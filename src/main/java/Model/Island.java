@@ -18,7 +18,7 @@ public class Island {
     //merges two islands: creates the resulting island. The dimension of the resulting island is sum of the dimensions of the other two
     public Island(Island i1, Island i2) {
         dimension = i1.getDimension() + i2.getDimension();
-        students = new Arraylist<Student>();
+        students = new ArrayList<Student>();
         students.addAll(i1.getStudents());
         students.addAll(i2.getStudents());
         influence = i1.getInfluence();
