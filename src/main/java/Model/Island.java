@@ -57,8 +57,8 @@ public class Island {
 
     //methods regarding motherNature attribute
 
-    public void setMotherNature(boolean new) {
-        motherNature = new;
+    public void setMotherNature(boolean n) {
+        motherNature = n;
     }
 
     public boolean isMotherNature() {
