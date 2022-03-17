@@ -3,14 +3,14 @@ import java.util.*;
 
 public class Island {
     private int dimension;
-    private List<Student> students;
+    private int[] students;
     private Player influence;
     private boolean motherNature;
 
     //builds an empty island, dimension is initialized 1
     public Island() {
         dimension = 1;
-        students = new ArrayList<Student>();
+        students = new int[5];
         influence = null;
         motherNature = false;
     }
@@ -18,9 +18,17 @@ public class Island {
     //merges two islands: creates the resulting island. The dimension of the resulting island is sum of the dimensions of the other two
     public Island(Island i1, Island i2) {
         dimension = i1.getDimension() + i2.getDimension();
-        students = new ArrayList<Student>();
-        students.addAll(i1.getStudents());
-        students.addAll(i2.getStudents());
+
+        students = new int[5];
+        int[] students1;
+        int[] students2;
+        students1 = i1.getStudents();
+        students2 = i2.getStudents();
+
+        for (int i = 0; i < 5; i++) {
+            students[i] = students1[i] + students2[i];
+        }
+
         influence = i1.getInfluence();
         motherNature = true;
     }
@@ -31,13 +39,14 @@ public class Island {
 
     //methods regarding students attribute
 
-    public List<Student> getStudents() {
-        List<> studentsCopy = new ArrayList();
-        studentsCopy.addAll(students);
-        return studentsCopy;
+    public int[] getStudents() {
+        return Arrays.copyOf(students, 5);
     }
+
     public void addStudents(List<Student> newStudents) {
-        students.addAll(newStudents);
+        for(Student s : newStudents) {
+            students[s.getColorId()]++;
+        }
     }
 
     //methods regarding influence attribute
@@ -48,8 +57,8 @@ public class Island {
 
     //methods regarding motherNature attribute
 
-    public void setMotherNature() {
-        motherNature = true;
+    public void setMotherNature(boolean new) {
+        motherNature = new;
     }
 
     public boolean isMotherNature() {
