@@ -4703,7 +4703,7 @@
 											"top": 1155,
 											"width": 342,
 											"height": 13,
-											"text": "+fillEntrance(): void",
+											"text": "+fillEntrance(Sack s): void",
 											"horizontalAlignment": 0
 										}
 									],
@@ -10183,6 +10183,15 @@
 									},
 									"type": "void",
 									"direction": "return"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAF/nrRZLkaERoc=",
+									"_parent": {
+										"$ref": "AAAAAAF/gpbblNLAvK4="
+									},
+									"name": "Sack s",
+									"type": ""
 								}
 							]
 						}

@@ -22,4 +22,7 @@ public class Cloud {
         return studentsOnCloud;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
 }
