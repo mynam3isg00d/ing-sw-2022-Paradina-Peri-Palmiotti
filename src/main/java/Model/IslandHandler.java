@@ -48,9 +48,9 @@ public class IslandHandler {
         }
 
         //the player who has influence over an island gets an extra point of influence
-        Player currentInfluence= islands.get(islandIndex).getInfluence();
+        Player currentInfluence = islands.get(islandIndex).getInfluence();
         if ( currentInfluence != null) {
-            influences.put(currentInfluence, 1);
+            influences.put(currentInfluence, islands.get(islandIndex).getDimension());
         }
 
         for(int color = 0; color < 5; color++) {
@@ -76,10 +76,46 @@ public class IslandHandler {
         }).get();
         System.out.println("max: " + e.getKey().getName() + "   " + Integer.toString(e.getValue()));
 
-        Player p = e.getKey(); //the player with the maximum influence
+        Player mostInfluent = e.getKey(); //the player with the maximum influence
 
-        //if(!p.equals( islands.get(islandIndex).getInfluence()) ) //se l'influenza è cambiata
-        //checkAndMerge()
+        checkAndMerge(mostInfluent, islandIndex, islands.get(islandIndex));
+    }
+
+    private void checkAndMerge(Player mostInfluent, int islandIndex, Island currentIsland) {
+        if(currentIsland.getInfluence()==null || !mostInfluent.equals( currentIsland.getInfluence()) ) { //if TRUE the player with the most influence has changed
+            currentIsland.setInfluence(mostInfluent);
+            Island nextIsland = islands.get((islandIndex+1)%islands.size());
+            Island prevIsland = islands.get((islandIndex-1)%islands.size());
+
+            Island newIsland = currentIsland;
+            boolean mergedPrev = false;
+            boolean mergedNext = false;
+
+            if (islands.get(islandIndex).getInfluence().equals(nextIsland)) {
+                newIsland = new Island(newIsland, nextIsland);
+                mergedNext = true;
+            }
+            if (islands.get(islandIndex).getInfluence().equals(islands.get(islandIndex-1).getInfluence())) {
+                newIsland = new Island(newIsland, prevIsland);
+                mergedPrev = true;
+            }
+
+            if (mergedPrev && mergedNext) {
+                islands.remove(islandIndex + 1);
+                islands.remove(islandIndex);
+                islands.remove(islandIndex - 1);
+                islands.add(islandIndex - 1, newIsland);
+            } else if (mergedPrev) {
+                islands.remove(islandIndex);
+                islands.remove(islandIndex - 1);
+                islands.add(islandIndex - 1, newIsland);
+            } else if (mergedNext) {
+                islands.remove(islandIndex + 1);
+                islands.remove(islandIndex);
+                islands.add(islandIndex, newIsland);
+            }
+
+        }
     }
 
     public static void main(String[] args) {

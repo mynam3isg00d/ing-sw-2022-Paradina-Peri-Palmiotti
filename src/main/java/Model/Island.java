@@ -55,6 +55,11 @@ public class Island {
         return influence;
     }
 
+    public void setInfluence(Player p) {
+        influence = p;
+        //TODO qualcosa per modificare torri
+    }
+
     //methods regarding motherNature attribute
 
     public void setMotherNature(boolean n) {
