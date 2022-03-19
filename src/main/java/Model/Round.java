@@ -1,4 +1,6 @@
-/*package Model;
+/*
+package Model;
+import java.util.*;
 
 public class Round {
     private int roundNumber;
@@ -6,8 +8,8 @@ public class Round {
     private List<Assistant> playedAssistants;
 
     private Sack sack;
-    private IslandController islandController;
-    private CloudController cloudController;
+    private IslandHandler islandHandler;
+    private CloudHandler cloudHandler;
 
     public Round(Game g) {
         //when Round is built, playerOrder is yet to be ordered. Players are ordered
@@ -17,13 +19,13 @@ public class Round {
         playedAssistants = new ArrayList<Assistant>();
 
         sack = g.getSack();
-        islandController = g.getIslandController();
-        cloudController = g.getCloudController();
+        islandHandler = g.getIslandHandler();
+        cloudHandler = g.getCloudHandler();
     }
 
     public void planningPhase() {
         //draw 3 students from the bag for each Cloud
-        cloudController.fillClouds(sack);
+        cloudHandler.fillClouds(sack);
 
         //Players choose 1 Assistant card, starting from the
         //first player and proceeding in a clockwise order
@@ -48,7 +50,7 @@ public class Round {
             p.moveToDining();
 
             //Show available island information!
-            islandController.showIslands();
+            islandHandler.showIslands();
 
             //moveToIsland returns the list of students that
             //p wants to move to an Island
@@ -57,15 +59,15 @@ public class Round {
             HashMap<Integer, Student> toMove = new HashMap<Integer, Student>();
             toMove = p.moveToIsland();
 
-            //Forward toMove information to IslandController somehow
-            //IslandController writer, you decide how to implement
+            //Forward toMove information to IslandHandler somehow
+            //IslandHandler writer, you decide how to implement
 
 
             //Move motherNature by a number of steps that is forwarded from the view
 
             //NOTE: check for max movement granted by assistant and other checks
             int steps = p.getMotherNatureSteps();
-            islandController.moveMother(steps);
+            islandHandler.moveMother(steps);
 
 
             //view tells which cloud to pick from
@@ -77,4 +79,6 @@ public class Round {
 
         //Move Mother Nature to an Island
     }
-}*/
+}
+
+ */

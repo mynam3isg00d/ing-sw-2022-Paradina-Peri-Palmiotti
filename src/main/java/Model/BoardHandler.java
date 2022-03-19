@@ -23,5 +23,7 @@ public class BoardHandler {
 
     public void fillEntrance(Sack s){
         //TODO: randomly draw 7 students from sack and put them in entrance. Waiting for Sack implementation
+        //Sack implementation is up, get back to work
     }
+
 }

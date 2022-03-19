@@ -12,9 +12,11 @@ public class CloudHandler{
         }
     }
 
+
     public void fillClouds(Sack s){
         for(Cloud c : clouds){
             //TODO: randomly extract students from sack and put 3 on each cloud. Waiting for sack implementation
+            //Sack implementation is up, get to work
         }
     }
 

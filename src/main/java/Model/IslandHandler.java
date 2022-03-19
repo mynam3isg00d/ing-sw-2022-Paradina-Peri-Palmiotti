@@ -28,6 +28,11 @@ public class IslandHandler {
 
         //initially, no professor is taken. So the array is filled with null
         professors = new Player[5];
+
+        //Davide:
+        /*TODO: every island starts with 1 random student on it, except the mother island and the opposite island
+                (in our case all but islands 0 and 5)
+        */
     }
 
     public void moveMother(int steps) {
@@ -119,8 +124,10 @@ public class IslandHandler {
     }
 
     public static void main(String[] args) {
-        Player p1 = new Player("samu");
-        Player p2 = new Player("dinho");
+        //Davide
+        //Woops, ho aggiornato il costruttore di player
+        Player p1 = new Player("samu", 0);
+        Player p2 = new Player("dinho", 1);
 
         IslandHandler ih = new IslandHandler();
         List<Student> toAdd = new ArrayList<Student>();
