@@ -29,10 +29,23 @@ public class IslandHandler {
         //initially, no professor is taken. So the array is filled with null
         professors = new Player[5];
 
-        //Davide:
-        /*TODO: every island starts with 1 random student on it, except the mother island and the opposite island
-                (in our case all but islands 0 and 5)
-        */
+        //every island starts with 1 random student on it, except the mother island and the opposite island
+        // (in our case all but islands 0 and 5)
+        Stack<Student> firstSack= new Stack<Student>();
+        for (int i = 0; i < 5; i++) {
+            firstSack.add(Sack.intToStudent(i));
+            firstSack.add(Sack.intToStudent(i));
+        }
+        Collections.shuffle(firstSack);
+
+        for (int i = 1; i < 12; i++) {
+            if (i != 5) {
+                List<Student> toAdd = new ArrayList<Student>();
+                toAdd.add(firstSack.pop());
+                islands.get(i).addStudents(toAdd);
+            }
+        }
+
     }
 
     public void moveMother(int steps) {

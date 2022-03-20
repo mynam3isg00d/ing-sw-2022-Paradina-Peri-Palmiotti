@@ -18,7 +18,13 @@ public class Sack {
     //TODO: Define proper exceptions
     public Student draw() {
         int draw = sack.pop();
-        switch (draw) {
+        return intToStudent(draw);
+    }
+
+    public boolean isEmpty() {return sack.empty();}
+
+    public static Student intToStudent(int i) {
+        switch (i) {
             case 0:
                 return Student.YELLOW;
             case 1:
@@ -30,12 +36,9 @@ public class Sack {
             case 4:
                 return Student.PINK;
             default:
-                System.out.printf("ERROR: Invalid Student Value");
+                return null;
         }
-        return null;
     }
-
-    public boolean isEmpty() {return sack.empty();}
 }
 
 
