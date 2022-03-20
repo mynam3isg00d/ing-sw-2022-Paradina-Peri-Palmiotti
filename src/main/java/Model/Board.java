@@ -9,6 +9,7 @@ public class Board {
     private int towersNum;
 
     public Board() {
+        //Davide: maybe convert static ArrayList-s to arrays? idk if it helps with overall efficency
         diners = new ArrayList<Integer>(5);
         entrance = new ArrayList<Student>();
         professors = new ArrayList<Boolean>(5);

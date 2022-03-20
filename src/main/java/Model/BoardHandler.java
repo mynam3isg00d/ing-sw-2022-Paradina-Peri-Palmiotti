@@ -1,7 +1,7 @@
 package Model;
-
 import java.util.List;
 
+/*
 public class BoardHandler {
     private Board board;
     private Player player;
@@ -27,3 +27,4 @@ public class BoardHandler {
     }
 
 }
+*/
