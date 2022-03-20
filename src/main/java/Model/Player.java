@@ -4,14 +4,14 @@ import java.util.*;
 public class Player {
 
     private String name;
-    private int teamID;
+    private int teamId;
     private Hand hand;
     private Stack discardPile;
     private Assistant assistantInPlay;
 
     public Player(String n, int tid) {
         name = n;
-        teamID = tid;
+        teamId = tid;
         hand = null;
         discardPile = new Stack();
     }
@@ -38,6 +38,10 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public int getTeamId() {
+        return teamId;
     }
 }
 

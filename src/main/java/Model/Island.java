@@ -4,14 +4,14 @@ import java.util.*;
 public class Island {
     private int dimension;
     private int[] students;
-    private Player influence;
+    private Integer influenceTeam;
     private boolean motherNature;
 
     //builds an empty island, dimension is initialized 1
     public Island() {
         dimension = 1;
         students = new int[5];
-        influence = null;
+        influenceTeam = null;
         motherNature = false;
     }
 
@@ -29,7 +29,7 @@ public class Island {
             students[i] = students1[i] + students2[i];
         }
 
-        influence = i1.getInfluence();
+        influenceTeam = i1.getInfluence();
         motherNature = true;
     }
 
@@ -51,12 +51,12 @@ public class Island {
 
     //methods regarding influence attribute
 
-    public Player getInfluence() {
-        return influence;
+    public Integer getInfluence() {
+        return influenceTeam;
     }
 
-    public void setInfluence(Player p) {
-        influence = p;
+    public void setInfluence(int team) {
+        influenceTeam = Integer.valueOf(team);
         //TODO qualcosa per modificare torri
     }
 
@@ -68,5 +68,24 @@ public class Island {
 
     public boolean isMotherNature() {
         return motherNature;
+    }
+
+    @Override
+    public String toString() {
+        String out = (
+                "|  Dimension: " + dimension + "  |\n" +
+                "|  Team Influence: " + influenceTeam + "  |\n" +
+                "|  MotherNature: " + motherNature + "  |\n" +
+                "|  Students: "
+        );
+
+        out = out.concat(" Y= " + students[0]);
+        out = out.concat(" B= " + students[1]);
+        out = out.concat(" G= " + students[2]);
+        out = out.concat(" R= " + students[3]);
+        out = out.concat(" P= " + students[4]);
+
+        out = out.concat(" |\n");
+        return out;
     }
 }

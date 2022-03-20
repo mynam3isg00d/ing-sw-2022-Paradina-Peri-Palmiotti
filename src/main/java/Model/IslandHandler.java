@@ -45,15 +45,15 @@ public class IslandHandler {
     }
 
     private void calcInfluence(int islandIndex){
-        //every player influence will be stored in a hashmap like:
-        //PlayerName -> influence
-        HashMap<Player, Integer> influences = new HashMap<Player, Integer>();
+        //every team influence will be stored in a hashmap like:
+        //teamId -> influence
+        HashMap<Integer, Integer> influences = new HashMap<Integer, Integer>();
         for(Player p : professors) {
-            if (p!=null) influences.put(p, 0);
+            if (p!=null) influences.put(Integer.valueOf(p.getTeamId()), 0);
         }
 
-        //the player who has influence over an island gets an extra point of influence
-        Player currentInfluence = islands.get(islandIndex).getInfluence();
+        //the team who has influence over an island gets an extra point of influence
+        Integer currentInfluence = islands.get(islandIndex).getInfluence();
         if ( currentInfluence != null) {
             influences.put(currentInfluence, islands.get(islandIndex).getDimension());
         }
@@ -65,67 +65,93 @@ public class IslandHandler {
             if (professors[color] != null) {
                 //playerKey is the player who controls the [color] professor
                 Player playerKey = professors[color];
-                System.out.println(playerKey.getName());
+                System.out.println("Team " + playerKey.getTeamId());
 
                 //influenceAdded is the influence value given by the control of the professor in consideration
-                int oldInfluence = influences.get(playerKey);
-                influences.put(playerKey, oldInfluence+studentsOnIsland);
+                int oldInfluence = influences.get(playerKey.getTeamId());
+                influences.put(playerKey.getTeamId(), oldInfluence+studentsOnIsland);
             }
         }
 
         //returns an Entry with the player and the greatest influence
         //TODO parità
-        Map.Entry<Player, Integer> e = influences.entrySet().stream().max( (Map.Entry<Player, Integer> e1, Map.Entry<Player, Integer> e2) -> {
+        Map.Entry<Integer, Integer> e = influences.entrySet().stream().max( (Map.Entry<Integer, Integer> e1, Map.Entry<Integer, Integer> e2) -> {
             if (e1.getValue() > e2.getValue()) return 1;
             else return -1;
         }).get();
-        System.out.println("max: " + e.getKey().getName() + "   " + Integer.toString(e.getValue()));
+        System.out.println("max: Team " + e.getKey() + "   " + Integer.toString(e.getValue()));
 
-        Player mostInfluent = e.getKey(); //the player with the maximum influence
+        //Player mostInfluent = e.getKey(); //the player with the maximum influence
+        Integer mostInfluentTeam = Integer.valueOf(e.getKey()); //the player with the maximum influence
 
-        checkAndMerge(mostInfluent, islandIndex, islands.get(islandIndex));
+
+        checkAndMerge(mostInfluentTeam, islandIndex, islands.get(islandIndex));
     }
 
-    private void checkAndMerge(Player mostInfluent, int islandIndex, Island currentIsland) {
-        if(currentIsland.getInfluence()==null || !mostInfluent.equals( currentIsland.getInfluence()) ) { //if TRUE the player with the most influence has changed
-            currentIsland.setInfluence(mostInfluent);
-            Island nextIsland = islands.get((islandIndex+1)%islands.size());
-            Island prevIsland = islands.get((islandIndex-1)%islands.size());
+    private void checkAndMerge(Integer mostInfluentTeam, int islandIndex, Island currentIsland) {
+        if (currentIsland.getInfluence()==null || mostInfluentTeam != currentIsland.getInfluence() ) { //if TRUE the player with the most influence has changed
+            //sets the influence on the island
+            islands.get(islandIndex).setInfluence(mostInfluentTeam);
+            System.out.println("influenza ora: " + islands.get(0).getInfluence());
 
+            //gets the next island on the right and the next island on the left
+            Island nextIsland = islands.get((islandIndex+1)%islands.size());
+            Island prevIsland;
+            if (islandIndex != 0)  prevIsland = islands.get(islandIndex-1);
+            else prevIsland = islands.get(islands.size()-1);
+
+            //if necessary, uses the Island constructor to build new Island merging the old ones
+            //the two flags are used in order to understand which island(s) has to be replaced
             Island newIsland = currentIsland;
             boolean mergedPrev = false;
             boolean mergedNext = false;
 
-            if (islands.get(islandIndex).getInfluence().equals(nextIsland)) {
+            if (currentIsland.getInfluence().equals(nextIsland.getInfluence())) {
                 newIsland = new Island(newIsland, nextIsland);
                 mergedNext = true;
             }
-            if (islands.get(islandIndex).getInfluence().equals(islands.get(islandIndex-1).getInfluence())) {
+            if (currentIsland.getInfluence().equals(prevIsland.getInfluence())) {
                 newIsland = new Island(newIsland, prevIsland);
                 mergedPrev = true;
             }
 
+            int oldSize = islands.size();
             if (mergedPrev && mergedNext) {
                 islands.remove(islandIndex + 1);
                 islands.remove(islandIndex);
-                islands.remove(islandIndex - 1);
-                islands.add(islandIndex - 1, newIsland);
+                if (islandIndex != 0) {
+                    islands.remove(islandIndex - 1);
+                    islands.add(islandIndex - 1, newIsland);
+                    System.out.println("CONSOLE: Merged with island " + (islandIndex-1) + " and " + (islandIndex+1));
+                } else {
+                    islands.remove(islands.size()-1);
+                    islands.add(newIsland);
+                    System.out.println("CONSOLE: Merged with island " + (islandIndex-1) + " and " + (islandIndex+1));
+                }
             } else if (mergedPrev) {
                 islands.remove(islandIndex);
-                islands.remove(islandIndex - 1);
-                islands.add(islandIndex - 1, newIsland);
+                if (islandIndex != 0) {
+                    islands.remove(islandIndex-1);
+                    islands.add(islandIndex-1, newIsland);
+                    System.out.println("CONSOLE: Merged with island " + (islandIndex-1));
+                } else {
+                    islands.remove(islands.size() - 1);
+                    islands.add(newIsland);
+                    System.out.println("CONSOLE: Merged with island " + (islandIndex-1));
+                }
             } else if (mergedNext) {
                 islands.remove(islandIndex + 1);
                 islands.remove(islandIndex);
                 islands.add(islandIndex, newIsland);
+                System.out.println("CONSOLE: Merged with island " + (islandIndex+1));
+            } else {
+                System.out.println("CONSOLE: No merge happened");
             }
 
         }
     }
 
     public static void main(String[] args) {
-        //Davide
-        //Woops, ho aggiornato il costruttore di player
         Player p1 = new Player("samu", 0);
         Player p2 = new Player("dinho", 1);
 
@@ -137,7 +163,9 @@ public class IslandHandler {
         toAdd.add(Student.YELLOW);
 
         ih.islands.get(0).addStudents(toAdd);
+        System.out.println("Sull'isola 0: ");
         for (int i : ih.islands.get(0).getStudents()) System.out.println(i);
+        System.out.println(" ");
 
 
         ih.professors[0] = p1;
@@ -146,6 +174,14 @@ public class IslandHandler {
         //ih.professors[3] = p1;
         ih.professors[4] = p1;
 
+        ih.islands.get(11).setInfluence(0);
+        ih.islands.get(1).setInfluence(0);
+
         ih.calcInfluence(0);
+
+        System.out.println(" ");System.out.println(" ");
+        for (Island i : ih.islands) {
+            System.out.println(i);
+        }
     }
 }
