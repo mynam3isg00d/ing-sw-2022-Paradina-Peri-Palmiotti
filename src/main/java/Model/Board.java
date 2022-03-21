@@ -3,39 +3,48 @@ import java.util.*;
 
 public class Board {
 
-    private ArrayList<Integer> diners;
+    private int[] diners;
     private List<Student> entrance;
-    private ArrayList<Boolean> professors;
+    private boolean[] professors;
     private int towersNum;
 
     public Board() {
         //Davide: maybe convert static ArrayList-s to arrays? idk if it helps with overall efficency
-        diners = new ArrayList<Integer>(5);
+        diners = new int[]{0, 0, 0, 0, 0};
         entrance = new ArrayList<Student>();
-        professors = new ArrayList<Boolean>(5);
-        //TODO: this needs to be set accordingly to how many towers the board has to have. Maybe do it with
-        //an override of the constructor where there is parameter indicating how many players are playing
-        towersNum=0;
+        professors = new boolean[]{false, false, false, false, false};
+        /*TODO: this needs to be set accordingly to how many towers the board has to have. Maybe do it with
+                an override of the constructor where there is parameter indicating how many players are playing
+
+                D: i have no idea what this means
+        */
+        towersNum = 0;
     }
 
-    public void addToDining(int n, int colorID){
-        //TODO: exception if diners.size()>5
-        //adds 1 diner to the table corresponding to colorID
-        diners.add(colorID, 1);
+    public void addToDining(Student s){
+        diners[s.getColorId()]++;
     }
 
     public void addToEntrance(List<Student> students){
         entrance.addAll(students);
     }
+    public void addToEntrance(Student s){
+        entrance.add(s);
+    }
 
     //TODO: not sure this is written correctly in the UML: where do the removed students go??
+    //
+    //      To student heaven
     public void removeFromEntrance(List<Student> students){
         entrance.removeAll(students);
+    }
+    public void removeFromEntrance(Student s){
+        entrance.remove(s);
     }
 
     //********getters*********//
 
-    public ArrayList<Integer> getDiners() {
+    public int[] getDiners() {
         return diners;
     }
 
@@ -43,7 +52,7 @@ public class Board {
         return entrance;
     }
 
-    public ArrayList<Boolean> getProfessors() {
+    public boolean[] getProfessors() {
         return professors;
     }
 
@@ -55,7 +64,7 @@ public class Board {
 
 
     //********setters*********//
-
+    /*
     public void setDiners(ArrayList<Integer> diners) {
         this.diners = diners;
     }
@@ -71,6 +80,6 @@ public class Board {
     public void setTowersNum(int towersNum) {
         this.towersNum = towersNum;
     }
-
+     */
     //************************//
 }

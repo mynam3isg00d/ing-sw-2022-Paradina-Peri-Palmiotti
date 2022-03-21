@@ -43,6 +43,8 @@ public class Player {
     public int getTeamId() {
         return teamId;
     }
+
+    public Assistant getAssistantInPlay() { return assistantInPlay; }
 }
 
 /*

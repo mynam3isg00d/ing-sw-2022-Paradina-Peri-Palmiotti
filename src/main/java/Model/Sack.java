@@ -3,12 +3,12 @@ import java.util.*;
 
 public class Sack {
 
-    private Stack<Integer> sack;
+    private final Stack<Integer> sack;
 
     //Sack constructor parameters:
     //numOfStudents: number of starting students in the sack.
     public Sack(int numOfStudents) {
-        sack = new Stack<Integer>();
+        sack = new Stack<>();
         for(int i = 0; i < numOfStudents; i++) sack.push(i % 5);
         Collections.shuffle(sack);
     }
@@ -16,9 +16,13 @@ public class Sack {
 
     //There is definitely a better way to do this using enums properly lmao
     //TODO: Define proper exceptions
-    public Student draw() {
-        int draw = sack.pop();
-        return intToStudent(draw);
+    public List<Student> draw(int numOfStudents) {
+        List<Student> returnVal = new ArrayList<>();
+        for (int i=0; i<numOfStudents; i++) {
+            int draw = sack.pop();
+            returnVal.add(intToStudent(draw));
+        }
+        return returnVal;
     }
 
     public boolean isEmpty() {return sack.empty();}

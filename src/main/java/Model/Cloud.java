@@ -25,4 +25,9 @@ public class Cloud {
     public List<Student> getStudents() {
         return students;
     }
+
+    public boolean isEmpty() {
+        if (students.size() == 0) return true;
+        return false;
+    }
 }

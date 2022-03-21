@@ -8,11 +8,14 @@ Possible implementation for Game constructors:
     then create the proper number
 */
 //TODO: Add BoardsHandler implementation
-
 package Model;
+
+import View.*;
 import java.util.*;
 
 public class Game {
+
+    private View v;
 
     private int roundCount;
     private int playersNumber;
@@ -21,6 +24,7 @@ public class Game {
     private Sack sack;
     private IslandHandler islandHandler;
     private CloudHandler cloudHandler;
+    private BoardsHandler boardsHandler;
 
     //NOTE: boardHandler is not properly implemented, keep in mind.
     //BoardHandler boardHandler;
@@ -37,7 +41,11 @@ public class Game {
 
         islandHandler = new IslandHandler();
         cloudHandler = new CloudHandler();
-        //TODO: add boardHandler
+        boardsHandler = new BoardsHandler(players);
+    }
+
+    public void connectView(View v) {
+        this.v = v;
     }
 
     private boolean checkEnd() {
@@ -52,10 +60,25 @@ public class Game {
         return false;
     }
 
+
+    public void start() {
+        boolean[] availableWizards =  {true, true, true ,true};
+        for(Player p : players) {
+            int choice = v.getWizard(p, availableWizards);
+            availableWizards[choice] = false;
+            p.chooseWizard(choice);
+        }
+    }
+
     public void playRound() {
         roundCount++;
         System.out.println("Playing round " + roundCount);
-        //Round r = new Round(this);
+        Round r = new Round(this);
+        r.planningPhase();
+    }
+
+    public int getPlayedAssistant(Player p) {
+        return v.getPlayedAssistant(p);
     }
 
     public IslandHandler getIslandHandler() {
@@ -64,6 +87,10 @@ public class Game {
 
     public CloudHandler getCloudHandler() {
         return cloudHandler;
+    }
+
+    public BoardsHandler getBoardsHandler() {
+        return boardsHandler;
     }
 
     public Sack getSack() {

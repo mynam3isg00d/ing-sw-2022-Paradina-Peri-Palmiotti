@@ -31,4 +31,13 @@ public class Hand {
     public void addAssistant(Assistant a) {
         hand.add(a);
     }
+
+    public boolean isAssistantInHand(int on) {
+        for(Assistant a : hand) {
+            if (a.getOrderNumber() == on) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
