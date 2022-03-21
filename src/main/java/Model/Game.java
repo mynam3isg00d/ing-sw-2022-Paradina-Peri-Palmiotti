@@ -69,14 +69,14 @@ public class Game {
             p.chooseWizard(choice);
         }
     }
-
+    /*
     public void playRound() {
         roundCount++;
         System.out.println("Playing round " + roundCount);
         Round r = new Round(this);
         r.planningPhase();
     }
-
+    */
     public int getPlayedAssistant(Player p) {
         return v.getPlayedAssistant(p);
     }
