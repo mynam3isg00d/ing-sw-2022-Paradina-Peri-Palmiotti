@@ -17,7 +17,6 @@ public class Player {
     }
 
     public void chooseWizard(int wizardID) {
-        //TODO: check if wizardID is not already taken somehow
         hand = new Hand(wizardID);
     }
 

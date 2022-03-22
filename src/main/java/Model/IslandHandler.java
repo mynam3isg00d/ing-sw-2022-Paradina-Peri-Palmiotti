@@ -57,7 +57,7 @@ public class IslandHandler {
         calcInfluence(motherNaturePosition);
     }
 
-    private void calcInfluence(int islandIndex){
+    public void calcInfluence(int islandIndex){
         //every team influence will be stored in a hashmap like:
         //teamId -> influence
         HashMap<Integer, Integer> influences = new HashMap<Integer, Integer>();
@@ -163,7 +163,7 @@ public class IslandHandler {
 
         }
     }
-
+    /*
     public static void main(String[] args) {
         Player p1 = new Player("samu", 0);
         Player p2 = new Player("dinho", 1);
@@ -197,4 +197,5 @@ public class IslandHandler {
             System.out.println(i);
         }
     }
+    */
 }

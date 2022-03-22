@@ -11,6 +11,6 @@ public class App {
         g.connectView(v);
 
         g.start();
-        g.playRound();
+        //g.playRound();
     }
 }

@@ -29,6 +29,10 @@ public class Game {
     //NOTE: boardHandler is not properly implemented, keep in mind.
     //BoardHandler boardHandler;
 
+    public Game() {
+
+    }
+
     //Assuming this is a 2game constructor
     public Game(String name1, String name2) {
         roundCount = 0;
