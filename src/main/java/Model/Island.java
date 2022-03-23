@@ -1,11 +1,15 @@
 package Model;
+import View.IslandView;
+
 import java.util.*;
 
-public class Island {
+//TODO aggiungere wrapper di isole, perchè handler è in realtà il controller
+public class Island { //è osservato da islandview, quindi ogni modifica chiama notify su view
     private int dimension;
     private int[] students;
     private Integer influenceTeam;
     private boolean motherNature;
+    private IslandView view;
 
     //builds an empty island, dimension is initialized 1
     public Island() {
@@ -13,6 +17,13 @@ public class Island {
         students = new int[5];
         influenceTeam = null;
         motherNature = false;
+    }
+
+    public Island(Island i) {
+        dimension = i.getDimension();
+        students = i.getStudents();
+        influenceTeam = i.getInfluence();
+        motherNature = i.isMotherNature();
     }
 
     //merges two islands: creates the resulting island. The dimension of the resulting island is sum of the dimensions of the other two
@@ -47,6 +58,8 @@ public class Island {
         for(Student s : newStudents) {
             students[s.getColorId()]++;
         }
+        view.notify();
+        //notify
     }
 
     //methods regarding influence attribute
@@ -58,12 +71,14 @@ public class Island {
     public void setInfluence(int team) {
         influenceTeam = Integer.valueOf(team);
         //TODO qualcosa per modificare torri
+        view.notify();
     }
 
     //methods regarding motherNature attribute
 
     public void setMotherNature(boolean n) {
         motherNature = n;
+        view.notify();
     }
 
     public boolean isMotherNature() {
@@ -73,7 +88,7 @@ public class Island {
     @Override
     public String toString() {
         String out = (
-                "|  Dimension: " + dimension + "  |\n" +
+                "|  Dimension: " + dimension + " |\n" +
                 "|  Team Influence: " + influenceTeam + "  |\n" +
                 "|  MotherNature: " + motherNature + "  |\n" +
                 "|  Students: "
