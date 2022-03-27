@@ -15,7 +15,7 @@ import java.util.*;
 
 public class Game {
 
-    private View v;
+    private View view;
 
     private int roundCount;
     private int playersNumber;
@@ -49,7 +49,7 @@ public class Game {
     }
 
     public void connectView(View v) {
-        this.v = v;
+        this.view = v;
     }
 
     private boolean checkEnd() {
@@ -68,7 +68,7 @@ public class Game {
     public void start() {
         boolean[] availableWizards =  {true, true, true ,true};
         for(Player p : players) {
-            int choice = v.getWizard(p, availableWizards);
+            int choice = view.getWizard(p, availableWizards);
             availableWizards[choice] = false;
             p.chooseWizard(choice);
         }
@@ -82,7 +82,7 @@ public class Game {
     }
     */
     public int getPlayedAssistant(Player p) {
-        return v.getPlayedAssistant(p);
+        return view.getPlayedAssistant(p);
     }
 
     public IslandHandler getIslandHandler() {
