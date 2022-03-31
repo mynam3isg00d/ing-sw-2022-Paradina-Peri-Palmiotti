@@ -1,0 +1,19 @@
+package Model;
+
+public class GameModel {
+    private String gamePhase;
+    private int roundNumber;
+    private Player playerTurn;
+
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    public Player getPlayerTurn() {
+        return playerTurn;
+    }
+
+    public String getGamePhase() {
+        return gamePhase;
+    }
+}
