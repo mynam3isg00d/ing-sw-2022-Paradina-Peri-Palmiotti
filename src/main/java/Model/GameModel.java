@@ -5,6 +5,11 @@ public class GameModel {
     private int roundNumber;
     private Player playerTurn;
 
+    public GameModel() {
+        gamePhase = "actionPhase";
+        roundNumber = 0;
+    }
+
     public int getRoundNumber() {
         return roundNumber;
     }

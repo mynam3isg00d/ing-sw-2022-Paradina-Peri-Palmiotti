@@ -17,11 +17,6 @@ public class IslandView {
     public IslandView() {
         input = new Scanner(System.in);
         output = System.out;
-
-        //initializes all the views
-        islandView = new IslandView();
-        //cloudView = new CloudView();
-        //...
     }
 
 
@@ -30,10 +25,10 @@ public class IslandView {
     public void update(List<Island> islands) {
         output.println("---Model has been updated, refreshing islands...---");
         for (Island i : islands) printIsland(i);
-        view.askChoice("actionPhase");
     }
 
     public void askStudentsMove() {
+
         boolean ok = false;
         while (!ok) {
             output.println("Quanti Studenti vuoi muovere?");
@@ -41,10 +36,11 @@ public class IslandView {
             output.println("Di che Colore?");
             String color = input.nextLine();
             output.println("Su che isola?");
-            int islandIndex = input.nextInt();
+            int islandIndex = Integer.parseInt(input.nextLine());
 
             //come dirgli cosa gli sto notificando? posso chiamare un metodo del controller?
             ok = islandController.moveStudents(islandIndex, k, color);
+            if (!ok) System.out.println("VIEW SAYS: Che cazzo fai");
         }
     }
 

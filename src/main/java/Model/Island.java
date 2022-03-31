@@ -9,7 +9,7 @@ public class Island { //è osservato da islandview, quindi ogni modifica chiama 
     private int[] students;
     private Integer influenceTeam;
     private boolean motherNature;
-    private IslandView view;
+    private IslandView islandView;
 
     //builds an empty island, dimension is initialized 1
     public Island() {
@@ -58,8 +58,6 @@ public class Island { //è osservato da islandview, quindi ogni modifica chiama 
         for(Student s : newStudents) {
             students[s.getColorId()]++;
         }
-        view.notify();
-        //notify
     }
 
     //methods regarding influence attribute
@@ -71,14 +69,14 @@ public class Island { //è osservato da islandview, quindi ogni modifica chiama 
     public void setInfluence(int team) {
         influenceTeam = Integer.valueOf(team);
         //TODO qualcosa per modificare torri
-        view.notify();
+        islandView.notify();
     }
 
     //methods regarding motherNature attribute
 
     public void setMotherNature(boolean n) {
         motherNature = n;
-        view.notify();
+        islandView.notify();
     }
 
     public boolean isMotherNature() {

@@ -168,7 +168,7 @@ public class IslandHandler {
 
     public boolean moveStudents(int islandIndex, int numOfStudents, String color) {
         boolean valid = true;
-
+        System.out.println("CONTROLLER SAYS: Voglio spostare " + numOfStudents + " studenti di colore " + color + " sull'isola " + islandIndex);
         if (numOfStudents > 3) return false;
         if (!color.equals("Y") && !color.equals("R") && !color.equals("P") && !color.equals("G") && !color.equals("B")) return false;
         if (numOfStudents > islandModel.getIslandLength()) return false;
@@ -177,13 +177,27 @@ public class IslandHandler {
         for (int i=0; i < numOfStudents; i++) {
             switch (color) {
                 case "Y": students.add(Sack.intToStudent(0));
+                    break;
+                    
                 case "B": students.add(Sack.intToStudent(1));
+                    break;
+
                 case "G": students.add(Sack.intToStudent(2));
+                    break;
+
                 case "R": students.add(Sack.intToStudent(3));
+                    break;
+
                 case "P": students.add(Sack.intToStudent(4));
+                    break;
+
             }
         }
 
+        System.out.println("CONTROLLER SAYS: La lista da aggiungere e'");
+        for (Student s : students) {
+            System.out.println(s);
+        }
         //TODO aggiungere notifica alla view in IslandModel
         islandModel.addStudents(islandIndex, students);
         return true;

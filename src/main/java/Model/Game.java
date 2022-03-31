@@ -27,14 +27,15 @@ public class Game {
     private CloudHandler cloudHandler;
     private BoardsHandler boardsHandler;
 
-    //NOTE: boardHandler is not properly implemented, keep in mind.
-    //BoardHandler boardHandler;
+    private GameModel gameModel;
 
     public Game() {
         //**initializes all the controllers**
         islandHandler = new IslandHandler();
         //cloudHandler = new CloudHandler();
         //boardsHandler = new BoardsHandler();
+
+        gameModel = new GameModel();
 
         //initializes the view
         view = new View();
@@ -46,6 +47,8 @@ public class Game {
         model.connectViews(view);       //connects view as an observer of the model
         view.connectControllers(this);
         connectModels(model);
+
+        play();
     }
 
     //Assuming this is a 2game constructor
@@ -89,14 +92,6 @@ public class Game {
             p.chooseWizard(choice);
         }
     }
-    /*
-    public void playRound() {
-        roundCount++;
-        System.out.println("Playing round " + roundCount);
-        Round r = new Round(this);
-        r.planningPhase();
-    }
-    */
 
     public void connectModels(Model m) {
         //***connects all the models***
@@ -125,5 +120,10 @@ public class Game {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void play() {
+        while (true) view.askChoice(gameModel.getGamePhase());
+
     }
 }

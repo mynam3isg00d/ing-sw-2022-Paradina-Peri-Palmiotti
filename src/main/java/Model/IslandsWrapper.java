@@ -78,5 +78,7 @@ public class IslandsWrapper {
 
     public void connectView(IslandView iv) {
         islandView = iv;
+        List<Island> isCopy = new ArrayList<>(islands);
+        iv.update(isCopy);
     }
 }
