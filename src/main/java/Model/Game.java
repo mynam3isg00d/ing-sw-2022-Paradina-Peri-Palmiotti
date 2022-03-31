@@ -16,6 +16,7 @@ import java.util.*;
 public class Game {
 
     private View view;
+    private Model model;
 
     private int roundCount;
     private int playersNumber;
@@ -30,7 +31,21 @@ public class Game {
     //BoardHandler boardHandler;
 
     public Game() {
+        //**initializes all the controllers**
+        islandHandler = new IslandHandler();
+        //cloudHandler = new CloudHandler();
+        //boardsHandler = new BoardsHandler();
 
+        //initializes the view
+        view = new View();
+
+        //initializes the model
+        model = new Model();
+
+        //connecting
+        model.connectViews(view);       //connects view as an observer of the model
+        view.connectControllers(this);
+        connectModels(model);
     }
 
     //Assuming this is a 2game constructor
@@ -43,6 +58,7 @@ public class Game {
         players.add(new Player(name1, 0));
         players.add(new Player(name2, 1));
 
+        //chi crea le cose??
         islandHandler = new IslandHandler();
         cloudHandler = new CloudHandler();
         boardsHandler = new BoardsHandler(players);
@@ -81,6 +97,12 @@ public class Game {
         r.planningPhase();
     }
     */
+
+    public void connectModels(Model m) {
+        //***connects all the models***
+        islandHandler.connectIslandModel(m.getIslandModel());
+        //...
+    }
     public int getPlayedAssistant(Player p) {
         return view.getPlayedAssistant(p);
     }

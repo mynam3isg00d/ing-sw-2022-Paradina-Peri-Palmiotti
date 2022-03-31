@@ -1,28 +1,57 @@
 package View;
 
 import Model.*;
+
+import java.io.PrintStream;
 import java.util.*;
 
 public class View {
+    final private PrintStream output;
+    private Scanner input;
+    private Game gameController;
 
-    private Game g;
-    private Scanner s;
+    private IslandView islandView;
+    //ecc
 
-    public View(Game g) {
-        this.g = g;
-        s = new Scanner(System.in);
+    public View() {
+        input = new Scanner(System.in);
+        output = System.out;
+
+        islandView = new IslandView();
+        //cloudView = new CloudView(this);
+        //ecc
     }
+
+    public void addController(Game g) {
+        gameController = g;
+    }
+
+    public void askChoice(String gamePhase) {
+        output.println("Che vuoi fare?");
+        switch (gamePhase) {
+            case "actionPhase":
+                output.println("1 - Sposta degli studenti su un'isola a scelta");
+                output.println("2 - Muovi madre natura");
+        }
+        String in = input.nextLine();
+
+        switch (in) {
+            case "1": islandView.askStudentsMove();
+            //case "2": islandView.askMotherNatureMove();
+        }
+    }
+
 
     public int getPlayedAssistant(Player p) {
         int assistantChoice;
         System.out.println(p.getName() + ", play a card: ");
         Hand h = p.getHand();
         printPlayerHand(h);
-        assistantChoice = s.nextInt();
+        assistantChoice = input.nextInt();
         while(!h.isAssistantInHand(assistantChoice)) {
             System.out.println("This assistant is not in your hand!! Choose another one: ");
             printPlayerHand(h);
-            assistantChoice = s.nextInt();
+            assistantChoice = input.nextInt();
         }
         return assistantChoice;
     }
@@ -32,11 +61,11 @@ public class View {
 
         System.out.println(p.getName() + ", choose your starting deck: ");
         printAvailableWizards(availableWizards);
-        wizardChoice = s.nextInt();
+        wizardChoice = input.nextInt();
         while(!availableWizards[wizardChoice]) {
             System.out.println("yo you can't choose this one fool, it's already been taken.");
             printAvailableWizards(availableWizards);
-            wizardChoice = s.nextInt();
+            wizardChoice = input.nextInt();
         }
         return wizardChoice;
     }
@@ -52,5 +81,14 @@ public class View {
             System.out.print("[" + a.getOrderNumber() + "|" + a.getMotherNumber() + "]");
         }
         System.out.println("\n");
+    }
+
+    public IslandView getIslandView() {
+        return islandView;
+    }
+
+    public void connectControllers(Game controller) {
+        gameController = controller;
+        islandView.connectController(controller.getIslandHandler());
     }
 }

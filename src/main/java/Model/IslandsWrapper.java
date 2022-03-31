@@ -7,15 +7,14 @@ import java.util.List;
 
 public class IslandsWrapper {
     final private List<Island> islands;
-    private IslandView view;
+    private IslandView islandView;
     private int motherNaturePos;
 
-    public IslandsWrapper(IslandView v) {
+    public IslandsWrapper() {
         islands = new ArrayList<Island>();
         for (int i = 0; i < 12; i++) {
             Island newIsland = new Island();
             islands.add(newIsland);
-            view = v;
         }
         motherNaturePos = 0;
     }
@@ -54,14 +53,14 @@ public class IslandsWrapper {
         }
 
         List<Island> islandModelView = new ArrayList<>(islands);
-        view.update(islandModelView);
+        islandView.update(islandModelView);
     }
 
     public void addStudents(int islandIndex, List<Student> students) {
         islands.get(islandIndex).addStudents(students);
 
         List<Island> islandModelView = new ArrayList<>(islands);
-        view.update(islandModelView);
+        islandView.update(islandModelView);
     }
 
     public void moveMotherNature(int newPosition) {
@@ -70,6 +69,14 @@ public class IslandsWrapper {
         islands.get(newPosition).setMotherNature(true);
 
         List<Island> islandModelView = new ArrayList<>(islands);
-        view.update(islandModelView);
+        islandView.update(islandModelView);
+    }
+
+    public int getIslandLength() {
+        return islands.size();
+    }
+
+    public void connectView(IslandView iv) {
+        islandView = iv;
     }
 }

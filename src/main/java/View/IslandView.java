@@ -1,18 +1,27 @@
 package View;
 import Model.*;
 
+
 import java.io.PrintStream;
 import java.util.*;
 
 //islandview osserva le modifiche ai modelli delle isole -> islandView verrà notificata delle modifiche del modello
-public class IslandView implements Runnable, EventListener {
+public class IslandView {
     final private Scanner input;
     final private PrintStream output;
+    private IslandHandler islandController;
+    private View view;
     //TODO private Game gameController;
+    private IslandView islandView;
 
-    public IslandView(String[] args) {
+    public IslandView() {
         input = new Scanner(System.in);
         output = System.out;
+
+        //initializes all the views
+        islandView = new IslandView();
+        //cloudView = new CloudView();
+        //...
     }
 
 
@@ -21,16 +30,23 @@ public class IslandView implements Runnable, EventListener {
     public void update(List<Island> islands) {
         output.println("---Model has been updated, refreshing islands...---");
         for (Island i : islands) printIsland(i);
-        //askChoice??
+        view.askChoice("actionPhase");
     }
 
-    /*
-    private void askChoice(String gamePhase) {
-        output.println("Che vuoi fare?");
-        String in = input.nextLine();
-        islandController.notify();
+    public void askStudentsMove() {
+        boolean ok = false;
+        while (!ok) {
+            output.println("Quanti Studenti vuoi muovere?");
+            int k = Integer.parseInt(input.nextLine());
+            output.println("Di che Colore?");
+            String color = input.nextLine();
+            output.println("Su che isola?");
+            int islandIndex = input.nextInt();
+
+            //come dirgli cosa gli sto notificando? posso chiamare un metodo del controller?
+            ok = islandController.moveStudents(islandIndex, k, color);
+        }
     }
-    */
 
     private void printIsland(Island i) {
         String out = (
@@ -51,9 +67,7 @@ public class IslandView implements Runnable, EventListener {
         output.println(out);
     }
 
-
-    @Override
-    public void run() {
-
+    public void connectController(IslandHandler ic) {
+        islandController = ic;
     }
 }

@@ -5,6 +5,7 @@ import java.util.*;
 public class IslandHandler {
     private List<Island> islands;
     private int motherNaturePosition;
+    private IslandsWrapper islandModel;
 
     //an array containing references to the players that have control on each professor.
     //position 0 -> Yellow
@@ -15,6 +16,7 @@ public class IslandHandler {
     private Player[] professors;
 
     public IslandHandler() {
+        /*
         //initializes the list of islands
         islands = new ArrayList<Island>();
         for (int i = 0; i < 12; i++) {
@@ -45,7 +47,7 @@ public class IslandHandler {
                 islands.get(i).addStudents(toAdd);
             }
         }
-
+        */
     }
 
     public void moveMother(int steps) {
@@ -163,6 +165,29 @@ public class IslandHandler {
 
         }
     }
+
+    public boolean moveStudents(int islandIndex, int numOfStudents, String color) {
+        boolean valid = true;
+
+        if (numOfStudents > 3) return false;
+        if (!color.equals("Y") && !color.equals("R") && !color.equals("P") && !color.equals("G") && !color.equals("B")) return false;
+        if (numOfStudents > islandModel.getIslandLength()) return false;
+
+        List<Student> students = new ArrayList<>();
+        for (int i=0; i < numOfStudents; i++) {
+            switch (color) {
+                case "Y": students.add(Sack.intToStudent(0));
+                case "B": students.add(Sack.intToStudent(1));
+                case "G": students.add(Sack.intToStudent(2));
+                case "R": students.add(Sack.intToStudent(3));
+                case "P": students.add(Sack.intToStudent(4));
+            }
+        }
+
+        //TODO aggiungere notifica alla view in IslandModel
+        islandModel.addStudents(islandIndex, students);
+        return true;
+    }
     /*
     public static void main(String[] args) {
         Player p1 = new Player("samu", 0);
@@ -198,4 +223,7 @@ public class IslandHandler {
         }
     }
     */
+    public void connectIslandModel(IslandsWrapper m) {
+        islandModel = m;
+    }
 }
