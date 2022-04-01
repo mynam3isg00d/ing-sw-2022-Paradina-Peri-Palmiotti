@@ -1,12 +1,16 @@
-package Model;
+package Controller;
 
-import Model.Characters.*;
+import Controller.CharacterEffects.*;
+import Model.Player;
+
 import java.util.*;
 
 public class CharacterHandler {
-    List<AbstractCharacter> characters;
+    List<CharacterEffect> characters;
     HashMap<Player, Integer> playerCoins;
     Game game;
+
+    //grande :)
 
     public CharacterHandler(Game g) {
         game = g;
@@ -23,7 +27,7 @@ public class CharacterHandler {
     }
 
     public void buyCharacter(Player p, int charIndex, Object playerInput) {
-        AbstractCharacter c = characters.get(charIndex);
+        CharacterEffect c = characters.get(charIndex);
         c.incrementCost();
         c.setBoughtBy(p);
         c.getData(game);

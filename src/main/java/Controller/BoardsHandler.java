@@ -1,4 +1,9 @@
-package Model;
+package Controller;
+import Model.Board;
+import Model.Player;
+import Model.Sack;
+import Model.Student;
+
 import java.util.*;
 
 public class BoardsHandler {

@@ -8,8 +8,9 @@ Possible implementation for Game constructors:
     then create the proper number
 */
 //TODO: Add BoardsHandler implementation
-package Model;
+package Controller;
 
+import Model.*;
 import View.*;
 import java.util.*;
 
@@ -29,7 +30,7 @@ public class Game {
 
     private GameModel gameModel;
 
-    public Game() {
+    public Game(String playerNumber) {
         //**initializes all the controllers**
         islandHandler = new IslandHandler();
         //cloudHandler = new CloudHandler();
@@ -52,6 +53,7 @@ public class Game {
     }
 
     //Assuming this is a 2game constructor
+    /*
     public Game(String name1, String name2) {
         roundCount = 0;
         playersNumber = 2;
@@ -66,10 +68,7 @@ public class Game {
         cloudHandler = new CloudHandler();
         boardsHandler = new BoardsHandler(players);
     }
-
-    public void connectView(View v) {
-        this.view = v;
-    }
+    */
 
     private boolean checkEnd() {
         //BoardsHandler end conditions: a player (or team) has no towers left;
@@ -81,16 +80,6 @@ public class Game {
         //      or IMMEDIATELY after the islands go from 4 to 3
 
         return false;
-    }
-
-
-    public void start() {
-        boolean[] availableWizards =  {true, true, true ,true};
-        for(Player p : players) {
-            int choice = view.getWizard(p, availableWizards);
-            availableWizards[choice] = false;
-            p.chooseWizard(choice);
-        }
     }
 
     public void connectModels(Model m) {
@@ -122,8 +111,8 @@ public class Game {
         return players;
     }
 
+    //Il play di samu non si tocca!!
     public void play() {
         while (true) view.askChoice(gameModel.getGamePhase());
-
     }
 }

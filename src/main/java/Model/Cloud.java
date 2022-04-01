@@ -3,15 +3,20 @@ import java.util.*;
 
 public class Cloud {
     private List<Student> students;
+    int numOfStudents;
 
     //builds an empty cloud
-    public Cloud(){
-        students = new ArrayList<Student>(3);
+    public Cloud(int numOfStudents){
+        students = new ArrayList<>();
+        this.numOfStudents = numOfStudents;
     }
 
     //fills the cloud with the students contained in the "students" list
-    //TODO exception if students.size()!=3
+    //TODO exception if students.size()!=numOfStudents
     public void fill(List<Student> students){
+        if (students.size() != numOfStudents) {
+            //exception
+        }
         this.students=students;
     }
 

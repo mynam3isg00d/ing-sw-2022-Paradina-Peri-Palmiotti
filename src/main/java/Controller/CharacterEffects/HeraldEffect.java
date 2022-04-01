@@ -1,9 +1,9 @@
-package Model.Characters;
+package Controller.CharacterEffects;
 
-import Model.Game;
-import Model.IslandHandler;
+import Controller.Game;
+import Controller.IslandHandler;
 
-public class Araldo extends AbstractCharacter {
+public class HeraldEffect extends CharacterEffect {
     IslandHandler ih;
 
     @Override

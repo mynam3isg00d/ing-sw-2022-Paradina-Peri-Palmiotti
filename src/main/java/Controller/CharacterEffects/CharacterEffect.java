@@ -1,13 +1,14 @@
-package Model.Characters;
+package Controller.CharacterEffects;
 
+import Controller.Game;
 import Model.*;
 
-public abstract class AbstractCharacter {
+public abstract class CharacterEffect {
     int cost;
     boolean isIncremented;
     Player boughtBy;
 
-    public AbstractCharacter() {
+    public CharacterEffect() {
         isIncremented = false;
     }
 

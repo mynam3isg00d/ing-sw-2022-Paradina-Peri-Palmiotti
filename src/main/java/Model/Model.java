@@ -1,4 +1,5 @@
 package Model;
+import Controller.Game;
 import View.*;
 
 public class Model {

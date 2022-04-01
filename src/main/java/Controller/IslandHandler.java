@@ -1,4 +1,6 @@
-package Model;
+package Controller;
+import Model.*;
+
 import java.util.*;
 
 //cloudhandler's job is to handle all interactions with clouds, providing methods which are simpler for the developer
