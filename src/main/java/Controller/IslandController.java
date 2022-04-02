@@ -1,13 +1,16 @@
 package Controller;
+import Exceptions.InvalidMoveException;
+import Exceptions.NoSuchIslandException;
+import Exceptions.NoSuchStudentsException;
 import Model.*;
 
 import java.util.*;
 
-//cloudhandler's job is to handle all interactions with clouds, providing methods which are simpler for the developer
-public class IslandHandler {
+public class IslandController {
     private List<Island> islands;
     private int motherNaturePosition;
     private IslandsWrapper islandModel;
+    private BoardsController boardsController;
 
     //an array containing references to the players that have control on each professor.
     //position 0 -> Yellow
@@ -17,7 +20,7 @@ public class IslandHandler {
     //position 4 -> Pink
     private Player[] professors;
 
-    public IslandHandler() {
+    public IslandController() {
         /*
         //initializes the list of islands
         islands = new ArrayList<Island>();
@@ -50,6 +53,10 @@ public class IslandHandler {
             }
         }
         */
+    }
+
+    public void connectBoards(BoardsController b) {
+        boardsController = b;
     }
 
     public void moveMother(int steps) {
@@ -168,12 +175,12 @@ public class IslandHandler {
         }
     }
 
-    public boolean moveStudents(int islandIndex, int numOfStudents, String color) {
+    public void moveStudents(String playerID, int islandIndex, int numOfStudents, String color) throws InvalidMoveException, NoSuchIslandException, NoSuchStudentsException {
         boolean valid = true;
         System.out.println("CONTROLLER SAYS: Voglio spostare " + numOfStudents + " studenti di colore " + color + " sull'isola " + islandIndex);
-        if (numOfStudents > 3) return false;
-        if (!color.equals("Y") && !color.equals("R") && !color.equals("P") && !color.equals("G") && !color.equals("B")) return false;
-        if (numOfStudents > islandModel.getIslandLength()) return false;
+        if (numOfStudents > 3) throw new InvalidMoveException();
+        if (!color.equals("Y") && !color.equals("R") && !color.equals("P") && !color.equals("G") && !color.equals("B")) throw new InvalidMoveException();
+        if (islandIndex > islandModel.getIslandLength()) throw new NoSuchIslandException();
 
         List<Student> students = new ArrayList<>();
         for (int i=0; i < numOfStudents; i++) {
@@ -195,14 +202,15 @@ public class IslandHandler {
 
             }
         }
-
         System.out.println("CONTROLLER SAYS: La lista da aggiungere e'");
         for (Student s : students) {
             System.out.println(s);
         }
+
+        boardsController.removeFromEntrance(playerID, students);
+
         //TODO aggiungere notifica alla view in IslandModel
         islandModel.addStudents(islandIndex, students);
-        return true;
     }
     /*
     public static void main(String[] args) {

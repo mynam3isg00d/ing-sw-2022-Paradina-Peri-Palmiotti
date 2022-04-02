@@ -12,6 +12,8 @@ public class Model {
         //initializes all the models
         islandModel = new IslandsWrapper();
         //cloudModel = new CloudModel();
+        //boards will be initialized by boardsController
+        
     }
 
     public void connectViews(View v) {

@@ -76,7 +76,6 @@ public class Island { //è osservato da islandview, quindi ogni modifica chiama 
 
     public void setMotherNature(boolean n) {
         motherNature = n;
-        islandView.notify();
     }
 
     public boolean isMotherNature() {

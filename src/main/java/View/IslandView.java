@@ -1,5 +1,5 @@
 package View;
-import Controller.IslandHandler;
+import Controller.IslandController;
 import Model.*;
 
 
@@ -10,7 +10,7 @@ import java.util.*;
 public class IslandView {
     final private Scanner input;
     final private PrintStream output;
-    private IslandHandler islandController;
+    private IslandController islandController;
     private View view;
     //TODO private Game gameController;
     private IslandView islandView;
@@ -29,20 +29,20 @@ public class IslandView {
     }
 
     public void askStudentsMove() {
+            try {
+                output.println("Quanti Studenti vuoi muovere?");
+                int k = Integer.parseInt(input.nextLine());
+                output.println("Di che Colore?");
+                String color = input.nextLine();
+                output.println("Su che isola?");
+                int islandIndex = Integer.parseInt(input.nextLine());
 
-        boolean ok = false;
-        while (!ok) {
-            output.println("Quanti Studenti vuoi muovere?");
-            int k = Integer.parseInt(input.nextLine());
-            output.println("Di che Colore?");
-            String color = input.nextLine();
-            output.println("Su che isola?");
-            int islandIndex = Integer.parseInt(input.nextLine());
-
-            //come dirgli cosa gli sto notificando? posso chiamare un metodo del controller?
-            ok = islandController.moveStudents(islandIndex, k, color);
-            if (!ok) System.out.println("VIEW SAYS: Che cazzo fai");
-        }
+                //come dirgli cosa gli sto notificando? posso chiamare un metodo del controller?
+                islandController.moveStudents("testID", islandIndex, k, color);
+            } catch (Exception e) {
+                e.printStackTrace();
+                output.println("E: " + e.getMessage());
+            }
     }
 
     private void printIsland(Island i) {
@@ -64,7 +64,7 @@ public class IslandView {
         output.println(out);
     }
 
-    public void connectController(IslandHandler ic) {
+    public void connectController(IslandController ic) {
         islandController = ic;
     }
 }

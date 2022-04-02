@@ -4,6 +4,7 @@ import java.util.*;
 public class Player {
 
     private String name;
+    private String playerID;
     private int teamId;
     private Hand hand;
     private Stack discardPile;
@@ -12,6 +13,7 @@ public class Player {
     public Player(String n, int tid) {
         name = n;
         teamId = tid;
+        playerID = "testID";
         hand = null;
         discardPile = new Stack();
     }
@@ -19,6 +21,8 @@ public class Player {
     public void chooseWizard(int wizardID) {
         hand = new Hand(wizardID);
     }
+
+    public String getPlayerID() { return playerID; }
 
     //At the bottom a mockup of a use of playAssistant and returnAssistantToHand
     public Assistant playAssistant(int orderNumber) {

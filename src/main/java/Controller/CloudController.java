@@ -5,11 +5,11 @@ import Model.Student;
 
 import java.util.*;
 
-public class CloudHandler{
+public class CloudController {
 
     private List<Cloud> clouds;
 
-    public CloudHandler(int numOfPlayers) {
+    public CloudController(int numOfPlayers) {
         this.clouds = new ArrayList<>();
 
         int numOfStudents;

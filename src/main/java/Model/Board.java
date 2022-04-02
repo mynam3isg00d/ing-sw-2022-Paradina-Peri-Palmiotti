@@ -12,6 +12,20 @@ public class Board {
         //Davide: maybe convert static ArrayList-s to arrays? idk if it helps with overall efficency
         diners = new int[]{0, 0, 0, 0, 0};
         entrance = new ArrayList<Student>();
+
+        //just for testing purposes
+        entrance.add(Student.YELLOW);
+        entrance.add(Student.YELLOW);
+        entrance.add(Student.GREEN);
+        entrance.add(Student.GREEN);
+        entrance.add(Student.BLUE);
+        entrance.add(Student.BLUE);
+        entrance.add(Student.PINK);
+        entrance.add(Student.PINK);
+        entrance.add(Student.RED);
+        entrance.add(Student.RED);
+
+
         professors = new boolean[]{false, false, false, false, false};
         /*TODO: this needs to be set accordingly to how many towers the board has to have. Maybe do it with
                 an override of the constructor where there is parameter indicating how many players are playing
@@ -36,7 +50,10 @@ public class Board {
     //
     //      To student heaven
     public void removeFromEntrance(List<Student> students){
-        entrance.removeAll(students);
+        //entrance.removeAll(students);
+        for (Student s : students) {
+            entrance.remove(s);
+        }
     }
     public void removeFromEntrance(Student s){
         entrance.remove(s);
@@ -49,7 +66,7 @@ public class Board {
     }
 
     public List<Student> getEntrance() {
-        return entrance;
+        return new ArrayList<>(entrance);
     }
 
     public boolean[] getProfessors() {

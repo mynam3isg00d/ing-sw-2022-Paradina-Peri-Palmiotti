@@ -1,4 +1,5 @@
 package Controller;
+import Exceptions.NoSuchStudentsException;
 import Model.Board;
 import Model.Player;
 import Model.Sack;
@@ -6,23 +7,23 @@ import Model.Student;
 
 import java.util.*;
 
-public class BoardsHandler {
-    private HashMap<Player, Board> playerBoardMap;
+public class BoardsController {
+    private HashMap<String, Board> playerBoardMap;
     private List<Player> players;
     private Player[] professors;
 
-    public BoardsHandler(List<Player> players) {
+    public BoardsController(List<Player> players) {
         professors = new Player[5];
         this.players = players;
         playerBoardMap = new HashMap<>();
         for(Player p : players) {
-            playerBoardMap.put(p, new Board());
+            playerBoardMap.put(p.getPlayerID(), new Board());
         }
     }
 
     public void init(Sack s) {
         for(Player p : players) {
-            Board b = playerBoardMap.get(p);
+            Board b = playerBoardMap.get(p.getPlayerID());
             b.addToEntrance(s.draw(9));
         }
     }
@@ -51,5 +52,17 @@ public class BoardsHandler {
                 }
             }
         }
+    }
+
+    //if the move is not valid throws an exception
+    //else, removes the students in s from the board of the right player
+    //called by islandHandler when a player wants to move some students to an island
+    public void removeFromEntrance(String playerID, List<Student> ss) throws NoSuchStudentsException {
+        List<Student> entranceCopy = playerBoardMap.get(playerID).getEntrance();
+        for (Student s : ss) {
+            if (!entranceCopy.remove(s)) throw new NoSuchStudentsException();
+        }
+
+        playerBoardMap.get(playerID).removeFromEntrance(ss);
     }
 }

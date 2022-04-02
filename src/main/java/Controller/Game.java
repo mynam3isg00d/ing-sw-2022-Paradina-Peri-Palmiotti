@@ -24,17 +24,22 @@ public class Game {
 
     private List<Player> players;
     private Sack sack;
-    private IslandHandler islandHandler;
-    private CloudHandler cloudHandler;
-    private BoardsHandler boardsHandler;
+    private IslandController islandController;
+    private CloudController cloudController;
+    private BoardsController boardsController;
 
     private GameModel gameModel;
 
     public Game(String playerNumber) {
+
+        //player for testing
+        players = new ArrayList<Player>();
+        players.add(new Player("Jay-Z", 0));
+
         //**initializes all the controllers**
-        islandHandler = new IslandHandler();
-        //cloudHandler = new CloudHandler();
-        //boardsHandler = new BoardsHandler();
+        islandController = new IslandController();
+        //cloudController = new CloudController();
+        boardsController = new BoardsController(players);
 
         gameModel = new GameModel();
 
@@ -49,6 +54,8 @@ public class Game {
         view.connectControllers(this);
         connectModels(model);
 
+        //connects controllers
+        islandController.connectBoards(boardsController);
         play();
     }
 
@@ -84,23 +91,23 @@ public class Game {
 
     public void connectModels(Model m) {
         //***connects all the models***
-        islandHandler.connectIslandModel(m.getIslandModel());
+        islandController.connectIslandModel(m.getIslandModel());
         //...
     }
     public int getPlayedAssistant(Player p) {
         return view.getPlayedAssistant(p);
     }
 
-    public IslandHandler getIslandHandler() {
-        return islandHandler;
+    public IslandController getIslandHandler() {
+        return islandController;
     }
 
-    public CloudHandler getCloudHandler() {
-        return cloudHandler;
+    public CloudController getCloudHandler() {
+        return cloudController;
     }
 
-    public BoardsHandler getBoardsHandler() {
-        return boardsHandler;
+    public BoardsController getBoardsHandler() {
+        return boardsController;
     }
 
     public Sack getSack() {

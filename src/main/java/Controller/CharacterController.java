@@ -5,14 +5,14 @@ import Model.Player;
 
 import java.util.*;
 
-public class CharacterHandler {
+public class CharacterController {
     List<CharacterEffect> characters;
     HashMap<Player, Integer> playerCoins;
     Game game;
 
     //grande :)
 
-    public CharacterHandler(Game g) {
+    public CharacterController(Game g) {
         game = g;
         playerCoins = new HashMap<>();
         for(Player p : game.getPlayers()) {

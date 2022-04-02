@@ -1,10 +1,10 @@
 package Controller.CharacterEffects;
 
 import Controller.Game;
-import Controller.IslandHandler;
+import Controller.IslandController;
 
 public class HeraldEffect extends CharacterEffect {
-    IslandHandler ih;
+    IslandController ih;
 
     @Override
     public void getData(Game g) {

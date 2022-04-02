@@ -17,6 +17,7 @@ public class IslandsWrapper {
             islands.add(newIsland);
         }
         motherNaturePos = 0;
+        islands.get(0).setMotherNature(true);
     }
 
     //public because will be called by the controller
