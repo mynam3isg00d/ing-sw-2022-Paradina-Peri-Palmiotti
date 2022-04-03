@@ -1,5 +1,8 @@
 package Controller;
+import Exceptions.CloudEmptyException;
+import Exceptions.CloudNotEmptyException;
 import Exceptions.EmptySackException;
+import Exceptions.InvalidStudentListException;
 import Model.Cloud;
 import Model.Sack;
 import Model.Student;
@@ -26,16 +29,25 @@ public class CloudController {
     }
 
 
-    public void fillClouds(Sack s) throws EmptySackException {
+    public void fillClouds(Sack s) {
         for(Cloud c : clouds){
             if(c.isEmpty()) {
-                c.fill(s.draw(3));
+                try {
+                    c.fill(s.draw(3));
+                } catch (CloudNotEmptyException | InvalidStudentListException | EmptySackException e) {
+                    e.getMessage();
+                }
             }
         }
     }
 
     //TODO: remove students from the cloud
-    public List<Student> getFromCloud(int cloudIndex){
-        return clouds.get(cloudIndex).empty();
+    public List<Student> getFromCloud(int cloudIndex) {
+        try {
+            return clouds.get(cloudIndex).empty();
+        } catch (CloudEmptyException e) {
+            e.getMessage();
+        }
+        return null;
     }
 }

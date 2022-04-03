@@ -1,0 +1,48 @@
+package Model;
+
+import Exceptions.CloudEmptyException;
+import Exceptions.CloudNotEmptyException;
+import Exceptions.EmptySackException;
+import Exceptions.InvalidStudentListException;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class CloudTest {
+
+    @Test
+    void cloudConstructorTest() {
+        Cloud c = new Cloud(453);
+        assertNotNull(c.getStudents());
+        assertTrue(c.isEmpty());
+    }
+
+    @Test
+    void fillTest() throws InvalidStudentListException, CloudNotEmptyException {
+        Cloud c = new Cloud(4);
+        assertThrows(InvalidStudentListException.class, () -> {c.fill(getStudents(3));});
+        assertThrows(InvalidStudentListException.class, () -> {c.fill(getStudents(5));});
+        c.fill(getStudents(4));
+        assertThrows(CloudNotEmptyException.class, () -> {c.fill(getStudents(4));});
+    }
+
+    @Test
+    void emptyTest() throws InvalidStudentListException, CloudNotEmptyException, CloudEmptyException {
+        Cloud c = new Cloud(3);
+        assertThrows(CloudEmptyException.class, c::empty);
+        c.fill(getStudents(3));
+        ArrayList<Student> ret = (ArrayList<Student>)c.empty();
+        assertThrows(CloudEmptyException.class, c::empty);
+        assertEquals(3, ret.size());
+    }
+    private static List<Student> getStudents(int num) {
+        ArrayList<Student> ret = new ArrayList<>();
+        for(int i=0; i<num; i++) {
+            ret.add(Student.BLUE);
+        }
+        return ret;
+    }
+}
