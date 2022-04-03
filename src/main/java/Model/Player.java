@@ -1,4 +1,6 @@
 package Model;
+import Exceptions.AssistantMissingException;
+
 import java.util.*;
 
 public class Player {
@@ -25,7 +27,7 @@ public class Player {
     public String getPlayerID() { return playerID; }
 
     //At the bottom a mockup of a use of playAssistant and returnAssistantToHand
-    public Assistant playAssistant(int orderNumber) {
+    public Assistant playAssistant(int orderNumber) throws AssistantMissingException {
         assistantInPlay = hand.getAssistantFromOrderNumber(orderNumber);
         return assistantInPlay;
     }

@@ -1,4 +1,6 @@
 package Model;
+import Exceptions.AssistantMissingException;
+
 import java.util.*;
 
 public class Hand {
@@ -7,27 +9,29 @@ public class Hand {
 
     public Hand(int wizardID) {
         this.wizardID = wizardID;
-        hand = new ArrayList<Assistant>();
+        hand = new ArrayList<>();
         for(int i = 1; i <= 10; i++) {
             hand.add(new Assistant(i));
         }
     }
 
-    public Assistant getAssistantFromOrderNumber(int on) {
+    public Assistant getAssistantFromOrderNumber(int on) throws AssistantMissingException {
         for(Assistant a : hand) {
             if (a.getOrderNumber() == on) {
                 hand.remove(a);
                 return a;
             }
         }
-        System.out.println("ERROR no assistant found for that number");
-        return null;
+        throw new AssistantMissingException();
     }
 
     public List<Assistant> getHand() {
         return hand;
     }
 
+    //TODO: check if it's a valid assistant (it should be because
+    //      Hand is the only one able to create assistants...)
+    //      (therefore maybe unnecessary...)
     public void addAssistant(Assistant a) {
         hand.add(a);
     }
