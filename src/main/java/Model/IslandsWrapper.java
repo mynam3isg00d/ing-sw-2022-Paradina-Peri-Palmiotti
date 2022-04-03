@@ -54,14 +54,30 @@ public class IslandsWrapper {
         }
 
         List<Island> islandModelView = new ArrayList<>(islands);
-        islandView.update(islandModelView);
+        //islandView.update(islandModelView);
     }
 
     public void addStudents(int islandIndex, List<Student> students) {
         islands.get(islandIndex).addStudents(students);
 
         List<Island> islandModelView = new ArrayList<>(islands);
-        islandView.update(islandModelView);
+        //islandView.update(islandModelView);
+    }
+
+    public int[] getStudents(int islandIndex) {
+        return islands.get(islandIndex).getStudents();
+    }
+
+    public void changeInfluence(int islandIndex, int team) {
+        islands.get(islandIndex).setInfluence(team);
+    }
+
+    public Integer getInfluence(int islandIndex) {
+        return islands.get(islandIndex).getInfluence();
+    }
+
+    public void setInfluence(int islandIndex, int team) {
+        islands.get(islandIndex).setInfluence(team);
     }
 
     public void moveMotherNature(int newPosition) {
@@ -81,5 +97,9 @@ public class IslandsWrapper {
         islandView = iv;
         List<Island> isCopy = new ArrayList<>(islands);
         iv.update(isCopy);
+    }
+
+    public Island getIsland(int islandIndex) {
+        return new Island(islands.get(islandIndex));
     }
 }

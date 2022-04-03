@@ -68,8 +68,6 @@ public class Island { //è osservato da islandview, quindi ogni modifica chiama 
 
     public void setInfluence(int team) {
         influenceTeam = Integer.valueOf(team);
-        //TODO qualcosa per modificare torri
-        islandView.notify();
     }
 
     //methods regarding motherNature attribute
@@ -80,6 +78,17 @@ public class Island { //è osservato da islandview, quindi ogni modifica chiama 
 
     public boolean isMotherNature() {
         return motherNature;
+    }
+
+    //only used in testing, in an actual game two islands with the same state ARE NOT equal
+    public boolean equals(Island i) {
+        if (influenceTeam != i.influenceTeam) return false;
+        if (dimension != i.dimension) return false;
+        if (motherNature != i.motherNature) return false;
+        for (int j = 0; j<5; j++) {
+            if(students[j] != i.getStudents()[j]) return false;
+        }
+        return true;
     }
 
     @Override
