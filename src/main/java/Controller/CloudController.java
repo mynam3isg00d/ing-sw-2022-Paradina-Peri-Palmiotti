@@ -1,4 +1,5 @@
 package Controller;
+import Exceptions.EmptySackException;
 import Model.Cloud;
 import Model.Sack;
 import Model.Student;
@@ -25,7 +26,7 @@ public class CloudController {
     }
 
 
-    public void fillClouds(Sack s){
+    public void fillClouds(Sack s) throws EmptySackException {
         for(Cloud c : clouds){
             if(c.isEmpty()) {
                 c.fill(s.draw(3));

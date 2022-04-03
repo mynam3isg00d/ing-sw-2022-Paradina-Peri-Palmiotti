@@ -1,4 +1,5 @@
 package Controller;
+import Exceptions.EmptySackException;
 import Exceptions.NoSuchStudentsException;
 import Model.Board;
 import Model.Player;
@@ -21,7 +22,7 @@ public class BoardsController {
         }
     }
 
-    public void init(Sack s) {
+    public void init(Sack s) throws EmptySackException {
         for(Player p : players) {
             Board b = playerBoardMap.get(p.getPlayerID());
             b.addToEntrance(s.draw(9));

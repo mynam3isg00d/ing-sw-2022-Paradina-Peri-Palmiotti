@@ -1,4 +1,6 @@
 package Model;
+import Exceptions.EmptySackException;
+
 import java.util.*;
 
 public class Sack {
@@ -13,20 +15,24 @@ public class Sack {
         Collections.shuffle(sack);
     }
 
-
-    //There is definitely a better way to do this using enums properly lmao
     //TODO: Define proper exceptions
-    public List<Student> draw(int numOfStudents) {
+    public List<Student> draw(int numOfStudents) throws EmptySackException {
         List<Student> returnVal = new ArrayList<>();
         for (int i=0; i<numOfStudents; i++) {
-            int draw = sack.pop();
-            returnVal.add(intToStudent(draw));
+            int draw;
+            try {
+                draw = sack.pop();
+                returnVal.add(intToStudent(draw));
+            } catch (EmptyStackException e) {
+                throw new EmptySackException();
+            }
         }
         return returnVal;
     }
 
     public boolean isEmpty() {return sack.empty();}
 
+    //There is definitely a better way to do this using enums properly lmao
     public static Student intToStudent(int i) {
         switch (i) {
             case 0:
