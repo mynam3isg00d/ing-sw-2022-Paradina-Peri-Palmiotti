@@ -73,7 +73,7 @@ public class IslandController {
         //teamId -> influence
         HashMap<Integer, Integer> influences = new HashMap<Integer, Integer>();
         for(Player p : professors) {
-            if (p!=null) influences.put(Integer.valueOf(p.getTeamId()), 0);
+            if (p!=null) influences.put(Integer.valueOf(p.getTeamID()), 0);
         }
 
         //the team who has influence over an island gets an extra point of influence
@@ -89,11 +89,11 @@ public class IslandController {
             if (professors[color] != null) {
                 //playerKey is the player who controls the [color] professor
                 Player playerKey = professors[color];
-                System.out.println("Team " + playerKey.getTeamId());
+                System.out.println("Team " + playerKey.getTeamID());
 
                 //influenceAdded is the influence value given by the control of the professor in consideration
-                int oldInfluence = influences.get(playerKey.getTeamId());
-                influences.put(playerKey.getTeamId(), oldInfluence+studentsOnIsland);
+                int oldInfluence = influences.get(playerKey.getTeamID());
+                influences.put(playerKey.getTeamID(), oldInfluence+studentsOnIsland);
             }
         }
 
@@ -212,41 +212,6 @@ public class IslandController {
         //TODO aggiungere notifica alla view in IslandModel
         islandModel.addStudents(islandIndex, students);
     }
-    /*
-    public static void main(String[] args) {
-        Player p1 = new Player("samu", 0);
-        Player p2 = new Player("dinho", 1);
-
-        IslandHandler ih = new IslandHandler();
-        List<Student> toAdd = new ArrayList<Student>();
-        toAdd.add(Student.BLUE);
-        toAdd.add(Student.YELLOW);
-        toAdd.add(Student.RED);
-        toAdd.add(Student.YELLOW);
-
-        ih.islands.get(0).addStudents(toAdd);
-        System.out.println("Sull'isola 0: ");
-        for (int i : ih.islands.get(0).getStudents()) System.out.println(i);
-        System.out.println(" ");
-
-
-        ih.professors[0] = p1;
-        //ih.professors[1] = p2;
-        ih.professors[2] = p2;
-        //ih.professors[3] = p1;
-        ih.professors[4] = p1;
-
-        ih.islands.get(11).setInfluence(0);
-        ih.islands.get(1).setInfluence(0);
-
-        ih.calcInfluence(0);
-
-        System.out.println(" ");System.out.println(" ");
-        for (Island i : ih.islands) {
-            System.out.println(i);
-        }
-    }
-    */
     public void connectIslandModel(IslandsWrapper m) {
         islandModel = m;
     }

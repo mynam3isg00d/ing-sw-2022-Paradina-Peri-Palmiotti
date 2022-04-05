@@ -45,7 +45,7 @@ public class Player {
         return name;
     }
 
-    public int getTeamId() {
+    public int getTeamID() {
         return teamId;
     }
 

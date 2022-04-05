@@ -59,24 +59,6 @@ public class Game {
         play();
     }
 
-    //Assuming this is a 2game constructor
-    /*
-    public Game(String name1, String name2) {
-        roundCount = 0;
-        playersNumber = 2;
-        players = new ArrayList<Player>();
-
-        //This is hard-coded for now
-        players.add(new Player(name1, 0));
-        players.add(new Player(name2, 1));
-
-        //chi crea le cose??
-        islandHandler = new IslandHandler();
-        cloudHandler = new CloudHandler();
-        boardsHandler = new BoardsHandler(players);
-    }
-    */
-
     private boolean checkEnd() {
         //BoardsHandler end conditions: a player (or team) has no towers left;
         //IslandHandler end conditions: 3 islands left;

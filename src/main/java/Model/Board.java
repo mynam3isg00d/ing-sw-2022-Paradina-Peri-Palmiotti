@@ -1,63 +1,50 @@
 package Model;
+import Exceptions.EmptyTableException;
+import Exceptions.FullEntranceException;
+import Exceptions.FullTableException;
+
 import java.util.*;
 
 public class Board {
+
+    private final int maxTableSeats = 10;
+    private final int maxEntrancePlaces = 9;
+    private int maxTowers;
 
     private int[] diners;
     private List<Student> entrance;
     private boolean[] professors;
     private int towersNum;
 
-    public Board() {
-        //Davide: maybe convert static ArrayList-s to arrays? idk if it helps with overall efficency
+    public Board(int towersNum) {
+        //TODO: tower colors unhandled, maybe finally time to create a tower enum
         diners = new int[]{0, 0, 0, 0, 0};
-        entrance = new ArrayList<Student>();
-
-        //just for testing purposes
-        entrance.add(Student.YELLOW);
-        entrance.add(Student.YELLOW);
-        entrance.add(Student.GREEN);
-        entrance.add(Student.GREEN);
-        entrance.add(Student.BLUE);
-        entrance.add(Student.BLUE);
-        entrance.add(Student.PINK);
-        entrance.add(Student.PINK);
-        entrance.add(Student.RED);
-        entrance.add(Student.RED);
-
-
+        entrance = new ArrayList<>();
         professors = new boolean[]{false, false, false, false, false};
-        /*TODO: this needs to be set accordingly to how many towers the board has to have. Maybe do it with
-                an override of the constructor where there is parameter indicating how many players are playing
-
-                D: i have no idea what this means
-        */
-        towersNum = 0;
+        this.maxTowers = this.towersNum = towersNum;
     }
 
-    public void addToDining(Student s){
+    public void addToDining(Student s) throws FullTableException {
+        if (diners[s.getColorId()] == maxTableSeats) throw new FullTableException();
         diners[s.getColorId()]++;
     }
+    public void removeFromDining(Student s) throws EmptyTableException {
+        if (diners[s.getColorId()] == 0) throw new EmptyTableException();
+        diners[s.getColorId()]--;
+    }
 
-    public void addToEntrance(List<Student> students){
+    //TODO: add proper exceptions
+    public void addToEntrance(List<Student> students) throws FullEntranceException {
+        if (entrance.size() + students.size() > maxEntrancePlaces) throw new FullEntranceException();
         entrance.addAll(students);
     }
-    public void addToEntrance(Student s){
-        entrance.add(s);
-    }
+    public void addToEntrance(Student s){ entrance.add(s); }
 
-    //TODO: not sure this is written correctly in the UML: where do the removed students go??
-    //
-    //      To student heaven
-    public void removeFromEntrance(List<Student> students){
-        //entrance.removeAll(students);
-        for (Student s : students) {
-            entrance.remove(s);
-        }
-    }
-    public void removeFromEntrance(Student s){
-        entrance.remove(s);
-    }
+    public void removeFromEntrance(List<Student> students){ entrance.removeAll(students); }
+    public void removeFromEntrance(Student s) { entrance.remove(s); }
+
+    public void addTower() { towersNum++; }
+    public void removeTower() { towersNum--; }
 
     //********getters*********//
 
