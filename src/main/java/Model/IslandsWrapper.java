@@ -11,7 +11,7 @@ public class IslandsWrapper {
     private int motherNaturePos;
 
     public IslandsWrapper() {
-        islands = new ArrayList<Island>();
+        islands = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             Island newIsland = new Island();
             islands.add(newIsland);
@@ -101,5 +101,17 @@ public class IslandsWrapper {
 
     public Island getIsland(int islandIndex) {
         return new Island(islands.get(islandIndex));
+    }
+
+    public int getMotherNaturePos() {
+        return motherNaturePos;
+    }
+
+    public void setMotherNaturePos(int motherNaturePos) {
+        this.motherNaturePos = motherNaturePos;
+    }
+
+    public int getIslandDimension(int islandIndex) {
+        return islands.get(islandIndex).getDimension();
     }
 }

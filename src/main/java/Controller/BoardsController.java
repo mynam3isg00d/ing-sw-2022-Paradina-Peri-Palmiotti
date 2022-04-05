@@ -13,9 +13,9 @@ import Model.Student;
 import java.util.*;
 
 public class BoardsController {
-    private HashMap<String, Board> playerBoardMap;
-    private List<Player> players;
-    private Player[] professors;
+    private final HashMap<String, Board> playerBoardMap;
+    private final List<Player> players;
+    private final Player[] professors;
 
     public BoardsController(List<Player> players) {
         professors = new Player[5];
@@ -112,5 +112,9 @@ public class BoardsController {
         } catch (FullEntranceException e) {
             e.getMessage();
         }
+    }
+
+    public Player getProfessorOwner(int colorId) {
+        return professors[colorId];
     }
 }

@@ -12,13 +12,6 @@ public class IslandController {
     private IslandsWrapper islandModel;
     private BoardsController boardsController;
 
-    //an array containing references to the players that have control on each professor.
-    //position 0 -> Yellow
-    //position 1 -> Blue
-    //position 2 -> Green
-    //position 3 -> Red
-    //position 4 -> Pink
-    private Player[] professors;
 
     public IslandController() {
         /*
@@ -59,54 +52,92 @@ public class IslandController {
         boardsController = b;
     }
 
-    public void moveMother(int steps) {
-        //moves motherNature
-        islands.get(motherNaturePosition).setMotherNature(false);
-        motherNaturePosition = (motherNaturePosition + steps) % islands.size();
-        islands.get(motherNaturePosition).setMotherNature(true);
+    //gets the number of steps and moves mother nature accordingly
+    //TODO pass the maximumSteps parameter in a smart way from the controller
+    public void moveMother(int steps, int maximumSteps) throws InvalidMoveException{
+        //checks card power
+        if (steps > maximumSteps) throw new InvalidMoveException("You must move mother nature a number of steps which is lower than the number indicated on the Assistant card you played");
 
+        //gets the old mother nature position
+        int oldPosition = islandModel.getMotherNaturePos();
+
+        //the new position is:
+        int newPosition = (oldPosition + steps) % islandModel.getIslandLength();
+
+        //changes the motherNature position in the model
+        islandModel.moveMotherNature(newPosition);
+
+        //calculates the influences on the new position
         calcInfluence(motherNaturePosition);
     }
 
     public void calcInfluence(int islandIndex){
         //every team influence will be stored in a hashmap like:
         //teamId -> influence
-        HashMap<Integer, Integer> influences = new HashMap<Integer, Integer>();
-        for(Player p : professors) {
-            if (p!=null) influences.put(Integer.valueOf(p.getTeamID()), 0);
+        HashMap<Integer, Integer> influences = new HashMap<>();
+
+        //checks which teams have some influence on the island (ie: the teams which have at least one professor and puts them on the infuences map)
+        List<Student> colors = Eryantis.getColors();
+        for (Student s : colors) {
+            Player owner = boardsController.getProfessorOwner(s.getColorId());
+            if (!influences.containsKey(owner.getTeamID())) influences.put(owner.getTeamID(), 0);
         }
 
-        //the team who has influence over an island gets an extra point of influence
-        Integer currentInfluence = islands.get(islandIndex).getInfluence();
+        //the team who has one or more towers get an extra point of influence for every one of them
+        Integer currentInfluence = islandModel.getInfluence(islandIndex);
         if ( currentInfluence != null) {
-            influences.put(currentInfluence, islands.get(islandIndex).getDimension());
+            influences.put(currentInfluence, islandModel.getIslandDimension(islandIndex));
         }
+
+        int[] students = islandModel.getStudents(islandIndex);
 
         for(int color = 0; color < 5; color++) {
             //studentsOnIsland is the number of [color] students already on the island
-            int studentsOnIsland = islands.get(islandIndex).getStudents()[color];
+            int studentsOnIsland = students[color];
 
-            if (professors[color] != null) {
+            Player professorOwner = boardsController.getProfessorOwner(color);
+            if (professorOwner != null) {
                 //playerKey is the player who controls the [color] professor
-                Player playerKey = professors[color];
-                System.out.println("Team " + playerKey.getTeamID());
+                Player playerKey = professorOwner;
 
                 //influenceAdded is the influence value given by the control of the professor in consideration
+                //puts oldInfluence + studentsOnIsland in the hashmap next to the relative team
                 int oldInfluence = influences.get(playerKey.getTeamID());
                 influences.put(playerKey.getTeamID(), oldInfluence+studentsOnIsland);
             }
         }
 
-        //returns an Entry with the player and the greatest influence
-        //TODO parità
-        Map.Entry<Integer, Integer> e = influences.entrySet().stream().max( (Map.Entry<Integer, Integer> e1, Map.Entry<Integer, Integer> e2) -> {
-            if (e1.getValue() > e2.getValue()) return 1;
-            else return -1;
-        }).get();
-        System.out.println("max: Team " + e.getKey() + "   " + Integer.toString(e.getValue()));
+        //empties the map in order to obtain a list of map entries sorted by influence
+        List<Map.Entry<Integer, Integer>> topInfluences = new ArrayList<>();
+        for (int j = 0; j < influences.size(); j++){
+            int maxInfluence = 0;
+            Map.Entry<Integer, Integer> bestEntry = null;
 
-        //Player mostInfluent = e.getKey(); //the player with the maximum influence
-        Integer mostInfluentTeam = Integer.valueOf(e.getKey()); //the player with the maximum influence
+            for (Map.Entry<Integer, Integer> e : influences.entrySet()) {
+                if (e.getValue() >= maxInfluence) bestEntry = e;
+            }
+
+            topInfluences.add(bestEntry);
+            influences.remove(bestEntry.getKey());
+        }
+
+        int maximumInfluence = topInfluences.get(0).getValue();
+
+        //only leaves the best scoring entries in the list
+        for (Map.Entry<Integer, Integer> e : topInfluences) {
+            if (e.getValue() != maximumInfluence) topInfluences.remove(e);
+        }
+
+        //handles ties and decides which is the new most influent team
+        //TODO handle null pointers in currentInfluence
+        int mostInfluentTeam;
+        if (topInfluences.size() == 1) {
+            mostInfluentTeam = Integer.valueOf(topInfluences.get(0).getKey()); //the player with the maximum influence
+        } else {
+            //TODO potrebbero pareggiare i due team senza influenza sull'isola? che succederebbe?
+            mostInfluentTeam = currentInfluence;
+        }
+
 
 
         checkAndMerge(mostInfluentTeam, islandIndex, islands.get(islandIndex));
@@ -175,13 +206,21 @@ public class IslandController {
         }
     }
 
+    //gets an object from the view indicating: (1) the player requesting to move (2) the destination island (3) the number of students (4) a string indicating the color
     public void moveStudents(String playerID, int islandIndex, int numOfStudents, String color) throws InvalidMoveException, NoSuchIslandException, NoSuchStudentsException {
-        boolean valid = true;
-        System.out.println("CONTROLLER SAYS: Voglio spostare " + numOfStudents + " studenti di colore " + color + " sull'isola " + islandIndex);
-        if (numOfStudents > 3) throw new InvalidMoveException();
-        if (!color.equals("Y") && !color.equals("R") && !color.equals("P") && !color.equals("G") && !color.equals("B")) throw new InvalidMoveException();
-        if (islandIndex > islandModel.getIslandLength()) throw new NoSuchIslandException();
+        //3 is the maximum number of students the rules want you to move
+        if (numOfStudents > 3) throw new InvalidMoveException("You must move a maximum of 3 students in this phase of the game");
 
+        //Y, R, P, G, B represent the 5 colors of the game. All other are wrong
+        if (!color.equals("Y") && !color.equals("R") && !color.equals("P") && !color.equals("G") && !color.equals("B")) {
+            String alert = color + " is not a color";
+            throw new InvalidMoveException(alert);
+        }
+
+        //every index higher than the length of the islands array in the model is non-existent at this stage of the game
+        if (islandIndex >= islandModel.getIslandLength() || islandIndex < 0) throw new NoSuchIslandException();
+
+        //generates a list of students to add to the selected island
         List<Student> students = new ArrayList<>();
         for (int i=0; i < numOfStudents; i++) {
             switch (color) {
@@ -202,15 +241,14 @@ public class IslandController {
 
             }
         }
-        System.out.println("CONTROLLER SAYS: La lista da aggiungere e'");
-        for (Student s : students) {
-            System.out.println(s);
-        }
 
+        //removes the students from playerID's board
         boardsController.removeFromEntrance(playerID, students);
 
-        //TODO aggiungere notifica alla view in IslandModel
+        //modifies the model, adding the student to the [islandIndex] island
         islandModel.addStudents(islandIndex, students);
+
+        //TODO aggiungere notifica alla view in IslandModel
     }
     public void connectIslandModel(IslandsWrapper m) {
         islandModel = m;
