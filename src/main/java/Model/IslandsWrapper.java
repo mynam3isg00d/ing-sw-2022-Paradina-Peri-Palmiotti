@@ -46,7 +46,7 @@ public class IslandsWrapper {
         }
 
 
-        //if possible adds the new island in the leftmost position between the old island's position, otherwise adds it at the and of the list
+        //if possible adds the new island in the leftmost position between the old island's position, otherwise adds it at the end of the list
         if (leftmostIndex < islands.size()) {
             islands.add(leftmostIndex, newIsland);
         } else {
@@ -61,7 +61,7 @@ public class IslandsWrapper {
         islands.get(islandIndex).addStudents(students);
 
         List<Island> islandModelView = new ArrayList<>(islands);
-        //islandView.update(islandModelView);
+        islandView.update(islandModelView);
     }
 
     public int[] getStudents(int islandIndex) {

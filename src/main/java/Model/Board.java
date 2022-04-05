@@ -40,7 +40,10 @@ public class Board {
     }
     public void addToEntrance(Student s){ entrance.add(s); }
 
-    public void removeFromEntrance(List<Student> students){ entrance.removeAll(students); }
+    public void removeFromEntrance(List<Student> students) {
+        for (Student s : students) entrance.remove(s);
+    }
+
     public void removeFromEntrance(Student s) { entrance.remove(s); }
 
     public void addTower() { towersNum++; }
