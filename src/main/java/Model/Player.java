@@ -35,7 +35,6 @@ public class Player {
     public void returnAssistantToHand(Assistant a) {
         hand.addAssistant(a);
     }
-    //At the bottom a mockup of a use of playAssistant and returnAssistantToHand
 
     public Hand getHand() {
         return hand;
@@ -51,20 +50,3 @@ public class Player {
 
     public Assistant getAssistantInPlay() { return assistantInPlay; }
 }
-
-/*
-        for(Player p : players) {
-            System.out.println(p.getName() + " play a card: ");
-            printHand(p.getHand());
-            Assistant toPlay = p.playAssistant(s.nextInt());
-            while(isInPlay(playedAssistants, toPlay)) {
-                p.returnAssistantToHand(toPlay);
-                System.out.println("This assistant has already been played, choose another one: ");
-                printHand(p.getHand());
-                toPlay = p.playAssistant(s.nextInt());
-            }
-            playedAssistants.add(toPlay);
-        }
-
-With isInPlay a function that checks if the chosen assistant has been played
-*/
