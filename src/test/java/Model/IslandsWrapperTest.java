@@ -64,6 +64,7 @@ class IslandsWrapperTest {
     }
 
     @Test
+
     void mergeIslandsOnEdge() {
         //initializes a new wrapper
         IslandsWrapper iw = new IslandsWrapper();

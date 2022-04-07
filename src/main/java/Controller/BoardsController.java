@@ -117,4 +117,29 @@ public class BoardsController {
     public Player getProfessorOwner(int colorId) {
         return professors[colorId];
     }
+
+    //TODO cancellare! serve solo per testing
+    public void setProfessor(String color, Player p) {
+        switch (color) {
+            case "Y":
+                professors[0] = p;
+                break;
+
+            case "B":
+                professors[1] = p;
+                break;
+
+            case "G":
+                professors[2] = p;
+                break;
+
+            case "R":
+                professors[3] = p;
+                break;
+
+            case "P":
+                professors[4] = p;
+                break;
+        }
+    }
 }

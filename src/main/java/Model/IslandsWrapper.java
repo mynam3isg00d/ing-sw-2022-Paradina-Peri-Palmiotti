@@ -21,6 +21,7 @@ public class IslandsWrapper {
     }
 
     //public because will be called by the controller
+    //TODO test merge on the edge
     public void mergeIslands(int leftmostIndex, int nToMerge) {
         int initialSize = islands.size();
 
@@ -61,15 +62,10 @@ public class IslandsWrapper {
         islands.get(islandIndex).addStudents(students);
 
         List<Island> islandModelView = new ArrayList<>(islands);
-        islandView.update(islandModelView);
     }
 
     public int[] getStudents(int islandIndex) {
         return islands.get(islandIndex).getStudents();
-    }
-
-    public void changeInfluence(int islandIndex, int team) {
-        islands.get(islandIndex).setInfluence(team);
     }
 
     public Integer getInfluence(int islandIndex) {
@@ -84,9 +80,6 @@ public class IslandsWrapper {
         islands.get(motherNaturePos).setMotherNature(false);
         motherNaturePos = newPosition;
         islands.get(newPosition).setMotherNature(true);
-
-        List<Island> islandModelView = new ArrayList<>(islands);
-        islandView.update(islandModelView);
     }
 
     public int getIslandLength() {

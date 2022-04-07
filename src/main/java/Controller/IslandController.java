@@ -7,52 +7,23 @@ import Model.*;
 import java.util.*;
 
 public class IslandController {
-    private List<Island> islands;
-    private int motherNaturePosition;
     private IslandsWrapper islandModel;
     private BoardsController boardsController;
-
-
-    public IslandController() {
-        /*
-        //initializes the list of islands
-        islands = new ArrayList<Island>();
-        for (int i = 0; i < 12; i++) {
-            Island newIsland = new Island();
-            islands.add(newIsland);
-        }
-
-        //puts motherNature on the first island (index 0)
-        islands.get(0).setMotherNature(true);
-        motherNaturePosition = 0;
-
-        //initially, no professor is taken. So the array is filled with null
-        professors = new Player[5];
-
-        //every island starts with 1 random student on it, except the mother island and the opposite island
-        // (in our case all but islands 0 and 5)
-        Stack<Student> firstSack= new Stack<Student>();
-        for (int i = 0; i < 5; i++) {
-            firstSack.add(Sack.intToStudent(i));
-            firstSack.add(Sack.intToStudent(i));
-        }
-        Collections.shuffle(firstSack);
-
-        for (int i = 1; i < 12; i++) {
-            if (i != 5) {
-                List<Student> toAdd = new ArrayList<Student>();
-                toAdd.add(firstSack.pop());
-                islands.get(i).addStudents(toAdd);
-            }
-        }
-        */
-    }
 
     public void connectBoards(BoardsController b) {
         boardsController = b;
     }
 
-    //gets the number of steps and moves mother nature accordingly
+    public void connectIslandModel(IslandsWrapper m) {
+        islandModel = m;
+    }
+
+    /**
+     * A method that gets the number of steps and moves mother nature accordingly. Only moves if the move is valid
+     * @param steps number of steps selected by the player
+     * @param maximumSteps the limit of steps the player can choose, accordingly to the assistant he played
+     * @throws InvalidMoveException
+     */
     //TODO pass the maximumSteps parameter in a smart way from the controller
     public void moveMother(int steps, int maximumSteps) throws InvalidMoveException{
         //checks card power
@@ -68,19 +39,34 @@ public class IslandController {
         islandModel.moveMotherNature(newPosition);
 
         //calculates the influences on the new position
-        calcInfluence(motherNaturePosition);
+        calcInfluence(newPosition);
     }
 
     public void calcInfluence(int islandIndex){
+        //gets the students on the island, if there are no students on the island the situation remains unchanged
+        int[] students = islandModel.getStudents(islandIndex);
+        int[] noStudentsArray = new int[] {
+                0,0,0,0,0
+        };
+        if (Arrays.equals(students, noStudentsArray)) {
+            System.out.println("CONTROLLER SAYS: no students on the island. Nothing changes");
+            return;
+        }
+
+
         //every team influence will be stored in a hashmap like:
         //teamId -> influence
         HashMap<Integer, Integer> influences = new HashMap<>();
-
-        //checks which teams have some influence on the island (ie: the teams which have at least one professor and puts them on the infuences map)
+        //checks which teams have some influence on the island (ie: the teams which have at least one professor) and puts them on the infuences map
         List<Student> colors = Eryantis.getColors();
         for (Student s : colors) {
             Player owner = boardsController.getProfessorOwner(s.getColorId());
-            if (!influences.containsKey(owner.getTeamID())) influences.put(owner.getTeamID(), 0);
+            if (owner != null && !influences.containsKey(owner.getTeamID())) influences.put(owner.getTeamID(), 0);
+        }
+        //if no professor is assigned, no team can have influence>0 on the island
+        if (influences.isEmpty()) {
+            System.out.println("CONTROLLER SAYS: no professor is assigned. Nothing changes");
+            return;
         }
 
         //the team who has one or more towers get an extra point of influence for every one of them
@@ -89,7 +75,6 @@ public class IslandController {
             influences.put(currentInfluence, islandModel.getIslandDimension(islandIndex));
         }
 
-        int[] students = islandModel.getStudents(islandIndex);
 
         for(int color = 0; color < 5; color++) {
             //studentsOnIsland is the number of [color] students already on the island
@@ -109,104 +94,101 @@ public class IslandController {
 
         //empties the map in order to obtain a list of map entries sorted by influence
         List<Map.Entry<Integer, Integer>> topInfluences = new ArrayList<>();
-        for (int j = 0; j < influences.size(); j++){
+        int influencesSize = influences.size();
+        for (int j = 0; j < influencesSize; j++){
             int maxInfluence = 0;
             Map.Entry<Integer, Integer> bestEntry = null;
 
             for (Map.Entry<Integer, Integer> e : influences.entrySet()) {
-                if (e.getValue() >= maxInfluence) bestEntry = e;
+                if (e.getValue() >= maxInfluence) {
+                    maxInfluence = e.getValue();
+                    bestEntry = e;
+                }
             }
 
             topInfluences.add(bestEntry);
+            System.out.println("CONTROLLER SAYS: added to topInfluences: " + bestEntry.getKey() + "   " + bestEntry.getValue());
             influences.remove(bestEntry.getKey());
         }
 
         int maximumInfluence = topInfluences.get(0).getValue();
 
         //only leaves the best scoring entries in the list
-        for (Map.Entry<Integer, Integer> e : topInfluences) {
-            if (e.getValue() != maximumInfluence) topInfluences.remove(e);
-        }
+        topInfluences.removeIf(e -> e.getValue() != maximumInfluence);
 
         //handles ties and decides which is the new most influent team
         //TODO handle null pointers in currentInfluence
         int mostInfluentTeam;
         if (topInfluences.size() == 1) {
-            mostInfluentTeam = Integer.valueOf(topInfluences.get(0).getKey()); //the player with the maximum influence
+            mostInfluentTeam = Integer.valueOf(topInfluences.get(0).getKey()); //the team with the maximum influence
         } else {
-            //TODO potrebbero pareggiare i due team senza influenza sull'isola? che succederebbe?
-            mostInfluentTeam = currentInfluence;
+            boolean isOldInfluenceInTheList = false;
+            for (Map.Entry<Integer, Integer> e : topInfluences) {
+                if (e.getKey() == currentInfluence) isOldInfluenceInTheList = true;
+            }
+
+            if (isOldInfluenceInTheList) {
+                mostInfluentTeam = currentInfluence;   //in case of a tie between the team which currently has the tower and another team, the influence remains unchanged
+            }
+            else mostInfluentTeam = -1;     //signals that we get a tie between two teams which don't currently have influence on the island, so the situation should remain unchanged
         }
 
+        System.out.println("The most influent team on Island " + islandIndex + " is team " + mostInfluentTeam);
 
 
-        checkAndMerge(mostInfluentTeam, islandIndex, islands.get(islandIndex));
+        //if the influence has changed, we check if a merge is needed
+        if (currentInfluence == null || mostInfluentTeam != currentInfluence) {
+            System.out.println("CONTROLLER SAYS: Checking if a merge is needed");
+            checkAndMerge(mostInfluentTeam, islandIndex);
+        }
     }
 
-    private void checkAndMerge(Integer mostInfluentTeam, int islandIndex, Island currentIsland) {
-        if (currentIsland.getInfluence()==null || mostInfluentTeam != currentIsland.getInfluence() ) { //if TRUE the player with the most influence has changed
+    /**
+     * A private method that gets called by calcInfluence() only if the influence on an island has changed. If necessary asks the model to merge the islands
+     * @param mostInfluentTeam the new most influent team
+     * @param islandIndex the index of the island
+     */
+    private void checkAndMerge(Integer mostInfluentTeam, int islandIndex) {
             //sets the influence on the island
-            islands.get(islandIndex).setInfluence(mostInfluentTeam);
-            System.out.println("influenza ora: " + islands.get(0).getInfluence());
+            islandModel.setInfluence(islandIndex, mostInfluentTeam);
+            System.out.println("CONTROLLER SAYS: Set influence " + mostInfluentTeam + " on island " + islandIndex);
 
-            //gets the next island on the right and the next island on the left
-            Island nextIsland = islands.get((islandIndex+1)%islands.size());
-            Island prevIsland;
-            if (islandIndex != 0)  prevIsland = islands.get(islandIndex-1);
-            else prevIsland = islands.get(islands.size()-1);
 
-            //if necessary, uses the Island constructor to build new Island merging the old ones
-            //the two flags are used in order to understand which island(s) has to be replaced
-            Island newIsland = currentIsland;
+            //checks if a merge is needed with the nearby islands
             boolean mergedPrev = false;
             boolean mergedNext = false;
-
-            if (currentIsland.getInfluence().equals(nextIsland.getInfluence())) {
-                newIsland = new Island(newIsland, nextIsland);
+            if (islandModel.getInfluence(islandIndex + 1)!=null && islandModel.getInfluence(islandIndex).equals(islandModel.getInfluence(islandIndex + 1))) {
                 mergedNext = true;
+                System.out.println("CONTROLLER SAYS: merge needed with island on the right");
             }
-            if (currentIsland.getInfluence().equals(prevIsland.getInfluence())) {
-                newIsland = new Island(newIsland, prevIsland);
+            if (islandModel.getInfluence(islandIndex + 1)!=null && islandModel.getInfluence(islandIndex).equals(islandModel.getInfluence(islandIndex - 1))) {
                 mergedPrev = true;
+                System.out.println("CONTROLLER SAYS: merge needed with island on the left");
             }
 
-            int oldSize = islands.size();
             if (mergedPrev && mergedNext) {
-                islands.remove(islandIndex + 1);
-                islands.remove(islandIndex);
-                if (islandIndex != 0) {
-                    islands.remove(islandIndex - 1);
-                    islands.add(islandIndex - 1, newIsland);
-                    System.out.println("CONSOLE: Merged with island " + (islandIndex-1) + " and " + (islandIndex+1));
-                } else {
-                    islands.remove(islands.size()-1);
-                    islands.add(newIsland);
-                    System.out.println("CONSOLE: Merged with island " + (islandIndex-1) + " and " + (islandIndex+1));
-                }
+                islandModel.mergeIslands(islandIndex-1, 3);
             } else if (mergedPrev) {
-                islands.remove(islandIndex);
-                if (islandIndex != 0) {
-                    islands.remove(islandIndex-1);
-                    islands.add(islandIndex-1, newIsland);
-                    System.out.println("CONSOLE: Merged with island " + (islandIndex-1));
-                } else {
-                    islands.remove(islands.size() - 1);
-                    islands.add(newIsland);
-                    System.out.println("CONSOLE: Merged with island " + (islandIndex-1));
-                }
+                islandModel.mergeIslands(islandIndex-1, 2);
             } else if (mergedNext) {
-                islands.remove(islandIndex + 1);
-                islands.remove(islandIndex);
-                islands.add(islandIndex, newIsland);
-                System.out.println("CONSOLE: Merged with island " + (islandIndex+1));
+                islandModel.mergeIslands(islandIndex,2);
             } else {
                 System.out.println("CONSOLE: No merge happened");
             }
-
-        }
     }
 
     //gets an object from the view indicating: (1) the player requesting to move (2) the destination island (3) the number of students (4) a string indicating the color
+
+    /**
+     * Removes students from a player entrance and adds them to a selected island
+     * @param playerID the player requesting to move
+     * @param islandIndex the destination island
+     * @param numOfStudents how many students (of the same color) the player wants to move
+     * @param color a string indicating the chosen color ( Y/B/G/R/P )
+     * @throws InvalidMoveException
+     * @throws NoSuchIslandException
+     * @throws NoSuchStudentsException
+     */
     public void moveStudents(String playerID, int islandIndex, int numOfStudents, String color) throws InvalidMoveException, NoSuchIslandException, NoSuchStudentsException {
         //3 is the maximum number of students the rules want you to move
         if (numOfStudents > 3) throw new InvalidMoveException("You must move a maximum of 3 students in this phase of the game");
@@ -250,7 +232,5 @@ public class IslandController {
 
         //TODO aggiungere notifica alla view in IslandModel
     }
-    public void connectIslandModel(IslandsWrapper m) {
-        islandModel = m;
-    }
+
 }
