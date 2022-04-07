@@ -6,14 +6,25 @@ import Model.*;
 
 import java.util.*;
 
+/**
+ * The Controller in charge of the operations regarding the game Islands.
+ */
 public class IslandController {
     private IslandsWrapper islandModel;
     private BoardsController boardsController;
 
+    /**
+     * Connects BoardController to the IslandController
+     * @param b BoardController passed by reference
+     */
     public void connectBoards(BoardsController b) {
         boardsController = b;
     }
 
+    /**
+     * Connects IslandModel to the IslandController
+     * @param m IslandModel passed by reference
+     */
     public void connectIslandModel(IslandsWrapper m) {
         islandModel = m;
     }
@@ -42,6 +53,10 @@ public class IslandController {
         calcInfluence(newPosition);
     }
 
+    /**
+     * Calculates the most influent team on the island and acts accordingly
+     * @param islandIndex The island
+     */
     public void calcInfluence(int islandIndex){
         //gets the students on the island, if there are no students on the island the situation remains unchanged
         int[] students = islandModel.getStudents(islandIndex);
@@ -233,4 +248,6 @@ public class IslandController {
         //TODO aggiungere notifica alla view in IslandModel
     }
 
+    //TODO init
+    public void initGame() {}
 }
