@@ -19,9 +19,6 @@ public class Model {
     }
 
     public void connectViews(View v) {
-        islandModel.connectView(v.getIslandView());
-        //cloudModel.connectView();
-        //boardModel.connectView();
     }
 
     public IslandsWrapper getIslandModel() {

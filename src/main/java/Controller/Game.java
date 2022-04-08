@@ -43,7 +43,7 @@ public class Game {
 
         gameModel = new GameModel();
 
-        //initializes the view
+        //initializes the view (probably the virtual one)
         view = new View();
 
         //initializes the model
@@ -51,12 +51,10 @@ public class Game {
 
         //connecting
         model.connectViews(view);       //connects view as an observer of the model
-        view.connectControllers(this);
         connectModels(model);
 
         //connects controllers
         islandController.connectBoards(boardsController);
-        play();
     }
 
     private boolean checkEnd() {
@@ -98,10 +96,5 @@ public class Game {
 
     public List<Player> getPlayers() {
         return players;
-    }
-
-    //Il play di samu non si tocca!!
-    public void play() {
-        while (true) view.askChoice(gameModel.getGamePhase());
     }
 }

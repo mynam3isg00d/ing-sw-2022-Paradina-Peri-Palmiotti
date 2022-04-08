@@ -1,17 +1,16 @@
 package Model;
-import View.IslandView;
+import Exceptions.MergeException;
 
 import java.util.*;
 
 /**
  * Island objects represent the model of an island of the game
  */
-public class Island { //è osservato da islandview, quindi ogni modifica chiama notify su view
+public class Island {
     private int dimension;
     private int[] students;
     private Integer influenceTeam;
     private boolean motherNature;
-    private IslandView islandView;
 
     //builds an empty island, dimension is initialized 1
 
@@ -44,8 +43,10 @@ public class Island { //è osservato da islandview, quindi ogni modifica chiama 
      * The new island will have all the students on both the islands, the influence unchanged (both should have the same influence) and the dimension equals to the sum of the two dimensions
      * @param i1 The first Island to merge
      * @param i2 The second Island to merge
+     * @throws MergeException Throws MergeException if the merge is not valid, ie the two islands have different influences
      */
-    public Island(Island i1, Island i2) {
+    public Island(Island i1, Island i2) throws MergeException {
+        if (!i1.getInfluence().equals(i2.getInfluence())) throw new MergeException();
         dimension = i1.getDimension() + i2.getDimension();
 
         students = new int[5];

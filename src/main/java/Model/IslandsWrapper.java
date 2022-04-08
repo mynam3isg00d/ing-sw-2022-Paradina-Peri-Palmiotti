@@ -1,7 +1,5 @@
 package Model;
 
-import View.IslandView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,9 +8,7 @@ import java.util.List;
  * Allows changes to the model by providing island indexes
  */
 public class IslandsWrapper {
-
     final private List<Island> islands;
-    private IslandView islandView;
     private int motherNaturePos;
 
     /**
@@ -28,11 +24,9 @@ public class IslandsWrapper {
         islands.get(0).setMotherNature(true);
     }
 
-    //public because will be called by the controller
-    //TODO test merge on the edge
-
     /**
-     * Replaces islands that need to be merged with the newly created island
+     * Replaces islands that need to be merged with the newly created island.
+     * Adds the newly created island either on leftMostIndex (if the last island is on the right of the first one) or at the end of the list
      * @param leftmostIndex The index of the leftmost island that needs to be replaced
      * @param nToMerge How many islands need to be replaced
      */
@@ -41,6 +35,7 @@ public class IslandsWrapper {
 
         int i;
         //removes the right islands from the islands list and merges them accordingly
+        //i is the number of "merges with the next island" needed
         if (leftmostIndex + nToMerge < initialSize) {
             i = nToMerge;
         } else {
@@ -49,14 +44,26 @@ public class IslandsWrapper {
 
         Island newIsland = new Island(islands.get(leftmostIndex));
         islands.remove(leftmostIndex);
+        //for every unit of i merges the island on leftmostindex and removes it from the list
         while (i > 1) {
-            newIsland = new Island(newIsland, islands.get(leftmostIndex));
+            try {
+                newIsland = new Island(newIsland, islands.get(leftmostIndex));
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println(e);
+            }
             islands.remove(leftmostIndex);
             i--;
         }
 
+        //merges the islands on the left when needed
         for (int j = 0; j < nToMerge - (initialSize - leftmostIndex); j++) {
-            newIsland = new Island(newIsland, islands.get(leftmostIndex));
+            try {
+                newIsland = new Island(newIsland, islands.get(0));
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println(e);
+            }
             islands.remove(0);
         }
 
@@ -67,9 +74,6 @@ public class IslandsWrapper {
         } else {
             islands.add(newIsland);
         }
-
-        List<Island> islandModelView = new ArrayList<>(islands);
-        //islandView.update(islandModelView);
     }
 
     /**

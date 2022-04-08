@@ -92,14 +92,19 @@ class IslandTest {
         i2.setInfluence(Integer.valueOf(0));
 
         //merges the island
-        Island i12 = new Island(i1, i2);
+        try {
+            Island i12 = new Island(i1, i2);
+            assertAll(
+                    () -> assertEquals(2, i12.getDimension()),
+                    () -> assertEquals(true, i12.isMotherNature()),
+                    () -> assertArrayEquals(expectedStudents, i12.getStudents()),
+                    () -> assertEquals(0, i12.getInfluence())
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
+        }
 
 
-        assertAll(
-                () -> assertEquals(2, i12.getDimension()),
-                () -> assertEquals(true, i12.isMotherNature()),
-                () -> assertArrayEquals(expectedStudents, i12.getStudents()),
-                () -> assertEquals(0, i12.getInfluence())
-                );
     }
 }

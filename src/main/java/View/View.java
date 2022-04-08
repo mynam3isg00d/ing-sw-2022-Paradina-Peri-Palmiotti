@@ -9,22 +9,10 @@ import java.util.*;
 public class View {
     final private PrintStream output;
     private Scanner input;
-    private Game gameController;
-
-    private IslandView islandView;
-    //ecc
 
     public View() {
         input = new Scanner(System.in);
         output = System.out;
-
-        islandView = new IslandView();
-        //cloudView = new CloudView(this);
-        //ecc
-    }
-
-    public void addController(Game g) {
-        gameController = g;
     }
 
     public void askChoice(String gamePhase) {
@@ -36,10 +24,6 @@ public class View {
         }
         String in = input.nextLine();
 
-        switch (in) {
-            case "1": islandView.askStudentsMove();
-            //case "2": islandView.askMotherNatureMove();
-        }
     }
 
 
@@ -82,14 +66,5 @@ public class View {
             System.out.print("[" + a.getOrderNumber() + "|" + a.getMotherNumber() + "]");
         }
         System.out.println("\n");
-    }
-
-    public IslandView getIslandView() {
-        return islandView;
-    }
-
-    public void connectControllers(Game controller) {
-        gameController = controller;
-        islandView.connectController(controller.getIslandHandler());
     }
 }
