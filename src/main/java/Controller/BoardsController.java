@@ -47,12 +47,7 @@ public class BoardsController {
                 }
                 break;
             default:
-                for (Player p : players) {
-                    playerBoardMap.put(p.getPlayerID(), new Board(0));
-                }
-                playerBoardMap.get("testID").addToEntrance(Student.YELLOW);
-                playerBoardMap.get("testID").addToEntrance(Student.YELLOW);
-                playerBoardMap.get("testID").addToEntrance(Student.YELLOW);
+                System.out.println("EXCEPTION NEEDED: Invalid number of players");
         }
     }
 

@@ -1,3 +1,5 @@
+//TODO: do we really need this? probably but it's useless for now.
+
 package Model;
 import Controller.Game;
 import View.*;

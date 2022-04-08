@@ -7,15 +7,23 @@ public class Sack {
 
     private final Stack<Integer> sack;
 
-    //Sack constructor parameters:
-    //numOfStudents: number of starting students in the sack.
+    /**
+     * Sack constructor, NOTE: adds students like
+     * R, B, Y, G, P, R, B, Y, G, P.... and then shuffles (keep in mind for more color implementation)
+     * @param numOfStudents the number of students initially inside the bag
+     */
     public Sack(int numOfStudents) {
         sack = new Stack<>();
         for(int i = 0; i < numOfStudents; i++) sack.push(i % 5);
         Collections.shuffle(sack);
     }
 
-    //TODO: Define proper exceptions
+    /**
+     * Used for drawing students from the bag
+     * @param numOfStudents the number of students to draw
+     * @return an arraylist of students drawn
+     * @throws EmptySackException thrown if the sack is empty
+     */
     public List<Student> draw(int numOfStudents) throws EmptySackException {
         List<Student> returnVal = new ArrayList<>();
         for (int i=0; i<numOfStudents; i++) {
@@ -30,9 +38,18 @@ public class Sack {
         return returnVal;
     }
 
+    /**
+     * Checks if the sack is empty
+     * @return true if empty, else false
+     */
     public boolean isEmpty() {return sack.empty();}
 
-    //There is definitely a better way to do this using enums properly lmao
+    //TODO: make this better
+    /**
+     * int to student converter
+     * @param i number (0, 4) for color id
+     * @return corresponding color
+     */
     public static Student intToStudent(int i) {
         switch (i) {
             case 0:

@@ -1,3 +1,10 @@
+/*
+-------------------------------------------------------------
+ EITHER MODEL OR GAMEMODEL HAS TO GO AND BLENDED WITH THE OTHER
+ ZIO PERA
+-------------------------------------------------------------
+ */
+
 package Model;
 
 public class GameModel {

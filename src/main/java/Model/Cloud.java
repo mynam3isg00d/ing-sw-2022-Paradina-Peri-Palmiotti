@@ -9,26 +9,40 @@ public class Cloud {
     private List<Student> students;
     int numOfStudents;
 
-    //builds an empty cloud
+    /**
+     * Creates an empty cloud
+     * @param numOfStudents max number of students allowed on the cloud
+     */
     public Cloud(int numOfStudents){
         students = new ArrayList<>();
         this.numOfStudents = numOfStudents;
     }
 
-    //fills the cloud with the students contained in the "students" list
+    /**
+     * Fills the cloud with the student list if it's empty
+     * @param students the student list to add
+     * @throws CloudNotEmptyException if the cloud is not empty
+     * @throws InvalidStudentListException if the student list is not of the correct size
+     */
     public void fill(List<Student> students) throws CloudNotEmptyException, InvalidStudentListException {
         if (!this.isEmpty()) throw new CloudNotEmptyException();
         if (students.size() != numOfStudents) throw new InvalidStudentListException();
         this.students.addAll(students);
     }
 
-    //empties a cloud returning the students that were on it
+    /**
+     * Empties a cloud returning the students that were on it
+     * @return the list on the cloud
+     * @throws CloudEmptyException if the cloud is already empty
+     */
     public List<Student> empty() throws CloudEmptyException {
         if(this.isEmpty()) throw new CloudEmptyException();
         List<Student> studentsOnCloud = new ArrayList<>(this.students);
         this.students.clear();
         return studentsOnCloud;
     }
+
+    //i'm not gonna jdoc this
 
     public List<Student> getStudents() {
         return new ArrayList<>(this.students);

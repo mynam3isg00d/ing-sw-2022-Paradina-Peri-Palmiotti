@@ -4,9 +4,13 @@ import Exceptions.AssistantMissingException;
 import java.util.*;
 
 public class Hand {
-    private int wizardID;
+    private final int wizardID;
     private List<Assistant> hand;
 
+    /**
+     * Creates a new hand
+     * @param wizardID wizard id (hand identifier)
+     */
     public Hand(int wizardID) {
         this.wizardID = wizardID;
         hand = new ArrayList<>();
@@ -15,6 +19,13 @@ public class Hand {
         }
     }
 
+    /**
+     * Gets the assistant from the hand based on order number and
+     * removes it if present
+     * @param on order number
+     * @return the assistant of the corresponding on
+     * @throws AssistantMissingException if the assistant is missing from the hand
+     */
     public Assistant getAssistantFromOrderNumber(int on) throws AssistantMissingException {
         for(Assistant a : hand) {
             if (a.getOrderNumber() == on) {
@@ -25,17 +36,23 @@ public class Hand {
         throw new AssistantMissingException();
     }
 
-    public List<Assistant> getHand() {
-        return hand;
-    }
-
     //TODO: check if it's a valid assistant (it should be because
     //      Hand is the only one able to create assistants...)
     //      (therefore maybe unnecessary...)
+
+    /**
+     * Adds assistant to hand
+     * @param a assistant to add
+     */
     public void addAssistant(Assistant a) {
         hand.add(a);
     }
 
+    /**
+     * Checks if assistant is in hand
+     * @param on order number
+     * @return true if assistant in hand, else false
+     */
     public boolean isAssistantInHand(int on) {
         for(Assistant a : hand) {
             if (a.getOrderNumber() == on) {
@@ -43,5 +60,14 @@ public class Hand {
             }
         }
         return false;
+    }
+
+    //do i need to jdoc this???????????????????????
+    public List<Assistant> getHand() {
+        return new ArrayList<>(hand);
+    }
+
+    public int getWizardID() {
+        return wizardID;
     }
 }
