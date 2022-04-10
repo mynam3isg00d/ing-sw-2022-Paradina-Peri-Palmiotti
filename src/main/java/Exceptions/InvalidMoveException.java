@@ -8,7 +8,7 @@ public class InvalidMoveException extends Exception{
         hint = m;
     }
 
-    public String getMessage() {
+    public String toString() {
         return "EX: Invalid Move!!! (Signals a move which is prohibited by the game rules)" + "\n" + hint;
     }
 }

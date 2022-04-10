@@ -1,7 +1,7 @@
 package Exceptions;
 
 public class EmptySackException extends Exception{
-    public String getMessage() {
+    public String toString() {
         return "Sack is empty, trmo";
     }
 }

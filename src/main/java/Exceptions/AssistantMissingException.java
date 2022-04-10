@@ -1,7 +1,8 @@
 package Exceptions;
 
 public class AssistantMissingException extends Exception{
-    public String getMessage() {
+    @Override
+    public String toString() {
         return "No assistant found for that number";
     }
 }

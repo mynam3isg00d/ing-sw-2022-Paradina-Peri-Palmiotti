@@ -1,7 +1,7 @@
 package Exceptions;
 
 public class EmptyTableException extends Exception{
-    public String getMessage() {
+    public String toString() {
         return "Table is empty";
     }
 }
