@@ -14,13 +14,16 @@ import Model.*;
 import View.*;
 import java.util.*;
 
+/**
+ * Game is the master controller.
+ * Has references to IslandController, CloudController and BoardsController that handle respectively Island, Cloud and Boards elements.
+ * Handles events coming from the view and calls the right methods on the right controller.
+ */
 public class Game {
-
-    private View view;
     private Model model;
 
-    private int roundCount;
-    private int playersNumber;
+    //GameInfo is an internal class that contains info about the game
+    private GameInfo info;
 
     private List<Player> players;
     private Sack sack;
@@ -30,31 +33,47 @@ public class Game {
 
     private GameModel gameModel;
 
-    public Game(String playerNumber) {
+    /**
+     * Once the lobby is filled, the Game can be initialized
+     * @param players The list of players accepted by the lobby.
+     */
+    public Game(List<Player> players) {
+        this.players = players;
+        int n = players.size();
 
-        //player for testing
-        players = new ArrayList<Player>();
-        players.add(new Player("Jay-Z", 0));
+        //initializes the game information
+        info = new GameInfo();
 
-        //**initializes all the controllers**
+        //initializes all controllers
+        //the controllers will initialize the respective models
         islandController = new IslandController();
-        //cloudController = new CloudController();
+        cloudController = new CloudController(n);
         boardsController = new BoardsController(players);
 
-        gameModel = new GameModel();
-
-        //initializes the view (probably the virtual one)
-        view = new View();
-
-        //initializes the model
-        model = new Model();
-
-        //connecting
-        model.connectViews(view);       //connects view as an observer of the model
-        connectModels(model);
-
-        //connects controllers
+        //islandController requires access to the boards
         islandController.connectBoards(boardsController);
+
+        //generates the Students sack
+        sack = new Sack(120);
+    }
+
+    //----------------------------------------------------------------------------------------------------------------
+    //handleEvent methods, overload on different event types. Event objects come from a factory of events parsing a json
+    //handleEvent will call the right methods on the right controller
+    //----------------------------------------------------------------------------------------------------------------
+    public void handleEvent() {
+
+    }
+
+    public void handleEvent(Object o) {
+
+    }
+    //----------------------------------------------------------------------------------------------------------------
+    //end events handling
+    //----------------------------------------------------------------------------------------------------------------
+
+    public int getRoundCount() {
+        return info.roundCount;
     }
 
     private boolean checkEnd() {
@@ -69,32 +88,27 @@ public class Game {
         return false;
     }
 
-    public void connectModels(Model m) {
-        //***connects all the models***
-        islandController.connectIslandModel(m.getIslandModel());
-        //...
-    }
-    public int getPlayedAssistant(Player p) {
-        return view.getPlayedAssistant(p);
-    }
-
-    public IslandController getIslandHandler() {
-        return islandController;
-    }
-
-    public CloudController getCloudHandler() {
-        return cloudController;
-    }
-
-    public BoardsController getBoardsHandler() {
-        return boardsController;
-    }
 
     public Sack getSack() {
         return sack;
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return new ArrayList<Player>(players);
+    }
+
+    public IslandController getIslandHandler() {
+        return islandController;
+    }
+}
+
+/**
+ * Wraps all info about the game
+ */
+class GameInfo {
+    int roundCount;
+
+    public GameInfo() {
+        roundCount = 0;
     }
 }

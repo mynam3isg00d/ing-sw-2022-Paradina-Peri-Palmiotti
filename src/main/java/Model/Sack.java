@@ -10,10 +10,11 @@ public class Sack {
     /**
      * Sack constructor, NOTE: adds students like
      * R, B, Y, G, P, R, B, Y, G, P.... and then shuffles (keep in mind for more color implementation)
-     * @param numOfStudents the number of students initially inside the bag
+     * @param numOfStudents the number of students initially in the sack
      */
     public Sack(int numOfStudents) {
         sack = new Stack<>();
+
         for(int i = 0; i < numOfStudents; i++) sack.push(i % 5);
         Collections.shuffle(sack);
     }

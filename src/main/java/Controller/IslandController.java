@@ -14,6 +14,13 @@ public class IslandController {
     private BoardsController boardsController;
 
     /**
+     * The IslandController constructor is called by Game.
+     * Also initializes the Model of the Islands (IslandWrapper)
+     */
+    public IslandController() {
+        islandModel = new IslandsWrapper();
+    }
+    /**
      * Connects BoardController to the IslandController
      * @param b BoardController passed by reference
      */

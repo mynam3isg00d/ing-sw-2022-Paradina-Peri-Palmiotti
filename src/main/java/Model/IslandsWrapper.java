@@ -12,7 +12,7 @@ public class IslandsWrapper {
     private int motherNaturePos;
 
     /**
-     * Builds the IslandWrapper and initializes 12 empty Islands
+     * Builds the IslandWrapper and initializes 12 Islands
      */
     public IslandsWrapper() {
         islands = new ArrayList<>();
@@ -22,6 +22,8 @@ public class IslandsWrapper {
         }
         motherNaturePos = 0;
         islands.get(0).setMotherNature(true);
+
+        //TODO put the right amount of students on the right islands
     }
 
     /**
