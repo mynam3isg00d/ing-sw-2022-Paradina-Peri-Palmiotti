@@ -4,50 +4,76 @@ import Exceptions.CloudNotEmptyException;
 import Exceptions.EmptySackException;
 import Exceptions.InvalidStudentListException;
 import Model.Cloud;
+import Model.CloudWrapper;
 import Model.Sack;
 import Model.Student;
 
 import java.util.*;
 
 public class CloudController {
+    private CloudWrapper cloudModel;
+    private int numOfClouds;
+    private int studentsPerCloud;
 
-    private List<Cloud> clouds;
-
+    /**
+     * Initializes CloudController and the clouds model
+     * Acts different accordingly to the number of players in the game
+     * @param numOfPlayers The number of players playing
+     */
     public CloudController(int numOfPlayers) {
-        this.clouds = new ArrayList<>();
-
-        int numOfStudents;
+        numOfClouds = numOfPlayers;
         if (numOfPlayers == 2 || numOfPlayers == 4) {
-            numOfStudents = 3;
+            studentsPerCloud = 3;
         } else {
-            numOfStudents = 4;
+            studentsPerCloud = 4;
         }
 
-        for (int i=0; i<numOfPlayers; i++) {
-            clouds.add(new Cloud(numOfStudents));
-        }
+        cloudModel = new CloudWrapper(numOfClouds, studentsPerCloud);
     }
 
-
+    /**
+     * Fills all the clouds initialized in the model and handles the relative exceptions
+     * @param s The Sack
+     */
     public void fillClouds(Sack s) {
-        for(Cloud c : clouds){
-            if(c.isEmpty()) {
+        for (int i = 0; i < numOfClouds; i++) {
+            //draws from the sack 3 students in order to add them to the cloud
+            try {
+                List<Student> toAdd = s.draw(studentsPerCloud);
+
+                //fills cloud i
                 try {
-                    c.fill(s.draw(3));
-                } catch (CloudNotEmptyException | InvalidStudentListException | EmptySackException e) {
-                    e.getMessage();
+                    cloudModel.fillCloud(toAdd, i);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
+
     }
 
-    //TODO: remove students from the cloud
+    /**
+     * Gets the students on the selected cloud and empties it. Also handles the exceptions that may be thrown
+     * @param cloudIndex The selected island index
+     * @return The list of students resulting from the operation
+     */
     public List<Student> getFromCloud(int cloudIndex) {
         try {
-            return clouds.get(cloudIndex).empty();
-        } catch (CloudEmptyException e) {
-            e.getMessage();
+            return cloudModel.getFromCloud(cloudIndex);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * Only used in testing
+     * @return the reference to the model
+     */
+    public CloudWrapper getCloudModel() {
+        return cloudModel;
     }
 }

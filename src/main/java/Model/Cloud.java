@@ -52,4 +52,8 @@ public class Cloud {
         if (students.size() == 0) return true;
         return false;
     }
+
+    public List<Student> peek() {
+        return new ArrayList<>(students);
+    }
 }

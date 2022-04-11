@@ -18,8 +18,9 @@ public class IslandController {
      * Also initializes the Model of the Islands (IslandWrapper)
      */
     public IslandController() {
-        islandModel = new IslandsWrapper();
+        //islandModel = new IslandsWrapper();
     }
+
     /**
      * Connects BoardController to the IslandController
      * @param b BoardController passed by reference
