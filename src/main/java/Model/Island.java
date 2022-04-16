@@ -91,6 +91,10 @@ public class Island {
         }
     }
 
+    public void addStudents(Student s) {
+        students[s.getColorId()]++;
+    }
+
     /**
      * Returns the ID of the team which have a tower on the Island
      * @return An Integer containing either the team ID or null (if no towers are on the island)

@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,7 +24,28 @@ public class IslandsWrapper {
         motherNaturePos = 0;
         islands.get(0).setMotherNature(true);
 
-        //TODO put the right amount of students on the right islands
+        //creates a list containing 2 students per color
+        //then places randomly 1 student on each island, except for the island mother nature is on (index 0) and the one opposite to it (index 6)
+        List<Student> initialStudents = initStudents();
+        for(int i = 0; i < 12; i++) {
+            if (i != 0 && i != 6) {
+                islands.get(i).addStudents(initialStudents.get(0));
+                initialStudents.remove(0);
+            }
+        }
+    }
+
+    //initializes a list with the students to place before the game starts
+    private List<Student> initStudents() {
+        List<Student> l = new ArrayList<>();
+        for (int i=0; i<2; i++) {
+            for (int j=0; j<5; j++) {
+                l.add(Sack.intToStudent(j));
+            }
+        }
+
+        Collections.shuffle(l);
+        return l;
     }
 
     /**
@@ -52,7 +74,6 @@ public class IslandsWrapper {
                 newIsland = new Island(newIsland, islands.get(leftmostIndex));
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println(e);
             }
             islands.remove(leftmostIndex);
             i--;
@@ -64,7 +85,6 @@ public class IslandsWrapper {
                 newIsland = new Island(newIsland, islands.get(0));
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println(e);
             }
             islands.remove(0);
         }
