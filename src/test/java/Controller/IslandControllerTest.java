@@ -2,6 +2,7 @@ package Controller;
 
 import Model.IslandsWrapper;
 import Model.Player;
+import Model.Sack;
 import Model.Student;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class IslandControllerTest {
         List<Player> players = new ArrayList<>();
         players.add(new Player("Jay-Z", 1));
         players.add(new Player("Achille Frigeri", 2));
-        BoardsController boardsController = new BoardsController(players);
+        BoardsController boardsController = new BoardsController(players, new Sack(120));
         islandController.connectBoards(boardsController);
 
         //adds some students on the island 1
@@ -63,7 +64,7 @@ class IslandControllerTest {
         List<Player> players = new ArrayList<>();
         players.add(new Player("Jay-Z", 1));
         players.add(new Player("Achille Frigeri", 2));
-        BoardsController boardsController = new BoardsController(players);
+        BoardsController boardsController = new BoardsController(players, new Sack(120));
         islandController.connectBoards(boardsController);
 
         //adds some students on the island 1
@@ -112,7 +113,7 @@ class IslandControllerTest {
         Player pl2 = new Player("toast", 2);
         pl2.setPlayerID("ID2");
         p.add(pl2);
-        BoardsController b = new BoardsController(p);
+        BoardsController b = new BoardsController(p, new Sack(120));
         ic.connectBoards(b);
 
         //provides a player with some students to move

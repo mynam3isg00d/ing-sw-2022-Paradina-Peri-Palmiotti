@@ -12,16 +12,51 @@ import Model.Student;
 
 import java.util.*;
 
+//TODO javadoc
+
+/**
+ * The Controller in charge of the operations regarding the player boards.
+ */
 public class BoardsController {
     private final HashMap<String, Board> playerBoardMap;
     private final List<Player> players;
     private final Player[] professors;
 
-    public BoardsController(List<Player> players) {
+    /**
+     * Initializes one board per player in the game and links players to their board using a Map
+     * Also fills player boards entrances
+     * @param players The list of players participating in the game
+     * @param s Reference to the sack, used to fill the boards
+     */
+    public BoardsController(List<Player> players, Sack s) {
         professors = new Player[5];
         this.players = players;
         playerBoardMap = new HashMap<>();
         createBoards(players.size());
+
+        int studentsPerEntrance = 0;
+        switch (players.size()) {
+            case 2:
+                studentsPerEntrance = 7;
+                break;
+            case 3:
+                studentsPerEntrance = 9;
+                break;
+            case 4:
+                studentsPerEntrance = 7;
+                break;
+            default:
+                System.out.println("EXCEPTION NEEDED: Invalid number of players");
+        }
+
+        //fills boards entrance with the right number of students, accordingly to the number of players
+        try {
+            init(s, studentsPerEntrance);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //TODO fill boards with random students
     }
 
     private void createBoards(int playerNum) {
@@ -51,13 +86,26 @@ public class BoardsController {
         }
     }
 
-    public void init(Sack s) throws EmptySackException, FullEntranceException {
+    /**
+     * A private method that initializes player boards with a number of students decided previously
+     * @param s Reference to the Students sack
+     * @param studentsPerEntrance The number of students to add to every board
+     * @throws EmptySackException
+     * @throws FullEntranceException
+     */
+    private void init(Sack s, int studentsPerEntrance) throws EmptySackException, FullEntranceException {
         for(Player p : players) {
             Board b = playerBoardMap.get(p.getPlayerID());
-            b.addToEntrance(s.draw(9));
+            b.addToEntrance(s.draw(studentsPerEntrance));
         }
     }
 
+    /**
+     * Moves one student from the entrance of the player requesting the move to his diner
+     * @param playerID The player requesting the move
+     * @param s The student that needs to be moved
+     * @throws NoSuchStudentsException
+     */
     public void moveToDiner(String playerID, Student s) throws NoSuchStudentsException {
         Board b = playerBoardMap.get(playerID);
         for(Student st : b.getEntrance()) {
@@ -75,6 +123,9 @@ public class BoardsController {
         throw new NoSuchStudentsException();
     }
 
+    /**
+     * Called each time //TODO a student gets moved to a diner (?)
+     */
     public void updateProfessors() {
         int[] maxNumOfStudents = {0, 0, 0, 0, 0};
         for(Player p : players) {
@@ -91,6 +142,14 @@ public class BoardsController {
     //if the move is not valid throws an exception
     //else, removes the students in s from the board of the right player
     //called by islandHandler when a player wants to move some students to an island
+
+    /**
+     * Called by islandController whenever a player wants to move students from the board to one island
+     * Simply removes the students from the board of the requesting player
+     * @param playerID The ID of the player requesting the move
+     * @param ss The list of students to remove
+     * @throws NoSuchStudentsException
+     */
     public void removeFromEntrance(String playerID, List<Student> ss) throws NoSuchStudentsException {
         List<Student> entranceCopy = playerBoardMap.get(playerID).getEntrance();
         for (Student s : ss) {
@@ -100,6 +159,11 @@ public class BoardsController {
         playerBoardMap.get(playerID).removeFromEntrance(ss);
     }
 
+    /**
+     * Adds a list of students to the entrance of the requesting player
+     * @param playerID The ID of the player requesting the move
+     * @param ss The list of students to add
+     */
     public void fillEntrance(String playerID, List<Student> ss) {
         Board b = playerBoardMap.get(playerID);
         try {

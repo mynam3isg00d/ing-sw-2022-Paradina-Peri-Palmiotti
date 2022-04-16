@@ -44,17 +44,19 @@ public class Game {
         //initializes the game information
         info = new GameInfo();
 
+        //generates the Students sack
+        sack = new Sack(120);
+
         //initializes all controllers
         //the controllers will initialize the respective models
         islandController = new IslandController();
         cloudController = new CloudController(n);
-        boardsController = new BoardsController(players);
+        boardsController = new BoardsController(players, sack);
 
         //islandController requires access to the boards
         islandController.connectBoards(boardsController);
 
-        //generates the Students sack
-        sack = new Sack(120);
+
     }
 
     //----------------------------------------------------------------------------------------------------------------
@@ -99,6 +101,13 @@ public class Game {
 
     public IslandController getIslandHandler() {
         return islandController;
+    }
+
+    /**
+     * Update player order will be called whenever, just before the start of the action phase of a turn, all players will have chosen an assistant
+     */
+    public void updatePlayerOrder() {
+        //TODO write something smart
     }
 }
 
