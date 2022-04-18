@@ -1,7 +1,7 @@
 package Exceptions;
 
-public class FullTableException extends Exception{
+public class FullTableException extends FullElementException{
     public String toString() {
-        return "The table is full";
+        return "This table is full";
     }
 }
