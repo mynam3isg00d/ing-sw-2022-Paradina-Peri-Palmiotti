@@ -5,6 +5,7 @@ import Model.*;
 
 public abstract class CharacterEffect {
     int cost;
+    int charID;
     boolean isIncremented;
     Player boughtBy;
 

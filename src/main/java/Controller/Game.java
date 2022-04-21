@@ -99,7 +99,7 @@ public class Game {
         return new ArrayList<Player>(players);
     }
 
-    public IslandController getIslandHandler() {
+    public IslandController getIslandController() {
         return islandController;
     }
 

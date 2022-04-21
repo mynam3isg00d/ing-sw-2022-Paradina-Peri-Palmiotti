@@ -1,37 +1,22 @@
 package Controller;
 
-import Controller.CharacterEffects.*;
-import Model.Player;
-
-import java.util.*;
+import Controller.CharacterEffects.CharacterEffect;
+import Model.Shop;
 
 public class CharacterController {
-    List<CharacterEffect> characters;
-    HashMap<Player, Integer> playerCoins;
-    Game game;
 
-    //grande :)
+    private CharacterEffect[] characterEffects;
+    private Shop shop;
 
-    public CharacterController(Game g) {
-        game = g;
-        playerCoins = new HashMap<>();
-        for(Player p : game.getPlayers()) {
-            playerCoins.put(p, 1);
-        }
-        characters = new ArrayList<>();
-        chooseRandomCharacters();
+    public CharacterController() {
+        characterEffects = new CharacterEffect[3];
+        getRandomEffects();
+        shop = new Shop();
+
     }
 
-    private void chooseRandomCharacters() {
-        return;
-    }
-
-    public void buyCharacter(Player p, int charIndex, Object playerInput) {
-        CharacterEffect c = characters.get(charIndex);
-        c.incrementCost();
-        c.setBoughtBy(p);
-        c.getData(game);
-        c.playEffect(playerInput);
+    private void getRandomEffects() {
+        //switch case with random
     }
 
 }

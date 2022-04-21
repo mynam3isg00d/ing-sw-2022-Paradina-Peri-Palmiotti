@@ -1,9 +1,8 @@
 //TODO: Jdocs
+//TODO: keep coin information here maybe??
 
 package Model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Shop {
     private CharacterCard[] shop;

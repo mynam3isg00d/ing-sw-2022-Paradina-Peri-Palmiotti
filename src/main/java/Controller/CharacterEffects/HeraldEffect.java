@@ -8,7 +8,7 @@ public class HeraldEffect extends CharacterEffect {
 
     @Override
     public void getData(Game g) {
-        ih = g.getIslandHandler();
+        ih = g.getIslandController();
     }
 
     @Override
