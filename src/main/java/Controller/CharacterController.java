@@ -12,7 +12,6 @@ public class CharacterController {
         characterEffects = new CharacterEffect[3];
         getRandomEffects();
         shop = new Shop();
-
     }
 
     private void getRandomEffects() {

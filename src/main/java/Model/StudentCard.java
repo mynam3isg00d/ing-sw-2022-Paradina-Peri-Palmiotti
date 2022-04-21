@@ -12,8 +12,8 @@ public class StudentCard extends CharacterCard {
 
     private final int MAX_STUDENTS;
     private List<Student> students;
-    public StudentCard(int cardID, int cost, int maxStudents) {
-        super(cardID, cost);
+    public StudentCard(int cardID, int maxStudents) {
+        super(cardID);
         students = new ArrayList<>();
         MAX_STUDENTS = maxStudents;
     }

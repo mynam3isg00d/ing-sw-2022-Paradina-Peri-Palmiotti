@@ -31,7 +31,16 @@ public class Game {
     private CloudController cloudController;
     private BoardsController boardsController;
 
-    private GameModel gameModel;
+    /**
+     * Wraps all info about the game
+     */
+
+    private class GameInfo {
+        int roundCount;
+        public GameInfo() {
+            roundCount = 0;
+        }
+    }
 
     /**
      * Once the lobby is filled, the Game can be initialized
@@ -108,16 +117,5 @@ public class Game {
      */
     public void updatePlayerOrder() {
         //TODO write something smart
-    }
-}
-
-/**
- * Wraps all info about the game
- */
-class GameInfo {
-    int roundCount;
-
-    public GameInfo() {
-        roundCount = 0;
     }
 }
