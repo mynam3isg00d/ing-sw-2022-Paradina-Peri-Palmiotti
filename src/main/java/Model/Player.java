@@ -23,6 +23,12 @@ public class Player {
         hand = null;
     }
 
+    public Player(String n) {
+        name = n;
+        teamId = -1;
+        hand = null;
+    }
+
     //TODO: what if two players choose the same wizard
     //TODO: handle if wizardID not between 1 and 4
     /**

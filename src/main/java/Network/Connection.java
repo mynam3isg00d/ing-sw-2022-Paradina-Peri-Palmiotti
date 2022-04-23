@@ -26,6 +26,11 @@ public class Connection extends Observable implements Runnable {
 
     }
 
+    public void send(String message) {
+        out.println(message);
+        out.flush();
+    }
+
     public void close() {
       isActive = false;
     }
@@ -39,11 +44,21 @@ public class Connection extends Observable implements Runnable {
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream());
 
-            //send("What's your name??");
+            send("What's your name??");
+            name = in.nextLine();
 
-            server.lobby(this);
+            int playerNumber = 0;
+            do{
+                send("How many players would you like to play with??");
+                playerNumber = Integer.parseInt(in.nextLine());
+            } while(playerNumber != 2 && playerNumber != 3 && playerNumber != 4);
+
+
+            server.lobby(this, name, playerNumber);
             while (isActive) {
                 //Object o = in.get??
+
+                //notifica virtual view
                 //notify(o);
             }
         }  catch (Exception e) {
