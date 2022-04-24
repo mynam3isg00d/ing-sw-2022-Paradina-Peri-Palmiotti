@@ -13,29 +13,52 @@ public class Shop {
     private final Integer[] AVAILABLE_CHARS = {0, 2, 5, 6, 7, 8, 9, 10};
     private CharacterCard[] shop;
 
-    //TODO: THIS DEFINITELY DOESNT WORK
-
     public Shop() {
         shop = new CharacterCard[3];
         List<Integer> charIndex = Arrays.asList(AVAILABLE_CHARS.clone());
         Collections.shuffle(charIndex);
-        fillShop((Integer[]) charIndex.toArray());
+        fillShop(charIndex.subList(0, 3));
     }
 
-    private void fillShop(Integer[] indexArray) {
-        if (indexArray.length != 3) return;
-        for(int i=0; i<indexArray.length; i++) {
-            int c = indexArray[i];
+    //Mainly for testing purposes
+    public Shop(Integer[] AVAILABLE_CHARS) {
+        shop = new CharacterCard[3];
+        List<Integer> charIndex = Arrays.asList(AVAILABLE_CHARS.clone());
+        Collections.shuffle(charIndex);
+        fillShop(charIndex.subList(0, 3));
+    }
+
+    public void fillShop(List<Integer> indexArray) {
+        if (indexArray.size() != 3) return;
+        for(int i=0; i<indexArray.size(); i++) {
+            int c = indexArray.get(i);
             switch(c) {
-                case 0: shop[i] = new StudentCard(c, 4); break;
-                case 6: shop[i] = new StudentCard(c, 6); break;
-                case 10: shop[i] = new StudentCard(c, 4); break;
-                default: shop[i] = new CharacterCard(c); break;
+                case 0:
+                case 10:
+                    shop[i] = new StudentCard(c, 4); break;
+                case 6:
+                    shop[i] = new StudentCard(c, 6); break;
+                default:
+                    shop[i] = new CharacterCard(c); break;
             }
         }
     }
 
+    //TODO: this is wrong
+    //      it returns a shop that has refrences to the original cards
+    //      meaning the cards themselves are not copies! (idk why it happens tho)
+    public CharacterCard[] getShop() {
+        return shop.clone();
+    }
+
     public void incrementCost(int index) {
         shop[index].incrementCost();
+    }
+
+    @Override
+    public Object clone() {
+        CharacterCard[] clonedShop = new CharacterCard[shop.length];
+        for(int i=0; i<3; i++) clonedShop[i] = shop[i].getCopy();
+        return clonedShop;
     }
 }

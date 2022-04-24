@@ -34,4 +34,8 @@ public class StudentCard extends CharacterCard {
             return s;
         }
     }
+
+    public int getMAX_STUDENTS() {
+        return MAX_STUDENTS;
+    }
 }

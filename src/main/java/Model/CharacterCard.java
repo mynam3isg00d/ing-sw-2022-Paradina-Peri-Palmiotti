@@ -19,9 +19,9 @@ CharacterIDs in order of apperance in the rulebook
 package Model;
 
 public class CharacterCard {
-    int cardID;
-    int cost;
-    boolean isIncremented;
+    private int cardID;
+    private int cost;
+    private boolean isIncremented;
 
     //TODO: Connect cardID and cost somehow? maybe a big if
     public CharacterCard(int cardID) {
@@ -35,5 +35,35 @@ public class CharacterCard {
             cost++;
             isIncremented = true;
         }
+    }
+
+    public CharacterCard getCopy() {
+        CharacterCard copy = new CharacterCard(this.cardID);
+        copy.cost = this.cost;
+        copy.isIncremented = this.isIncremented;
+        return copy;
+    }
+
+    public int getCardID() {
+        return cardID;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public boolean isIncremented() {
+        return isIncremented;
+    }
+
+    //TODO: could be useful, but it was made for testing
+    //      this means that it's not an *ideal* equals
+    //      (for example it doesn't check isIncremented)
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof CharacterCard)) return false;
+        CharacterCard cc = (CharacterCard)o;
+        if(cc.getCardID() == this.cardID) return true;
+        return false;
     }
 }

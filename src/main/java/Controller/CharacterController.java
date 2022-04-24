@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.CharacterEffects.CharacterEffect;
+import Model.CharacterCard;
 import Model.Shop;
 
 public class CharacterController {
@@ -10,12 +11,16 @@ public class CharacterController {
 
     public CharacterController() {
         characterEffects = new CharacterEffect[3];
-        getRandomEffects();
         shop = new Shop();
+        getRandomEffects();
     }
 
     private void getRandomEffects() {
-        //switch case with random
+        /*
+        for(int i=0; i<shop.getShop().length; i++) {
+            characterEffects[i] =
+        }
+        */
     }
 
 }
