@@ -2,7 +2,9 @@ package Model;
 import Controller.Game;
 import View.*;
 
-public class Model {
+import java.util.Observable;
+
+public class Model extends Observable {
     private View view;
     private Game controller;
 

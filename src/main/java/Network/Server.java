@@ -1,6 +1,7 @@
 package Network;
 
 import Controller.Game;
+import Model.Model;
 import Model.Player;
 
 import java.io.IOException;
@@ -13,11 +14,11 @@ import java.util.concurrent.*;
 
 public class Server implements Runnable{
     private final int  PORT = 42069;
-    private ServerSocket serverSocket;
-    private ExecutorService executor;
+    private final ServerSocket serverSocket;
+    private final ExecutorService executor;
 
-    private Map<String, Connection>[] waitingLists = new Map[3];
-    private Map<String, Connection>[] playingLists = new Map[3];
+    private final Map<String, Connection>[] waitingLists = new Map[3];
+    private final Map<String, Connection>[] playingLists = new Map[3];
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
@@ -33,9 +34,10 @@ public class Server implements Runnable{
     /**
      * Lobby is called every time a new Connection is initialized.
      * When the waitingList contains a number of players which is equals to the number of players needed for the game to start the game is initialized
-     * @param newConnection
+     * Synchronized in order to avoid concurrent changes to the lists
+     * @param newConnection The connection just created
      */
-    public void lobby(Connection newConnection, String name, int playerNumber) {
+    public synchronized void lobby(Connection newConnection, String name, int playerNumber) {
         int listIndex = playerNumber - 2;
 
         //adds a new connection to the correct waiting list
@@ -63,13 +65,18 @@ public class Server implements Runnable{
             }
 
             //initializes the server game components
-            //Game c = new Game(players);
-            //Model m = new Model()
+            Game c = new Game(players);
+            Model m = new Model();
 
-            //for(RemoteView rv : remoteViews) {
-            //m.addObserver(rv);
-            //rv.addObserver(c);
-            //}
+            //TODO if controller cannot initialize Model components, we need to "connect" the right controller components to the respective Model components
+            //in case we decide to use Model as gateWay for every change requested by the Controller, each controller component should have a Model reference, and Model should contain methods that call Model components methods
+
+            //RemoteView is made observer of Model
+            //Controller is made observer of RemoteView
+            for(RemoteView rv : remoteViews) {
+                m.addObserver(rv);
+                rv.addObserver(c);
+            }
 
 
         }
@@ -82,6 +89,7 @@ public class Server implements Runnable{
     public Map<String, Connection> getPlayingList(int playerNumber) {
         return new HashMap<>(playingLists[playerNumber-2]);
     }
+
     /**
      * The server listens in order to accept connections.
      * Each new connection is executed by the thread pool.

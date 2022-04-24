@@ -56,10 +56,12 @@ public class Connection extends Observable implements Runnable {
 
             server.lobby(this, name, playerNumber);
             while (isActive) {
-                //Object o = in.get??
+                //currently, only works with strings
+                String message = in.nextLine();
+                notifyObservers(message);
 
+                //Object o = in.get??
                 //notifica virtual view
-                //notify(o);
             }
         }  catch (Exception e) {
             e.printStackTrace();

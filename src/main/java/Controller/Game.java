@@ -19,7 +19,7 @@ import java.util.*;
  * Has references to IslandController, CloudController and BoardsController that handle respectively Island, Cloud and Boards elements.
  * Handles events coming from the view and calls the right methods on the right controller.
  */
-public class Game {
+public class Game implements Observer{
     private Model model;
 
     //GameInfo is an internal class that contains info about the game
@@ -66,6 +66,16 @@ public class Game {
         islandController.connectBoards(boardsController);
 
 
+    }
+
+    /**
+     * Receives updates from the remoteView and calls handleEvent
+     * @param obs
+     * @param o The Event coming from the RemoteView
+     */
+    @Override
+    public void update(Observable obs, Object o) {
+        handleEvent(o);
     }
 
     //----------------------------------------------------------------------------------------------------------------

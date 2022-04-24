@@ -7,7 +7,7 @@ import Model.Player;
 import java.util.Observable;
 import java.util.Observer;
 
-public class RemoteView extends Observable {
+public class RemoteView extends Observable implements Observer{
     private Player player;
     private Connection connection;
 
@@ -44,11 +44,16 @@ public class RemoteView extends Observable {
         player = p;
         connection = c;
 
-        c.addObserver(new MessageReceiver());
-        //c.send("Qualcosa");
+        connection.addObserver(new MessageReceiver());
+        //connection.send("Qualcosa");
     }
 
     public void processChoice(GameEvent event) {
         notifyAll();
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        //connection.send("Modello aggiornato");
     }
 }
