@@ -2,10 +2,17 @@ package Controller.CharacterEffects;
 
 import Controller.Game;
 import Controller.IslandController;
+import Model.CharacterCard;
+
+import java.util.List;
 
 public class CentaurEffect extends CharacterEffect {
 
     private IslandController ic;
+
+    public CentaurEffect(CharacterCard c) {
+
+    }
 
     @Override
     public void getData(Game g) {
@@ -13,7 +20,7 @@ public class CentaurEffect extends CharacterEffect {
     }
 
     @Override
-    public void playEffect(Object playerInput) {
+    public void playEffect(List<Object> playerInput) {
         
     }
 }

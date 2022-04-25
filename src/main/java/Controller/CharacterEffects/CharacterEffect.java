@@ -3,25 +3,19 @@ package Controller.CharacterEffects;
 import Controller.Game;
 import Model.*;
 
+import java.util.List;
+
 public abstract class CharacterEffect {
-    int cost;
-    int charID;
-    boolean isIncremented;
-    Player boughtBy;
+
+    protected CharacterCard card;
+    protected Player boughtBy;
+    protected int expectedInputSize;
 
     public CharacterEffect() {
-        isIncremented = false;
+
     }
 
     public abstract void getData(Game g);
-    public abstract void playEffect(Object playerInput);
+    public abstract void playEffect(List<Object> playerInput);
 
-    public void incrementCost() {
-        if (!isIncremented) cost++;
-        isIncremented = true;
-    }
-
-    public void setBoughtBy(Player boughtBy) {
-        this.boughtBy = boughtBy;
-    }
 }

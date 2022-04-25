@@ -2,22 +2,33 @@ package Controller.CharacterEffects;
 
 import Controller.Game;
 import Controller.IslandController;
+import Model.CharacterCard;
+
+import java.util.List;
 
 public class HeraldEffect extends CharacterEffect {
-    IslandController ih;
+    IslandController ic;
 
-    @Override
-    public void getData(Game g) {
-        ih = g.getIslandController();
+    public HeraldEffect() {
+        super();
+        expectedInputSize = 1;
     }
 
     @Override
-    public void playEffect(Object playerInput) {
-        if (!((playerInput instanceof Integer))) {
+    public void getData(Game g) {
+        ic = g.getIslandController();
+    }
+
+    @Override
+    public void playEffect(List<Object> playerInput) {
+        //Expects:
+        //{islandID : Integer}
+        if (playerInput.size() != expectedInputSize || !((playerInput.get(0) instanceof Integer))) {
+            //TODO: Exception?
             System.out.println("Message from Araldo.java:\nERROR unusable player input");
             return;
         }
-        int islandID = (int)playerInput;
-        ih.calcInfluence(islandID);
+        int islandID = (int)playerInput.get(0);
+        ic.calcInfluence(islandID);
     }
 }

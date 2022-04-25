@@ -28,6 +28,8 @@ public class Shop {
         fillShop(charIndex.subList(0, 3));
     }
 
+
+    //TODO: maybe use factory!!!
     public void fillShop(List<Integer> indexArray) {
         if (indexArray.size() != 3) return;
         for(int i=0; i<indexArray.size(); i++) {
