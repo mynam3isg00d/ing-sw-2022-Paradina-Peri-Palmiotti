@@ -10,6 +10,7 @@ Possible implementation for Game constructors:
 //TODO: Add BoardsHandler implementation
 package Controller;
 
+import Events.GameEvent;
 import Model.*;
 import View.*;
 import java.util.*;
@@ -75,18 +76,18 @@ public class Game implements Observer{
      */
     @Override
     public void update(Observable obs, Object o) {
-        handleEvent(o);
+        handleEvent((GameEvent)o);
     }
 
     //----------------------------------------------------------------------------------------------------------------
-    //handleEvent methods, overload on different event types. Event objects come from a factory of events parsing a json
+    //handleEvent methods, overload on different event types. Event objects come from a factory of events parsing a json  (are you sure?)
     //handleEvent will call the right methods on the right controller
     //----------------------------------------------------------------------------------------------------------------
     public void handleEvent() {
 
     }
 
-    public void handleEvent(Object o) {
+    public void handleEvent(GameEvent gameEvent) {
 
     }
     //----------------------------------------------------------------------------------------------------------------
@@ -126,6 +127,22 @@ public class Game implements Observer{
      * Update player order will be called whenever, just before the start of the action phase of a turn, all players will have chosen an assistant
      */
     public void updatePlayerOrder() {
-        //TODO write something smart
+        //TODO: doesn't consider same assistant play for now
+        ArrayList<Player> temp = new ArrayList<>();
+        ArrayList<Player> playersCopy = new ArrayList<>(players);
+        while(!playersCopy.isEmpty()) {
+            Player minPlayer = playersCopy.get(0);
+            int minOrderNumber = 11;
+            for(Player p : playersCopy) {
+                int t = p.getAssistantInPlay().getOrderNumber();
+                if(t < minOrderNumber) {
+                    minPlayer = p;
+                    minOrderNumber = t;
+                }
+            }
+            playersCopy.remove(minPlayer);
+            temp.add(minPlayer);
+        }
+        players = temp;
     }
 }
