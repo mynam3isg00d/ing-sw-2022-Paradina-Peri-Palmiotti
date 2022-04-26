@@ -48,13 +48,25 @@ public class Connection extends Observable implements Runnable {
             name = in.nextLine();
 
             int playerNumber = 0;
+            boolean validEntry;
             do{
+                validEntry = true;
                 send("How many players would you like to play with??");
-                playerNumber = Integer.parseInt(in.nextLine());
-            } while(playerNumber != 2 && playerNumber != 3 && playerNumber != 4);
+                try {
+                    playerNumber = Integer.parseInt(in.nextLine());
+                    if (playerNumber != 2 && playerNumber != 3 && playerNumber != 4) validEntry = false;
+                } catch (NumberFormatException e) {
+                    validEntry = false;
+                    e.printStackTrace();
+                } finally {
+
+                }
+            } while(!validEntry);
 
 
-            server.lobby(this, name, playerNumber);
+            int n = server.lobby(this, name, playerNumber);
+            send("Waiting for " + n + " player(s) to join");
+
             while (isActive) {
                 //currently, only works with strings
                 String message = in.nextLine();

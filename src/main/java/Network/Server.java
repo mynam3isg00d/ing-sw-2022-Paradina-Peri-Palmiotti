@@ -3,6 +3,7 @@ package Network;
 import Controller.Game;
 import Model.Model;
 import Model.Player;
+import View.RemoteView;
 
 import java.io.IOException;
 import java.net.*;
@@ -37,7 +38,7 @@ public class Server implements Runnable{
      * Synchronized in order to avoid concurrent changes to the lists
      * @param newConnection The connection just created
      */
-    public synchronized void lobby(Connection newConnection, String name, int playerNumber) {
+    public synchronized int lobby(Connection newConnection, String name, int playerNumber) {
         int listIndex = playerNumber - 2;
 
         //adds a new connection to the correct waiting list
@@ -78,7 +79,9 @@ public class Server implements Runnable{
                 rv.addObserver(c);
             }
 
-
+            return 0;
+        } else {
+            return playerNumber - waitingLists[listIndex].size();
         }
     }
 

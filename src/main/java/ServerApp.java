@@ -2,7 +2,7 @@ import Network.Server;
 
 public class ServerApp {
 
-    public static void main() {
+    public static void main(String[] args) {
         Server server;
         try {
             server = new Server();

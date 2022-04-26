@@ -1,8 +1,9 @@
-package Network;
+package View;
 
 import Events.EventFactory;
 import Events.GameEvent;
 import Model.Player;
+import Network.Connection;
 
 import java.util.Observable;
 import java.util.Observer;
