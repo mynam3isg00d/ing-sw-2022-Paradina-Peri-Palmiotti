@@ -12,7 +12,7 @@ public class Board {
     private final int MAXTOWERS;
 
     private int[] diners;
-    private List<Student> entrance;
+    private Student[] entrance;
     private boolean[] professors;
     private int towersNum;
 
@@ -23,10 +23,12 @@ public class Board {
     public Board(int towersNum) {
         //TODO: tower colors unhandled, maybe finally time to create a tower enum
         diners = new int[]{0, 0, 0, 0, 0};
-        entrance = new ArrayList<>();
+        entrance = new Student[MAXENTRANCEPLACES];
+        Arrays.fill(entrance, null);
         professors = new boolean[]{false, false, false, false, false};
         this.MAXTOWERS = this.towersNum = towersNum;
     }
+
 
     /**
      * Adds a student to dining
@@ -49,36 +51,53 @@ public class Board {
     }
 
     //TODO: add proper exceptions
-
-    /**
-     * Adds a list of students to entrance
-     * @param students list of students to add
-     * @throws FullEntranceException if the entrance is full (DOES NOT add students up until maxsize)
-     */
-    public void addToEntrance(List<Student> students) throws FullEntranceException {
-        if (entrance.size() + students.size() > MAXENTRANCEPLACES) throw new FullEntranceException();
-        entrance.addAll(students);
+    public void addToEntrance(List<Student> s) throws FullEntranceException {
+        int emptyCount = 0;
+        for(int i=0; i<MAXENTRANCEPLACES; i++) {
+            if (entrance[i] == null) emptyCount++;
+        }
+        if (emptyCount < s.size()) throw new FullEntranceException();
+        for(Student st : s) addToEntrance(st);
     }
 
     /**
      * Adds a single student to entrance
      * @param s single student to add
      */
-    public void addToEntrance(Student s){ entrance.add(s); }
+    public void addToEntrance(Student s) throws FullEntranceException {
+        for(int i=0; i<entrance.length; i++) {
+            if (entrance[i] == null) {
+                entrance[i] = s;
+                return;
+            }
+        }
+        throw new FullEntranceException();
+    }
 
+    @Deprecated
     /**
      * Removes a list of students from entrance
      * @param students list of students to remove
      */
     public void removeFromEntrance(List<Student> students) {
-        for (Student s : students) entrance.remove(s);
+        System.out.println("THIS HAS BEEN DEPRECATED");
+        //for (Student s : students) entrance.remove(s);
     }
 
+    @Deprecated
     /**
      * Removes a single student from entrance
      * @param s single student to remove
      */
-    public void removeFromEntrance(Student s) { entrance.remove(s); }
+    public void removeFromEntrance(Student s) {
+        System.out.println("THIS HAS BEEN DEPRECATED");
+    }
+
+    public Student removeFromEntrance(int idx) {
+        Student retval = entrance[idx];
+        entrance[idx] = null;
+        return retval;
+    }
 
     /**
      * Adds a tower to the board (increases towerNum)
@@ -114,8 +133,8 @@ public class Board {
         return diners;
     }
 
-    public List<Student> getEntrance() {
-        return new ArrayList<>(entrance);
+    public Student[] getEntrance() {
+        return entrance.clone();
     }
 
     public boolean[] getProfessors() {

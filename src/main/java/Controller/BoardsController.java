@@ -124,6 +124,17 @@ public class BoardsController {
     }
 
     /**
+     * Moves one student from the entrance of the player requesting the move to his diner
+     * @param playerID The player requesting the move
+     * @param index index of the student in the entrance
+     * @throws NoSuchStudentsException
+     */
+    public void moveToDiner(String playerID, int index) throws NoSuchStudentsException {
+        Board b = playerBoardMap.get(playerID);
+
+    }
+
+    /**
      * Called each time //TODO a student gets moved to a diner (?)
      */
     public void updateProfessors() {
@@ -143,6 +154,7 @@ public class BoardsController {
     //else, removes the students in s from the board of the right player
     //called by islandHandler when a player wants to move some students to an island
 
+    @Deprecated
     /**
      * Called by islandController whenever a player wants to move students from the board to one island
      * Simply removes the students from the board of the requesting player
@@ -151,7 +163,7 @@ public class BoardsController {
      * @throws NoSuchStudentsException
      */
     public void removeFromEntrance(String playerID, List<Student> ss) throws NoSuchStudentsException {
-        List<Student> entranceCopy = playerBoardMap.get(playerID).getEntrance();
+        List<Student> entranceCopy = Arrays.asList(playerBoardMap.get(playerID).getEntrance());
         for (Student s : ss) {
             if (!entranceCopy.remove(s)) throw new NoSuchStudentsException();
         }

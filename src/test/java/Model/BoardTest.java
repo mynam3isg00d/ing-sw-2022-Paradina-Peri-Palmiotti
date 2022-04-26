@@ -3,6 +3,7 @@ package Model;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,7 +58,7 @@ class BoardTest {
         expected.add(Student.BLUE);
 
         for (int i = 0; i < expected.size(); i++) {
-            assertEquals(expected.get(i), b.getEntrance().get(i));
+            assertEquals(expected.get(i), Arrays.asList(b.getEntrance()).get(i));
         }
     }
 
@@ -74,7 +75,7 @@ class BoardTest {
         expected.add(Student.RED);
 
         for (int i = 0; i < expected.size(); i++) {
-            assertEquals(expected.get(i), b.getEntrance().get(i));
+            assertEquals(expected.get(i), Arrays.asList(b.getEntrance()).get(i));
         }
     }
 
