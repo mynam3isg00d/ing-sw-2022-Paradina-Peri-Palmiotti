@@ -21,7 +21,9 @@ import java.util.*;
  * Handles events coming from the view and calls the right methods on the right controller.
  */
 public class Game implements Observer{
+
     private Model model;
+    private View view;
 
     //GameInfo is an internal class that contains info about the game
     private GameInfo info;
@@ -88,7 +90,47 @@ public class Game implements Observer{
     }
 
     public void handleEvent(GameEvent gameEvent) {
+        switch (gameEvent.getMove()){
+            case A:
+                //Check if the assistant played is in the player's hand.
+                //Check if the assistant is legal, i.e. has not yet been played by someone else
 
+                //Update model
+                break;
+            case B:
+                //Check if arguments are legal.
+                //Check if studentID is available to be moved
+                //Move student to dining room
+
+                //Update model moving student to dining room
+                break;
+            case C:
+                //Check if arguments are legal.
+                //Check if studentID is available to be moved
+
+                //Update model moving student to island
+                break;
+            case D:
+                //Check if number of steps is legal
+
+                //Update model by relocating mother nature
+                break;
+            case E:
+                //Check if cloudID is legal
+                //Check if cloud is not empty
+
+                //Update model by adding the students that are on the cloud to the entrance of the player
+                break;
+            case F:
+                //handle event
+                break;
+            case G:
+                //Check if wizard is available
+
+                //Update model by assigning wizard's deck to player
+                break;
+
+        }
     }
     //----------------------------------------------------------------------------------------------------------------
     //end events handling
@@ -144,5 +186,9 @@ public class Game implements Observer{
             temp.add(minPlayer);
         }
         players = temp;
+    }
+
+    public void HandleEvent(Choice choice){
+
     }
 }
