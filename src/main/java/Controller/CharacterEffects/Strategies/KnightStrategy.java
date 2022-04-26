@@ -8,7 +8,13 @@ import Model.Student;
 
 import java.util.*;
 
-public class CentaurStrategy implements InfluenceStrategy{
+public class KnightStrategy implements InfluenceStrategy{
+    private int teamId;
+
+    public KnightStrategy(int tid) {
+        teamId = tid;
+    }
+
     @Override
     public int calcInfluence(int islandIndex, IslandsWrapper islandModel, BoardsController boardsController) {
         //gets the students on the island, if there are no students on the island the situation remains unchanged
@@ -25,7 +31,6 @@ public class CentaurStrategy implements InfluenceStrategy{
         //every team influence will be stored in a hashmap like:
         //teamId -> influence
         HashMap<Integer, Integer> influences = new HashMap<>();
-
         //checks which teams have some influence on the island (ie: the teams which have at least one professor) and puts them on the infuences map
         List<Student> colors = Eryantis.getColors();
         for (Student s : colors) {
@@ -33,15 +38,19 @@ public class CentaurStrategy implements InfluenceStrategy{
             if (owner != null && !influences.containsKey(owner.getTeamID())) influences.put(owner.getTeamID(), 0);
         }
 
-        Integer currentInfluence = islandModel.getInfluence(islandIndex);
-        //----------------------------------------------------------------------------------------
-        //no extra influence point
-        //----------------------------------------------------------------------------------------
+        //initializes to 2 the influence points of the team requesting the effect
+        influences.put(teamId, 2);
 
         //if no professor is assigned, no team can have influence>0 on the island
         if (influences.isEmpty()) {
             System.out.println("CONTROLLER SAYS: no professor is assigned. Nothing changes");
             return -1;
+        }
+
+        //the team who has one or more towers get an extra point of influence for every one of them
+        Integer currentInfluence = islandModel.getInfluence(islandIndex);
+        if ( currentInfluence != null) {
+            influences.put(currentInfluence, islandModel.getIslandDimension(islandIndex));
         }
 
 
@@ -113,6 +122,6 @@ public class CentaurStrategy implements InfluenceStrategy{
             return mostInfluentTeam;
         } else {
             return -1;
+        }
     }
-}
 }

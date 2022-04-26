@@ -8,10 +8,16 @@ import Model.Student;
 
 import java.util.*;
 
-public class CentaurStrategy implements InfluenceStrategy{
+public class MushroomStrategy implements InfluenceStrategy{
+    private int colorId;
+
+    public MushroomStrategy(int cid) {
+        colorId = cid;
+    }
+
     @Override
     public int calcInfluence(int islandIndex, IslandsWrapper islandModel, BoardsController boardsController) {
-        //gets the students on the island, if there are no students on the island the situation remains unchanged
+//gets the students on the island, if there are no students on the island the situation remains unchanged
         int[] students = islandModel.getStudents(islandIndex);
         int[] noStudentsArray = new int[] {
                 0,0,0,0,0
@@ -25,40 +31,45 @@ public class CentaurStrategy implements InfluenceStrategy{
         //every team influence will be stored in a hashmap like:
         //teamId -> influence
         HashMap<Integer, Integer> influences = new HashMap<>();
-
         //checks which teams have some influence on the island (ie: the teams which have at least one professor) and puts them on the infuences map
         List<Student> colors = Eryantis.getColors();
         for (Student s : colors) {
             Player owner = boardsController.getProfessorOwner(s.getColorId());
             if (owner != null && !influences.containsKey(owner.getTeamID())) influences.put(owner.getTeamID(), 0);
         }
-
-        Integer currentInfluence = islandModel.getInfluence(islandIndex);
-        //----------------------------------------------------------------------------------------
-        //no extra influence point
-        //----------------------------------------------------------------------------------------
-
         //if no professor is assigned, no team can have influence>0 on the island
         if (influences.isEmpty()) {
             System.out.println("CONTROLLER SAYS: no professor is assigned. Nothing changes");
             return -1;
         }
 
+        //the team who has one or more towers get an extra point of influence for every one of them
+        Integer currentInfluence = islandModel.getInfluence(islandIndex);
+        if ( currentInfluence != null) {
+            influences.put(currentInfluence, islandModel.getIslandDimension(islandIndex));
+        }
+
 
         for(int color = 0; color < 5; color++) {
-            //studentsOnIsland is the number of [color] students already on the island
-            int studentsOnIsland = students[color];
 
-            Player professorOwner = boardsController.getProfessorOwner(color);
-            if (professorOwner != null) {
-                //playerKey is the player who controls the [color] professor
-                Player playerKey = professorOwner;
+            //influence points are added ONLY IF the color is different from the one chosen by the player requesting the effect
+            if (color != colorId) {
+                //studentsOnIsland is the number of [color] students already on the island
+                int studentsOnIsland = students[color];
 
-                //influenceAdded is the influence value given by the control of the professor in consideration
-                //puts oldInfluence + studentsOnIsland in the hashmap next to the relative team
-                int oldInfluence = influences.get(playerKey.getTeamID());
-                influences.put(playerKey.getTeamID(), oldInfluence+studentsOnIsland);
+                Player professorOwner = boardsController.getProfessorOwner(color);
+                if (professorOwner != null) {
+                    //playerKey is the player who controls the [color] professor
+                    Player playerKey = professorOwner;
+
+                    //influenceAdded is the influence value given by the control of the professor in consideration
+                    //puts oldInfluence + studentsOnIsland in the hashmap next to the relative team
+                    int oldInfluence = influences.get(playerKey.getTeamID());
+                    influences.put(playerKey.getTeamID(), oldInfluence + studentsOnIsland);
+                }
             }
+
+
         }
 
         //empties the map in order to obtain a list of map entries sorted by influence
@@ -113,6 +124,6 @@ public class CentaurStrategy implements InfluenceStrategy{
             return mostInfluentTeam;
         } else {
             return -1;
+        }
     }
-}
 }

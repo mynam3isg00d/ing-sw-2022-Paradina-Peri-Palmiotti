@@ -27,7 +27,6 @@ public class CharacterController {
         ce.playEffect(playerInput);
         //Modify model
         shop.incrementCost(cardIndex);
-
     }
 
     private static CharacterEffect getEffect(CharacterCard cc) {

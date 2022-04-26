@@ -20,6 +20,9 @@ public abstract class CharacterEffect {
     }
 
     public abstract void getData(Game g);
+
+    //QUI le strategy vengono inizializzate, passando nei costruttori i player input che servono
+    //OPPURE bisogna mettere un metodo per cambiarlo
     public abstract void playEffect(List<Object> playerInput);
 
 }
