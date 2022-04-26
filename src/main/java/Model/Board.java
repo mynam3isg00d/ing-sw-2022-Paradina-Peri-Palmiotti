@@ -8,7 +8,7 @@ import java.util.*;
 public class Board {
 
     private final int MAXTABLESEATS = 10;
-    private final int MAXENTRANCEPLACES = 9;
+    private final int MAXENTRANCEPLACES;
     private final int MAXTOWERS;
 
     private int[] diners;
@@ -23,6 +23,17 @@ public class Board {
     public Board(int towersNum) {
         //TODO: tower colors unhandled, maybe finally time to create a tower enum
         diners = new int[]{0, 0, 0, 0, 0};
+        MAXENTRANCEPLACES = 9;
+        entrance = new Student[MAXENTRANCEPLACES];
+        Arrays.fill(entrance, null);
+        professors = new boolean[]{false, false, false, false, false};
+        this.MAXTOWERS = this.towersNum = towersNum;
+    }
+
+    public Board(int towersNum, int maxEntrancePlaces) {
+        //TODO: tower colors unhandled, maybe finally time to create a tower enum
+        diners = new int[]{0, 0, 0, 0, 0};
+        MAXENTRANCEPLACES = maxEntrancePlaces;
         entrance = new Student[MAXENTRANCEPLACES];
         Arrays.fill(entrance, null);
         professors = new boolean[]{false, false, false, false, false};
