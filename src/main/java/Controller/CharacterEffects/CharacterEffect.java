@@ -1,5 +1,6 @@
 package Controller.CharacterEffects;
 
+import Controller.CharacterEffects.Strategies.Strategy;
 import Controller.Game;
 import Model.*;
 
@@ -10,6 +11,9 @@ public abstract class CharacterEffect {
     protected CharacterCard card;
     protected Player boughtBy;
     protected int expectedInputSize;
+
+    //TODO così??
+    protected Strategy strategy;
 
     public CharacterEffect() {
 

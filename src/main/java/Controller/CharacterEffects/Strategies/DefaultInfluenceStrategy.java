@@ -1,4 +1,4 @@
-package Controller.CharacterEffects.DefaultStrategies;
+package Controller.CharacterEffects.Strategies;
 
 import Controller.BoardsController;
 import Controller.Eryantis;
@@ -9,7 +9,7 @@ import Model.Student;
 import java.util.*;
 
 
-public class DefaultInfluenceStrategy {
+public class DefaultInfluenceStrategy implements InfluenceStrategy{
     /**
      * Calculates the most influent team and returns its id
      * @param islandIndex The island in question

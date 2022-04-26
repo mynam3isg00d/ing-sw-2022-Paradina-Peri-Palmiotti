@@ -1,5 +1,6 @@
 package Controller;
-import Controller.CharacterEffects.DefaultStrategies.DefaultInfluenceStrategy;
+import Controller.CharacterEffects.Strategies.DefaultInfluenceStrategy;
+import Controller.CharacterEffects.Strategies.InfluenceStrategy;
 import Exceptions.InvalidMoveException;
 import Exceptions.NoSuchIslandException;
 import Exceptions.NoSuchStudentsException;
@@ -13,7 +14,7 @@ import java.util.*;
 public class IslandController {
     private IslandsWrapper islandModel;
     private BoardsController boardsController;
-    private DefaultInfluenceStrategy influenceStrategy;
+    private InfluenceStrategy influenceStrategy;
 
     /**
      * The IslandController constructor is called by Game.
@@ -61,6 +62,14 @@ public class IslandController {
 
         //calculates the influences on the new position
         calcInfluence(newPosition);
+    }
+
+    /**
+     * Sets a new Influence Strategy
+     * @param newStrategy The new InfluenceStrategy
+     */
+    public void setInfluenceStrategy(InfluenceStrategy newStrategy) {
+        influenceStrategy = newStrategy;
     }
 
     /**
