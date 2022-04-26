@@ -37,13 +37,11 @@ public class BoardsController {
         int studentsPerEntrance = 0;
         switch (players.size()) {
             case 2:
+            case 4:
                 studentsPerEntrance = 7;
                 break;
             case 3:
                 studentsPerEntrance = 9;
-                break;
-            case 4:
-                studentsPerEntrance = 7;
                 break;
             default:
                 System.out.println("EXCEPTION NEEDED: Invalid number of players");

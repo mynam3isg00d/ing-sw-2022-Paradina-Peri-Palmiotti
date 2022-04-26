@@ -22,8 +22,8 @@ class IslandControllerTest {
         islandController.connectIslandModel(islandModel);
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Jay-Z", 1));
-        players.add(new Player("Achille Frigeri", 2));
+        players.add(new Player("1", "Jay-Z", 1));
+        players.add(new Player("2", "Achille Frigeri", 2));
         BoardsController boardsController = new BoardsController(players, new Sack(120));
         islandController.connectBoards(boardsController);
 
@@ -62,8 +62,8 @@ class IslandControllerTest {
         islandController.connectIslandModel(islandModel);
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Jay-Z", 1));
-        players.add(new Player("Achille Frigeri", 2));
+        players.add(new Player("1", "Jay-Z", 1));
+        players.add(new Player("2", "Achille Frigeri", 2));
         BoardsController boardsController = new BoardsController(players, new Sack(120));
         islandController.connectBoards(boardsController);
 

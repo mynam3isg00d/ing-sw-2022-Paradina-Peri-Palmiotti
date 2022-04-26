@@ -23,6 +23,13 @@ public class Player {
         hand = null;
     }
 
+    public Player(String pid, String n, int tid) {
+        playerID = pid;
+        name = n;
+        teamId = tid;
+        hand = null;
+    }
+
     public Player(String n) {
         name = n;
         teamId = -1;
