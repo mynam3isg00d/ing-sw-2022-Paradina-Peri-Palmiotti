@@ -33,6 +33,8 @@ public class Game implements Observer{
     private CloudController cloudController;
     private BoardsController boardsController;
 
+    private GameModel gameModel;
+
     /**
      * Wraps all info about the game
      */
@@ -64,10 +66,11 @@ public class Game implements Observer{
         cloudController = new CloudController(n);
         boardsController = new BoardsController(players, sack);
 
+        //initializes the game model
+        gameModel = new GameModel();
+
         //islandController requires access to the boards
         islandController.connectBoards(boardsController);
-
-
     }
 
     /**
@@ -78,6 +81,18 @@ public class Game implements Observer{
     @Override
     public void update(Observable obs, Object o) {
         handleEvent((GameEvent)o);
+    }
+
+    /**
+     * Adds rv as observer of all model components
+     * @param rv The RemoteView
+     */
+    public void addObserversToModelComponents(RemoteView rv) {
+        sack.addObserver(rv);
+        islandController.addObserverToModel(rv);
+        cloudController.addObserverToModel(rv);
+        boardsController.addObserverToModel(rv);
+        gameModel.addObserver(rv);
     }
 
     //----------------------------------------------------------------------------------------------------------------

@@ -7,8 +7,9 @@ package Model;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
-public class Shop {
+public class Shop extends Observable {
 
     private final Integer[] AVAILABLE_CHARS = {0, 2, 5, 6, 7, 8, 9, 10};
     private CharacterCard[] shop;

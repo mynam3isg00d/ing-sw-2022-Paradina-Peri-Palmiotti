@@ -4,8 +4,9 @@ import Exceptions.CloudEmptyException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class CloudWrapper {
+public class CloudWrapper extends Observable {
     private List<Cloud> clouds;
 
     /**

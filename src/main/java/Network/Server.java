@@ -65,18 +65,15 @@ public class Server implements Runnable{
                 remoteViews.add(new RemoteView(p, entry.getValue()));
             }
 
-            //initializes the server game components
+            //initializes the Controller components
             Game c = new Game(players);
-            Model m = new Model();
 
-            //TODO if controller cannot initialize Model components, we need to "connect" the right controller components to the respective Model components
-            //in case we decide to use Model as gateWay for every change requested by the Controller, each controller component should have a Model reference, and Model should contain methods that call Model components methods
-
-            //RemoteView is made observer of Model
+            //for each remote view:
             //Controller is made observer of RemoteView
+            //RemoteView is made observer of all Model components
             for(RemoteView rv : remoteViews) {
-                m.addObserver(rv);
-                rv.addObserver(c);
+                rv.addObserver(c); //Controller observes remoteView
+                c.addObserversToModelComponents(rv); //remoteView observes Model
             }
 
             return 0;

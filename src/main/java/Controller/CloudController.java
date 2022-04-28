@@ -7,6 +7,7 @@ import Model.Cloud;
 import Model.CloudWrapper;
 import Model.Sack;
 import Model.Student;
+import View.RemoteView;
 
 import java.util.*;
 
@@ -31,6 +32,9 @@ public class CloudController {
         cloudModel = new CloudWrapper(numOfClouds, studentsPerCloud);
     }
 
+    public void addObserverToModel(RemoteView rv) {
+        cloudModel.addObserver(rv);
+    }
     /**
      * Fills all the clouds initialized in the model and handles the relative exceptions
      * @param s The Sack

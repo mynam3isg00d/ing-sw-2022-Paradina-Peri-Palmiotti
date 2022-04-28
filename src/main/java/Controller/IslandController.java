@@ -5,6 +5,7 @@ import Exceptions.InvalidMoveException;
 import Exceptions.NoSuchIslandException;
 import Exceptions.NoSuchStudentsException;
 import Model.*;
+import View.RemoteView;
 
 import java.util.*;
 
@@ -22,6 +23,7 @@ public class IslandController {
      */
     public IslandController() {
         influenceStrategy = new DefaultInfluenceStrategy();
+        islandModel = new IslandsWrapper();
     }
 
     /**
@@ -30,6 +32,10 @@ public class IslandController {
      */
     public void connectBoards(BoardsController b) {
         boardsController = b;
+    }
+
+    public void addObserverToModel(RemoteView rv) {
+        islandModel.addObserver(rv);
     }
 
     /**

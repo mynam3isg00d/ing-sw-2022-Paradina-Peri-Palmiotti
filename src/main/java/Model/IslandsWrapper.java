@@ -3,12 +3,13 @@ package Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Contains the references to all the islands (model).
  * Allows changes to the model by providing island indexes
  */
-public class IslandsWrapper {
+public class IslandsWrapper extends Observable {
     final private List<Island> islands;
     private int motherNaturePos;
 

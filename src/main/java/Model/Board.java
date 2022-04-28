@@ -5,7 +5,7 @@ import Exceptions.FullTableException;
 
 import java.util.*;
 
-public class Board {
+public class Board extends Observable{
 
     private final int MAXTABLESEATS = 10;
     private final int MAXENTRANCEPLACES;

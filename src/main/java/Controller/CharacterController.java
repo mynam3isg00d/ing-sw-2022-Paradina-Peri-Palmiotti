@@ -6,6 +6,7 @@ import Controller.CharacterEffects.CharacterEffect;
 import Controller.CharacterEffects.HeraldEffect;
 import Model.CharacterCard;
 import Model.Shop;
+import View.RemoteView;
 
 import java.util.List;
 
@@ -17,6 +18,10 @@ public class CharacterController {
     public CharacterController(Game g) {
         shop = new Shop();
         gameReference = g;
+    }
+
+    public void addObserverToModel(RemoteView rv) {
+        shop.addObserver(rv);
     }
 
     public void buyCard(int cardIndex, List<Object> playerInput) {

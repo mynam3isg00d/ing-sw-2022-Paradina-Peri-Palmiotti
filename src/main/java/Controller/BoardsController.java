@@ -9,6 +9,7 @@ import Model.Board;
 import Model.Player;
 import Model.Sack;
 import Model.Student;
+import View.RemoteView;
 
 import java.util.*;
 
@@ -53,8 +54,16 @@ public class BoardsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-        //TODO fill boards with random students
+    /**
+     * Adds the remote view as an observer for every Board model
+     * @param rv The board model
+     */
+    public void addObserverToModel(RemoteView rv) {
+        for (Player p : players) {
+            playerBoardMap.get(p.getPlayerID()).addObserver(rv);
+        }
     }
 
     private void createBoards(int playerNum) {

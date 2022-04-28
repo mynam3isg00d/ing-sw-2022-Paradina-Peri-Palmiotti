@@ -3,7 +3,7 @@ import Exceptions.EmptySackException;
 
 import java.util.*;
 
-public class Sack {
+public class Sack extends Observable {
 
     private final Stack<Integer> sack;
 
