@@ -21,6 +21,6 @@ public class CentaurEffect extends CharacterEffect {
 
     @Override
     public void playEffect(List<Object> playerInput) {
-        
+        //ic.setStrategy(new CentaurStrategy( (Student)playerInput.get(0) );
     }
 }

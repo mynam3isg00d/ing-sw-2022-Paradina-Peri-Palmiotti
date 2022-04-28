@@ -7,7 +7,7 @@ import java.io.PrintStream;
 import java.util.*;
 
 
-public class View implements Runnable, Observer extends Observable{
+public class View extends Observable implements Runnable, Observer {
 
     //TODO: add notify and update;
 
@@ -133,5 +133,10 @@ public class View implements Runnable, Observer extends Observable{
             System.out.print("[" + a.getOrderNumber() + "|" + a.getMotherNumber() + "]");
         }
         System.out.println("\n");
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

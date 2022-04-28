@@ -7,7 +7,6 @@ Possible implementation for Game constructors:
     Game(String name1, String name2, String name3, String name4)
     then create the proper number
 */
-//TODO: Add BoardsHandler implementation
 package Controller;
 
 import Events.GameEvent;
@@ -186,9 +185,5 @@ public class Game implements Observer{
             temp.add(minPlayer);
         }
         players = temp;
-    }
-
-    public void HandleEvent(Choice choice){
-
     }
 }

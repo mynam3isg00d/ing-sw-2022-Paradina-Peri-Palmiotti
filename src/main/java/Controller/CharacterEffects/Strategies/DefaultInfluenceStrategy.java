@@ -4,6 +4,7 @@ import Controller.BoardsController;
 import Controller.Eryantis;
 import Model.IslandsWrapper;
 import Model.Player;
+import Model.Sack;
 import Model.Student;
 
 import java.util.*;
@@ -33,7 +34,7 @@ public class DefaultInfluenceStrategy implements InfluenceStrategy{
         //teamId -> influence
         HashMap<Integer, Integer> influences = new HashMap<>();
         //checks which teams have some influence on the island (ie: the teams which have at least one professor) and puts them on the infuences map
-        List<Student> colors = Eryantis.getColors();
+        List<Student> colors = Sack.getColors();
         for (Student s : colors) {
             Player owner = boardsController.getProfessorOwner(s.getColorId());
             if (owner != null && !influences.containsKey(owner.getTeamID())) influences.put(owner.getTeamID(), 0);
