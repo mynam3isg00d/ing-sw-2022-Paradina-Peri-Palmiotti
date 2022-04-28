@@ -1,5 +1,7 @@
 package View;
 
+import Events.EventFactory;
+import Events.GameEvent;
 import Events.Move;
 import Model.*;
 
@@ -49,39 +51,61 @@ public class View extends Observable implements Runnable, Observer {
         output.println("G - Choose your wizard");
 
         String in = input.next();
-
+        GameEvent currEvent;
         try{
             Move choice = Enum.valueOf(Move.class, in.toUpperCase());
             switch (choice){
                 case A:
+                    currEvent = EventFactory.getEvent(choice);
                     output.println("Choose an assistant from you hand");
                     break;
                 case B:
+                    currEvent = EventFactory.getEvent(choice);
                     output.println("Choose a student and a dining room in this format: STUDENT, DINING ROOM");
                     //print all available studentIDs and dining room IDs
                     break;
                 case C:
+                    currEvent = EventFactory.getEvent(choice);
                     output.println("Choose a student and an island in this format: STUDENT, ISLAND");
                     //print all available studentsIDs and islandIds
                     break;
                 case D:
+                    currEvent = EventFactory.getEvent(choice);
                     output.println("Choose number of steps to move mother nature");
                     break;
                 case E:
+                    currEvent = EventFactory.getEvent(choice);
                     output.println("Choose cloud");
                     //print all available cloudIDs
                     break;
                 case F:
+                    currEvent = EventFactory.getEvent(choice);
                     output.println("Choose character");
                     break;
                 case G:
+                    currEvent = EventFactory.getEvent(choice);
                     output.println("Choose a wizard");
                     //print available wizards
                     break;
+
             }
 
             in = input.next();
-            //here a notification has to be sent to observers. Game needs to handle the event.
+            currEvent.parseInput(in);
+
+
+
+            //A seconda di che evento è il parsing viene fatto in modo diverso. Istanzio l'evento chiamando il factory,
+            //e chiamo il parser della classe che ho istanziato. Il parser salva i parametri di input dentro gli
+            //attributi della classe.
+
+            //Per Event uso una abstract class invece che una interface perché oltre ai metodi non implementati,
+            //che chiederebbero l'uso di interface, mi serve anche un attributo statico che mi dice che tipo di evento
+            //istanziare con il factory metod. Un'interface non può avere metodi, quindi devo usare abstract class.
+            //Altrimenti: c'è un altro posto dove potrei tenere l'attributo che mi dice che tipo di evento devo
+            //istanziare? Magari una nuova classe InputParser che contiene askChoice.
+
+            //Here a notification has to be sent to observers. currEvent needs to be handled by Game.
 
 
         }catch(IllegalArgumentException e){
