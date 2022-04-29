@@ -9,7 +9,7 @@ Possible implementation for Game constructors:
 */
 package Controller;
 
-import Events.GameEvent;
+import Events.*;
 import Model.*;
 import View.*;
 import java.util.*;
@@ -100,9 +100,34 @@ public class Game implements Observer{
     //handleEvent methods, overload on different event types. Event objects come from a factory of events parsing a json  (are you sure?)
     //handleEvent will call the right methods on the right controller
     //----------------------------------------------------------------------------------------------------------------
-    public void handleEvent() {
+    public void handleEvent(PlayAssistantEvent event) {
 
     }
+
+    public void handleEvent(MoveStudentToDiningEvent event) {
+
+    }
+
+    public void handleEvent(MoveStudentToIslandEvent event) {
+
+    }
+
+    public void handleEvent(MoveMotherNatureEvent event) {
+
+    }
+
+    public void handleEvent(PickStudentsFromCloudEvent event) {
+
+    }
+
+    public void handleEvent(BuyPlayCharacterEvent event) {
+
+    }
+
+    public void handleEvent(ChooseWizardEvent event) {
+
+    }
+
 
     public int getRoundCount() {
         return info.roundCount;

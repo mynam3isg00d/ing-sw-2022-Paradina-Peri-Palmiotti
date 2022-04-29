@@ -1,7 +1,5 @@
 package Events;
 
-import Controller.Game;
-
 import java.util.ArrayList;
 import java.util.List;
 
