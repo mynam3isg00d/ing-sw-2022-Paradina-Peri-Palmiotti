@@ -20,9 +20,4 @@ public class PlayAssistantEvent extends GameEvent {
         }
     }
 
-    public List<Object> getInput(){
-        List<Object> out = new ArrayList();
-        out.add(playedAssistant);
-        return out;
-    }
 }

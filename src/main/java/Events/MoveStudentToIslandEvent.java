@@ -1,35 +1,26 @@
 package Events;
 
-import Controller.Game;
+import Model.Student;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MoveStudentToIslandEvent extends GameEvent {
 
-    private Object student;
-    private Object island;
+    private Student student;
+    private int islandID;
 
-    public Object getStudent() {
+    public Student getStudent() {
         return student;
     }
 
-    public Object getIsland() {
-        return island;
+    public int getIslandID() {
+        return islandID;
     }
 
     @Override
     public void parseInput(String input) {
         String[] words = input.split("\\W+");
-        student = words[0];
-        island = words[1];
+        student = Student.valueOf(words[0].toUpperCase());
+        islandID = Integer.parseInt(words[1]);
     }
 
-    @Override
-    public List<Object> getInput() {
-        List<Object> out = new ArrayList();
-        out.add(student);
-        out.add(island);
-        return out;
-    }
 }

@@ -64,50 +64,23 @@ public class View extends Observable implements Runnable, Observer {
                     currEvent = EventFactory.getEvent(choice);
                     output.println("Choose an assistant from you hand: " +
                                    "write tho orderNumber of the assistant you want to play");
-
-                    /*
-                    TODO:   Here a dummy player is initialized. This is a placeholder: we need to find a way
-                            to access the actual player that is playing this move.
-                    */
-                    Player player = new Player("dummyPlayer", 0);
-                    player = null;
-                    //Prints the player's hand so the user can choose one of the cards. Uses the toString method
-                    //of the Assistant class
-                    output.println(player.getHand().getHand());
                     break;
 
                 case B:
                     currEvent = EventFactory.getEvent(choice);
-                    output.println("Choose a student to move to the dining room:" +
-                                    "write the number corresponding to the student you want to move");
-
-                    //TODO Here I need to access the boardController to print tha available students.
-                    // This can't be done because player doesn't have a reference to boardsController and
-                    // View doesn't have a reference to Game, which has a reference to boardsController.
-
-                    /*********************************************************************
-                     This should be deleted after solving the TODO  */
-                    List<Player> players = new ArrayList();
-                    player = null;
-                    players.add(player);
-                    Game game = new Game(players);
-                    /*********************************************************************/
-
-                    //Prints all the students in the entrance: first their index, then the colour
-                    Student[] s = game.getBoardsController().getBoard(player).getEntrance();
-                    for(int i=0; i<s.length; i++){
-                        output.println(i + " - " + s[i]);
-                    }
+                    output.println("Choose a student to move to the dining room by writing its color");
                     break;
+
                 case C:
                     currEvent = EventFactory.getEvent(choice);
                     output.println("Choose a student and an island in this format: STUDENT ISLAND");
-                    //print all available studentsIDs and islandIds
                     break;
+
                 case D:
                     currEvent = EventFactory.getEvent(choice);
                     output.println("Choose number of steps to move mother nature");
                     break;
+
                 case E:
                     currEvent = EventFactory.getEvent(choice);
                     output.println("Choose cloud");
@@ -115,7 +88,7 @@ public class View extends Observable implements Runnable, Observer {
                     break;
                 case F:
                     currEvent = EventFactory.getEvent(choice);
-                    output.println("Choose character");
+                    output.println("Choose character and insert parameters");
                     break;
                 case G:
                     currEvent = EventFactory.getEvent(choice);
@@ -126,19 +99,11 @@ public class View extends Observable implements Runnable, Observer {
             }
 
             in = input.next();
+
+            //A seconda di che evento è il parsing viene fatto in modo diverso. IL'evento è stato istanziato sopra
+            //chiamando il factory method, e qui chiamo il parser della classe che ho istanziato. Il parser salva i
+            //parametri di input dentro gli attributi della classe.
             currEvent.parseInput(in);
-
-
-
-            //A seconda di che evento è il parsing viene fatto in modo diverso. Istanzio l'evento chiamando il factory,
-            //e chiamo il parser della classe che ho istanziato. Il parser salva i parametri di input dentro gli
-            //attributi della classe.
-
-            //Per Event uso una abstract class invece che una interface perché oltre ai metodi non implementati,
-            //che chiederebbero l'uso di interface, mi serve anche un attributo statico che mi dice che tipo di evento
-            //istanziare con il factory metod. Un'interface non può avere metodi, quindi devo usare abstract class.
-            //Altrimenti: c'è un altro posto dove potrei tenere l'attributo che mi dice che tipo di evento devo
-            //istanziare? Magari una nuova classe InputParser che contiene askChoice.
 
             //Here a notification has to be sent to observers. currEvent needs to be handled by Game.
 

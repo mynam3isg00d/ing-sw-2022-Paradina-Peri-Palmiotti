@@ -5,7 +5,6 @@ import java.util.List;
 public abstract class GameEvent {
 
     public abstract void parseInput(String input);
-    public abstract List<Object> getInput();
 
 }
 

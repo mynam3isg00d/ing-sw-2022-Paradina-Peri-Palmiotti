@@ -1,25 +1,16 @@
 package Events;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ChooseWizardEvent extends GameEvent{
 
-    private Object wizard;
+    private int wizardID;
 
-    public Object getWizard() {
-        return wizard;
+    public int getWizardID() {
+        return wizardID;
     }
 
     @Override
     public void parseInput(String input) {
-        wizard = input;
+        wizardID = Integer.parseInt(input);
     }
 
-    @Override
-    public List<Object> getInput() {
-        List<Object> out = new ArrayList();
-        out.add(wizard);
-        return out;
-    }
 }

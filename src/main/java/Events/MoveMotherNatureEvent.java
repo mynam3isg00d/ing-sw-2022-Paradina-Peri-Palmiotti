@@ -1,25 +1,16 @@
 package Events;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MoveMotherNatureEvent extends GameEvent{
 
-    private Object numberOfSteps;
+    private int numberOfSteps;
 
-    public Object getNumberOfSteps() {
+    public int getNumberOfSteps() {
         return numberOfSteps;
     }
 
     @Override
     public void parseInput(String input) {
-        numberOfSteps = input;
+        numberOfSteps = Integer.parseInt(input);
     }
 
-    @Override
-    public List<Object> getInput() {
-        List<Object> out = new ArrayList();
-        out.add(numberOfSteps);
-        return out;
-    }
 }
