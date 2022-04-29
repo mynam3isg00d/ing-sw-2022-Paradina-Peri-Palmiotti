@@ -1,15 +1,21 @@
 package Events;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BuyPlayCharacterEvent extends GameEvent {
+
+    private Object character;
+
     @Override
     public void parseInput(String input) {
-
+        character = input;
     }
 
     @Override
     public List<Object> getInput() {
-        return null;
+        List<Object> out = new ArrayList();
+        out.add(character);
+        return out;
     }
 }

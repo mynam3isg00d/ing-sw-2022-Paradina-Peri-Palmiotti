@@ -61,12 +61,12 @@ public class View extends Observable implements Runnable, Observer {
                     break;
                 case B:
                     currEvent = EventFactory.getEvent(choice);
-                    output.println("Choose a student and a dining room in this format: STUDENT, DINING ROOM");
+                    output.println("Choose a student to move to the dining room");
                     //print all available studentIDs and dining room IDs
                     break;
                 case C:
                     currEvent = EventFactory.getEvent(choice);
-                    output.println("Choose a student and an island in this format: STUDENT, ISLAND");
+                    output.println("Choose a student and an island in this format: STUDENT ISLAND");
                     //print all available studentsIDs and islandIds
                     break;
                 case D:
