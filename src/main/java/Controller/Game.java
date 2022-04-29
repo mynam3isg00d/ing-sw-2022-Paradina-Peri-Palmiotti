@@ -101,6 +101,8 @@ public class Game implements Observer{
     //handleEvent will call the right methods on the right controller
     //----------------------------------------------------------------------------------------------------------------
     public void handleEvent(PlayAssistantEvent event) {
+        //I need a way to access who played this move. For now I'll use a playerID variable that I'm initializing here
+        Player player = null;
 
     }
 

@@ -7,6 +7,10 @@ public class PlayAssistantEvent extends GameEvent {
 
     public Object playedAssistant;
 
+    public Object getPlayedAssistant() {
+        return playedAssistant;
+    }
+
     public void parseInput(String input){
         this.playedAssistant = input;
     }

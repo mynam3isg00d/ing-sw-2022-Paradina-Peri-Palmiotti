@@ -10,6 +10,14 @@ public class MoveStudentToIslandEvent extends GameEvent {
     private Object student;
     private Object island;
 
+    public Object getStudent() {
+        return student;
+    }
+
+    public Object getIsland() {
+        return island;
+    }
+
     @Override
     public void parseInput(String input) {
         String[] words = input.split("\\W+");

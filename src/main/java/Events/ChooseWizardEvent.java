@@ -7,6 +7,10 @@ public class ChooseWizardEvent extends GameEvent{
 
     private Object wizard;
 
+    public Object getWizard() {
+        return wizard;
+    }
+
     @Override
     public void parseInput(String input) {
         wizard = input;

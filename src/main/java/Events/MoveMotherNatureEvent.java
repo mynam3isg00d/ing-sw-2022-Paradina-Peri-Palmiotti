@@ -7,6 +7,10 @@ public class MoveMotherNatureEvent extends GameEvent{
 
     private Object numberOfSteps;
 
+    public Object getNumberOfSteps() {
+        return numberOfSteps;
+    }
+
     @Override
     public void parseInput(String input) {
         numberOfSteps = input;

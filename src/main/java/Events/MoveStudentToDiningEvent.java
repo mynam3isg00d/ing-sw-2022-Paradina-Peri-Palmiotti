@@ -7,6 +7,10 @@ public class MoveStudentToDiningEvent extends GameEvent{
 
     private Object student;
 
+    public Object getStudent() {
+        return student;
+    }
+
     @Override
     public void parseInput(String input) {
         student = input;

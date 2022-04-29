@@ -7,6 +7,10 @@ public class BuyPlayCharacterEvent extends GameEvent {
 
     private Object character;
 
+    public Object getCharacter() {
+        return character;
+    }
+
     @Override
     public void parseInput(String input) {
         character = input;
