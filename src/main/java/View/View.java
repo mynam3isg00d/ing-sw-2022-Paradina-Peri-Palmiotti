@@ -1,8 +1,10 @@
 package View;
 
+import Controller.Game;
 import Events.EventFactory;
 import Events.GameEvent;
 import Events.Move;
+import Exceptions.NoSuchPlayerException;
 import Model.*;
 
 import java.io.PrintStream;
@@ -39,7 +41,7 @@ public class View extends Observable implements Runnable, Observer {
     }
     */
 
-    public void askChoice(){
+    public void askChoice() throws NoSuchPlayerException {
 
         output.println("Select the letter corresponding to what you want to do: ");
         output.println("A - Play an assistant card");
@@ -54,7 +56,7 @@ public class View extends Observable implements Runnable, Observer {
 
         //currEvent variable might need to be protected when using concurrency
         GameEvent currEvent = null;
-        
+
         try{
             Move choice = Enum.valueOf(Move.class, in.toUpperCase());
             switch (choice){
@@ -68,15 +70,34 @@ public class View extends Observable implements Runnable, Observer {
                             to access the actual player that is playing this move.
                     */
                     Player player = new Player("dummyPlayer", 0);
-
+                    player = null;
                     //Prints the player's hand so the user can choose one of the cards. Uses the toString method
                     //of the Assistant class
                     output.println(player.getHand().getHand());
                     break;
+
                 case B:
                     currEvent = EventFactory.getEvent(choice);
-                    output.println("Choose a student to move to the dining room");
-                    //print all available studentIDs and dining room IDs
+                    output.println("Choose a student to move to the dining room:" +
+                                    "write the number corresponding to the student you want to move");
+
+                    //TODO Here I need to access the boardController to print tha available students.
+                    // This can't be done because player doesn't have a reference to boardsController and
+                    // View doesn't have a reference to Game, which has a reference to boardsController.
+
+                    /*********************************************************************
+                     This should be deleted after solving the TODO  */
+                    List<Player> players = new ArrayList();
+                    player = null;
+                    players.add(player);
+                    Game game = new Game(players);
+                    /*********************************************************************/
+
+                    //Prints all the students in the entrance: first their index, then the colour
+                    Student[] s = game.getBoardsController().getBoard(player).getEntrance();
+                    for(int i=0; i<s.length; i++){
+                        output.println(i + " - " + s[i]);
+                    }
                     break;
                 case C:
                     currEvent = EventFactory.getEvent(choice);

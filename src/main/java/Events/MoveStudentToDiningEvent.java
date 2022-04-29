@@ -1,25 +1,31 @@
 package Events;
 
+import Model.Student;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MoveStudentToDiningEvent extends GameEvent{
 
-    private Object student;
+    private int studentIndex;
 
-    public Object getStudent() {
-        return student;
+    public int getStudentIndex() {
+        return studentIndex;
     }
 
     @Override
-    public void parseInput(String input) {
-        student = input;
+    public void parseInput(String input){
+        try{
+            this.studentIndex = Integer.parseInt(input);
+        }catch (NumberFormatException e){
+            e.printStackTrace();;
+        }
     }
 
     @Override
     public List<Object> getInput() {
         List<Object> out = new ArrayList();
-        out.add(student);
+        out.add(studentIndex);
         return out;
     }
 }

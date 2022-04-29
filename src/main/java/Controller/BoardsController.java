@@ -1,10 +1,7 @@
 //NOTE: ALL PLAYER REFERNCES SHOULD BE HANDLED WITH THEIR ID INSTEAD (when sensible).
 
 package Controller;
-import Exceptions.EmptySackException;
-import Exceptions.FullEntranceException;
-import Exceptions.FullTableException;
-import Exceptions.NoSuchStudentsException;
+import Exceptions.*;
 import Model.Board;
 import Model.Player;
 import Model.Sack;
@@ -54,6 +51,19 @@ public class BoardsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Returns the player's board
+     * @param player The player whose board we need to access
+     * @return The board of the player
+     */
+    public Board getBoard(Player player) throws NoSuchPlayerException{
+
+        if(!players.contains(player)){throw new NoSuchPlayerException();}
+
+        return playerBoardMap.get(player.getPlayerID());
+
     }
 
     /**

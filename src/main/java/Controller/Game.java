@@ -12,6 +12,7 @@ package Controller;
 import Events.*;
 import Exceptions.AssistantMissingException;
 import Exceptions.IllegalAssistantException;
+import Exceptions.NoSuchStudentsException;
 import Model.*;
 import View.*;
 import java.util.*;
@@ -118,8 +119,10 @@ public class Game implements Observer{
         player.playAssistant(event.getPlayedAssistant());
     }
 
-    public void handleEvent(MoveStudentToDiningEvent event) {
-
+    public void handleEvent(MoveStudentToDiningEvent event) throws NoSuchStudentsException {
+        //TODO: I need a way to access who played this move. For now, I'll use a dummy player variable that I'm initializing here
+        Player player = new Player("dummyPlayer", 0);
+        boardsController.moveToDiner(player.getPlayerID(), event.getStudentIndex());
     }
 
     public void handleEvent(MoveStudentToIslandEvent event) {
@@ -170,6 +173,10 @@ public class Game implements Observer{
 
     public IslandController getIslandController() {
         return islandController;
+    }
+
+    public BoardsController getBoardsController() {
+        return boardsController;
     }
 
     /**
