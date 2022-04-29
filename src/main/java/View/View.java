@@ -51,7 +51,7 @@ public class View extends Observable implements Runnable, Observer {
         output.println("G - Choose your wizard");
 
         String in = input.next();
-        GameEvent currEvent;
+        GameEvent currEvent = null;
         try{
             Move choice = Enum.valueOf(Move.class, in.toUpperCase());
             switch (choice){

@@ -1,7 +1,6 @@
 package Controller.CharacterEffects.Strategies;
 
 import Controller.BoardsController;
-import Controller.Eryantis;
 import Model.IslandsWrapper;
 import Model.Player;
 import Model.Sack;

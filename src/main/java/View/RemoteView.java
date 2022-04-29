@@ -27,8 +27,8 @@ public class RemoteView extends Observable implements Observer{
             System.out.println("MESSAGE RECEIVER SAYS: Event Received");
             try{
                 //Factory che crea eventi
-                GameEvent e = EventFactory.getEvent();
-                processChoice(e);
+                //GameEvent e = EventFactory.getEvent();
+                //processChoice(e);
             } catch (Exception e) {
                 e.printStackTrace();
             }

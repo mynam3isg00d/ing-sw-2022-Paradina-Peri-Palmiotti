@@ -81,7 +81,7 @@ public class Game implements Observer{
      */
     @Override
     public void update(Observable obs, Object o) {
-        handleEvent((GameEvent)o);
+        //handleEvent((GameEvent)o);
     }
 
     /**
