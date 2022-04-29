@@ -51,13 +51,27 @@ public class View extends Observable implements Runnable, Observer {
         output.println("G - Choose your wizard");
 
         String in = input.next();
+
+        //currEvent variable might need to be protected when using concurrency
         GameEvent currEvent = null;
+        
         try{
             Move choice = Enum.valueOf(Move.class, in.toUpperCase());
             switch (choice){
                 case A:
                     currEvent = EventFactory.getEvent(choice);
-                    output.println("Choose an assistant from you hand");
+                    output.println("Choose an assistant from you hand: " +
+                                   "write tho orderNumber of the assistant you want to play");
+
+                    /*
+                    TODO:   Here a dummy player is initialized. This is a placeholder: we need to find a way
+                            to access the actual player that is playing this move.
+                    */
+                    Player player = new Player("dummyPlayer", 0);
+
+                    //Prints the player's hand so the user can choose one of the cards. Uses the toString method
+                    //of the Assistant class
+                    output.println(player.getHand().getHand());
                     break;
                 case B:
                     currEvent = EventFactory.getEvent(choice);

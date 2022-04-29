@@ -10,6 +10,8 @@ Possible implementation for Game constructors:
 package Controller;
 
 import Events.*;
+import Exceptions.AssistantMissingException;
+import Exceptions.IllegalAssistantException;
 import Model.*;
 import View.*;
 import java.util.*;
@@ -100,10 +102,20 @@ public class Game implements Observer{
     //handleEvent methods, overload on different event types. Event objects come from a factory of events parsing a json  (are you sure?)
     //handleEvent will call the right methods on the right controller
     //----------------------------------------------------------------------------------------------------------------
-    public void handleEvent(PlayAssistantEvent event) {
-        //I need a way to access who played this move. For now I'll use a playerID variable that I'm initializing here
-        Player player = null;
+    public void handleEvent(PlayAssistantEvent event) throws AssistantMissingException, IllegalAssistantException {
+        //TODO: I need a way to access who played this move. For now, I'll use a dummy player variable that I'm initializing here
+        Player player = new Player("dummyPlayer", 0);
+        if(event.getPlayedAssistant() > player.getHand().getHand().size() - 1){ throw new AssistantMissingException(); }
 
+        //Checks if someone else as already played that card. If so, it can't be played unless it's the only available
+        //card in the player's hand.
+        for(Player p : players){
+            if(p.getAssistantInPlay().equals(event.getPlayedAssistant()) && player.getHand().getHand().size()>1){
+                throw new IllegalAssistantException();
+            }
+        }
+
+        player.playAssistant(event.getPlayedAssistant());
     }
 
     public void handleEvent(MoveStudentToDiningEvent event) {

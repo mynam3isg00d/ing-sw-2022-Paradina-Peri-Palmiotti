@@ -5,14 +5,19 @@ import java.util.List;
 
 public class PlayAssistantEvent extends GameEvent {
 
-    public Object playedAssistant;
+    public int playedAssistant;
 
-    public Object getPlayedAssistant() {
+    public int getPlayedAssistant() {
         return playedAssistant;
     }
 
+
     public void parseInput(String input){
-        this.playedAssistant = input;
+        try{
+            this.playedAssistant = Integer.parseInt(input);
+        }catch (NumberFormatException e){
+            e.printStackTrace();;
+        }
     }
 
     public List<Object> getInput(){
