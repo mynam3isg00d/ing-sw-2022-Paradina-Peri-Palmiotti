@@ -4,15 +4,15 @@ import Model.Student;
 
 public class MoveStudentToDiningEvent extends GameEvent{
 
-    private Student student;
+    private int studentIndex;
 
-    public Student getStudent() {
-        return student;
+    public int getStudentIndex() {
+        return studentIndex;
     }
 
     @Override
     public void parseInput(String input){
-        this.student = Student.valueOf(input);
+        this.studentIndex = Integer.parseInt(input);
     }
 
 }

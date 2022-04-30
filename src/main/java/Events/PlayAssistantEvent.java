@@ -1,16 +1,12 @@
 package Events;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PlayAssistantEvent extends GameEvent {
 
-    public int playedAssistant;
+    private int playedAssistant;
 
     public int getPlayedAssistant() {
         return playedAssistant;
     }
-
 
     public void parseInput(String input){
         try{
@@ -18,6 +14,10 @@ public class PlayAssistantEvent extends GameEvent {
         }catch (NumberFormatException e){
             e.printStackTrace();;
         }
+    }
+
+    public void setPlayedAssistant(int playedAssistant) {
+        this.playedAssistant = playedAssistant;
     }
 
 }

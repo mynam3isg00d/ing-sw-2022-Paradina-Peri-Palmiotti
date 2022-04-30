@@ -3,6 +3,15 @@ package Events;
 import java.util.List;
 
 public abstract class GameEvent {
+    protected String playerId;
+
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
+    }
+
+    public String getPlayerId() {
+        return playerId;
+    }
 
     public abstract void parseInput(String input);
 

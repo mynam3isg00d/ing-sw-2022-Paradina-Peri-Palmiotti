@@ -98,6 +98,9 @@ public class View extends Observable implements Runnable, Observer {
 
             }
 
+            //TODO: I need a way to access who played the move. For now, I'll use a dummy player variable that I'm initializing here
+            Player player = new Player("dummyPlayer", 0);
+            currEvent.setPlayerId(player.getPlayerID());
             in = input.next();
 
             //A seconda di che evento è il parsing viene fatto in modo diverso. IL'evento è stato istanziato sopra

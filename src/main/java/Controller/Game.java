@@ -120,7 +120,7 @@ public class Game implements Observer{
     public void handleEvent(MoveStudentToDiningEvent event) throws NoSuchStudentsException {
         //TODO: I need a way to access who played this move. For now, I'll use a dummy player variable that I'm initializing here
         Player player = new Player("dummyPlayer", 0);
-        boardsController.moveToDiner(player.getPlayerID(), event.getStudent());
+        boardsController.moveToDiner(player.getPlayerID(), event.getStudentIndex());
     }
 
 
