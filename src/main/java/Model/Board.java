@@ -2,6 +2,7 @@ package Model;
 import Exceptions.EmptyTableException;
 import Exceptions.FullEntranceException;
 import Exceptions.FullTableException;
+import Exceptions.NoSuchStudentsException;
 
 import java.util.*;
 
@@ -104,7 +105,9 @@ public class Board extends Observable{
         System.out.println("THIS HAS BEEN DEPRECATED");
     }
 
-    public Student removeFromEntrance(int idx) {
+    public Student removeFromEntrance(int idx) throws NoSuchStudentsException {
+        if (entrance[idx] == null) throw new NoSuchStudentsException();
+
         Student retval = entrance[idx];
         entrance[idx] = null;
         return retval;

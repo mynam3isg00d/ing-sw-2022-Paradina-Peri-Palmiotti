@@ -4,7 +4,9 @@ import Model.Student;
 
 
 public class MoveStudentToIslandEvent extends GameEvent {
+    private String playerId;
 
+    private int studentBoardIndex;
     private Student student;
     private int islandID;
 
@@ -14,6 +16,14 @@ public class MoveStudentToIslandEvent extends GameEvent {
 
     public int getIslandID() {
         return islandID;
+    }
+
+    public int getStudentBoardIndex() {
+        return studentBoardIndex;
+    }
+
+    public String getPlayerId() {
+        return playerId;
     }
 
     @Override

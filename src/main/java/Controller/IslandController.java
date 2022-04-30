@@ -49,14 +49,10 @@ public class IslandController {
     /**
      * A method that gets the number of steps and moves mother nature accordingly. Only moves if the move is valid
      * @param steps number of steps selected by the player
-     * @param maximumSteps the limit of steps the player can choose, accordingly to the assistant he played
      * @throws InvalidMoveException
      */
     //TODO pass the maximumSteps parameter in a smart way from the controller
-    public void moveMother(int steps, int maximumSteps) throws InvalidMoveException{
-        //checks card power
-        if (steps > maximumSteps) throw new InvalidMoveException("You must move mother nature a number of steps which is lower than the number indicated on the Assistant card you played");
-
+    public void moveMother(int steps) throws InvalidMoveException{
         //gets the old mother nature position
         int oldPosition = islandModel.getMotherNaturePos();
 
@@ -136,6 +132,7 @@ public class IslandController {
      * @throws NoSuchIslandException
      * @throws NoSuchStudentsException
      */
+    @Deprecated
     public void moveStudents(String playerID, int islandIndex, int numOfStudents, String color) throws InvalidMoveException, NoSuchIslandException, NoSuchStudentsException {
         //3 is the maximum number of students the rules want you to move
         if (numOfStudents > 3) throw new InvalidMoveException("You must move a maximum of 3 students in this phase of the game");
@@ -180,6 +177,14 @@ public class IslandController {
         //TODO aggiungere notifica alla view in IslandModel
     }
 
-    //TODO init
-    public void initGame() {}
+    public void moveStudent(int islandIndex, Student student){
+        List<Student> toAdd = new ArrayList<>();
+        toAdd.add(student);
+
+        islandModel.addStudents(islandIndex, toAdd);
+    }
+
+    public int getIslandsQuantity() {
+        return islandModel.getIslandLength();
+    }
 }

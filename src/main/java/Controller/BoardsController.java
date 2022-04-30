@@ -188,6 +188,11 @@ public class BoardsController {
         playerBoardMap.get(playerID).removeFromEntrance(ss);
     }
 
+    public Student removeFromEntrance(String playerID, int studentBoardIndex) throws NoSuchStudentsException {
+        Student s = playerBoardMap.get(playerID).removeFromEntrance(studentBoardIndex);
+        return s;
+    }
+
     /**
      * Adds a list of students to the entrance of the requesting player
      * @param playerID The ID of the player requesting the move

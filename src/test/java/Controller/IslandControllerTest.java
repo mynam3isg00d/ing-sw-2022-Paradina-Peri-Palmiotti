@@ -43,7 +43,7 @@ class IslandControllerTest {
 
         try {
             //moves from island 0 to island 1
-            islandController.moveMother(1, 5);
+            islandController.moveMother(1);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
@@ -86,7 +86,7 @@ class IslandControllerTest {
 
         try {
             //moves from island 0 to island 1
-            islandController.moveMother(1, 5);
+            islandController.moveMother(1);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
