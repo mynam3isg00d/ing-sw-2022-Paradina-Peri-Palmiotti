@@ -25,9 +25,6 @@ public class Game implements Observer{
     private Model model;
     private View view;
 
-    //GameInfo is an internal class that contains info about the game
-    private GameInfo info;
-
     private List<Player> players;
     private Sack sack;
     private IslandController islandController;
@@ -41,12 +38,6 @@ public class Game implements Observer{
      * Wraps all info about the game
      */
 
-    private class GameInfo {
-        int roundCount;
-        public GameInfo() {
-            roundCount = 0;
-        }
-    }
 
     /**
      * Once the lobby is filled, the Game can be initialized
@@ -56,8 +47,6 @@ public class Game implements Observer{
         this.players = players;
         int n = players.size();
 
-        //initializes the game information
-        info = new GameInfo();
 
         //generates the Students sack
         sack = new Sack(120);
@@ -181,10 +170,6 @@ public class Game implements Observer{
 
     }
 
-
-    public int getRoundCount() {
-        return info.roundCount;
-    }
 
     private boolean checkEnd() {
         //BoardsHandler end conditions: a player (or team) has no towers left;

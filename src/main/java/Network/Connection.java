@@ -1,5 +1,7 @@
 package Network;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
@@ -7,6 +9,7 @@ import java.util.*;
 public class Connection extends Observable implements Runnable {
     private Socket socket;
     private Scanner in;
+    private BufferedReader buf;
     private PrintWriter out;
     private Server server;
     private String name;
@@ -46,6 +49,7 @@ public class Connection extends Observable implements Runnable {
 
             send("What's your name??");
             name = in.nextLine();
+            System.out.println("RECEIVED: " + name);
 
             int playerNumber = 0;
             boolean validEntry;
@@ -58,14 +62,11 @@ public class Connection extends Observable implements Runnable {
                 } catch (NumberFormatException e) {
                     validEntry = false;
                     e.printStackTrace();
-                } finally {
-
                 }
             } while(!validEntry);
 
 
-            int n = server.lobby(this, name, playerNumber);
-            send("Waiting for " + n + " player(s) to join");
+            server.lobby(this, name, playerNumber);
 
             while (isActive) {
                 //currently, only works with strings

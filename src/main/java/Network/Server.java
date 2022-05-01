@@ -38,7 +38,7 @@ public class Server implements Runnable{
      * Synchronized in order to avoid concurrent changes to the lists
      * @param newConnection The connection just created
      */
-    public synchronized int lobby(Connection newConnection, String name, int playerNumber) {
+    public synchronized void lobby(Connection newConnection, String name, int playerNumber) {
         int listIndex = playerNumber - 2;
 
         //adds a new connection to the correct waiting list
@@ -76,9 +76,17 @@ public class Server implements Runnable{
                 c.addObserversToModelComponents(rv); //remoteView observes Model
             }
 
-            return 0;
+            //-------------------------------------------
+
+            //each connection in the playing list has to be notified of the start of the match
+            for (Map.Entry<String, Connection> entry : playingLists[listIndex].entrySet()) {
+                entry.getValue().send("Game Started");
+            }
+
         } else {
-            return playerNumber - waitingLists[listIndex].size();
+            for (Map.Entry<String, Connection> entry : waitingLists[listIndex].entrySet()) {
+                entry.getValue().send("Waiting for " + (playerNumber - waitingLists[listIndex].size()) + "player(s) to join");
+            }
         }
     }
 
