@@ -63,13 +63,8 @@ public class CloudController {
      * @param cloudIndex The selected island index
      * @return The list of students resulting from the operation
      */
-    public List<Student> getFromCloud(int cloudIndex) {
-        try {
-            return cloudModel.getFromCloud(cloudIndex);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List<Student> getFromCloud(int cloudIndex) throws CloudEmptyException{
+        return cloudModel.getFromCloud(cloudIndex);
     }
 
 
@@ -79,5 +74,9 @@ public class CloudController {
      */
     public CloudWrapper getCloudModel() {
         return cloudModel;
+    }
+
+    public int getNumOfClouds() {
+        return numOfClouds;
     }
 }

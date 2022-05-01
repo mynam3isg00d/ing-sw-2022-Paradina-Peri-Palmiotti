@@ -90,26 +90,56 @@ public class Game implements Observer{
     //handleEvent methods, overload on different event types. Event objects come from a factory of events parsing a json  (are you sure?)
     //handleEvent will call the right methods on the right controller
     //----------------------------------------------------------------------------------------------------------------
-    public void handleEvent(PlayAssistantEvent event) throws AssistantMissingException, IllegalAssistantException {
-        //TODO: I need a way to access who played this move. For now, I'll use a dummy player variable that I'm initializing here
-        Player player = new Player("dummyPlayer", 0);
-        if(event.getPlayedAssistant() > player.getHand().getHand().size() - 1){ throw new AssistantMissingException(); }
+
+    /**
+     * Handles a request to play an assistant
+     * @param event
+     * @throws AssistantMissingException //TODO
+     * @throws IllegalAssistantException //TODO
+     * @throws NotYourTurnException The request is coming from the wrong player
+     * @throws InvalidMoveException The request is coming from the right player but in the wrong game phase
+     */
+    public void handleEvent(PlayAssistantEvent event) throws AssistantMissingException, IllegalAssistantException, NotYourTurnException, InvalidMoveException {
+        //not your turn
+        if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
+
+        //not the right phase
+        if (!gameModel.getGamePhase().equals(Phase.PLANNING)) throw new InvalidMoveException("Assistants can only be played in the planning phase");
+
+        //gets reference to the player requesting the move
+        Player requestingPlayer = new Player("");
+        for (Player p : players) {
+            if (event.getPlayerId() == p.getPlayerID()) requestingPlayer = p;
+        }
+
+        if(event.getPlayedAssistant() > requestingPlayer.getHand().getHand().size() - 1){ throw new AssistantMissingException(); }
 
         //Checks if someone else as already played that card. If so, it can't be played unless it's the only available
         //card in the player's hand.
         for(Player p : players){
-            if(p.getAssistantInPlay().equals(event.getPlayedAssistant()) && player.getHand().getHand().size()>1){
+            if(p.getAssistantInPlay().equals(event.getPlayedAssistant()) && requestingPlayer.getHand().getHand().size()>1){
                 throw new IllegalAssistantException();
             }
         }
 
-        player.playAssistant(event.getPlayedAssistant());
+        requestingPlayer.playAssistant(event.getPlayedAssistant());
     }
 
-    public void handleEvent(MoveStudentToDiningEvent event) throws NoSuchStudentsException {
-        //TODO: I need a way to access who played this move. For now, I'll use a dummy player variable that I'm initializing here
-        Player player = new Player("dummyPlayer", 0);
-        boardsController.moveToDiner(player.getPlayerID(), event.getStudentIndex());
+    /**
+     * Handles a request of moving a student to the dining room
+     * @param event
+     * @throws NoSuchStudentsException You don't have the student you want to move
+     * @throws NotYourTurnException The request is coming from the wrong player
+     * @throws InvalidMoveException The request is coming from the right player but in the wrong game phase
+     */
+    public void handleEvent(MoveStudentToDiningEvent event) throws NoSuchStudentsException, NotYourTurnException, InvalidMoveException {
+        //not your turn
+        if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
+
+        //not the right phase
+        if (!gameModel.getGamePhase().equals(Phase.ACTION_STUDENTS)) throw new InvalidMoveException("You can't move any student now");
+
+        boardsController.moveToDiner(event.getPlayerId(), event.getStudentIndex());
     }
 
 
@@ -158,16 +188,49 @@ public class Game implements Observer{
         islandController.moveMother(numberOfSteps);
     }
 
-    public void handleEvent(PickStudentsFromCloudEvent event) {
+    /**
+     * Handles a request of students from a cloud by a player
+     * @param event
+     * @throws NotYourTurnException The request is coming from the wrong player
+     * @throws InvalidMoveException The request is coming from the right player but in the wrong game phase
+     * @throws NoSuchCloudException The cloud index does not exist
+     */
+    public void handleEvent(PickStudentsFromCloudEvent event) throws NotYourTurnException, InvalidMoveException, NoSuchCloudException{
+        //not your turn
+        if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
+        //wrong game phase
+        if (!gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) throw new InvalidMoveException("It's not time to take students from a cloud");
+
+        //wrong index
+        int cloudIndex = event.getCloudIndex();
+        if (cloudIndex < 0 || cloudIndex >= cloudController.getNumOfClouds()) throw new NoSuchCloudException();
+
+        try {
+            //gets from cloud
+            List<Student> fromCloud = cloudController.getFromCloud(cloudIndex);
+            //adds the students to the board
+            boardsController.fillEntrance(event.getPlayerId(), fromCloud);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void handleEvent(BuyPlayCharacterEvent event) {
+    public void handleEvent(BuyPlayCharacterEvent event) throws NotYourTurnException, InvalidMoveException {
+        //not your turn
+        if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
+        //TODO i dont know when characters are played
+        //not the right phase
+        //if (!gameModel.getGamePhase().equals(Phase.PLANNING)) throw new InvalidMoveException("Assistants can only be played in the planning phase");
     }
 
-    public void handleEvent(ChooseWizardEvent event) {
+    public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException{
+        //not your turn
+        if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
+        //not the right phase
+        if (!gameModel.getGamePhase().equals(Phase.SETUP)) throw new InvalidMoveException("You already have chosen a wizard");
     }
 
 
