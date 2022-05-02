@@ -53,6 +53,9 @@ public class RemoteView extends Observable implements Observer{
         notifyAll();
     }
 
+    public void sendError(Exception e) {
+        //connection.send(e);   JSON
+    }
     @Override
     public void update(Observable observable, Object o) {
         //connection.send("Modello aggiornato");

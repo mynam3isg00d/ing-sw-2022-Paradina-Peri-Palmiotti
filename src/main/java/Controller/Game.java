@@ -71,7 +71,11 @@ public class Game implements Observer{
      */
     @Override
     public void update(Observable obs, Object o) {
-        //handleEvent((GameEvent)o);
+        try {
+            //handleEvent((GameEvent) o);
+        } catch (Exception e) {
+            //obs.send(e);
+        }
     }
 
     /**
@@ -107,10 +111,10 @@ public class Game implements Observer{
         if (!gameModel.getGamePhase().equals(Phase.PLANNING)) throw new InvalidMoveException("Assistants can only be played in the planning phase");
 
         //gets reference to the player requesting the move
-        Player requestingPlayer = new Player("");
-        for (Player p : players) {
-            if (event.getPlayerId() == p.getPlayerID()) requestingPlayer = p;
-        }
+        Player requestingPlayer = findRequestingPlayer(event.getPlayerId());
+
+        //you have already played an assistant
+        if (requestingPlayer.getAssistantInPlay() != null) throw new InvalidMoveException("You already have played an assistant");
 
         if(event.getPlayedAssistant() > requestingPlayer.getHand().getHand().size() - 1){ throw new AssistantMissingException(); }
 
@@ -123,6 +127,12 @@ public class Game implements Observer{
         }
 
         requestingPlayer.playAssistant(event.getPlayedAssistant());
+
+        if (allPlayersPlayedAssistant()) {
+            updatePlayerOrder();
+            //set current player
+            gameModel.setGamePhase(Phase.ACTION_STUDENTS);
+        }
     }
 
     /**
@@ -139,11 +149,22 @@ public class Game implements Observer{
         //not the right phase
         if (!gameModel.getGamePhase().equals(Phase.ACTION_STUDENTS)) throw new InvalidMoveException("You can't move any student now");
 
+        //already moved three students
+        if (gameModel.getNumStudentsMoved() >= 3) throw new InvalidMoveException("You can't move any more students");
+
         boardsController.moveToDiner(event.getPlayerId(), event.getStudentIndex());
+
+        //add one student to the turn info
+        gameModel.studentMoved();
+
+        //if the player has moved 3 students the ACTION_STUDENTS phase has ended
+        if (gameModel.getNumStudentsMoved() == 3) {
+            gameModel.setGamePhase(Phase.ACTION_MOTHERNATURE);
+        }
     }
 
 
-    public void handleEvent(MoveStudentToIslandEvent event) throws InvalidMoveException, NotYourTurnException, NoSuchIslandException {
+    public void handleEvent(MoveStudentToIslandEvent event) throws InvalidMoveException, NotYourTurnException, NoSuchIslandException, NoSuchStudentsException {
         int islandIndex = event.getIslandID();
 
         //not your turn
@@ -152,18 +173,28 @@ public class Game implements Observer{
         //not the right phase
         if (!gameModel.getGamePhase().equals(Phase.ACTION_STUDENTS)) throw new InvalidMoveException("You can't move any student now");
 
+        //already moved three students
+        if (gameModel.getNumStudentsMoved() >= 3) throw new InvalidMoveException("You can't move any more students");
+
         //wrong island index
         if (islandController.getIslandsQuantity() <= islandIndex || islandIndex <= 0) throw new NoSuchIslandException();
 
-        Student removed = null;
         try {
-            removed = boardsController.removeFromEntrance(event.getPlayerId(), event.getStudentBoardIndex());
+            Student removed = boardsController.removeFromEntrance(event.getPlayerId(), event.getStudentBoardIndex());
+
+            islandController.moveStudent(islandIndex, removed);
         } catch (NoSuchStudentsException e) {
-            e.printStackTrace();
-            return;
+            throw e;
         }
 
-        islandController.moveStudent(islandIndex, removed);
+
+        //add one student to the turn info
+        gameModel.studentMoved();
+
+        //if the player has moved 3 students the ACTION_STUDENTS phase has ended
+        if (gameModel.getNumStudentsMoved() == 3) {
+            gameModel.setGamePhase(Phase.ACTION_MOTHERNATURE);
+        }
     }
 
     /**
@@ -179,13 +210,21 @@ public class Game implements Observer{
         //wrong game phase
         if (!gameModel.getGamePhase().equals(Phase.ACTION_MOTHERNATURE)) throw new InvalidMoveException("Mother Nature cannot be moved now");
 
+        //you already have moved mother nature
+        if (gameModel.hasMotherNatureMoved()) throw new InvalidMoveException("You can't move mother nature again");
+
         //illegal number of steps requested
         int maximumSteps = gameModel.getCurrentPlayer().getAssistantInPlay().getMotherNumber();
         int numberOfSteps = event.getNumberOfSteps();
         if (numberOfSteps > maximumSteps || numberOfSteps <= 0) throw new InvalidMoveException("You must move mother nature a number of steps which is between 0 and the number indicated on the Assistant card you played");
 
-
         islandController.moveMother(numberOfSteps);
+
+        //set mother nature moved
+        gameModel.motherNatureMoved();
+
+        //once mother nature has moved we get to the cloud phase
+        gameModel.setGamePhase(Phase.ACTION_CLOUDS);
     }
 
     /**
@@ -195,12 +234,15 @@ public class Game implements Observer{
      * @throws InvalidMoveException The request is coming from the right player but in the wrong game phase
      * @throws NoSuchCloudException The cloud index does not exist
      */
-    public void handleEvent(PickStudentsFromCloudEvent event) throws NotYourTurnException, InvalidMoveException, NoSuchCloudException{
+    public void handleEvent(PickStudentsFromCloudEvent event) throws NotYourTurnException, InvalidMoveException, NoSuchCloudException, CloudEmptyException{
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
         //wrong game phase
         if (!gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) throw new InvalidMoveException("It's not time to take students from a cloud");
+
+        //already picked a cloud
+        if (gameModel.isCloudChosen()) throw new InvalidMoveException("You can't pick another cloud");
 
         //wrong index
         int cloudIndex = event.getCloudIndex();
@@ -211,26 +253,53 @@ public class Game implements Observer{
             List<Student> fromCloud = cloudController.getFromCloud(cloudIndex);
             //adds the students to the board
             boardsController.fillEntrance(event.getPlayerId(), fromCloud);
+
+            gameModel.cloudChosen();
+
+            //if the player requesting the move was the last one THEN the round ends
+            if (players.get(players.size() - 1).getPlayerID() == event.getPlayerId()) {     //the player is the last one if it's the last in the players list
+                endRound();
+                initNewRound();
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
     }
 
+    //TODO davide!!!!!!!!
     public void handleEvent(BuyPlayCharacterEvent event) throws NotYourTurnException, InvalidMoveException {
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
-        //TODO i dont know when characters are played
         //not the right phase
-        //if (!gameModel.getGamePhase().equals(Phase.PLANNING)) throw new InvalidMoveException("Assistants can only be played in the planning phase");
+        if (!gameModel.getGamePhase().equals(Phase.ACTION_STUDENTS) && !gameModel.getGamePhase().equals(Phase.ACTION_MOTHERNATURE) && !gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) throw new InvalidMoveException("Assistants can only be played in the planning phase");
     }
 
-    public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException{
+    public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException, WizardAlreadyChosenException{
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
         //not the right phase
-        if (!gameModel.getGamePhase().equals(Phase.SETUP)) throw new InvalidMoveException("You already have chosen a wizard");
+        if (!gameModel.getGamePhase().equals(Phase.SETUP)) throw new InvalidMoveException("You can't choose a wizard now");
+
+        Player requestingPlayer = findRequestingPlayer(event.getPlayerId());
+        //already chosen a wizard
+        if (requestingPlayer.getHand() != null) throw new InvalidMoveException("Already have chosen a wizard");
+
+        //checks if wizard has already been chosen
+        for (Player p : players) {
+            if (p.getHand().getWizardID() == event.getWizardID()) throw new WizardAlreadyChosenException();
+        }
+
+        //sets wizard and initializes hand
+        requestingPlayer.chooseWizard(event.getWizardID());
+
+        //if all players have chosen a wizard the first round can begin
+        if (allWizardsChosen()) {
+            gameModel.newRound();
+            gameModel.setGamePhase(Phase.PLANNING);
+        }
     }
 
 
@@ -284,5 +353,43 @@ public class Game implements Observer{
             temp.add(minPlayer);
         }
         players = temp;
+    }
+
+    /**
+     * Returns the reference to the player with the provided id
+     * @param pid The provided id
+     * @return The reference to the player with the provided id
+     */
+    private Player findRequestingPlayer(String pid) {
+        for (Player p : players) {
+            if (pid == p.getPlayerID()) return p;
+        }
+        return null;
+    }
+
+    /**
+     * Tells if all players have chosen a wizard
+     * @return TRUE/FALSE
+     */
+    private boolean allWizardsChosen() {
+        for (Player p : players) {
+            if (p.getHand() == null) return false;
+        }
+        return true;
+    }
+
+    private boolean allPlayersPlayedAssistant() {
+        for (Player p : players) {
+            if (p.getAssistantInPlay() == null) return false;
+        }
+        return true;
+    }
+
+    private void initNewRound() {
+        //riempie nuvole eccetera
+    }
+
+    private void endRound() {
+        //resetta
     }
 }
