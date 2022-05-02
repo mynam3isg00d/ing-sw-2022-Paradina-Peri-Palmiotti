@@ -62,7 +62,8 @@ public class Hand {
         return false;
     }
 
-    //do i need to jdoc this???????????????????????
+    public int getHandSize() { return hand.size(); }
+
     public List<Assistant> getHand() {
         return new ArrayList<>(hand);
     }

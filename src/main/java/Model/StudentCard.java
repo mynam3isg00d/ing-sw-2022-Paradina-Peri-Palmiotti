@@ -26,13 +26,10 @@ public class StudentCard extends CharacterCard {
         }
     }
 
-    public Student getStudent(Student s) throws NoSuchStudentsException {
-        if(!students.contains(s)) {
-            throw new NoSuchStudentsException();
-        } else {
-            students.remove(s);
-            return s;
-        }
+    public Student getStudent(int index) throws IndexOutOfBoundsException {
+        Student ret = students.get(index);
+        students.remove(index);
+        return ret;
     }
 
     public int getMAX_STUDENTS() {

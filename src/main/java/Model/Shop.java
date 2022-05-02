@@ -4,18 +4,23 @@
 package Model;
 
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 public class Shop extends Observable {
 
     private final Integer[] AVAILABLE_CHARS = {0, 2, 5, 6, 7, 8, 9, 10};
     private CharacterCard[] shop;
+    private HashMap<String, Integer> coinMap;
 
-    public Shop() {
+    public Shop(List<Player> playerList) {
+
         shop = new CharacterCard[3];
+        coinMap = new HashMap<>();
+
+        for(Player p : playerList) {
+            coinMap.put(p.getPlayerID(), 1);
+        }
+
         List<Integer> charIndex = Arrays.asList(AVAILABLE_CHARS.clone());
         Collections.shuffle(charIndex);
         fillShop(charIndex.subList(0, 3));
@@ -27,6 +32,17 @@ public class Shop extends Observable {
         List<Integer> charIndex = Arrays.asList(AVAILABLE_CHARS.clone());
         Collections.shuffle(charIndex);
         fillShop(charIndex.subList(0, 3));
+    }
+
+    public void addCoins(String playerID, int num) {
+        int prev = coinMap.get(playerID);
+        coinMap.put(playerID, prev + num);
+    }
+
+    public void removeCoins(String playerID, int num) {
+
+        //remember to update only the addCoins
+        addCoins(playerID, -num);
     }
 
 
