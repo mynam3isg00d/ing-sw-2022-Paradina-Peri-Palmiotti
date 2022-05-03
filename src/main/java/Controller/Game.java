@@ -256,11 +256,7 @@ public class Game implements Observer{
 
             gameModel.cloudChosen();
 
-            //if the player requesting the move was the last one THEN the round ends
-            if (players.get(players.size() - 1).getPlayerID() == event.getPlayerId()) {     //the player is the last one if it's the last in the players list
-                endRound();
-                initNewRound();
-            }
+            endTurn(event.getPlayerId());
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -362,7 +358,7 @@ public class Game implements Observer{
      */
     private Player findRequestingPlayer(String pid) {
         for (Player p : players) {
-            if (pid == p.getPlayerID()) return p;
+            if (pid.equals(p.getPlayerID())) return p;
         }
         return null;
     }
@@ -387,9 +383,35 @@ public class Game implements Observer{
 
     private void initNewRound() {
         //riempie nuvole eccetera
+        cloudController.fillClouds(sack);
     }
 
-    private void endRound() {
-        //resetta
+    private void endTurn(String pid) {
+        //if the player requesting the move was the last one THEN the round ends
+        if (players.get(players.size() - 1).getPlayerID().equals(pid)) {     //the player is the last one if it's the last in the players list
+            initNewRound();
+        } else {
+            try {
+                //changes current player to the next one
+                Player nextPlayer = getNextPlayer();
+                gameModel.setCurrentPlayer(nextPlayer);
+
+                //resets turn info in player turn
+                gameModel.resetTurnInfo();
+            } catch (Exception e) {
+                System.out.println("Who is this player");
+                e.printStackTrace();
+            }
+        }
     }
+
+    private Player getNextPlayer() throws Exception{
+        String current = gameModel.getCurrentPlayer().getPlayerID();
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getPlayerID().equals(current)) return players.get(i+1);
+        }
+
+        throw new Exception();
+    }
+
 }
