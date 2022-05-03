@@ -5,6 +5,9 @@ import Model.Student;
 
 public class MoveStudentToIslandEvent extends GameEvent {
 
+    public MoveStudentToIslandEvent() {
+        eventId = "0003";
+    }
     private int studentBoardIndex;
     private int islandID;
 

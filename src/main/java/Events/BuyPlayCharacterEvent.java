@@ -6,6 +6,9 @@ import java.util.List;
 
 public class BuyPlayCharacterEvent extends GameEvent {
 
+    public BuyPlayCharacterEvent() {
+        eventId = "0006";
+    }
     private int cardID;
     private List<Object> parameters;
 

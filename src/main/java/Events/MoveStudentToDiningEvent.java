@@ -4,6 +4,9 @@ import Model.Student;
 
 public class MoveStudentToDiningEvent extends GameEvent{
 
+    public MoveStudentToDiningEvent() {
+        eventId = "0002";
+    }
     private int studentIndex;
 
     public int getStudentIndex() {

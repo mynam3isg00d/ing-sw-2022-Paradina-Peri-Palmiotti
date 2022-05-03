@@ -2,6 +2,9 @@ package Events;
 
 public class PlayAssistantEvent extends GameEvent {
 
+    public PlayAssistantEvent() {
+        eventId = "0001";
+    }
     private int playedAssistant;
 
     public int getPlayedAssistant() {
