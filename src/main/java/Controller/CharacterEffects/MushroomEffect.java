@@ -1,16 +1,16 @@
 package Controller.CharacterEffects;
 
-import Controller.CharacterEffects.Strategies.CentaurStrategy;
+import Controller.CharacterEffects.Strategies.MushroomStrategy;
 import Controller.ExpertGame;
 import Controller.IslandController;
 
 import java.util.List;
 
-public class CentaurEffect extends CharacterEffect {
+public class MushroomEffect extends CharacterEffect {
 
     private IslandController ic;
 
-    public CentaurEffect(String playerID) {
+    public MushroomEffect(String playerID) {
         super(playerID);
     }
 
@@ -21,6 +21,10 @@ public class CentaurEffect extends CharacterEffect {
 
     @Override
     public void playEffect(List<Object> playerInput) {
-        ic.setInfluenceStrategy(new CentaurStrategy());
+
+        //Check input format
+        int cid = (Integer) playerInput.get(0);
+
+        ic.setInfluenceStrategy(new MushroomStrategy(cid));
     }
 }

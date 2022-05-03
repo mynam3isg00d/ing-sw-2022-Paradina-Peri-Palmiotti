@@ -1,10 +1,13 @@
+//I hate this, i do not know if it works
+
 package Controller.CharacterEffects;
 
-import Controller.Game;
+import Controller.ExpertGame;
 import Controller.IslandController;
-import Model.CharacterCard;
+import Exceptions.EmptySackException;
+import Exceptions.FullElementException;
 import Model.Sack;
-import Model.Shop;
+import Model.Student;
 import Model.StudentCard;
 
 import java.util.List;
@@ -15,18 +18,39 @@ public class ClerkEffect extends StudentsEffect {
     private StudentCard sc;
     private IslandController ic;
 
-    public ClerkEffect(int playerID) {
+    public ClerkEffect(String playerID) {
         super(playerID);
     }
 
     @Override
-    public void init(Game g) {
+    public void init(ExpertGame g, int cardIndex) {
+        //Connects the controller
+        ic = g.getIslandController();
         sack = g.getSack();
 
+        //Connects the model
+        sc = (StudentCard)g.getCharacterController().getShopReference().getShop()[cardIndex];
     }
 
     @Override
     public void playEffect(List<Object> playerInput) {
 
+        //Expects
+        //{studentIndex : int, islandIndex : int}
+        int studentIndex = (Integer)playerInput.get(0);
+        int islandIndex = (Integer)playerInput.get(1);
+
+        //Get the student at said index
+        Student s = sc.getStudent(studentIndex);
+
+        //Move the student to the island
+        ic.moveStudent(islandIndex, s);
+
+        //Update model
+        try {
+            sc.addStudent(sack.draw(1).get(0));
+        } catch (EmptySackException | FullElementException e) {
+            e.printStackTrace();
+        }
     }
 }

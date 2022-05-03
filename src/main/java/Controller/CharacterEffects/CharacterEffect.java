@@ -1,23 +1,26 @@
 package Controller.CharacterEffects;
 
+import Controller.ExpertGame;
 import Controller.Game;
+import Exceptions.InvalidPlayerInputException;
 import Model.Shop;
 
 import java.util.List;
 
 public abstract class CharacterEffect {
 
-    protected int boughtByID;
+    protected String boughtByID;
     protected int expectedInputSize;
 
-    public CharacterEffect(int playerID) {
+    public CharacterEffect(String playerID) {
         boughtByID = playerID;
     }
 
     //Init requires the which holds:
-    public abstract void init(Game g);
+    public abstract void init(ExpertGame g, int cardIndex);
 
     //QUI le strategy vengono inizializzate, passando nei costruttori i player input che servono
     //OPPURE bisogna mettere un metodo per cambiarlo
-    public abstract void playEffect(List<Object> playerInput);
+    public abstract void playEffect(List<Object> playerInput) throws InvalidPlayerInputException;
+
 }

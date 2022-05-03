@@ -22,16 +22,16 @@ import java.util.*;
  */
 public class Game implements Observer{
 
-    private Model model;
-    private View view;
+    protected Model model;
+    protected View view;
 
-    private List<Player> players;
-    private Sack sack;
-    private IslandController islandController;
-    private CloudController cloudController;
-    private BoardsController boardsController;
+    protected List<Player> players;
+    protected Sack sack;
+    protected IslandController islandController;
+    protected CloudController cloudController;
+    protected BoardsController boardsController;
 
-    private GameModel gameModel;
+    protected GameModel gameModel;
 
 
     /**

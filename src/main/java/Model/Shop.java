@@ -45,6 +45,9 @@ public class Shop extends Observable {
         addCoins(playerID, -num);
     }
 
+    public int getPlayerCoins(String playerID) {
+        return coinMap.get(playerID);
+    }
 
     //TODO: maybe use factory!!!
     public void fillShop(List<Integer> indexArray) {
@@ -72,12 +75,5 @@ public class Shop extends Observable {
 
     public void incrementCost(int index) {
         shop[index].incrementCost();
-    }
-
-    @Override
-    public Object clone() {
-        CharacterCard[] clonedShop = new CharacterCard[shop.length];
-        for(int i=0; i<3; i++) clonedShop[i] = shop[i].getCopy();
-        return clonedShop;
     }
 }

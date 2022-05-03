@@ -11,8 +11,11 @@ public class ExpertGame extends Game {
 
     public ExpertGame(List<Player> players) {
         super(players);
+        characterController = new CharacterController(this);
+    }
 
-        //init characterController
+    public CharacterController getCharacterController() {
+        return characterController;
     }
 
     public void addObserversToModelComponents(RemoteView rv) {

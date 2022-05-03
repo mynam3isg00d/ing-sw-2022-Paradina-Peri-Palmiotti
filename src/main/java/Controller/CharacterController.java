@@ -4,6 +4,8 @@ import Controller.CharacterEffects.CentaurEffect;
 import Controller.CharacterEffects.CharacterEffect;
 import Controller.CharacterEffects.ClerkEffect;
 import Controller.CharacterEffects.HeraldEffect;
+import Exceptions.InsufficientCoinsException;
+import Exceptions.InvalidPlayerInputException;
 import Model.CharacterCard;
 import Model.Shop;
 import View.RemoteView;
@@ -13,9 +15,9 @@ import java.util.List;
 public class CharacterController {
 
     private Shop shop;
-    private Game gameReference;
+    private ExpertGame gameReference;
 
-    public CharacterController(Game g) {
+    public CharacterController(ExpertGame g) {
         gameReference = g;
         shop = new Shop(gameReference.getPlayers());
     }
@@ -24,20 +26,24 @@ public class CharacterController {
         shop.addObserver(rv);
     }
 
-    public void buyCard(int cardIndex, int playerID, List<Object> playerInput) {
+    public void buyCard(int cardIndex, String playerID, List<Object> playerInput) throws InsufficientCoinsException, InvalidPlayerInputException {
 
         CharacterCard cc = shop.getShop()[cardIndex];
+
+        if (shop.getPlayerCoins(playerID) < cc.getCost()) throw new InsufficientCoinsException();
+
+        shop.removeCoins(playerID, cc.getCost());
         CharacterEffect ce = getEffect(cc, playerID);
-        ce.init(gameReference);
+        ce.init(gameReference, cardIndex);
         ce.playEffect(playerInput);
-        shop.incrementCost(cardIndex);
     }
 
     public Game getGameReference() {
         return gameReference;
     }
+    public Shop getShopReference() { return shop; }
 
-    private static CharacterEffect getEffect(CharacterCard cc, int playerID) {
+    private static CharacterEffect getEffect(CharacterCard cc, String playerID) {
         int charID = cc.getCardID();
         switch(charID) {
             case 0: return new ClerkEffect(playerID);
