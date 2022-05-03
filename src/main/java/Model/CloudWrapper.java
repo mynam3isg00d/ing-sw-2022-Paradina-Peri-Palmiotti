@@ -27,7 +27,7 @@ public class CloudWrapper extends Observable {
      * @param cloudIndex The index of the selected cloud
      * @throws Exception Generic Exception that could come from a single cloud, will be handled in the controller
      */
-    public void fillCloud(List<Student> students, int cloudIndex) throws Exception{
+    public void fillCloud(List<Student> students, int cloudIndex) throws Exception {
         clouds.get(cloudIndex).fill(students);
     }
 

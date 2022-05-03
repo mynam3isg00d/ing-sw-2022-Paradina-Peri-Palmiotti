@@ -10,30 +10,38 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShopTest {
 
-    /*
     @Test
     void testConstructor() {
-        Shop s = new Shop();
-        assertEquals(3, s.getShop().length);
-        for(int i=0; i<s.getShop().length; i++) {
-            assertNotNull(s.getShop()[i]);
-            assertTrue(s.getShop()[i] instanceof CharacterCard);
-        }
+       for(int n=2; n<=4; n++) {
+           List<Player> players = getPlayerList(n);
+           Shop s = new Shop(players);
+           assertEquals(3, s.getShop().length);
+           for(int i=0; i<s.getShop().length; i++) {
+               assertNotNull(s.getShop()[i]);
+               assertTrue(s.getShop()[i] instanceof CharacterCard);
+           }
+           for(int i=0; i<2; i++) {
+               assertEquals(1, s.getPlayerCoins(players.get(i).getPlayerID()));
+           }
+       }
     }
 
     @Test
     void testCustomCharacterPool() {
-        Shop s = new Shop(new Integer[]{0, 2, 5});
-        List<CharacterCard> carr = Arrays.asList(s.getShop());
-        assertTrue(carr.contains(new CharacterCard(0)));
-        assertTrue(carr.contains(new CharacterCard(2)));
-        assertTrue(carr.contains(new CharacterCard(5)));
-        assertFalse(carr.contains(new CharacterCard(10)));
+        for(int n=2; n<=4; n++) {
+            List<Player> players = getPlayerList(n);
+            Shop s = new Shop(players, new Integer[]{0, 2, 5});
+            List<CharacterCard> carr = Arrays.asList(s.getShop());
+            assertTrue(carr.contains(new CharacterCard(0)));
+            assertTrue(carr.contains(new CharacterCard(2)));
+            assertTrue(carr.contains(new CharacterCard(5)));
+            assertFalse(carr.contains(new CharacterCard(10)));
+        }
     }
 
     @Test
     void testStudentCardPool() {
-        Shop s = new Shop(new Integer[]{0, 10, 6});
+        Shop s = new Shop(getPlayerList(2), new Integer[]{0, 10, 6});
         for(int i=0; i<s.getShop().length; i++) {
             CharacterCard cc = s.getShop()[i];
             assertTrue(cc instanceof StudentCard);
@@ -48,7 +56,7 @@ class ShopTest {
     }
 
     private void testBuyIndex(int i) {
-        Shop s = new Shop();
+        Shop s = new Shop(getPlayerList(2));
         CharacterCard[] carr = s.getShop();
         int oldCost = carr[i].getCost();
         assertFalse(carr[i].isIncremented());
@@ -62,5 +70,32 @@ class ShopTest {
         assertTrue(carr[i].isIncremented());
         assertEquals(oldCost, carr[i].getCost());
     }
-    */
+
+    @Test
+    void testCoinMap() {
+        List<Player> players = getPlayerList(3);
+        Shop s = new Shop(players);
+        for(int i=0; i<3; i++) {
+            assertEquals(1, s.getPlayerCoins(players.get(i).getPlayerID()));
+        }
+
+        s.addCoins(players.get(0).getPlayerID(), 1);
+        s.addCoins(players.get(1).getPlayerID(), 1);
+
+        assertEquals(2, s.getPlayerCoins(players.get(0).getPlayerID()));
+        assertEquals(2, s.getPlayerCoins(players.get(1).getPlayerID()));
+        assertEquals(1, s.getPlayerCoins(players.get(2).getPlayerID()));
+    }
+
+    private List<Player> getPlayerList(int n) {
+        List<Player> ret = new ArrayList<>();
+        String name = "a";
+        for(int i=0; i<n; i++) {
+            Player p = new Player(name, i);
+            p.setPlayerID(name);
+            ret.add(p);
+            name = name + "a";
+        }
+        return ret;
+    }
 }

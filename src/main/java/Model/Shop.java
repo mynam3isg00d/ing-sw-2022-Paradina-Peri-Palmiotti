@@ -27,8 +27,15 @@ public class Shop extends Observable {
     }
 
     //Mainly for testing purposes
-    public Shop(Integer[] AVAILABLE_CHARS) {
+    public Shop(List<Player> playerList, Integer[] AVAILABLE_CHARS) {
         shop = new CharacterCard[3];
+
+        coinMap = new HashMap<>();
+
+        for(Player p : playerList) {
+            coinMap.put(p.getPlayerID(), 1);
+        }
+
         List<Integer> charIndex = Arrays.asList(AVAILABLE_CHARS.clone());
         Collections.shuffle(charIndex);
         fillShop(charIndex.subList(0, 3));
