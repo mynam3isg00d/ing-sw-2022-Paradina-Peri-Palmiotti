@@ -42,6 +42,10 @@ public class GameModel extends Observable {
         return currentPlayer;
     }
 
+    public void setCurrentPlayer(Player newCurrentPlayer) {
+        currentPlayer = newCurrentPlayer;
+    }
+
     public void resetTurnInfo() {
         turnInfo.numOfStudentsMoved = 0;
         turnInfo.motherNatureMoved = false;
