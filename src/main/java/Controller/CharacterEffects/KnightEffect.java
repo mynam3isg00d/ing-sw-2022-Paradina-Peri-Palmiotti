@@ -8,9 +8,8 @@ import Model.Player;
 
 import java.util.List;
 
-public class KnightEffect extends CharacterEffect {
+public class KnightEffect extends InfluenceEffect {
 
-    private IslandController ic;
     private String playerID;
     private int teamID;
 

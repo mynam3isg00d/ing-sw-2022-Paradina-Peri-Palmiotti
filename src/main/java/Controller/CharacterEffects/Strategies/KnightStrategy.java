@@ -9,10 +9,10 @@ import Model.Student;
 import java.util.*;
 
 public class KnightStrategy implements InfluenceStrategy{
-    private int teamId;
+    private int teamID;
 
     public KnightStrategy(int tid) {
-        teamId = tid;
+        teamID = tid;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class KnightStrategy implements InfluenceStrategy{
         }
 
         //initializes to 2 the influence points of the team requesting the effect
-        influences.put(teamId, 2);
+        influences.put(teamID, 2);
 
         //if no professor is assigned, no team can have influence>0 on the island
         if (influences.isEmpty()) {

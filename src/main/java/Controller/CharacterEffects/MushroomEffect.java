@@ -2,13 +2,10 @@ package Controller.CharacterEffects;
 
 import Controller.CharacterEffects.Strategies.MushroomStrategy;
 import Controller.ExpertGame;
-import Controller.IslandController;
 
 import java.util.List;
 
-public class MushroomEffect extends CharacterEffect {
-
-    private IslandController ic;
+public class MushroomEffect extends InfluenceEffect {
 
     public MushroomEffect(String playerID) {
         super(playerID);

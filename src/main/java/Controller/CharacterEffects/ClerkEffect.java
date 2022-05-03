@@ -14,8 +14,6 @@ import java.util.List;
 
 public class ClerkEffect extends StudentsEffect {
 
-    private Sack sack;
-    private StudentCard sc;
     private IslandController ic;
 
     public ClerkEffect(String playerID) {

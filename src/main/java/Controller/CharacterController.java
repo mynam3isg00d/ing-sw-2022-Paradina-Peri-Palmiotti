@@ -1,9 +1,6 @@
 package Controller;
 
-import Controller.CharacterEffects.CentaurEffect;
-import Controller.CharacterEffects.CharacterEffect;
-import Controller.CharacterEffects.ClerkEffect;
-import Controller.CharacterEffects.HeraldEffect;
+import Controller.CharacterEffects.*;
 import Exceptions.InsufficientCoinsException;
 import Exceptions.InvalidPlayerInputException;
 import Model.CharacterCard;
@@ -53,8 +50,8 @@ public class CharacterController {
             //case 4: return new GrandmaEffect();
             case 5: return new CentaurEffect(playerID);
             //case 6: return new JesterEffect();
-            //case 7: return new KnightEffect();
-            //case 8: return new MushroomEffect();
+            case 7: return new KnightEffect(playerID);
+            case 8: return new MushroomEffect(playerID);
             //case 9: return new BardEffect();
             //case 10: return new PrincessEffect();
             //case 11: return new ThiefEffect();

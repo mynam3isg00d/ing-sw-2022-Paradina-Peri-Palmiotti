@@ -6,9 +6,7 @@ import Controller.IslandController;
 
 import java.util.List;
 
-public class CentaurEffect extends CharacterEffect {
-
-    private IslandController ic;
+public class CentaurEffect extends InfluenceEffect {
 
     public CentaurEffect(String playerID) {
         super(playerID);

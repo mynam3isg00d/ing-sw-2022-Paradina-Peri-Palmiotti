@@ -8,7 +8,8 @@ import Model.Student;
 
 import java.util.*;
 
-public class CentaurStrategy implements InfluenceStrategy{
+public class CentaurStrategy implements InfluenceStrategy {
+
     @Override
     public int calcInfluence(int islandIndex, IslandsWrapper islandModel, BoardsController boardsController) {
         //gets the students on the island, if there are no students on the island the situation remains unchanged

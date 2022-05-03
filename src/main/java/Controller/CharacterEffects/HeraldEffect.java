@@ -7,6 +7,7 @@ import Exceptions.InvalidPlayerInputException;
 import java.util.List;
 
 public class HeraldEffect extends CharacterEffect {
+
     IslandController ic;
 
     public HeraldEffect(String playerID) {

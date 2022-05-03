@@ -33,12 +33,6 @@ public class Game implements Observer{
 
     protected GameModel gameModel;
 
-
-    /**
-     * Wraps all info about the game
-     */
-
-
     /**
      * Once the lobby is filled, the Game can be initialized
      * @param players The list of players accepted by the lobby.
@@ -263,7 +257,7 @@ public class Game implements Observer{
         }
     }
 
-    //TODO davide!!!!!!!!
+    //TODO davide!!!!!!!! dimmi
     public void handleEvent(BuyPlayCharacterEvent event) throws NotYourTurnException, InvalidMoveException {
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
