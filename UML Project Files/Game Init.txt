@@ -1,0 +1,35 @@
+title Game Initialization
+
+participant ClientApp
+participant "Client <<Runnable>>" as Client
+participant ServerApp
+
+participant "Server <<Runnable>>" as Server
+participant "Connection <<Runnable>>" as Connection
+participant RemoteView
+ServerApp-->Server:new Server()\n
+Server-->Server: this.serverSocket = new ServerSocket()
+Server-->Server: this.executor = new FixedThreadPool()
+ServerApp-->Server: run()
+Server-->Server: ServerSocket.accept()
+note over Server: for each incoming connection:
+Server-->Connection: new Connection()
+Connection-->Connection: isActive = true
+Server-->Server: executor.submit(connection)
+note right of Server: executor calls connection.run()
+Server-->Connection: connection.run()
+Connection->Client: "What's your name?"
+Client->Connection: -name
+Connection->Client: "How many players you want to play with?"
+Client->Connection: -number
+note over Connection,Client: this interaction is repeated until the Client submits 2/3/4
+Connection-->Server: lobby(this, name, number)
+note over Server: each connection is added to a lobby according \n to the number of players previously selected
+note over Server: when the lobby is filled with the right number \n of players a game is initialized:
+Server-->Game: for (Player in PlayersList) { new RemoteView() }
+Server-->Game: new Game( playersList )
+Game-->Game: new Model()
+Server-->RemoteView: addObserver( Game )
+Server-->Game: addObserverToModelComponents(remoteView)
+Server-->Client: "Game Started"
+RemoteView-->Client: *sends the first model*

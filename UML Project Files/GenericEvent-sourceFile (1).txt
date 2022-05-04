@@ -1,0 +1,37 @@
+title Generic Event Handling
+
+participant "Client UI" as UI
+participant Connection
+participant MessageReceiver
+participant RemoteView
+
+participant Game
+
+participant Model
+
+activate UI
+note over UI,Model:Connection is observed by MessageReceiver\nRemoteView is observed by Game\nModel is observed by RemoteView
+UI->Connection: *sends Generic GameEvent*
+activate MessageReceiver
+activate Connection
+
+Connection-->MessageReceiver: notify(GameEvent)
+deactivate Connection
+MessageReceiver-->MessageReceiver: *parse JSON\ninto event*
+activate RemoteView
+MessageReceiver-->RemoteView: processChoice(parsedGameEvent)
+deactivate MessageReceiver
+activate Game
+RemoteView-->Game: notify(parsedEvent)
+Game-->Game: handleEvent(parsedEvent)
+activate Model
+Game-->Model: *modifies model*
+deactivate Game
+Model-->RemoteView: notify( ModelPart )
+deactivate Model
+RemoteView-->Connection: send( ModelPart )
+activate Connection
+deactivate RemoteView
+Connection->UI: *sends updated model part*
+deactivate Connection
+UI-->UI: *updates view*
