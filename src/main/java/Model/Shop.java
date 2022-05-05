@@ -4,26 +4,24 @@
 package Model;
 
 
+import Exceptions.EmptySackException;
+
 import java.util.*;
 
 public class Shop extends Observable {
 
     private final Integer[] AVAILABLE_CHARS = {0, 2, 5, 6, 7, 8, 9, 10};
+    //private final Integer[] AVAILABLE_CHARS = {0, 2, 5, 7, 8};
     private CharacterCard[] shop;
     private HashMap<String, Integer> coinMap;
 
     public Shop(List<Player> playerList) {
-
         shop = new CharacterCard[3];
         coinMap = new HashMap<>();
 
         for(Player p : playerList) {
             coinMap.put(p.getPlayerID(), 1);
         }
-
-        List<Integer> charIndex = Arrays.asList(AVAILABLE_CHARS.clone());
-        Collections.shuffle(charIndex);
-        fillShop(charIndex.subList(0, 3));
     }
 
     //Mainly for testing purposes
@@ -35,10 +33,16 @@ public class Shop extends Observable {
         for(Player p : playerList) {
             coinMap.put(p.getPlayerID(), 1);
         }
+    }
 
+    public void initShop(Sack s) {
         List<Integer> charIndex = Arrays.asList(AVAILABLE_CHARS.clone());
         Collections.shuffle(charIndex);
-        fillShop(charIndex.subList(0, 3));
+        try {
+            fillShop(charIndex.subList(0, 3), s);
+        } catch (EmptySackException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addCoins(String playerID, int num) {
@@ -57,16 +61,16 @@ public class Shop extends Observable {
     }
 
     //TODO: maybe use factory!!!
-    public void fillShop(List<Integer> indexArray) {
+    public void fillShop(List<Integer> indexArray, Sack sack) throws EmptySackException {
         if (indexArray.size() != 3) return;
         for(int i=0; i<indexArray.size(); i++) {
             int c = indexArray.get(i);
             switch(c) {
                 case 0:
                 case 10:
-                    shop[i] = new StudentCard(c, 4); break;
+                    shop[i] = new StudentCard(c, sack.draw(4)); break;
                 case 6:
-                    shop[i] = new StudentCard(c, 6); break;
+                    shop[i] = new StudentCard(c, sack.draw(6)); break;
                 default:
                     shop[i] = new CharacterCard(c); break;
             }

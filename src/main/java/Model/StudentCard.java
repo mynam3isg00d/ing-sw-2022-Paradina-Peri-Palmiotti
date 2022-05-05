@@ -11,14 +11,21 @@ public class StudentCard extends CharacterCard {
 
     private final int MAX_STUDENTS;
     private List<Student> students;
+
     public StudentCard(int cardID, int maxStudents) {
         super(cardID);
         students = new ArrayList<>();
         MAX_STUDENTS = maxStudents;
     }
 
+    public StudentCard(int cardID, List<Student> students) {
+        super(cardID);
+        this.students = students;
+        MAX_STUDENTS = students.size();
+    }
+
     public void addStudent(Student s) throws FullElementException {
-        if(students.size() == MAX_STUDENTS) {
+        if(students.size() >= MAX_STUDENTS) {
             throw new FullElementException();
         } else {
             students.add(s);

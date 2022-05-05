@@ -68,6 +68,8 @@ public class Sack extends Observable {
         }
     }
 
+    public int getSackSize() {return sack.size();}
+
     public static List<Student> getColors() {
         List<Student> x = new ArrayList<>();
         x.add(Student.YELLOW);

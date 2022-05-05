@@ -17,6 +17,13 @@ public class CharacterController {
     public CharacterController(ExpertGame g) {
         gameReference = g;
         shop = new Shop(gameReference.getPlayers());
+        shop.initShop(gameReference.getSack());
+    }
+
+    public CharacterController(ExpertGame g, Integer[] shopList) {
+        gameReference = g;
+        shop = new Shop(gameReference.getPlayers(), shopList);
+        shop.initShop(gameReference.getSack());
     }
 
     public void addObserverToModel(RemoteView rv) {

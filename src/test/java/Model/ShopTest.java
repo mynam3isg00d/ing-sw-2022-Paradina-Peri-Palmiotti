@@ -15,6 +15,7 @@ class ShopTest {
        for(int n=2; n<=4; n++) {
            List<Player> players = getPlayerList(n);
            Shop s = new Shop(players);
+           s.initShop(new Sack(120));
            assertEquals(3, s.getShop().length);
            for(int i=0; i<s.getShop().length; i++) {
                assertNotNull(s.getShop()[i]);
@@ -26,22 +27,27 @@ class ShopTest {
        }
     }
 
+    /*
     @Test
     void testCustomCharacterPool() {
         for(int n=2; n<=4; n++) {
             List<Player> players = getPlayerList(n);
+            Sack sack = new Sack(120);
             Shop s = new Shop(players, new Integer[]{0, 2, 5});
+            s.initShop(sack);
             List<CharacterCard> carr = Arrays.asList(s.getShop());
             assertTrue(carr.contains(new CharacterCard(0)));
             assertTrue(carr.contains(new CharacterCard(2)));
             assertTrue(carr.contains(new CharacterCard(5)));
             assertFalse(carr.contains(new CharacterCard(10)));
+            assertEquals(116, sack.getSackSize());
         }
     }
 
     @Test
     void testStudentCardPool() {
         Shop s = new Shop(getPlayerList(2), new Integer[]{0, 10, 6});
+        s.initShop(new Sack(120));
         for(int i=0; i<s.getShop().length; i++) {
             CharacterCard cc = s.getShop()[i];
             assertTrue(cc instanceof StudentCard);
@@ -86,7 +92,7 @@ class ShopTest {
         assertEquals(2, s.getPlayerCoins(players.get(1).getPlayerID()));
         assertEquals(1, s.getPlayerCoins(players.get(2).getPlayerID()));
     }
-
+    */
     private List<Player> getPlayerList(int n) {
         List<Player> ret = new ArrayList<>();
         String name = "a";
