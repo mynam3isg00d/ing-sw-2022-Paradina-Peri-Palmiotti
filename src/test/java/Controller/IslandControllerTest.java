@@ -100,58 +100,18 @@ class IslandControllerTest {
     }
 
     @Test
-    void moveStudents() {
-        //init
+    void moveStudent() {
         IslandController ic = new IslandController();
-        IslandsWrapper im = new IslandsWrapper();
-        ic.connectIslandModel(im);
+        IslandsWrapper iw = new IslandsWrapper();
+        ic.connectIslandModel(iw);
 
-        List<Player> p = new ArrayList<>();
-        Player pl = new Player("test", 1);
-        pl.setPlayerID("ID1");
-        p.add(pl);
-        Player pl2 = new Player("toast", 2);
-        pl2.setPlayerID("ID2");
-        p.add(pl2);
-        BoardsController b = new BoardsController(p, new Sack(120));
-        ic.connectBoards(b);
+        ic.moveStudent(3, Student.YELLOW);
 
-        //provides a player with some students to move
-        List<Student> toAdd = new ArrayList<>();
-        toAdd.add(Student.YELLOW);
-        toAdd.add(Student.BLUE);
-        toAdd.add(Student.GREEN);
-        toAdd.add(Student.RED);
-        toAdd.add(Student.PINK);
-        b.fillEntrance("ID1", toAdd);
+        int[] expected = new int[5];
+        expected[0] = 1;
 
-        //moves the students
-        try{
-            ic.moveStudents("ID1", 1, 1, "Y");
-            ic.moveStudents("ID1", 1, 1, "B");
-            ic.moveStudents("ID1", 1, 1, "G");
-            ic.moveStudents("ID1", 1, 1, "R");
-            ic.moveStudents("ID1", 1, 1, "P");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        assertArrayEquals( expected, iw.getStudents(3));
 
-        //island 1 should contain 1 student per color
-        for (int numOfStudents : im.getStudents(1)) {
-            assertEquals(1, numOfStudents);
-        }
-
-        //tries to move a student which is not present on the player board
-        try{
-            ic.moveStudents("ID1", 1, 1, "Y");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //checks nothing has changed
-        for (int numOfStudents : im.getStudents(1)) {
-            assertEquals(1, numOfStudents);
-        }
 
     }
 }

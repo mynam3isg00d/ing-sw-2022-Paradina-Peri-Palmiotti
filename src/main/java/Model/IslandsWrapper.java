@@ -24,7 +24,9 @@ public class IslandsWrapper extends Observable {
         }
         motherNaturePos = 0;
         islands.get(0).setMotherNature(true);
+    }
 
+    public void initIslands() {
         //creates a list containing 2 students per color
         //then places randomly 1 student on each island, except for the island mother nature is on (index 0) and the one opposite to it (index 6)
         List<Student> initialStudents = initStudents();

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServerTest {
 
-    @Test
+    /*@Test
     void lobby() {
         try {
             //initializes a new server
@@ -52,5 +52,5 @@ class ServerTest {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }

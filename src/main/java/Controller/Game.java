@@ -48,6 +48,8 @@ public class Game implements Observer{
         //initializes all controllers
         //the controllers will initialize the respective models
         islandController = new IslandController();
+        islandController.initIslands();
+
         cloudController = new CloudController(n);
         boardsController = new BoardsController(players, sack);
 

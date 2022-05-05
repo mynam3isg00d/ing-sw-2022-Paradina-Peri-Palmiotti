@@ -26,6 +26,10 @@ public class IslandController {
         islandModel = new IslandsWrapper();
     }
 
+    public void initIslands() {
+        islandModel.initIslands();
+    }
+
     /**
      * Connects BoardController to the IslandController
      * @param b BoardController passed by reference
@@ -120,62 +124,6 @@ public class IslandController {
             }
     }
 
-    //gets an object from the view indicating: (1) the player requesting to move (2) the destination island (3) the number of students (4) a string indicating the color
-
-    /**
-     * Removes students from a player entrance and adds them to a selected island
-     * @param playerID the player requesting to move
-     * @param islandIndex the destination island
-     * @param numOfStudents how many students (of the same color) the player wants to move
-     * @param color a string indicating the chosen color ( Y/B/G/R/P )
-     * @throws InvalidMoveException
-     * @throws NoSuchIslandException
-     * @throws NoSuchStudentsException
-     */
-    @Deprecated
-    public void moveStudents(String playerID, int islandIndex, int numOfStudents, String color) throws InvalidMoveException, NoSuchIslandException, NoSuchStudentsException {
-        //3 is the maximum number of students the rules want you to move
-        if (numOfStudents > 3) throw new InvalidMoveException("You must move a maximum of 3 students in this phase of the game");
-
-        //Y, R, P, G, B represent the 5 colors of the game. All other are wrong
-        if (!color.equals("Y") && !color.equals("R") && !color.equals("P") && !color.equals("G") && !color.equals("B")) {
-            String alert = color + " is not a color";
-            throw new InvalidMoveException(alert);
-        }
-
-        //every index higher than the length of the islands array in the model is non-existent at this stage of the game
-        if (islandIndex >= islandModel.getIslandLength() || islandIndex < 0) throw new NoSuchIslandException();
-
-        //generates a list of students to add to the selected island
-        List<Student> students = new ArrayList<>();
-        for (int i=0; i < numOfStudents; i++) {
-            switch (color) {
-                case "Y": students.add(Sack.intToStudent(0));
-                    break;
-                    
-                case "B": students.add(Sack.intToStudent(1));
-                    break;
-
-                case "G": students.add(Sack.intToStudent(2));
-                    break;
-
-                case "R": students.add(Sack.intToStudent(3));
-                    break;
-
-                case "P": students.add(Sack.intToStudent(4));
-                    break;
-
-            }
-        }
-
-        //removes the students from playerID's board
-        boardsController.removeFromEntrance(playerID, students);
-
-        //modifies the model, adding the student to the [islandIndex] island
-        islandModel.addStudents(islandIndex, students);
-
-        //TODO aggiungere notifica alla view in IslandModel
-    }
 
     public void moveStudent(int islandIndex, Student student){
         List<Student> toAdd = new ArrayList<>();
