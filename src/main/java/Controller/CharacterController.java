@@ -56,11 +56,11 @@ public class CharacterController {
             //case 3: return new PostmanEffect();
             //case 4: return new GrandmaEffect();
             case 5: return new CentaurEffect(playerID);
-            //case 6: return new JesterEffect();
+            case 6: return new JesterEffect(playerID);
             case 7: return new KnightEffect(playerID);
             case 8: return new MushroomEffect(playerID);
-            //case 9: return new BardEffect();
-            //case 10: return new PrincessEffect();
+            case 9: return new BardEffect(playerID);
+            case 10: return new PrincessEffect(playerID);
             //case 11: return new ThiefEffect();
             default: return null;
         }

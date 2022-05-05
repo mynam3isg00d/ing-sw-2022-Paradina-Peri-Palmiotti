@@ -6,7 +6,6 @@ import Controller.ExpertGame;
 import Controller.IslandController;
 import Exceptions.EmptySackException;
 import Exceptions.FullElementException;
-import Model.Sack;
 import Model.Student;
 import Model.StudentCard;
 

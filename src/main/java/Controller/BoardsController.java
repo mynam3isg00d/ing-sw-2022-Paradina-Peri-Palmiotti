@@ -66,6 +66,10 @@ public class BoardsController {
 
     }
 
+    public Board getBoard(String playerID) {
+        return playerBoardMap.get(playerID);
+    }
+
     /**
      * Adds the remote view as an observer for every Board model
      * @param rv The board model
@@ -117,12 +121,14 @@ public class BoardsController {
         }
     }
 
+
     /**
      * Moves one student from the entrance of the player requesting the move to his diner
      * @param playerID The player requesting the move
      * @param s The student that needs to be moved
      * @throws NoSuchStudentsException
      */
+    /*
     public void moveToDiner(String playerID, Student s) throws NoSuchStudentsException {
         Board b = playerBoardMap.get(playerID);
         for(Student st : b.getEntrance()) {
@@ -139,6 +145,7 @@ public class BoardsController {
         }
         throw new NoSuchStudentsException();
     }
+    */
 
     /**
      * Moves one student from the entrance of the player requesting the move to his diner
@@ -146,9 +153,20 @@ public class BoardsController {
      * @param index index of the student in the entrance
      * @throws NoSuchStudentsException
      */
-    public void moveToDiner(String playerID, int index) throws NoSuchStudentsException {
+    public void moveToDiner(String playerID, int index) throws NoSuchStudentsException, FullTableException {
         Board b = playerBoardMap.get(playerID);
+        Student s = b.removeFromEntrance(index);
+        b.addToDining(s);
+    }
 
+    public void removeFromDining(String playerID, Student s) throws EmptyTableException {
+        Board b = playerBoardMap.get(playerID);
+        b.removeFromDining(s);
+    }
+
+    public void addToDining(String playerID, Student s) throws FullTableException {
+        Board b = playerBoardMap.get(playerID);
+        b.addToDining(s);
     }
 
     /**
