@@ -1,4 +1,6 @@
 //NOTE: ALL PLAYER REFERNCES SHOULD BE HANDLED WITH THEIR ID INSTEAD (when sensible).
+//NOTE: ALL ENTRANCE REFERENCES MUST BE MADE WITH THEIR POSITION INDEX
+//      ALL DINING REFERENCES MUST BE MADE WITH THEIR STUDENT TYPE (OR THEIR CORRESPONDING INT)
 
 package Controller;
 import Exceptions.*;
@@ -54,18 +56,10 @@ public class BoardsController {
     }
 
     /**
-     * Returns the player's board
-     * @param player The player whose board we need to access
-     * @return The board of the player
+     * Returns the board of the corresponding playerID
+     * @param playerID the ID to get
+     * @return reference to the board
      */
-    public Board getBoard(Player player) throws NoSuchPlayerException{
-
-        if(!players.contains(player)){throw new NoSuchPlayerException();}
-
-        return playerBoardMap.get(player.getPlayerID());
-
-    }
-
     public Board getBoard(String playerID) {
         return playerBoardMap.get(playerID);
     }
@@ -83,10 +77,10 @@ public class BoardsController {
     private void createBoards(int playerNum) {
         switch(playerNum) {
             case 2:
-                for (Player p : players) playerBoardMap.put(p.getPlayerID(), new Board(8));
+                for (Player p : players) playerBoardMap.put(p.getPlayerID(), new Board(8, 7));
                 break;
             case 3:
-                for (Player p : players) playerBoardMap.put(p.getPlayerID(), new Board(6));
+                for (Player p : players) playerBoardMap.put(p.getPlayerID(), new Board(6, 9));
                 break;
             case 4:
                 //addedTowers contains teams which have a player who already possesses the team's towers
@@ -96,9 +90,9 @@ public class BoardsController {
                 for (Player p : players) {
                     if(!addedTowers.contains(p.getTeamID())) {
                         addedTowers.add(p.getTeamID());
-                        playerBoardMap.put(p.getPlayerID(), new Board(8));
+                        playerBoardMap.put(p.getPlayerID(), new Board(8, 7));
                     } else {
-                        playerBoardMap.put(p.getPlayerID(), new Board(0));
+                        playerBoardMap.put(p.getPlayerID(), new Board(0, 7));
                     }
                 }
                 break;
@@ -121,39 +115,13 @@ public class BoardsController {
         }
     }
 
-
-    /**
-     * Moves one student from the entrance of the player requesting the move to his diner
-     * @param playerID The player requesting the move
-     * @param s The student that needs to be moved
-     * @throws NoSuchStudentsException
-     */
-    /*
-    public void moveToDiner(String playerID, Student s) throws NoSuchStudentsException {
-        Board b = playerBoardMap.get(playerID);
-        for(Student st : b.getEntrance()) {
-            if (st == s) {
-                try {
-                    b.addToDining(s);
-                } catch (FullTableException e) {
-                    e.getMessage();
-                    return;
-                }
-                b.removeFromEntrance(s);
-                return;
-            }
-        }
-        throw new NoSuchStudentsException();
-    }
-    */
-
     /**
      * Moves one student from the entrance of the player requesting the move to his diner
      * @param playerID The player requesting the move
      * @param index index of the student in the entrance
      * @throws NoSuchStudentsException
      */
-    public void moveToDiner(String playerID, int index) throws NoSuchStudentsException, FullTableException {
+    public void moveFromEntranceToDining(String playerID, int index) throws NoSuchStudentsException, FullTableException {
         Board b = playerBoardMap.get(playerID);
         Student s = b.removeFromEntrance(index);
         b.addToDining(s);
@@ -173,13 +141,39 @@ public class BoardsController {
      * Called each time //TODO a student gets moved to a diner (?)
      */
     public void updateProfessors() {
+
+        Player[] old_professors = professors.clone();
+
         int[] maxNumOfStudents = {0, 0, 0, 0, 0};
         for(Player p : players) {
-            int[] diners = playerBoardMap.get(p.getPlayerID()).getDiners();
+            int[] diners = playerBoardMap.get(p.getPlayerID()).getDinings();
             for(int i=0; i<5; i++) {
                 if (maxNumOfStudents[i] < diners[i]) {
                     professors[i] = p;
                     maxNumOfStudents[i] = diners[i];
+                }
+            }
+        }
+
+        for(int i=0; i<professors.length; i++) {
+            if (professors[i] != null) {
+                String newOwner = professors[i].getPlayerID();
+                if(old_professors[i] == null) {
+                    //There is no old owner, simply add the new professor
+                    Board newB = playerBoardMap.get(newOwner);
+                    newB.addProfessor(i);
+                } else {
+                    //Remove the old owner and add the new owner
+                    String oldOwner = old_professors[i].getPlayerID();
+
+                    //...given that the owner has actually changed
+                    if(!newOwner.equals(oldOwner)) {
+                        Board newB = playerBoardMap.get(newOwner);
+                        Board oldB = playerBoardMap.get(oldOwner);
+
+                        newB.addProfessor(i);
+                        oldB.removeProfessor(i);
+                    }
                 }
             }
         }
@@ -188,24 +182,6 @@ public class BoardsController {
     //if the move is not valid throws an exception
     //else, removes the students in s from the board of the right player
     //called by islandHandler when a player wants to move some students to an island
-
-    @Deprecated
-    /**
-     * Called by islandController whenever a player wants to move students from the board to one island
-     * Simply removes the students from the board of the requesting player
-     * @param playerID The ID of the player requesting the move
-     * @param ss The list of students to remove
-     * @throws NoSuchStudentsException
-     */
-    public void removeFromEntrance(String playerID, List<Student> ss) throws NoSuchStudentsException {
-        List<Student> entranceCopy = Arrays.asList(playerBoardMap.get(playerID).getEntrance());
-        for (Student s : ss) {
-            if (!entranceCopy.remove(s)) throw new NoSuchStudentsException();
-        }
-
-        playerBoardMap.get(playerID).removeFromEntrance(ss);
-    }
-
     public Student removeFromEntrance(String playerID, int studentBoardIndex) throws NoSuchStudentsException {
         Student s = playerBoardMap.get(playerID).removeFromEntrance(studentBoardIndex);
         return s;
@@ -216,7 +192,7 @@ public class BoardsController {
      * @param playerID The ID of the player requesting the move
      * @param ss The list of students to add
      */
-    public void fillEntrance(String playerID, List<Student> ss) {
+    public void addToEntrance(String playerID, List<Student> ss) {
         Board b = playerBoardMap.get(playerID);
         try {
             b.addToEntrance(ss);
@@ -229,7 +205,19 @@ public class BoardsController {
         return professors[colorId];
     }
 
-    //TODO cancellare! serve solo per testing
+    public void addTowers(String playerID, int numToAdd) throws FullElementException {
+        Board b = playerBoardMap.get(playerID);
+        b.addTower(numToAdd);
+    }
+
+    public void removeTowers(String playerID, int numToRemove) throws EmptyElementException {
+        Board b = playerBoardMap.get(playerID);
+        b.removeTower(numToRemove);
+    }
+
+    //----------------------------------
+    //Testing functions
+    //----------------------------------
     public void setProfessor(String color, Player p) {
         switch (color) {
             case "Y":

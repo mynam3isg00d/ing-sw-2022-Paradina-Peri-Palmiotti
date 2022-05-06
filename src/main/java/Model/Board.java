@@ -1,8 +1,5 @@
 package Model;
-import Exceptions.EmptyTableException;
-import Exceptions.FullEntranceException;
-import Exceptions.FullTableException;
-import Exceptions.NoSuchStudentsException;
+import Exceptions.*;
 
 import java.util.*;
 
@@ -17,22 +14,7 @@ public class Board extends Observable{
     private boolean[] professors;
     private int towersNum;
 
-    /**
-     * Creates a new board
-     * @param towersNum max number of available towers
-     */
-    public Board(int towersNum) {
-        //TODO: tower colors unhandled, maybe finally time to create a tower enum
-        diners = new int[]{0, 0, 0, 0, 0};
-        MAXENTRANCEPLACES = 9;
-        entrance = new Student[MAXENTRANCEPLACES];
-        Arrays.fill(entrance, null);
-        professors = new boolean[]{false, false, false, false, false};
-        this.MAXTOWERS = this.towersNum = towersNum;
-    }
-
     public Board(int towersNum, int maxEntrancePlaces) {
-        //TODO: tower colors unhandled, maybe finally time to create a tower enum
         diners = new int[]{0, 0, 0, 0, 0};
         MAXENTRANCEPLACES = maxEntrancePlaces;
         entrance = new Student[MAXENTRANCEPLACES];
@@ -62,7 +44,11 @@ public class Board extends Observable{
         diners[s.getColorId()]--;
     }
 
-    //TODO: add proper exceptions
+    /**
+     * Adds the student list s to the entrance (drawn from sack usually)
+     * @param s is the list to add!!
+     * @throws FullEntranceException if the entrance is full
+     */
     public void addToEntrance(List<Student> s) throws FullEntranceException {
         int emptyCount = 0;
         for(int i=0; i<MAXENTRANCEPLACES; i++) {
@@ -86,25 +72,6 @@ public class Board extends Observable{
         throw new FullEntranceException();
     }
 
-    @Deprecated
-    /**
-     * Removes a list of students from entrance
-     * @param students list of students to remove
-     */
-    public void removeFromEntrance(List<Student> students) {
-        System.out.println("THIS HAS BEEN DEPRECATED");
-        //for (Student s : students) entrance.remove(s);
-    }
-
-    @Deprecated
-    /**
-     * Removes a single student from entrance
-     * @param s single student to remove
-     */
-    public void removeFromEntrance(Student s) {
-        System.out.println("THIS HAS BEEN DEPRECATED");
-    }
-
     public Student removeFromEntrance(int idx) throws NoSuchStudentsException {
         if (entrance[idx] == null) throw new NoSuchStudentsException();
 
@@ -113,15 +80,24 @@ public class Board extends Observable{
         return retval;
     }
 
+
+    //TODO: maybe set these like addTower(int n)? so that we don't send 200.000 models
     /**
-     * Adds a tower to the board (increases towerNum)
+     * Adds towers to the board (increases towerNum)
      */
-    public void addTower() { towersNum++; }
+    public void addTower(int n) throws FullElementException {
+        if (towersNum + n > MAXTOWERS) throw new FullElementException();
+        towersNum += n;
+    }
 
     /**
-     * Removes a tower from the board (decreases towerNum)
+     * Removes towers from the board (decreases towerNum)
      */
-    public void removeTower() { towersNum--; }
+    //TODO: if the towersNum reaches 0, a win condition should be called!!!!!
+    public void removeTower(int n) throws EmptyElementException {
+        if (towersNum - n < 0) throw new EmptyElementException();
+        towersNum -= n;
+    }
 
 
     //TODO: better names?
@@ -143,7 +119,7 @@ public class Board extends Observable{
 
     //********getters*********//
 
-    public int[] getDiners() {
+    public int[] getDinings() {
         return diners;
     }
 

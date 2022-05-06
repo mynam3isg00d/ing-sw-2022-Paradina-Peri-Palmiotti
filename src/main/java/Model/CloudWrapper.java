@@ -1,6 +1,6 @@
 package Model;
 
-import Exceptions.CloudEmptyException;
+import Exceptions.EmptyCloudException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +35,9 @@ public class CloudWrapper extends Observable {
      * Empties the selected cloud and returns its content
      * @param cloudIndex The index of the selected island
      * @return The list of students previously on the cloud
-     * @throws CloudEmptyException Thrown if the selected island is already empty
+     * @throws EmptyCloudException Thrown if the selected island is already empty
      */
-    public List<Student> getFromCloud(int cloudIndex) throws CloudEmptyException {
+    public List<Student> getFromCloud(int cloudIndex) throws EmptyCloudException {
         return clouds.get(cloudIndex).empty();
     }
 

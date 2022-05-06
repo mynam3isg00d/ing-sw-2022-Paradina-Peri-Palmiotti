@@ -1,8 +1,7 @@
 package Model;
 
-import Exceptions.CloudEmptyException;
+import Exceptions.EmptyCloudException;
 import Exceptions.CloudNotEmptyException;
-import Exceptions.EmptySackException;
 import Exceptions.InvalidStudentListException;
 import org.junit.jupiter.api.Test;
 
@@ -30,12 +29,12 @@ class CloudTest {
     }
 
     @Test
-    void emptyTest() throws InvalidStudentListException, CloudNotEmptyException, CloudEmptyException {
+    void emptyTest() throws InvalidStudentListException, CloudNotEmptyException, EmptyCloudException {
         Cloud c = new Cloud(3);
-        assertThrows(CloudEmptyException.class, c::empty);
+        assertThrows(EmptyCloudException.class, c::empty);
         c.fill(getStudents(3));
         ArrayList<Student> ret = (ArrayList<Student>)c.empty();
-        assertThrows(CloudEmptyException.class, c::empty);
+        assertThrows(EmptyCloudException.class, c::empty);
         assertEquals(3, ret.size());
     }
     private static List<Student> getStudents(int num) {

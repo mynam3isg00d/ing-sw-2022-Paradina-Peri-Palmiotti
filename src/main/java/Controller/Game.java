@@ -21,8 +21,6 @@ import java.util.*;
  * Handles events coming from the view and calls the right methods on the right controller.
  */
 public class Game implements Observer{
-
-    protected Model model;
     protected View view;
 
     protected List<Player> players;
@@ -148,7 +146,7 @@ public class Game implements Observer{
         //already moved three students
         if (gameModel.getNumStudentsMoved() >= 3) throw new InvalidMoveException("You can't move any more students");
 
-        boardsController.moveToDiner(event.getPlayerId(), event.getStudentIndex());
+        boardsController.moveFromEntranceToDining(event.getPlayerId(), event.getStudentIndex());
 
         //add one student to the turn info
         gameModel.studentMoved();
@@ -230,7 +228,7 @@ public class Game implements Observer{
      * @throws InvalidMoveException The request is coming from the right player but in the wrong game phase
      * @throws NoSuchCloudException The cloud index does not exist
      */
-    public void handleEvent(PickStudentsFromCloudEvent event) throws NotYourTurnException, InvalidMoveException, NoSuchCloudException, CloudEmptyException{
+    public void handleEvent(PickStudentsFromCloudEvent event) throws NotYourTurnException, InvalidMoveException, NoSuchCloudException, EmptyCloudException {
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
@@ -248,7 +246,7 @@ public class Game implements Observer{
             //gets from cloud
             List<Student> fromCloud = cloudController.getFromCloud(cloudIndex);
             //adds the students to the board
-            boardsController.fillEntrance(event.getPlayerId(), fromCloud);
+            boardsController.addToEntrance(event.getPlayerId(), fromCloud);
 
             gameModel.cloudChosen();
 

@@ -1,5 +1,5 @@
 package Model;
-import Exceptions.CloudEmptyException;
+import Exceptions.EmptyCloudException;
 import Exceptions.CloudNotEmptyException;
 import Exceptions.InvalidStudentListException;
 
@@ -33,10 +33,10 @@ public class Cloud {
     /**
      * Empties a cloud returning the students that were on it
      * @return the list on the cloud
-     * @throws CloudEmptyException if the cloud is already empty
+     * @throws EmptyCloudException if the cloud is already empty
      */
-    public List<Student> empty() throws CloudEmptyException {
-        if(this.isEmpty()) throw new CloudEmptyException();
+    public List<Student> empty() throws EmptyCloudException {
+        if(this.isEmpty()) throw new EmptyCloudException();
         List<Student> studentsOnCloud = new ArrayList<>(this.students);
         this.students.clear();
         return studentsOnCloud;

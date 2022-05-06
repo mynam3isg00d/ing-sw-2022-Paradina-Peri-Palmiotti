@@ -55,6 +55,6 @@ public class JesterEffect extends StudentsEffect {
         }
 
         //Add card students to entrance
-        bc.fillEntrance(playerID, toMove);
+        bc.addToEntrance(playerID, toMove);
     }
 }

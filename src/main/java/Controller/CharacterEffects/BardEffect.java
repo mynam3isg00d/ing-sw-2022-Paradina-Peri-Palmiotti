@@ -40,7 +40,7 @@ public class BardEffect extends CharacterEffect {
         try {
             //add entrance students to the dining
             for(Integer i : studentsToDining) {
-                bc.moveToDiner(playerID, i);
+                bc.moveFromEntranceToDining(playerID, i);
             }
 
             //remove students from the dining and add them to the entrance
@@ -49,7 +49,7 @@ public class BardEffect extends CharacterEffect {
                 bc.removeFromDining(playerID, Sack.intToStudent(i));
                 toAdd.add(Sack.intToStudent(i));
             }
-            bc.fillEntrance(playerID, toAdd);
+            bc.addToEntrance(playerID, toAdd);
         } catch (NoSuchStudentsException | FullTableException | EmptyTableException e) {
             e.printStackTrace();
         }

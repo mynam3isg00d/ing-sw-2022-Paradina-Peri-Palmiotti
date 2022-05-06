@@ -1,7 +1,6 @@
 package Network;
 
 import Controller.Game;
-import Model.Model;
 import Model.Player;
 import View.RemoteView;
 

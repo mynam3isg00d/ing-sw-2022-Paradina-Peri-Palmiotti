@@ -1,9 +1,5 @@
 package Controller;
-import Exceptions.CloudEmptyException;
-import Exceptions.CloudNotEmptyException;
-import Exceptions.EmptySackException;
-import Exceptions.InvalidStudentListException;
-import Model.Cloud;
+import Exceptions.EmptyCloudException;
 import Model.CloudWrapper;
 import Model.Sack;
 import Model.Student;
@@ -63,7 +59,7 @@ public class CloudController {
      * @param cloudIndex The selected island index
      * @return The list of students resulting from the operation
      */
-    public List<Student> getFromCloud(int cloudIndex) throws CloudEmptyException{
+    public List<Student> getFromCloud(int cloudIndex) throws EmptyCloudException {
         return cloudModel.getFromCloud(cloudIndex);
     }
 

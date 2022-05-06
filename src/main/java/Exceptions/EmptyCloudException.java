@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class CloudEmptyException extends Exception{
+public class EmptyCloudException extends EmptyElementException {
     public String toString() {
         return "Accessed cloud is empty";
     }
