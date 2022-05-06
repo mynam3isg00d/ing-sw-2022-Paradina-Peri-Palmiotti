@@ -78,6 +78,10 @@ public class IslandController {
         influenceStrategy = newStrategy;
     }
 
+    public InfluenceStrategy getInfluenceStrategy() {
+        return influenceStrategy;
+    }
+
     /**
      * Calculates the most influent team on the island and acts accordingly
      * @param islandIndex The island

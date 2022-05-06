@@ -10,8 +10,8 @@ import java.util.*;
 
 public class Shop extends Observable {
 
-    private final Integer[] AVAILABLE_CHARS = {0, 2, 5, 6, 7, 8, 9, 10};
-    //private final Integer[] AVAILABLE_CHARS = {0, 2, 5, 7, 8};
+    private Integer[] AVAILABLE_CHARS = {0, 2, 5, 6, 7, 8, 9, 10};
+    //private Integer[] AVAILABLE_CHARS = {0, 2, 5, 7, 8};
     private CharacterCard[] shop;
     private HashMap<String, Integer> coinMap;
 
@@ -27,7 +27,7 @@ public class Shop extends Observable {
     //Mainly for testing purposes
     public Shop(List<Player> playerList, Integer[] AVAILABLE_CHARS) {
         shop = new CharacterCard[3];
-
+        this.AVAILABLE_CHARS = AVAILABLE_CHARS;
         coinMap = new HashMap<>();
 
         for(Player p : playerList) {

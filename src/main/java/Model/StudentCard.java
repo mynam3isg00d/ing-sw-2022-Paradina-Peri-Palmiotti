@@ -38,6 +38,17 @@ public class StudentCard extends CharacterCard {
         return ret;
     }
 
+    public List<Student> getStudents(List<Integer> indexes) {
+        List<Student> retVal = new ArrayList<>();
+        for(Integer i : indexes) {
+            retVal.add(students.get(i));
+        }
+        for(Integer i : indexes) {
+            students.remove((int)i);
+        }
+        return retVal;
+    }
+
     public int getMAX_STUDENTS() {
         return MAX_STUDENTS;
     }

@@ -22,4 +22,13 @@ public class ExpertGame extends Game {
         super.addObserversToModelComponents(rv);
         characterController.addObserverToModel(rv);
     }
+
+    //--------
+    //Testing functions
+    //--------
+
+
+    public void setCharacterController(CharacterController characterController) {
+        this.characterController = characterController;
+    }
 }

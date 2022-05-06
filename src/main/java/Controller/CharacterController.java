@@ -36,10 +36,18 @@ public class CharacterController {
 
         if (shop.getPlayerCoins(playerID) < cc.getCost()) throw new InsufficientCoinsException();
 
+        //Update model
         shop.removeCoins(playerID, cc.getCost());
+        shop.incrementCost(cardIndex);
+
+        //Get and play the effect
         CharacterEffect ce = getEffect(cc, playerID);
         ce.init(gameReference, cardIndex);
         ce.playEffect(playerInput);
+    }
+
+    public void giveCoins(String playerID, int n) {
+        shop.addCoins(playerID, n);
     }
 
     public Game getGameReference() {

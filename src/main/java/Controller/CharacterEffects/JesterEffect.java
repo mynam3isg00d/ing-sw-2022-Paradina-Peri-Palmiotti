@@ -8,6 +8,7 @@ import Exceptions.NoSuchStudentsException;
 import Model.Student;
 import Model.StudentCard;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,12 +39,7 @@ public class JesterEffect extends StudentsEffect {
         if(cardStudents.size() > 3 ||
            cardStudents.size() != entranceStudents.size()) throw new InvalidPlayerInputException();
 
-        List<Student> toMove = new ArrayList<>();
-
-        //Get students from the card
-        for(Integer i : cardStudents) {
-            toMove.add(sc.getStudent(i));
-        }
+        List<Student> toMove = new ArrayList<>(sc.getStudents(cardStudents));
 
         //Add entrance students to the card
         for(Integer i : entranceStudents) {
