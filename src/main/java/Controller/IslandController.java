@@ -139,4 +139,8 @@ public class IslandController {
     public int getIslandsQuantity() {
         return islandModel.getIslandLength();
     }
+
+    public IslandsWrapper getIslandModel() {
+        return islandModel;
+    }
 }

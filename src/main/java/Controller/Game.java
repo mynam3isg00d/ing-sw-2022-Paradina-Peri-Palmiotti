@@ -379,6 +379,10 @@ public class Game implements Observer{
         return true;
     }
 
+    /**
+     * Tells if all players have picked a cloud
+     * @return TRUE/FALSE
+     */
     private boolean allPlayersPlayedAssistant() {
         for (Player p : players) {
             if (p.getAssistantInPlay() == null) return false;
@@ -391,6 +395,11 @@ public class Game implements Observer{
         cloudController.fillClouds(sack);
     }
 
+    /**
+     * A player has finished his turn in one of the phases of the game
+     * If the player was the last one to move, then the phase can change
+     * @param pid The id of the player who has just moved
+     */
     private void endTurn(String pid) {
         //if the player requesting the move was the last one THEN the (macro)phase ends
         if (players.get(players.size() - 1).getPlayerID().equals(pid)) {     //the player is the last one if it's the last in the players list
@@ -411,6 +420,11 @@ public class Game implements Observer{
 
     }
 
+    /**
+     * Returns the next player that should move
+     * @return A reference to the player that should move
+     * @throws Exception Something went wrong
+     */
     private Player getNextPlayer() throws Exception{
         String current = gameModel.getCurrentPlayer().getPlayerID();
         for (int i = 0; i < players.size(); i++) {
@@ -420,6 +434,10 @@ public class Game implements Observer{
         throw new Exception();
     }
 
+    /**
+     * endPhase is called whenever all players have finished their turn in one of the 3 phases of a game
+     * Phases change in this order: SETUP->PLANNING->ACTION->PLANNING->ACTION->...
+     */
     private void endphase() {
         if (gameModel.getGamePhase().equals(Phase.SETUP)) {
             gameModel.setGamePhase(Phase.PLANNING);

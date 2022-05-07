@@ -14,6 +14,32 @@ import static org.junit.jupiter.api.Assertions.*;
 class IslandControllerTest {
 
     @Test
+    void initIslands() {
+        IslandController ic = new IslandController();
+        IslandsWrapper im = ic.getIslandModel();
+
+        ic.initIslands();
+
+        assertEquals(im.getIslandLength(), ic.getIslandsQuantity());
+
+        assertEquals(0, countStudents(im.getStudents(0)));
+        assertEquals(1, countStudents(im.getStudents(1)));
+        assertEquals(1, countStudents(im.getStudents(2)));
+        assertEquals(1, countStudents(im.getStudents(3)));
+        assertEquals(1, countStudents(im.getStudents(4)));
+        assertEquals(1, countStudents(im.getStudents(5)));
+        assertEquals(0, countStudents(im.getStudents(6)));
+        assertEquals(1, countStudents(im.getStudents(7)));
+        assertEquals(1, countStudents(im.getStudents(8)));
+        assertEquals(1, countStudents(im.getStudents(9)));
+        assertEquals(1, countStudents(im.getStudents(10)));
+        assertEquals(1, countStudents(im.getStudents(11)));
+    }
+
+    public int countStudents(int[] s) {
+        return s[0] + s[1] + s[2] + s[3] + s[4];
+    }
+    @Test
     void moveMotherOnNullIsland() {
         //init
         IslandController islandController = new IslandController();
