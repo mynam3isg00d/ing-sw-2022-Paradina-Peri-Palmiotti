@@ -79,4 +79,8 @@ public class GameModel extends Observable {
     public void newRound() {
         roundCount++;
     }
+
+    public int getRoundCount() {
+        return roundCount;
+    }
 }

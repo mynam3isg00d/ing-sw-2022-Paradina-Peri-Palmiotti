@@ -53,6 +53,7 @@ public class Game implements Observer{
 
         //initializes the game model
         gameModel = new GameModel();
+        gameModel.setCurrentPlayer(players.get(0));  //for the first round the order of game is the order by which the players have connected
 
         //islandController requires access to the boards
         islandController.connectBoards(boardsController);
@@ -279,16 +280,18 @@ public class Game implements Observer{
 
         //checks if wizard has already been chosen
         for (Player p : players) {
-            if (p.getHand().getWizardID() == event.getWizardID()) throw new WizardAlreadyChosenException();
+            if (p.getHand() != null && p.getHand().getWizardID() == event.getWizardID()) throw new WizardAlreadyChosenException();
         }
 
         //sets wizard and initializes hand
         requestingPlayer.chooseWizard(event.getWizardID());
 
+
+
+        endTurn(event.getPlayerId());
         //if all players have chosen a wizard the first round can begin
         if (allWizardsChosen()) {
             gameModel.newRound();
-            gameModel.setGamePhase(Phase.PLANNING);
         }
     }
 
@@ -320,6 +323,14 @@ public class Game implements Observer{
 
     public BoardsController getBoardsController() {
         return boardsController;
+    }
+
+    public CloudController getCloudController() {
+        return cloudController;
+    }
+
+    public GameModel getGameModel() {
+        return gameModel;
     }
 
     /**
@@ -381,31 +392,41 @@ public class Game implements Observer{
     }
 
     private void endTurn(String pid) {
-        //if the player requesting the move was the last one THEN the round ends
+        //if the player requesting the move was the last one THEN the (macro)phase ends
         if (players.get(players.size() - 1).getPlayerID().equals(pid)) {     //the player is the last one if it's the last in the players list
-            initNewRound();
-        } else {
-            try {
-                //changes current player to the next one
-                Player nextPlayer = getNextPlayer();
-                gameModel.setCurrentPlayer(nextPlayer);
-
-                //resets turn info in player turn
-                gameModel.resetTurnInfo();
-            } catch (Exception e) {
-                System.out.println("Who is this player");
-                e.printStackTrace();
-            }
+            endphase();
         }
+
+        try {
+            //changes current player to the next one
+            Player nextPlayer = getNextPlayer();
+            gameModel.setCurrentPlayer(nextPlayer);
+
+            //resets turn info in player turn
+            gameModel.resetTurnInfo();
+        } catch (Exception e) {
+            System.out.println("Who is this player");
+            e.printStackTrace();
+        }
+
     }
 
     private Player getNextPlayer() throws Exception{
         String current = gameModel.getCurrentPlayer().getPlayerID();
         for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).getPlayerID().equals(current)) return players.get(i+1);
+            if (players.get(i).getPlayerID().equals(current)) return players.get((i+1)% players.size());
         }
 
         throw new Exception();
     }
 
+    private void endphase() {
+        if (gameModel.getGamePhase().equals(Phase.SETUP)) {
+            gameModel.setGamePhase(Phase.PLANNING);
+        } else if (gameModel.getGamePhase().equals(Phase.PLANNING)) {
+            gameModel.setGamePhase(Phase.ACTION_STUDENTS);
+        } else if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) {
+            gameModel.setGamePhase(Phase.PLANNING);
+        }
+    }
 }
