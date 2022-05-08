@@ -111,23 +111,21 @@ public class Game implements Observer{
         //you have already played an assistant
         if (requestingPlayer.getAssistantInPlay() != null) throw new InvalidMoveException("You already have played an assistant");
 
-        if(event.getPlayedAssistant() > requestingPlayer.getHand().getHand().size() - 1){ throw new AssistantMissingException(); }
-
-        //Checks if someone else as already played that card. If so, it can't be played unless it's the only available
+        //Checks if someone else has already played that card. If so, it can't be played unless it's the only available
         //card in the player's hand.
+        Assistant selectedAssistant = requestingPlayer.getHand().getAssistantByIndex(event.getPlayedAssistant());
         for(Player p : players){
-            if(p.getAssistantInPlay().equals(event.getPlayedAssistant()) && requestingPlayer.getHand().getHand().size()>1){
-                throw new IllegalAssistantException();
+            if(requestingPlayer.getHand().getHandSize() > 1) {
+                if (p.getAssistantInPlay() != null && p.getAssistantInPlay().equals(selectedAssistant)) throw new IllegalAssistantException();
             }
         }
 
-        requestingPlayer.playAssistant(event.getPlayedAssistant());
+        //plays the selected assistant. Throws an exception if the provided index is not valid
+        requestingPlayer.playAssistant(selectedAssistant);
 
-        if (allPlayersPlayedAssistant()) {
-            updatePlayerOrder();
-            //set current player
-            gameModel.setGamePhase(Phase.ACTION_STUDENTS);
-        }
+
+        //ends the turn (this changes the player order too)
+        endTurn(event.getPlayerId());
     }
 
     /**
@@ -403,7 +401,7 @@ public class Game implements Observer{
     private void endTurn(String pid) {
         //if the player requesting the move was the last one THEN the (macro)phase ends
         if (players.get(players.size() - 1).getPlayerID().equals(pid)) {     //the player is the last one if it's the last in the players list
-            endphase();
+            endPhase();
         }
 
         try {
@@ -417,7 +415,6 @@ public class Game implements Observer{
             System.out.println("Who is this player");
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -438,10 +435,18 @@ public class Game implements Observer{
      * endPhase is called whenever all players have finished their turn in one of the 3 phases of a game
      * Phases change in this order: SETUP->PLANNING->ACTION->PLANNING->ACTION->...
      */
-    private void endphase() {
+    private void endPhase() {
         if (gameModel.getGamePhase().equals(Phase.SETUP)) {
+            //fills the clouds
+            cloudController.fillClouds(sack);
+
+            //sets the phase to planning. Game is now waiting for players to play assistant cards
             gameModel.setGamePhase(Phase.PLANNING);
         } else if (gameModel.getGamePhase().equals(Phase.PLANNING)) {
+            //all players have played an assistant -> the player order is updated
+            updatePlayerOrder();
+
+            //phase changes to action. Game is now waiting for student-type events
             gameModel.setGamePhase(Phase.ACTION_STUDENTS);
         } else if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) {
             gameModel.setGamePhase(Phase.PLANNING);

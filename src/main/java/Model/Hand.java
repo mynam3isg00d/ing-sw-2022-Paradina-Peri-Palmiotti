@@ -36,6 +36,17 @@ public class Hand {
         throw new AssistantMissingException();
     }
 
+    /**
+     * Gets the Assistant card in the selected position, without removing it
+     * @param index
+     * @return
+     * @throws AssistantMissingException
+     */
+    public Assistant getAssistantByIndex(int index) throws AssistantMissingException {
+        if (index >= hand.size()) throw new AssistantMissingException();
+        else return hand.get(index);
+    }
+
     //TODO: check if it's a valid assistant (it should be because
     //      Hand is the only one able to create assistants...)
     //      (therefore maybe unnecessary...)
@@ -70,5 +81,9 @@ public class Hand {
 
     public int getWizardID() {
         return wizardID;
+    }
+
+    public void removeAssistant(Assistant a) {
+        hand.remove(a);
     }
 }

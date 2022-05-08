@@ -58,6 +58,15 @@ public class Player {
     }
 
     /**
+     * Plays the provided assistant and removes it from the hand
+     * @param a
+     */
+    public void playAssistant(Assistant a) {
+        assistantInPlay = a;
+        getHand().removeAssistant(a);
+    }
+
+    /**
      * Set the player's ID
      * @param pid id to set
      */
