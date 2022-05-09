@@ -170,7 +170,7 @@ public class Game implements Observer{
         if (gameModel.getNumStudentsMoved() >= 3) throw new InvalidMoveException("You can't move any more students");
 
         //wrong island index
-        if (islandController.getIslandsQuantity() <= islandIndex || islandIndex <= 0) throw new NoSuchIslandException();
+        if (islandController.getIslandsQuantity() <= islandIndex || islandIndex < 0) throw new NoSuchIslandException();
 
         try {
             Student removed = boardsController.removeFromEntrance(event.getPlayerId(), event.getStudentBoardIndex());
@@ -186,7 +186,7 @@ public class Game implements Observer{
 
         //if the player has moved 3 students the ACTION_STUDENTS phase has ended
         if (gameModel.getNumStudentsMoved() == 3) {
-            gameModel.setGamePhase(Phase.ACTION_MOTHERNATURE);
+            endTurn(event.getPlayerId());
         }
     }
 

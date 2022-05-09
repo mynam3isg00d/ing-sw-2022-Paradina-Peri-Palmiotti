@@ -1,13 +1,13 @@
 package Controller;
 
 import Events.ChooseWizardEvent;
+import Events.MoveStudentToIslandEvent;
 import Events.PlayAssistantEvent;
 import Exceptions.IllegalAssistantException;
+import Exceptions.NoSuchStudentsException;
+import Exceptions.NotYourTurnException;
 import Exceptions.WizardAlreadyChosenException;
-import Model.CloudWrapper;
-import Model.GameModel;
-import Model.Phase;
-import Model.Player;
+import Model.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -264,7 +264,169 @@ class GameTest {
         assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
     }
 
+    public Game doPlanningPhase() {
+        Game game = doSetupPhase();
 
+        List<Player> initialPlayers = game.getPlayers();
+
+
+        //p1 wants to play the 3rd assistant in his hand
+        PlayAssistantEvent ev1 = new PlayAssistantEvent();
+        ev1.setPlayerId("id1");
+        ev1.parseInput("3");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev1);
+        });
+
+
+        //p2 wants to play the 1st assistant in his hand (no one has played that one yet)
+        PlayAssistantEvent ev3 = new PlayAssistantEvent();
+        ev3.setPlayerId("id2");
+        ev3.parseInput("0");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev3);
+        });
+
+        //p3 wants to play the 10th assistant in his hand (no one has played that one yet)
+        PlayAssistantEvent ev4 = new PlayAssistantEvent();
+        ev4.setPlayerId("id3");
+        ev4.parseInput("9");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev4);
+        });
+
+        //all players have played an assistant:
+        //- the player order should have been updated to p2 -> p1 -> p3
+        //- we should be in action phase
+        //- p2 should be the next player to play
+
+        return game;
+    }
+
+    @Test
+    public void studentsToIsland() {
+        Game game = doPlanningPhase();
+
+        GameModel gameModel = game.getGameModel();
+        IslandController ic = game.getIslandController();
+        IslandsWrapper im = ic.getIslandModel();
+
+        //after the planning phase has finished we should be in the action phase (players move students)
+        assertEquals(Phase.ACTION_STUDENTS , gameModel.getGamePhase());
+
+        //-------------------------------------------
+        //p2 wants to move one student (the one in his first slot) to island 0
+        MoveStudentToIslandEvent ev1 = new MoveStudentToIslandEvent();
+        ev1.setPlayerId("id2");
+        ev1.parseInput("0 + 0");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev1);
+        });
+        //on island 0 there should be 1 student atm (since it is initialized with no students)
+        assertEquals(1, countStudents(im.getStudents(0)));
+        //game model has registered one student-move for the current turn
+        //p2 is still the current player
+        //ACTION_STUDENTS is still the game phase
+        assertEquals(1, gameModel.getNumStudentsMoved());
+        assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
+        assertEquals(Phase.ACTION_STUDENTS, gameModel.getGamePhase());
+        assertEquals(1, gameModel.getRoundCount());
+
+        //-----------------------------------------
+
+        //p2 wants to move one student (the one in his first slot) to island 0
+        MoveStudentToIslandEvent ev2 = new MoveStudentToIslandEvent();
+        ev2.setPlayerId("id2");
+        ev2.parseInput("0 + 0");
+
+        //should signal the assistant has already been played
+        assertThrows(NoSuchStudentsException.class, () -> {
+            game.handleEvent(ev2);
+        });
+
+        //nothing changed
+        assertEquals(1, countStudents(im.getStudents(0)));
+        assertEquals(1, gameModel.getNumStudentsMoved());
+        assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
+        assertEquals(Phase.ACTION_STUDENTS, gameModel.getGamePhase());
+        assertEquals(1, gameModel.getRoundCount());
+
+        //----------------------------------------------
+
+        //p2 wants to move one student (the one in his second slot) to island 0
+        MoveStudentToIslandEvent ev3 = new MoveStudentToIslandEvent();
+        ev3.setPlayerId("id2");
+        ev3.parseInput("1 + 0");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev3);
+        });
+        //on island 0 there should be 2 students atm (since it is initialized with no students)
+        assertEquals(2, countStudents(im.getStudents(0)));
+        //game model has registered one student-move for the current turn
+        //p2 is still the current player
+        //ACTION_STUDENTS is still the game phase
+        assertEquals(2, gameModel.getNumStudentsMoved());
+        assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
+        assertEquals(Phase.ACTION_STUDENTS, gameModel.getGamePhase());
+
+        //-----------------------------------------------------------
+
+        //p1 wants to move one student (the one in his second slot) to island 0
+        MoveStudentToIslandEvent ev4 = new MoveStudentToIslandEvent();
+        ev4.setPlayerId("id1");
+        ev4.parseInput("1 + 0");
+
+        //should signal the turn is wrong
+        assertThrows(NotYourTurnException.class, () -> {
+            game.handleEvent(ev4);
+        });
+
+        //nothing changed
+        assertEquals(2, countStudents(im.getStudents(0)));
+        assertEquals(2, gameModel.getNumStudentsMoved());
+        assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
+        assertEquals(Phase.ACTION_STUDENTS, gameModel.getGamePhase());
+
+        //------------------------------------------------------------
+
+        //p2 wants to move one student (the one in his third slot) to island 0
+        MoveStudentToIslandEvent ev5 = new MoveStudentToIslandEvent();
+        ev5.setPlayerId("id2");
+        ev5.parseInput("2 + 0");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev5);
+        });
+
+        //turn info in gameModel should have been reset
+        //game phase should still be ACTION_STUDENTS
+        //p1 should now be in turn
+        assertEquals(0, gameModel.getNumStudentsMoved());
+        assertFalse(gameModel.hasMotherNatureMoved());
+        assertFalse(gameModel.isCloudChosen());
+        assertEquals(Phase.ACTION_STUDENTS, gameModel.getGamePhase());
+        assertEquals("id1", gameModel.getCurrentPlayer().getPlayerID());
+    }
+
+    /**
+     * Counts the number of students in an array
+     * @param s
+     * @return
+     */
+    private int countStudents(int[] s) {
+        return s[0] + s[1] + s[2] + s[3] +s[4];
+    }
 
     private List<Player> getPlayerList(int n) {
         List<Player> ret = new ArrayList<>();
