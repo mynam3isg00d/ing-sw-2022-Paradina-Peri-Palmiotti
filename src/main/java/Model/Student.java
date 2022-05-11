@@ -18,5 +18,14 @@ public enum Student {
         return colorId;
     }
 
-
+    public char getChar() {
+        switch(colorId) {
+            case 0: return 'Y';
+            case 1: return 'B';
+            case 2: return 'G';
+            case 3: return 'R';
+            case 4: return 'P';
+        }
+        return '-';
+    }
 }
