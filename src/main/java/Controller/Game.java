@@ -150,7 +150,7 @@ public class Game implements Observer{
         //add one student to the turn info
         gameModel.studentMoved();
 
-        //if the player has moved 3 students the ACTION_STUDENTS phase has ended
+        //if the player has moved 3 students the turn changes
         if (gameModel.getNumStudentsMoved() == 3) {
             gameModel.setGamePhase(Phase.ACTION_MOTHERNATURE);
         }
@@ -184,9 +184,9 @@ public class Game implements Observer{
         //add one student to the turn info
         gameModel.studentMoved();
 
-        //if the player has moved 3 students the ACTION_STUDENTS phase has ended
+        //if the player has moved 3 students the turn changes
         if (gameModel.getNumStudentsMoved() == 3) {
-            endTurn(event.getPlayerId());
+            gameModel.setGamePhase(Phase.ACTION_MOTHERNATURE);
         }
     }
 
@@ -415,6 +415,8 @@ public class Game implements Observer{
             System.out.println("Who is this player");
             e.printStackTrace();
         }
+
+
     }
 
     /**

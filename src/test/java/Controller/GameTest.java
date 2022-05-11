@@ -1,6 +1,7 @@
 package Controller;
 
 import Events.ChooseWizardEvent;
+import Events.MoveStudentToDiningEvent;
 import Events.MoveStudentToIslandEvent;
 import Events.PlayAssistantEvent;
 import Exceptions.IllegalAssistantException;
@@ -310,7 +311,7 @@ class GameTest {
     }
 
     @Test
-    public void studentsToIsland() {
+    public void action_students_phase() {
         Game game = doPlanningPhase();
 
         GameModel gameModel = game.getGameModel();
@@ -399,24 +400,33 @@ class GameTest {
 
         //------------------------------------------------------------
 
-        //p2 wants to move one student (the one in his third slot) to island 0
-        MoveStudentToIslandEvent ev5 = new MoveStudentToIslandEvent();
+        //p2 wants to move one student (the one in his third slot) to the dining room
+        MoveStudentToDiningEvent ev5 = new MoveStudentToDiningEvent();
         ev5.setPlayerId("id2");
-        ev5.parseInput("2 + 0");
+        ev5.parseInput("2");
 
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
             game.handleEvent(ev5);
         });
 
-        //turn info in gameModel should have been reset
-        //game phase should still be ACTION_STUDENTS
-        //p1 should now be in turn
-        assertEquals(0, gameModel.getNumStudentsMoved());
+        //one dining in p2's board should now have a student
+        BoardsController bc = game.getBoardsController();
+        Board b2 = bc.getBoard("id2");
+        assertEquals(1, countStudents(b2.getDinings()));
+
+
+        //game phase should now be ACTION.MOTHERNATURE
+        //p2 should still be in turn
+        assertEquals(3, gameModel.getNumStudentsMoved());
         assertFalse(gameModel.hasMotherNatureMoved());
         assertFalse(gameModel.isCloudChosen());
-        assertEquals(Phase.ACTION_STUDENTS, gameModel.getGamePhase());
-        assertEquals("id1", gameModel.getCurrentPlayer().getPlayerID());
+        assertEquals(Phase.ACTION_MOTHERNATURE, gameModel.getGamePhase());
+        assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
+
+        //----------------------------------------------------
+        //----------------------------------------------------
+        //----------------------------------------------------
     }
 
     /**
@@ -427,6 +437,7 @@ class GameTest {
     private int countStudents(int[] s) {
         return s[0] + s[1] + s[2] + s[3] +s[4];
     }
+
 
     private List<Player> getPlayerList(int n) {
         List<Player> ret = new ArrayList<>();
