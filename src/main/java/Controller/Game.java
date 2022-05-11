@@ -86,7 +86,7 @@ public class Game implements Observer{
     }
 
     //----------------------------------------------------------------------------------------------------------------
-    //handleEvent methods, overload on different event types. Event objects come from a factory of events parsing a json  (are you sure?)
+    //handleEvent methods, overload on different event types. Event objects come from a factory of events parsing a json
     //handleEvent will call the right methods on the right controller
     //----------------------------------------------------------------------------------------------------------------
 
@@ -256,15 +256,6 @@ public class Game implements Observer{
         }
     }
 
-    //TODO davide!!!!!!!! dimmi
-    public void handleEvent(BuyPlayCharacterEvent event) throws NotYourTurnException, InvalidMoveException {
-        //not your turn
-        if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
-
-        //not the right phase
-        if (!gameModel.getGamePhase().equals(Phase.ACTION_STUDENTS) && !gameModel.getGamePhase().equals(Phase.ACTION_MOTHERNATURE) && !gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) throw new InvalidMoveException("Assistants can only be played in the planning phase");
-    }
-
     public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException, WizardAlreadyChosenException{
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
@@ -293,19 +284,108 @@ public class Game implements Observer{
         }
     }
 
+    //-----------------------------------------------------------------------------------------------------------------
+    //      END CONDITIONS
+    //-----------------------------------------------------------------------------------------------------------------
 
-    private boolean checkEnd() {
-        //BoardsHandler end conditions: a player (or team) has no towers left;
-        //IslandHandler end conditions: 3 islands left;
-        //Sack end conditions:          the sack is empty, but the game goes on for one last round!
-        //Hand end conditions:          if the hand is empty, one last round is played.
-
-        //NOTE: this might need some tinkering, the game should end IMMEDIATELY after the last tower is placed
-        //      or IMMEDIATELY after the islands go from 4 to 3
-
-        return false;
+    //Returns the teamID of the winning team,
+    //                      otherwise returns -1 if there are no winners
+    //                      otherwise returns -2 if it's a draw
+    private int checkTowerEnd() {
+        if (players.size() == 4) {
+            int emptyWhite = 0;
+            int emptyBlack = 0;
+            for(Player p : players) {
+                Board b = boardsController.getBoard(p.getPlayerID());
+                if (b.getTowersNum() == 0) {
+                    if (p.getTeamID() == 0) emptyWhite++;
+                    if (p.getTeamID() == 1) emptyBlack++;
+                }
+            }
+            if (emptyWhite == 2) return 0;
+            if (emptyBlack == 2) return 1;
+        } else {
+            for(Player p : players) {
+                Board b = boardsController.getBoard(p.getPlayerID());
+                if (b.getTowersNum() == 0) return p.getTeamID();
+            }
+        }
+        return -1;
     }
 
+    private int checkIslandEnd() {
+        if (islandController.getIslandsQuantity() == 3) return getWinningTeam();
+        return -1;
+    }
+
+    private int checkSackEnd() {
+        if (sack.isEmpty()) gameModel.setLastRound(true);
+        return -1;
+    }
+
+    //This could be handled with the roundCount, 10 rounds is max number of playable rounds
+    private int checkHandEnd() {
+        for (Player p : players) {
+            if(p.getHand().getHandSize() == 0) gameModel.setLastRound(true);
+        }
+        return -1;
+    }
+
+    private int getWinningTeam() {
+        //white counters
+        int whiteSum = 0;
+        int whiteProf = 0;
+
+        //black counters
+        int blackSum = 0;
+        int blackProf = 0;
+
+        //grey counters
+        int greySum = 0;
+        int greyProf = 0;
+
+        //Check every board and count #towers and #prof per team
+        for(Player p : players) {
+            Board b = boardsController.getBoard(p.getPlayerID());
+            if (p.getTeamID() == 0) {
+                whiteSum += b.getTowersNum();
+                whiteProf += b.getProfNum();
+            }
+            if (p.getTeamID() == 1) {
+                blackSum += b.getTowersNum();
+                blackProf += b.getProfNum();
+            }
+            if (p.getTeamID() == 2) {
+                greySum += b.getTowersNum();
+                greyProf += b.getProfNum();
+            }
+        }
+
+        //Check towers
+        int minTowers = Math.min(whiteSum, Math.min(blackSum, greySum));
+        List<Integer> possibleWinners = new ArrayList<>();
+
+        if (whiteSum == minTowers) possibleWinners.add(0);
+        if (blackSum == minTowers) possibleWinners.add(1);
+        if (greySum == minTowers) possibleWinners.add(2);
+        if (possibleWinners.size() == 1) return possibleWinners.get(0);
+
+        //Tower draw!! Check professors
+        int minProfessors = Math.min(whiteProf, Math.min(blackProf, greyProf));
+        List<Integer> newPossibleWinners = new ArrayList<>();
+
+        if (whiteProf == minProfessors && possibleWinners.contains(0)) newPossibleWinners.add(0);
+        if (blackProf == minProfessors && possibleWinners.contains(1)) newPossibleWinners.add(1);
+        if (greyProf == minProfessors && possibleWinners.contains(2)) newPossibleWinners.add(2);
+        if (newPossibleWinners.size() == 1) return newPossibleWinners.get(0);
+
+        //DRAW!
+        return -2;
+    }
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //      Getters
+    //-----------------------------------------------------------------------------------------------------------------
 
     public Sack getSack() {
         return sack;
@@ -330,6 +410,11 @@ public class Game implements Observer{
     public GameModel getGameModel() {
         return gameModel;
     }
+
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //      Other methods
+    //-----------------------------------------------------------------------------------------------------------------
 
     /**
      * Update player order will be called whenever, just before the start of the action phase of a turn, all players will have chosen an assistant

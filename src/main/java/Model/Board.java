@@ -135,6 +135,14 @@ public class Board extends Observable{
         return towersNum;
     }
 
+    public int getProfNum() {
+        int ret = 0;
+        for(int i=0; i<professors.length; i++) {
+            if (professors[i]) ret++;
+        }
+        return ret;
+    }
+
     //************************//
 
 

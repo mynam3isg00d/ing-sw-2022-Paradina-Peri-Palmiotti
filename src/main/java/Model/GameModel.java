@@ -5,6 +5,8 @@ import java.util.Observable;
 public class GameModel extends Observable {
     private int roundCount;
 
+    private boolean isLastRound;
+
     private Phase gamePhase;
     private Player currentPlayer;
 
@@ -24,6 +26,7 @@ public class GameModel extends Observable {
     public GameModel() {
         //round 0 is the setup phase
         roundCount = 0;
+        isLastRound = false;
 
         currentPlayer = null;
         gamePhase = Phase.SETUP;
@@ -36,6 +39,10 @@ public class GameModel extends Observable {
 
     public Phase getGamePhase() {
         return gamePhase;
+    }
+
+    public void setLastRound(boolean lastRound) {
+        isLastRound = lastRound;
     }
 
     public Player getCurrentPlayer() {
@@ -82,5 +89,9 @@ public class GameModel extends Observable {
 
     public int getRoundCount() {
         return roundCount;
+    }
+
+    public boolean isLastRound() {
+        return isLastRound;
     }
 }
