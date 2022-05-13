@@ -227,7 +227,7 @@ public class Game implements Observer{
      * @throws InvalidMoveException The request is coming from the right player but in the wrong game phase
      * @throws NoSuchCloudException The cloud index does not exist
      */
-    public void handleEvent(PickStudentsFromCloudEvent event) throws NotYourTurnException, InvalidMoveException, NoSuchCloudException, EmptyCloudException {
+    public void handleEvent(PickStudentsFromCloudEvent event) throws NotYourTurnException, InvalidMoveException, NoSuchCloudException, EmptyCloudException, FullEntranceException{
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
@@ -244,7 +244,9 @@ public class Game implements Observer{
         try {
             //gets from cloud
             List<Student> fromCloud = cloudController.getFromCloud(cloudIndex);
+            System.out.println("DEBUG: " + fromCloud.size());
             //adds the students to the board
+            System.out.println("Adding students from cloud to board of " + event.getPlayerId());
             boardsController.addToEntrance(event.getPlayerId(), fromCloud);
 
             gameModel.cloudChosen();
@@ -463,7 +465,7 @@ public class Game implements Observer{
     }
 
     /**
-     * Tells if all players have picked a cloud
+     * Tells if all players have chosen an assistant
      * @return TRUE/FALSE
      */
     private boolean allPlayersPlayedAssistant() {
@@ -472,6 +474,7 @@ public class Game implements Observer{
         }
         return true;
     }
+
 
     private void initNewRound() {
         //riempie nuvole eccetera

@@ -143,6 +143,10 @@ public class Board extends Observable{
         return ret;
     }
 
+    public int getMaxEntrance() {
+        return MAXENTRANCEPLACES;
+    }
+
     //************************//
 
 

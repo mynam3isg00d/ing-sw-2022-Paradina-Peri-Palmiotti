@@ -192,13 +192,9 @@ public class BoardsController {
      * @param playerID The ID of the player requesting the move
      * @param ss The list of students to add
      */
-    public void addToEntrance(String playerID, List<Student> ss) {
+    public void addToEntrance(String playerID, List<Student> ss) throws FullEntranceException {
         Board b = playerBoardMap.get(playerID);
-        try {
-            b.addToEntrance(ss);
-        } catch (FullEntranceException e) {
-            e.getMessage();
-        }
+        b.addToEntrance(ss);
     }
 
     public Player getProfessorOwner(int colorId) {

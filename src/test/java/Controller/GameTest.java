@@ -1,13 +1,7 @@
 package Controller;
 
-import Events.ChooseWizardEvent;
-import Events.MoveStudentToDiningEvent;
-import Events.MoveStudentToIslandEvent;
-import Events.PlayAssistantEvent;
-import Exceptions.IllegalAssistantException;
-import Exceptions.NoSuchStudentsException;
-import Exceptions.NotYourTurnException;
-import Exceptions.WizardAlreadyChosenException;
+import Events.*;
+import Exceptions.*;
 import Model.*;
 import org.junit.jupiter.api.Test;
 
@@ -311,7 +305,7 @@ class GameTest {
     }
 
     @Test
-    public void action_students_phase() {
+    public void action_phase() {
         Game game = doPlanningPhase();
 
         GameModel gameModel = game.getGameModel();
@@ -427,6 +421,90 @@ class GameTest {
         //----------------------------------------------------
         //----------------------------------------------------
         //----------------------------------------------------
+
+        //p1 wants to move mothernature 1 steps ahead
+        //not his turn though
+        MoveMotherNatureEvent ev6 = new MoveMotherNatureEvent();
+        ev6.setPlayerId("id1");
+        ev6.parseInput("1");
+
+        //should signal the turn is wrong
+        assertThrows(NotYourTurnException.class, () -> {
+            game.handleEvent(ev6);
+        });
+
+        //p2 wants to move mothernature 5 steps ahead
+        //he played an assistant with 1 max steps
+        MoveMotherNatureEvent ev7 = new MoveMotherNatureEvent();
+        ev7.setPlayerId("id2");
+        ev7.parseInput("5");
+
+        //should throw an invalid move exception
+        assertThrows(InvalidMoveException.class, () -> {
+            game.handleEvent(ev7);
+        });
+
+        //p2 wants to move mothernature 1 steps ahead
+        //he played an assistant with 1 max steps
+        MoveMotherNatureEvent ev8 = new MoveMotherNatureEvent();
+        ev8.setPlayerId("id2");
+        ev8.parseInput("1");
+
+        //should process the event correctly
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev8);
+        });
+
+        //mothernature should be on island 1, not on island 0 anymore
+        assertEquals(1, im.getMotherNaturePos());
+        assertFalse(im.getIsland(0).isMotherNature());
+        assertTrue(im.getIsland(1).isMotherNature());
+
+        //should now be in ACTION_CLOUDS
+        //p2 should still be in turn
+        assertEquals(Phase.ACTION_CLOUDS, gameModel.getGamePhase());
+        assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
+        assertTrue(gameModel.hasMotherNatureMoved());
+        assertFalse(gameModel.isCloudChosen());
+
+        //----------------------------------------
+        //-------------cloud phase----------------
+        //----------------------------------------
+
+        //p2 wants to pick students from cloud 4
+        PickStudentsFromCloudEvent ev9 = new PickStudentsFromCloudEvent();
+        ev9.setPlayerId("id2");
+        ev9.parseInput("4");
+
+        assertThrows(NoSuchCloudException.class, () -> {
+            game.handleEvent(ev9);
+        });
+
+        //p1 wants to pick students from cloud 1
+        PickStudentsFromCloudEvent ev10 = new PickStudentsFromCloudEvent();
+        ev10.setPlayerId("id1");
+        ev10.parseInput("2");
+
+        assertThrows(NotYourTurnException.class, () -> {
+            game.handleEvent(ev10);
+        });
+
+        //atm b2 should have 6 students in his entrance
+        Student[] b2Entrance = b2.getEntrance();
+        assertEquals(6, countStudentsInEntrance(b2Entrance));
+
+        //p2 wants to pick students from cloud 1
+        PickStudentsFromCloudEvent ev11 = new PickStudentsFromCloudEvent();
+        ev11.setPlayerId("id2");
+        ev11.parseInput("2");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev11);
+        });
+
+        //the number of students in p2's entrance should have now been restored to 9
+        assertEquals(9, countStudentsInEntrance(b2Entrance));
     }
 
     /**
@@ -436,6 +514,14 @@ class GameTest {
      */
     private int countStudents(int[] s) {
         return s[0] + s[1] + s[2] + s[3] +s[4];
+    }
+
+    private int countStudentsInEntrance(Student[] s) {
+        int count = 0;
+        for (Student ss : s) {
+            if (ss != null) count++;
+        }
+        return count;
     }
 
 
