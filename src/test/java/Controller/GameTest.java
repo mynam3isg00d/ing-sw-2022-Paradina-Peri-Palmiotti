@@ -248,9 +248,7 @@ class GameTest {
         //- we should be in action phase
         //- p2 should be the next player to play
         List<Player> newOrder = game.getPlayers();
-        for (Player p : newOrder) {
-            System.out.println(p.getPlayerID());
-        }
+
         assertEquals("id2" , newOrder.get(0).getPlayerID());
         assertEquals("id1" , newOrder.get(1).getPlayerID());
         assertEquals("id3" , newOrder.get(2).getPlayerID());
@@ -394,6 +392,7 @@ class GameTest {
 
         //------------------------------------------------------------
 
+        //3rd STUDENT MOVED
         //p2 wants to move one student (the one in his third slot) to the dining room
         MoveStudentToDiningEvent ev5 = new MoveStudentToDiningEvent();
         ev5.setPlayerId("id2");
@@ -410,9 +409,23 @@ class GameTest {
         assertEquals(1, countStudents(b2.getDinings()));
 
 
+        //4th STUDENT MOVED
+        //p2 wants to move one student (the one in his 5th slot) to the dining room
+        MoveStudentToDiningEvent ev = new MoveStudentToDiningEvent();
+        ev5.setPlayerId("id2");
+        ev5.parseInput("4");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev5);
+        });
+
+
+
+
         //game phase should now be ACTION.MOTHERNATURE
         //p2 should still be in turn
-        assertEquals(3, gameModel.getNumStudentsMoved());
+        assertEquals(4, gameModel.getNumStudentsMoved());
         assertFalse(gameModel.hasMotherNatureMoved());
         assertFalse(gameModel.isCloudChosen());
         assertEquals(Phase.ACTION_MOTHERNATURE, gameModel.getGamePhase());
@@ -489,22 +502,48 @@ class GameTest {
             game.handleEvent(ev10);
         });
 
-        //atm b2 should have 6 students in his entrance
+        //atm b2 should have 9-4 students in his entrance
         Student[] b2Entrance = b2.getEntrance();
-        assertEquals(6, countStudentsInEntrance(b2Entrance));
+        assertEquals(5, countStudentsInEntrance(b2Entrance));
 
-        //p2 wants to pick students from cloud 1
+        //p2 wants to pick students from cloud 2
         PickStudentsFromCloudEvent ev11 = new PickStudentsFromCloudEvent();
         ev11.setPlayerId("id2");
         ev11.parseInput("2");
+
+        //-----------------------
+        CloudWrapper cm = game.getCloudController().getCloudModel();
+        System.out.println("GAMETEST: CLOUD 2 has " + cm.peekAtCloud(1).size());
 
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
             game.handleEvent(ev11);
         });
 
+        b2Entrance = b2.getEntrance();
+
+        //cloud 2 should now be empty
+        assertTrue(cm.isEmpty(2));
         //the number of students in p2's entrance should have now been restored to 9
         assertEquals(9, countStudentsInEntrance(b2Entrance));
+
+        //since p2's turn has ended, p1 should now be in turn
+        assertEquals("id1", gameModel.getCurrentPlayer().getPlayerID());
+
+        //info about the turn should have been reset
+        assertEquals(0, gameModel.getNumStudentsMoved());
+        assertFalse(gameModel.hasMotherNatureMoved());
+        assertFalse(gameModel.isCloudChosen());
+
+        //phase should have been set to action_students
+        assertEquals(Phase.ACTION_STUDENTS, gameModel.getGamePhase());
+
+
+        //----------------------------------------------------------------
+        //-------------------p2's turn ends-------------------------------
+        //----------------------------------------------------------------
+        //-------------------p1's turn starts-----------------------------
+        //----------------------------------------------------------------
     }
 
     /**

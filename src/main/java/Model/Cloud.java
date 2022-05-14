@@ -36,7 +36,9 @@ public class Cloud {
      * @throws EmptyCloudException if the cloud is already empty
      */
     public List<Student> empty() throws EmptyCloudException {
-        if(this.isEmpty()) throw new EmptyCloudException();
+        if(this.isEmpty()) {
+            throw new EmptyCloudException();
+        }
         List<Student> studentsOnCloud = new ArrayList<>(this.students);
         this.students.clear();
         return studentsOnCloud;

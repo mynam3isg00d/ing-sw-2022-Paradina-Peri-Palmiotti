@@ -7,6 +7,7 @@ public class GameModel extends Observable {
 
     private boolean isLastRound;
 
+    private final int STUDENTS_PER_TURN;
     private Phase gamePhase;
     private Player currentPlayer;
 
@@ -23,7 +24,7 @@ public class GameModel extends Observable {
         }
     }
 
-    public GameModel() {
+    public GameModel(int playerNumber) {
         //round 0 is the setup phase
         roundCount = 0;
         isLastRound = false;
@@ -31,6 +32,12 @@ public class GameModel extends Observable {
         currentPlayer = null;
         gamePhase = Phase.SETUP;
         turnInfo = new TurnInfo();
+
+        if (playerNumber == 2 || playerNumber == 4) {
+            STUDENTS_PER_TURN = 3;
+        } else {
+            STUDENTS_PER_TURN = 4;
+        }
     }
 
     public void setGamePhase(Phase gamePhase) {
@@ -41,6 +48,9 @@ public class GameModel extends Observable {
         return gamePhase;
     }
 
+    public int getSTUDENTS_PER_TURN() {
+        return STUDENTS_PER_TURN;
+    }
     public void setLastRound(boolean lastRound) {
         isLastRound = lastRound;
     }

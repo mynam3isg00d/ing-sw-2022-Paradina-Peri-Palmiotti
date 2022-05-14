@@ -52,7 +52,7 @@ public class Game implements Observer{
         boardsController = new BoardsController(players, sack);
 
         //initializes the game model
-        gameModel = new GameModel();
+        gameModel = new GameModel(players.size());
         gameModel.setCurrentPlayer(players.get(0));  //for the first round the order of game is the order by which the players have connected
 
         //islandController requires access to the boards
@@ -143,15 +143,15 @@ public class Game implements Observer{
         if (!gameModel.getGamePhase().equals(Phase.ACTION_STUDENTS)) throw new InvalidMoveException("You can't move any student now");
 
         //already moved three students
-        if (gameModel.getNumStudentsMoved() >= 3) throw new InvalidMoveException("You can't move any more students");
+        if (gameModel.getNumStudentsMoved() >= gameModel.getSTUDENTS_PER_TURN()) throw new InvalidMoveException("You can't move any more students");
 
         boardsController.moveFromEntranceToDining(event.getPlayerId(), event.getStudentIndex());
 
         //add one student to the turn info
         gameModel.studentMoved();
 
-        //if the player has moved 3 students the turn changes
-        if (gameModel.getNumStudentsMoved() == 3) {
+        //if the player has moved STUDENTS_PER_TURN students the turn changes
+        if (gameModel.getNumStudentsMoved() == gameModel.getSTUDENTS_PER_TURN()) {
             gameModel.setGamePhase(Phase.ACTION_MOTHERNATURE);
         }
     }
@@ -167,7 +167,7 @@ public class Game implements Observer{
         if (!gameModel.getGamePhase().equals(Phase.ACTION_STUDENTS)) throw new InvalidMoveException("You can't move any student now");
 
         //already moved three students
-        if (gameModel.getNumStudentsMoved() >= 3) throw new InvalidMoveException("You can't move any more students");
+        if (gameModel.getNumStudentsMoved() >= gameModel.getSTUDENTS_PER_TURN()) throw new InvalidMoveException("You can't move any more students");
 
         //wrong island index
         if (islandController.getIslandsQuantity() <= islandIndex || islandIndex < 0) throw new NoSuchIslandException();
@@ -184,8 +184,8 @@ public class Game implements Observer{
         //add one student to the turn info
         gameModel.studentMoved();
 
-        //if the player has moved 3 students the turn changes
-        if (gameModel.getNumStudentsMoved() == 3) {
+        //if the player has moved STUDENTS_PER_TURN students the turn changes
+        if (gameModel.getNumStudentsMoved() == gameModel.getSTUDENTS_PER_TURN()) {
             gameModel.setGamePhase(Phase.ACTION_MOTHERNATURE);
         }
     }
@@ -244,18 +244,28 @@ public class Game implements Observer{
         try {
             //gets from cloud
             List<Student> fromCloud = cloudController.getFromCloud(cloudIndex);
-            System.out.println("DEBUG: " + fromCloud.size());
             //adds the students to the board
-            System.out.println("Adding students from cloud to board of " + event.getPlayerId());
             boardsController.addToEntrance(event.getPlayerId(), fromCloud);
 
             gameModel.cloudChosen();
 
             endTurn(event.getPlayerId());
         } catch (Exception e) {
+            System.out.println("PROBLEMA");
             e.printStackTrace();
             throw e;
         }
+
+        /*//gets from cloud
+        List<Student> fromCloud = cloudController.getFromCloud(cloudIndex);
+        System.out.println("GAME: n_studenti_presi = " + fromCloud.size());
+        //adds the students to the board
+        System.out.println("GAME: Adding students from cloud to board of " + event.getPlayerId());
+        boardsController.addToEntrance(event.getPlayerId(), fromCloud);
+
+        gameModel.cloudChosen();
+
+        endTurn(event.getPlayerId());*/
     }
 
     public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException, WizardAlreadyChosenException{
@@ -500,6 +510,10 @@ public class Game implements Observer{
 
             //resets turn info in player turn
             gameModel.resetTurnInfo();
+
+            if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) {
+                gameModel.setGamePhase(Phase.ACTION_STUDENTS);
+            }
         } catch (Exception e) {
             System.out.println("Who is this player");
             e.printStackTrace();

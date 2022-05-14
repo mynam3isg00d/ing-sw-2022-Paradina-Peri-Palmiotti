@@ -54,7 +54,11 @@ public class Board extends Observable{
         for(int i=0; i<MAXENTRANCEPLACES; i++) {
             if (entrance[i] == null) emptyCount++;
         }
-        if (emptyCount < s.size()) throw new FullEntranceException();
+
+        if (emptyCount < s.size()) {
+            throw new FullEntranceException();
+        }
+
         for(Student st : s) addToEntrance(st);
     }
 
@@ -69,6 +73,7 @@ public class Board extends Observable{
                 return;
             }
         }
+
         throw new FullEntranceException();
     }
 
