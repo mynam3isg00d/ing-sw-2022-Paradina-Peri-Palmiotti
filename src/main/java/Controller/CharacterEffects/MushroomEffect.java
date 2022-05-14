@@ -2,6 +2,7 @@ package Controller.CharacterEffects;
 
 import Controller.CharacterEffects.Strategies.MushroomStrategy;
 import Controller.ExpertGame;
+import Exceptions.InvalidPlayerInputException;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ public class MushroomEffect extends InfluenceEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) {
+    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
 
-        //Check input format
+        //TODO: Check input format
         int cid = (Integer) playerInput.get(0);
 
         ic.setInfluenceStrategy(new MushroomStrategy(cid));

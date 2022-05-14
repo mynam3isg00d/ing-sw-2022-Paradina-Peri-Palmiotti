@@ -475,11 +475,12 @@ public class Game implements Observer{
         return true;
     }
 
-
+    /*
     private void initNewRound() {
         //riempie nuvole eccetera
         cloudController.fillClouds(sack);
     }
+    */
 
     /**
      * A player has finished his turn in one of the phases of the game
@@ -527,8 +528,16 @@ public class Game implements Observer{
      */
     private void endPhase() {
         if (gameModel.getGamePhase().equals(Phase.SETUP)) {
+
+            //NOTE FOR SAMUELE rumeperi PERI
+            //Should this be try/catch or throw
+
             //fills the clouds
-            cloudController.fillClouds(sack);
+            try {
+                cloudController.fillClouds(sack);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             //sets the phase to planning. Game is now waiting for players to play assistant cards
             gameModel.setGamePhase(Phase.PLANNING);

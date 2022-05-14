@@ -21,6 +21,8 @@ public abstract class CharacterEffect {
 
     //QUI le strategy vengono inizializzate, passando nei costruttori i player input che servono
     //OPPURE bisogna mettere un metodo per cambiarlo
-    public abstract void playEffect(List<Object> playerInput) throws InvalidPlayerInputException;
+
+    //TODO: Generic Exception should be replaced with a "Model Related Exception" for clarity
+    public abstract void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception;
 
 }

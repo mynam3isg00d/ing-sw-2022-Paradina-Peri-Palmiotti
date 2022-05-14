@@ -21,7 +21,7 @@ public class HeraldEffect extends CharacterEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException {
+    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
         //Expects:
         //{islandID : Integer}
         if (playerInput.size() != expectedInputSize || !((playerInput.get(0) instanceof Integer))) {

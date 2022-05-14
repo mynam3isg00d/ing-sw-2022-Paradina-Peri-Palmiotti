@@ -1,5 +1,6 @@
 package Controller;
 import Exceptions.EmptyCloudException;
+import Exceptions.EmptySackException;
 import Model.CloudWrapper;
 import Model.Sack;
 import Model.Student;
@@ -35,21 +36,13 @@ public class CloudController {
      * Fills all the clouds initialized in the model and handles the relative exceptions
      * @param s The Sack
      */
-    public void fillClouds(Sack s) {
+    public void fillClouds(Sack s) throws Exception {
         for (int i = 0; i < numOfClouds; i++) {
             //draws from the sack 3 students in order to add them to the cloud
-            try {
-                List<Student> toAdd = s.draw(studentsPerCloud);
+            List<Student> toAdd = s.draw(studentsPerCloud);
 
-                //fills cloud i
-                try {
-                    cloudModel.fillCloud(toAdd, i);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            //fills cloud i
+            cloudModel.fillCloud(toAdd, i);
         }
 
     }

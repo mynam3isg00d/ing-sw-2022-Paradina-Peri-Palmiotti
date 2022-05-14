@@ -28,7 +28,7 @@ public class BardEffect extends CharacterEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException {
+    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
         // Expects
         // {List<Integer> studentsToEntrance, List<Integer> studentsToDining}
 
@@ -37,21 +37,17 @@ public class BardEffect extends CharacterEffect {
 
         //TODO: check valid input
 
-        try {
-            //add entrance students to the dining
-            for(Integer i : studentsToDining) {
-                bc.moveFromEntranceToDining(playerID, i);
-            }
-
-            //remove students from the dining and add them to the entrance
-            List<Student> toAdd = new ArrayList<>();
-            for(Integer i : studentsToEntrance) {
-                bc.removeFromDining(playerID, Sack.intToStudent(i));
-                toAdd.add(Sack.intToStudent(i));
-            }
-            bc.addToEntrance(playerID, toAdd);
-        } catch (NoSuchStudentsException | FullTableException | EmptyTableException e) {
-            e.printStackTrace();
+        //add entrance students to the dining
+        for(Integer i : studentsToDining) {
+            bc.moveFromEntranceToDining(playerID, i);
         }
+
+        //remove students from the dining and add them to the entrance
+        List<Student> toAdd = new ArrayList<>();
+        for(Integer i : studentsToEntrance) {
+            bc.removeFromDining(playerID, Sack.intToStudent(i));
+            toAdd.add(Sack.intToStudent(i));
+        }
+        bc.addToEntrance(playerID, toAdd);
     }
 }

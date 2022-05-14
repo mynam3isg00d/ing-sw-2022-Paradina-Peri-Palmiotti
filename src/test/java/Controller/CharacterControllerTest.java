@@ -28,7 +28,7 @@ class CharacterControllerTest {
     }
 
     @Test
-    void clerkEffectTest() throws InvalidPlayerInputException, InsufficientCoinsException {
+    void clerkEffectTest() throws Exception {
         List<Player> pl = getPlayerList(2);
         ExpertGame g = new ExpertGame(pl);
         g.setCharacterController(new CharacterController(g, new Integer[]{0, 0, 0}));
@@ -42,7 +42,7 @@ class CharacterControllerTest {
 
     //No idea how to test this so i trust it works
     @Test
-    void heraldEffectTest() throws InvalidPlayerInputException, InsufficientCoinsException {
+    void heraldEffectTest() throws Exception {
         List<Player> pl = getPlayerList(2);
         ExpertGame g = new ExpertGame(pl);
         g.setCharacterController(new CharacterController(g, new Integer[]{2, 2, 2}));
@@ -55,7 +55,7 @@ class CharacterControllerTest {
     }
 
     @Test
-    void centaurEffectTest() throws InvalidPlayerInputException, InsufficientCoinsException {
+    void centaurEffectTest() throws Exception {
         List<Player> pl = getPlayerList(2);
         ExpertGame g = new ExpertGame(pl);
         g.setCharacterController(new CharacterController(g, new Integer[]{5, 5, 5}));

@@ -4,6 +4,7 @@ import Controller.CharacterEffects.Strategies.CentaurStrategy;
 import Controller.CharacterEffects.Strategies.KnightStrategy;
 import Controller.ExpertGame;
 import Controller.IslandController;
+import Exceptions.InvalidPlayerInputException;
 import Model.Player;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class KnightEffect extends InfluenceEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) {
+    public void playEffect(List<Object> playerInput)throws InvalidPlayerInputException, Exception {
         ic.setInfluenceStrategy(new KnightStrategy(teamID));
     }
 }

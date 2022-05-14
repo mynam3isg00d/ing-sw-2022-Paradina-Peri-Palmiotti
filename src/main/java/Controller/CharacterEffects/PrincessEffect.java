@@ -29,7 +29,7 @@ public class PrincessEffect extends StudentsEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException {
+    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
 
         //Expects
         //{int studentToTake}
@@ -37,11 +37,7 @@ public class PrincessEffect extends StudentsEffect {
 
         //TODO: check player input
 
-        try {
-            bc.addToDining(playerID, sc.getStudent(studentToTake));
-            sc.addStudent(sack.draw(1).get(0));
-        } catch (FullElementException | EmptySackException e) {
-            e.printStackTrace();
-        }
+        bc.addToDining(playerID, sc.getStudent(studentToTake));
+        sc.addStudent(sack.draw(1).get(0));
     }
 }

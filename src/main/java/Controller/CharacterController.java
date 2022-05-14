@@ -30,7 +30,7 @@ public class CharacterController {
         shop.addObserver(rv);
     }
 
-    public void buyCard(int cardIndex, String playerID, List<Object> playerInput) throws InsufficientCoinsException, InvalidPlayerInputException {
+    public void buyCard(int cardIndex, String playerID, List<Object> playerInput) throws InsufficientCoinsException, InvalidPlayerInputException, Exception {
 
         CharacterCard cc = shop.getShop()[cardIndex];
 

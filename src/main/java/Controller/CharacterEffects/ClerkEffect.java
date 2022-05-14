@@ -6,6 +6,7 @@ import Controller.ExpertGame;
 import Controller.IslandController;
 import Exceptions.EmptySackException;
 import Exceptions.FullElementException;
+import Exceptions.InvalidPlayerInputException;
 import Model.Student;
 import Model.StudentCard;
 
@@ -30,7 +31,9 @@ public class ClerkEffect extends StudentsEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) {
+    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
+
+        //TODO: player input check
 
         //Expects
         //{studentIndex : int, islandIndex : int}
@@ -44,10 +47,6 @@ public class ClerkEffect extends StudentsEffect {
         ic.moveStudent(islandIndex, s);
 
         //Update model
-        try {
-            sc.addStudent(sack.draw(1).get(0));
-        } catch (EmptySackException | FullElementException e) {
-            e.printStackTrace();
-        }
+        sc.addStudent(sack.draw(1).get(0));
     }
 }

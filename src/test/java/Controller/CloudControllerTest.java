@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CloudControllerTest {
 
     @Test
-    void fillClouds() {
+    void fillClouds() throws Exception {
         CloudController cc = new CloudController(3);
         Sack s = new Sack(120);
 
@@ -33,7 +33,7 @@ class CloudControllerTest {
     }
 
     @Test
-    void getFromCloud() {
+    void getFromCloud() throws Exception {
         CloudController cc = new CloudController(3);
         Sack s = new Sack(120);
 

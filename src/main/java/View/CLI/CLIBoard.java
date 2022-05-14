@@ -4,9 +4,12 @@ package View.CLI;
 
 import Model.Board;
 import Model.Student;
+import org.fusesource.jansi.AnsiConsole;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class CLIBoard extends CLIElement {
 

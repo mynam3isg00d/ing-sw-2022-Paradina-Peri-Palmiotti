@@ -8,7 +8,6 @@ import Exceptions.NoSuchStudentsException;
 import Model.Student;
 import Model.StudentCard;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class JesterEffect extends StudentsEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException {
+    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
 
         //Expects:
         // { List<Integer> cardStudents, List<Integer> entranceStudents }
@@ -43,11 +42,7 @@ public class JesterEffect extends StudentsEffect {
 
         //Add entrance students to the card
         for(Integer i : entranceStudents) {
-            try {
-                sc.addStudent( bc.removeFromEntrance(playerID, i) );
-            } catch (FullElementException | NoSuchStudentsException e ) {
-                e.printStackTrace();
-            }
+            sc.addStudent( bc.removeFromEntrance(playerID, i) );
         }
 
         //Add card students to entrance

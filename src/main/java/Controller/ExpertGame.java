@@ -19,7 +19,7 @@ public class ExpertGame extends Game {
         characterController = new CharacterController(this);
     }
 
-    public void handleEvent(BuyPlayCharacterEvent event) throws NotYourTurnException, InvalidPlayerInputException, InsufficientCoinsException, InvalidMoveException {
+    public void handleEvent(BuyPlayCharacterEvent event) throws NotYourTurnException, InvalidPlayerInputException, InsufficientCoinsException, InvalidMoveException, Exception {
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
