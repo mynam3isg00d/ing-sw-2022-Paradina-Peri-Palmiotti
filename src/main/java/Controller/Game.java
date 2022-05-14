@@ -256,16 +256,6 @@ public class Game implements Observer{
             throw e;
         }
 
-        /*//gets from cloud
-        List<Student> fromCloud = cloudController.getFromCloud(cloudIndex);
-        System.out.println("GAME: n_studenti_presi = " + fromCloud.size());
-        //adds the students to the board
-        System.out.println("GAME: Adding students from cloud to board of " + event.getPlayerId());
-        boardsController.addToEntrance(event.getPlayerId(), fromCloud);
-
-        gameModel.cloudChosen();
-
-        endTurn(event.getPlayerId());*/
     }
 
     public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException, WizardAlreadyChosenException{
@@ -500,6 +490,7 @@ public class Game implements Observer{
     private void endTurn(String pid) {
         //if the player requesting the move was the last one THEN the (macro)phase ends
         if (players.get(players.size() - 1).getPlayerID().equals(pid)) {     //the player is the last one if it's the last in the players list
+            System.out.println("phase to end");
             endPhase();
         }
 
@@ -543,9 +534,6 @@ public class Game implements Observer{
     private void endPhase() {
         if (gameModel.getGamePhase().equals(Phase.SETUP)) {
 
-            //NOTE FOR SAMUELE rumeperi PERI
-            //Should this be try/catch or throw
-
             //fills the clouds
             try {
                 cloudController.fillClouds(sack);
@@ -562,7 +550,15 @@ public class Game implements Observer{
             //phase changes to action. Game is now waiting for student-type events
             gameModel.setGamePhase(Phase.ACTION_STUDENTS);
         } else if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) {
-            gameModel.setGamePhase(Phase.PLANNING);
+            initNewRound();
         }
+    }
+
+    private void initNewRound() {
+        //phase is now planning phase
+        gameModel.setGamePhase(Phase.PLANNING);
+
+        //round count is updated
+        gameModel.newRound();
     }
 }

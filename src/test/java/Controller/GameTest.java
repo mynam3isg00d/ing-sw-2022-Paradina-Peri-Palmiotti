@@ -513,7 +513,6 @@ class GameTest {
 
         //-----------------------
         CloudWrapper cm = game.getCloudController().getCloudModel();
-        System.out.println("GAMETEST: CLOUD 2 has " + cm.peekAtCloud(1).size());
 
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
@@ -544,6 +543,113 @@ class GameTest {
         //----------------------------------------------------------------
         //-------------------p1's turn starts-----------------------------
         //----------------------------------------------------------------
+
+        //no need to assert, the methods have already been tested on p2's turn
+        MoveStudentToDiningEvent ev20 = new MoveStudentToDiningEvent();
+        ev20.setPlayerId("id1");
+        ev20.parseInput("0");
+
+        MoveStudentToDiningEvent ev21 = new MoveStudentToDiningEvent();
+        ev21.setPlayerId("id1");
+        ev21.parseInput("1");
+
+        MoveStudentToDiningEvent ev22 = new MoveStudentToDiningEvent();
+        ev22.setPlayerId("id1");
+        ev22.parseInput("2");
+
+        MoveStudentToDiningEvent ev23 = new MoveStudentToDiningEvent();
+        ev23.setPlayerId("id1");
+        ev23.parseInput("3");
+
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev20);
+            game.handleEvent(ev21);
+            game.handleEvent(ev22);
+            game.handleEvent(ev23);
+        });
+
+        //--------------------------------------------------------------------------------
+
+        assertEquals(Phase.ACTION_MOTHERNATURE, gameModel.getGamePhase());
+
+        MoveMotherNatureEvent ev24 = new MoveMotherNatureEvent();
+        ev24.setPlayerId("id1");
+        ev24.parseInput("2");
+
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev24);
+        });
+
+
+        //--------------------------------------------------------------------------------
+
+        assertEquals(Phase.ACTION_CLOUDS, gameModel.getGamePhase());
+
+        PickStudentsFromCloudEvent ev25 = new PickStudentsFromCloudEvent();
+        ev25.setPlayerId("id1");
+        ev25.parseInput("0");
+
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev25);
+        });
+
+        //--------------------------------------------------------------------------------
+
+        assertEquals(Phase.ACTION_STUDENTS, gameModel.getGamePhase());
+        assertEquals("id3", gameModel.getCurrentPlayer().getPlayerID());
+
+        MoveStudentToDiningEvent ev30 = new MoveStudentToDiningEvent();
+        ev30.setPlayerId("id3");
+        ev30.parseInput("0");
+
+        MoveStudentToDiningEvent ev31 = new MoveStudentToDiningEvent();
+        ev31.setPlayerId("id3");
+        ev31.parseInput("1");
+
+        MoveStudentToDiningEvent ev32 = new MoveStudentToDiningEvent();
+        ev32.setPlayerId("id3");
+        ev32.parseInput("2");
+
+        MoveStudentToDiningEvent ev33 = new MoveStudentToDiningEvent();
+        ev33.setPlayerId("id3");
+        ev33.parseInput("3");
+
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev30);
+            game.handleEvent(ev31);
+            game.handleEvent(ev32);
+            game.handleEvent(ev33);
+        });
+
+        //-----------------------------------------------------
+
+        assertEquals(Phase.ACTION_MOTHERNATURE, gameModel.getGamePhase());
+
+        MoveMotherNatureEvent ev34 = new MoveMotherNatureEvent();
+        ev34.setPlayerId("id3");
+        ev34.parseInput("2");
+
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev34);
+        });
+
+        //--------------------------------------------------------
+
+        assertEquals(Phase.ACTION_CLOUDS, gameModel.getGamePhase());
+
+        PickStudentsFromCloudEvent ev35 = new PickStudentsFromCloudEvent();
+        ev35.setPlayerId("id3");
+        ev35.parseInput("1");
+
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev35);
+        });
+
+        //->
+        //the round should have ended!
+        assertEquals(2, gameModel.getRoundCount());
+        //and we should be back in planning phase
+        assertEquals(Phase.PLANNING, gameModel.getGamePhase());
     }
 
     /**
