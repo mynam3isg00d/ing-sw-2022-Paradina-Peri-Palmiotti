@@ -77,10 +77,10 @@ public class BoardsController {
     private void createBoards(int playerNum) {
         switch(playerNum) {
             case 2:
-                for (Player p : players) playerBoardMap.put(p.getPlayerID(), new Board(8, 7));
+                for (Player p : players) playerBoardMap.put(p.getPlayerID(), new Board(p.getName(), p.getTeamID(), 8, 7));
                 break;
             case 3:
-                for (Player p : players) playerBoardMap.put(p.getPlayerID(), new Board(6, 9));
+                for (Player p : players) playerBoardMap.put(p.getPlayerID(), new Board(p.getName(), p.getTeamID(), 6, 9));
                 break;
             case 4:
                 //addedTowers contains teams which have a player who already possesses the team's towers
@@ -90,9 +90,9 @@ public class BoardsController {
                 for (Player p : players) {
                     if(!addedTowers.contains(p.getTeamID())) {
                         addedTowers.add(p.getTeamID());
-                        playerBoardMap.put(p.getPlayerID(), new Board(8, 7));
+                        playerBoardMap.put(p.getPlayerID(), new Board(p.getName(),p.getTeamID(),8, 7));
                     } else {
-                        playerBoardMap.put(p.getPlayerID(), new Board(0, 7));
+                        playerBoardMap.put(p.getPlayerID(), new Board(p.getName(), p.getTeamID(),0, 7));
                     }
                 }
                 break;

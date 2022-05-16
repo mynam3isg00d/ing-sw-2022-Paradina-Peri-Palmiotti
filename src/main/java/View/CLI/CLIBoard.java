@@ -24,6 +24,8 @@ public class CLIBoard extends CLIElement {
     }
 
     private void updateLines() {
+        String n = formatName(board.getPlayerName());
+        String te = getTeamString(board.getTeamID());
         String[] e = getCorrespondingASCIArray(board.getEntrance());
         int[] d = board.getDinings();
         char[] p = getCorrespondingCharArray(board.getProfessors());
@@ -31,7 +33,7 @@ public class CLIBoard extends CLIElement {
 
         lines.clear();
         lines.add(  "+-------+----------+---+"  );
-        lines.add(  "| XXXXX |  D    P  |   |"  );
+        lines.add(  "| "+ n +" |  D    P  |[" + te + "]|"  );
         lines.add(  "|[" + e[0] + "] [" + e[1] + "]| [@|yellow " + d[0] +"|@]  [@|bold,yellow " + p[0] + "|@] |   |"  );
         lines.add(  "|[" + e[2] + "] [" + e[3] + "]| [@|blue " + d[1] +"|@]  [@|bold,blue " + p[1] + "|@] |[" + t +  "]|"  );
         lines.add(  "|[" + e[4] + "] [" + e[5] + "]| [@|green " + d[2] +"|@]  [@|bold,green " + p[2] + "|@] |   |"  );
@@ -70,6 +72,18 @@ public class CLIBoard extends CLIElement {
             }
         }
         return ret;
+    }
+
+    private String getTeamString(int i) {
+        if (i == 0) return "W";
+        if (i == 1) return "B";
+        return "G";
+    }
+
+    private String formatName(String name) {
+        if(name.length() == 5) return name;
+        if(name.length() > 5) return name.substring(0, 5);
+        return name + " ".repeat(5 - name.length());
     }
 
     private char[] getCorrespondingCharArray(boolean[] bool) {

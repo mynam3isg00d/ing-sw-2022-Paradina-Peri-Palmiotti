@@ -24,14 +24,16 @@ public class CLIPlayer extends CLIElement {
 
     @Override
     public void displayLines(int x0, int y0) {
-        List<Assistant> assistants = player.getHand().getHand();
-        int offset = 0;
-
         super.displayLines(x0, y0);
-        for (int i=0; i<assistants.size(); i++) {
-            CLIAssistant clia = new CLIAssistant(assistants.get(i));
-            clia.displayLines(x0 + 14 + offset, y0 + 1);
-            offset += clia.getX();
+        if (player.getHand() != null) {
+            List<Assistant> assistants = player.getHand().getHand();
+            int offset = 0;
+
+            for (int i=0; i<assistants.size(); i++) {
+                CLIAssistant clia = new CLIAssistant(assistants.get(i));
+                clia.displayLines(x0 + 14 + offset, y0 + 1);
+                offset += clia.getX();
+            }
         }
         try {
             CLIAssistant clia = new CLIAssistant(player.getAssistantInPlay());

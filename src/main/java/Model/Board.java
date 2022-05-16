@@ -13,6 +13,8 @@ public class Board extends Observable{
     private Student[] entrance;
     private boolean[] professors;
     private int towersNum;
+    String playerName;
+    int teamID;
 
     public Board(int towersNum, int maxEntrancePlaces) {
         diners = new int[]{0, 0, 0, 0, 0};
@@ -21,6 +23,17 @@ public class Board extends Observable{
         Arrays.fill(entrance, null);
         professors = new boolean[]{false, false, false, false, false};
         this.MAXTOWERS = this.towersNum = towersNum;
+    }
+
+    public Board(String name, int teamID, int towersNum, int maxEntrancePlaces) {
+        diners = new int[]{0, 0, 0, 0, 0};
+        MAXENTRANCEPLACES = maxEntrancePlaces;
+        entrance = new Student[MAXENTRANCEPLACES];
+        Arrays.fill(entrance, null);
+        professors = new boolean[]{false, false, false, false, false};
+        this.MAXTOWERS = this.towersNum = towersNum;
+        playerName = name;
+        this.teamID = teamID;
     }
 
 
@@ -138,6 +151,14 @@ public class Board extends Observable{
 
     public int getTowersNum() {
         return towersNum;
+    }
+
+    public int getTeamID() {
+        return teamID;
+    }
+
+    public String getPlayerName() {
+        return playerName;
     }
 
     public int getProfNum() {

@@ -56,30 +56,48 @@ public class CLI {
 
     //Update methods
     public void updateModel(Board b, int i) {
+        //Update the model
         boards[i].updateBoard(b);
+        //Overwrite the new model
+        boards[i].displayLines(i * (2+boards[0].getX()), 0);
+        //Reset cursor position
+        System.out.print( ansi().cursor(0,0).cursorDown(boards[0].getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2));
     }
 
     public void updateModel(GameModel g) {
         gameModel.updateGameModel(g);
+        gameModel.displayLines(4 * (2+boards[0].getX()), 0);
+        System.out.print( ansi().cursor(0,0).cursorDown(boards[0].getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2));
     }
 
     public void updateModel(IslandsWrapper iw) {
         islandWrapper.updateIslandWrapper(iw);
+        islandWrapper.display(10, boards[0].getY() + 1);
+        System.out.print( ansi().cursor(0,0).cursorDown(boards[0].getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2));
     }
 
     public void updateModel(CloudWrapper cw) {
         cloudWrapper.updateCloudWrapper(cw);
+        cloudWrapper.display(10 + islandWrapper.getX() + 10, boards[0].getY() + 1);
+        System.out.print( ansi().cursor(0,0).cursorDown(boards[0].getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2));
     }
 
     public void updateModel(Shop s) {
         shop.updateShop(s);
+        shop.displayLines(0, boards[0].getY() + 1 + islandWrapper.getY() + 2);
+        System.out.print( ansi().cursor(0,0).cursorDown(boards[0].getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2));
     }
 
     public void updateModel(Player p, int i) {
         players[i].updatePlayer(p);
+        players[i].displayLines(shop.getX() + 1,
+                boards[0].getY() + 1 + islandWrapper.getY() + 2 + i*(players[0].getY() - 1));
+        System.out.print( ansi().cursor(0,0).cursorDown(boards[0].getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2));
     }
 
     public void updateModel(Sack s) {
         sack.updateSack(s);
+        sack.displayLines(shop.getX() + players[0].getX() + 1, boards[0].getY() + 1 + islandWrapper.getY() + 5);
+        System.out.print( ansi().cursor(0,0).cursorDown(boards[0].getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2));
     }
 }
