@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Cloud {
     private List<Student> students;
-    int numOfStudents;
+    private int numOfStudents;
 
     /**
      * Creates an empty cloud
@@ -57,5 +57,9 @@ public class Cloud {
 
     public List<Student> peek() {
         return new ArrayList<>(students);
+    }
+
+    public int getNumOfStudents() {
+        return numOfStudents;
     }
 }

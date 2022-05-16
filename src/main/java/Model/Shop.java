@@ -14,10 +14,12 @@ public class Shop extends Observable {
     //private Integer[] AVAILABLE_CHARS = {0, 2, 5, 7, 8};
     private CharacterCard[] shop;
     private HashMap<String, Integer> coinMap;
+    private List<Player> playerList;
 
     public Shop(List<Player> playerList) {
         shop = new CharacterCard[3];
         coinMap = new HashMap<>();
+        this.playerList = playerList;
 
         for(Player p : playerList) {
             coinMap.put(p.getPlayerID(), 1);
@@ -87,4 +89,10 @@ public class Shop extends Observable {
     public void incrementCost(int index) {
         shop[index].incrementCost();
     }
+
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
 }
+
+

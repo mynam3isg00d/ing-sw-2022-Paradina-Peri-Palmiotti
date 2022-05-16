@@ -52,4 +52,8 @@ public class StudentCard extends CharacterCard {
     public int getMAX_STUDENTS() {
         return MAX_STUDENTS;
     }
+
+    public List<Student> peekStudents() {
+        return students;
+    }
 }

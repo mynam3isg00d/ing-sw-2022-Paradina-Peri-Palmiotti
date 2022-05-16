@@ -4,12 +4,8 @@ package View.CLI;
 
 import Model.Board;
 import Model.Student;
-import org.fusesource.jansi.AnsiConsole;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static org.fusesource.jansi.Ansi.ansi;
 
 public class CLIBoard extends CLIElement {
 
@@ -27,20 +23,8 @@ public class CLIBoard extends CLIElement {
         updateLines();
     }
 
-    public List<String> getLines() {
-        return lines;
-    }
-
-    public void displayLines() {
-        for(String l : lines) {
-            System.out.println(l);
-        }
-    }
-
-    //---------
-
     private void updateLines() {
-        char[] e = getCorrespondingCharArray(board.getEntrance());
+        String[] e = getCorrespondingASCIArray(board.getEntrance());
         int[] d = board.getDinings();
         char[] p = getCorrespondingCharArray(board.getProfessors());
         int t = board.getTowersNum();
@@ -48,26 +32,41 @@ public class CLIBoard extends CLIElement {
         lines.clear();
         lines.add(  "+-------+----------+---+"  );
         lines.add(  "| XXXXX |  D    P  |   |"  );
-        lines.add(  "|[" + e[0] + "] [" + e[1] + "]| [" + d[0] +"]  [" + p[0] + "] |   |"  );
-        lines.add(  "|[" + e[2] + "] [" + e[3] + "]| [" + d[1] +"]  [" + p[1] + "] |[" + t +  "]|"  );
-        lines.add(  "|[" + e[4] + "] [" + e[5] + "]| [" + d[2] +"]  [" + p[2] + "] |   |"  );
-        lines.add(  "|[" + e[6] + "] [" + e[7] + "]| [" + d[3] +"]  [" + p[3] + "] |   |"  );
-        lines.add(  "|[" + e[8] + "] [" + e[9] + "]| [" + d[4] +"]  [" + p[4] + "] |   |"  );
+        lines.add(  "|[" + e[0] + "] [" + e[1] + "]| [@|yellow " + d[0] +"|@]  [@|bold,yellow " + p[0] + "|@] |   |"  );
+        lines.add(  "|[" + e[2] + "] [" + e[3] + "]| [@|blue " + d[1] +"|@]  [@|bold,blue " + p[1] + "|@] |[" + t +  "]|"  );
+        lines.add(  "|[" + e[4] + "] [" + e[5] + "]| [@|green " + d[2] +"|@]  [@|bold,green " + p[2] + "|@] |   |"  );
+        lines.add(  "|[" + e[6] + "] [" + e[7] + "]| [@|red " + d[3] +"|@]  [@|bold,red " + p[3] + "|@] |   |"  );
+        lines.add(  "|[" + e[8] + "] [" + e[9] + "]| [@|magenta " + d[4] +"|@]  [@|bold,magenta " + p[4] + "|@] |   |"  );
         lines.add(  "+-------+----------+---+"  );
     }
 
-    private char[] getCorrespondingCharArray(Student[] stud) {
-        char[] ret = new char[10];
-
+    private String[] getCorrespondingASCIArray(Student[] stud) {
+        String[] ret = new String[10];
         for(int i=0; i<ret.length; i++) {
             try {
-                if(stud[i] != null) {
-                    ret[i] = stud[i].getChar();
+                if (stud[i] == null) {
+                    ret[i] = " ";
                 } else {
-                    ret[i] = ' ';
+                    switch (stud[i]) {
+                        case RED:
+                            ret[i] = "@|red R|@";
+                            break;
+                        case GREEN:
+                            ret[i] = "@|green G|@";
+                            break;
+                        case BLUE:
+                            ret[i] = "@|blue B|@";
+                            break;
+                        case YELLOW:
+                            ret[i] = "@|yellow Y|@";
+                            break;
+                        case PINK:
+                            ret[i] = "@|magenta P|@";
+                            break;
+                    }
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
-                ret[i] = '-';
+                ret[i] = "-";
             }
         }
         return ret;

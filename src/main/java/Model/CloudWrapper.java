@@ -59,4 +59,8 @@ public class CloudWrapper extends Observable {
     public boolean isEmpty(int cloudIndex) {
         return clouds.get(cloudIndex).isEmpty();
     }
+
+    public int getNumOfClouds() {return clouds.size(); }
+
+    public Cloud getCloud(int cloudIndex) { return clouds.get(cloudIndex); }
 }
