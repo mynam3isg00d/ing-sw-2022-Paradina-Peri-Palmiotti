@@ -18,6 +18,11 @@ public class CLIGameModel extends CLIElement {
         updateLines();
     }
 
+    public void updateGameModel(GameModel g) {
+        this.gameModel = g;
+        updateLines();
+    }
+
     @Override
     public void displayLines(int x0, int y0) {
         super.displayLines(x0, y0);

@@ -17,6 +17,11 @@ public class CLIPlayer extends CLIElement {
         updateLines();
     }
 
+    public void updatePlayer(Player p) {
+        this.player = p;
+        updateLines();
+    }
+
     @Override
     public void displayLines(int x0, int y0) {
         List<Assistant> assistants = player.getHand().getHand();

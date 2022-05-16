@@ -15,6 +15,11 @@ public class CLISack extends CLIElement {
         updateLines();
     }
 
+    public void updateSack(Sack s) {
+        this.sack = s;
+        updateLines();
+    }
+
     private void updateLines() {
         String n = getNumString(sack.getSackSize());
 

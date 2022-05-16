@@ -1,5 +1,6 @@
 package View.CLI;
 
+import Controller.Game;
 import Model.*;
 import org.fusesource.jansi.AnsiConsole;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,9 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 class CLITest {
 
+    /*
     @Test
-    void displayTest() {
+    void old_displayTest() {
 
         //--Model---------
 
@@ -70,6 +72,39 @@ class CLITest {
         System.out.println("-".repeat(4 * (2+cb[0].getX()) + cg.getX()));
 
         while(true);
+    }
+     */
+
+    @Test
+    void displayTest() {
+        //Players
+        List<Player> p = getPlayerList(2);
+        for(int i=0; i<p.size(); i++) p.get(i).chooseWizard(i);
+
+        //Board
+        Board[] b = new Board[p.size()];
+        for(int i=0; i<b.length; i++) b[i] = new Board(8, 7);
+
+        //GameModel
+        GameModel g = new GameModel(p.size());
+        g.setCurrentPlayer(p.get(0));
+        g.setGamePhase(Phase.ACTION_MOTHERNATURE);
+
+        //Sack
+        Sack sc = new Sack(120);
+
+        //CloudWrapper
+        CloudWrapper cw = new CloudWrapper(4, 3);
+
+        //IslandsWrapper
+        IslandsWrapper iw = new IslandsWrapper();
+
+        //Shop
+        Shop s = new Shop(p);
+        s.initShop(sc);
+
+        CLI c = new CLI(b, g, iw, cw, s, p, sc);
+        c.display();
     }
 
     private List<Player> getPlayerList(int n) {
