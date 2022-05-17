@@ -58,6 +58,7 @@ public class RemoteView extends Observable implements Observer{
     }
     @Override
     public void update(Observable observable, Object o) {
-        //connection.send("Modello aggiornato");
+        System.out.println("Arrivato");
+        connection.send("Modello aggiornato");
     }
 }

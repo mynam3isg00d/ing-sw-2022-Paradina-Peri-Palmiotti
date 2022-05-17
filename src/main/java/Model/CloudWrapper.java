@@ -5,6 +5,7 @@ import Exceptions.EmptyCloudException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 public class CloudWrapper extends Observable {
     private List<Cloud> clouds;
@@ -19,6 +20,11 @@ public class CloudWrapper extends Observable {
         for (int i = 0; i < numOfClouds; i++) {
             clouds.add(new Cloud(studentsPerCloud));
         }
+
+        System.out.println("created cloudwrapper");
+
+        setChanged();
+        notifyObservers(this);
     }
 
     /**
@@ -63,4 +69,13 @@ public class CloudWrapper extends Observable {
     public int getNumOfClouds() {return clouds.size(); }
 
     public Cloud getCloud(int cloudIndex) { return clouds.get(cloudIndex); }
+
+    @Override
+    public synchronized void addObserver(Observer o) {
+        System.out.println("ADDED");
+        super.addObserver(o);
+
+        setChanged();
+        notifyObservers(this);
+    }
 }
