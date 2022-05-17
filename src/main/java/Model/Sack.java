@@ -1,5 +1,9 @@
 package Model;
 import Exceptions.EmptySackException;
+import Network.JsonFactory;
+import Observer.Observable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.*;
 
@@ -19,9 +23,14 @@ public class Sack extends Observable {
         Collections.shuffle(sack);
     }
 
+    //-------Copy constructor------------
+    private Sack(Stack<Integer> sack) {
+        this.sack = sack;
+    }
+
     public void sendSack() {
-        setChanged();
-        notifyObservers(this);
+        Gson b = new GsonBuilder().create();
+        notify(b.toJson(getCopy()));
     }
 
     /**
@@ -84,6 +93,10 @@ public class Sack extends Observable {
         x.add(Student.PINK);
 
         return x;
+    }
+
+    private Sack getCopy() {
+        return new Sack(sack);
     }
 }
 

@@ -8,13 +8,13 @@ import java.util.*;
  * Island objects represent the model of an island of the game
  */
 public class Island {
-    @Expose
+    
     private int dimension;
-    @Expose
+    
     private int[] students;
-    @Expose
+    
     private Integer influenceTeam;
-    @Expose
+    
     private boolean motherNature;
 
     //builds an empty island, dimension is initialized 1

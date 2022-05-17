@@ -1,7 +1,7 @@
 package Network;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import Observer.Observable;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
@@ -71,7 +71,7 @@ public class Connection extends Observable implements Runnable {
             while (isActive) {
                 //currently, only works with strings
                 String message = in.nextLine();
-                notifyObservers(message);
+                notify(message);
 
                 //Object o = in.get??
                 //notifica virtual view

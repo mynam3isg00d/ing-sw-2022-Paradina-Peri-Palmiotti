@@ -3,15 +3,17 @@
 
 package Model;
 
-
 import Exceptions.EmptySackException;
+import Network.JsonFactory;
+import Observer.Observable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.*;
 
 public class Shop extends Observable {
 
     private Integer[] AVAILABLE_CHARS = {0, 2, 5, 6, 7, 8, 9, 10};
-    //private Integer[] AVAILABLE_CHARS = {0, 2, 5, 7, 8};
     private CharacterCard[] shop;
     private HashMap<String, Integer> coinMap;
     private List<Player> playerList;
@@ -24,6 +26,13 @@ public class Shop extends Observable {
         for(Player p : playerList) {
             coinMap.put(p.getPlayerID(), 1);
         }
+    }
+
+    //-------Copy constructor-----------
+    private Shop (CharacterCard[] shop, HashMap<String, Integer> coinMap, List<Player> playerList) {
+        this.shop = shop;
+        this.coinMap = coinMap;
+        this.playerList = playerList;
     }
 
     //Mainly for testing purposes
@@ -94,9 +103,13 @@ public class Shop extends Observable {
         return playerList;
     }
 
+    private Shop getCopy() {
+        return new Shop(shop, coinMap, playerList);
+    }
+
     public void sendShop() {
-        setChanged();
-        notifyObservers();
+        Gson b = new GsonBuilder().create();
+        notify(b.toJson(getShop()));
     }
 }
 

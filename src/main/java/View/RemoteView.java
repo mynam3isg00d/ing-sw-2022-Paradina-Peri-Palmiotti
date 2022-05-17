@@ -6,14 +6,30 @@ import Events.GameEvent;
 import Model.*;
 import Network.Connection;
 import Network.JsonFactory;
+import Observer.*;
 
 
-import java.util.Observable;
-import java.util.Observer;
+public class RemoteView extends Observable implements Observer {
 
-public class RemoteView extends Observable implements Observer{
     private Player player;
     private Connection connection;
+    private JsonFactory json;
+
+    public RemoteView(Player p, Connection c) {
+        player = p;
+        connection = c;
+        json = new JsonFactory();
+
+        connection.addObserver(new MessageReceiver());
+        //connection.send("Qualcosa");
+    }
+
+    @Override
+    public void update(Object o) {
+        System.out.println("ArrivatoAA");
+
+        connection.send((String) o);
+    }
 
     /**
      * MessageReceiver is an internal class that directly observes the connection tied to the RemoteView
@@ -22,11 +38,10 @@ public class RemoteView extends Observable implements Observer{
     private class MessageReceiver implements Observer {
         /**
          * Receives a stream of bytes from the network and turns it into a GameEvent
-         * @param obs
          * @param o
          */
         @Override
-        public void update(Observable obs, Object o) {
+        public void update(Object o) {
             System.out.println("MESSAGE RECEIVER SAYS: Event Received");
             try{
                 //Factory che crea eventi
@@ -44,27 +59,11 @@ public class RemoteView extends Observable implements Observer{
 
     }
 
-    public RemoteView(Player p, Connection c) {
-        player = p;
-        connection = c;
-
-        connection.addObserver(new MessageReceiver());
-        //connection.send("Qualcosa");
-    }
-
     public void processChoice(GameEvent event) {
         notifyAll();
     }
 
     public void sendError(Exception e) {
         //connection.send(e);   JSON
-    }
-    @Override
-    public void update(Observable observable, Object o) {
-        System.out.println("Arrivato");
-
-        //arriva il modello!!!
-        //turns the model component into a json, in order to pass it to the client
-        connection.send(JsonFactory.modelToJson(o));
     }
 }

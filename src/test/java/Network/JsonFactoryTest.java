@@ -1,13 +1,19 @@
 package Network;
 
+import Controller.BoardsController;
+import Controller.Game;
+import Controller.IslandController;
 import Events.EventFactory;
 import Events.GameEvent;
 import Events.PlayAssistantEvent;
-import Model.CloudWrapper;
-import Model.Sack;
+import Model.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,18 +42,22 @@ class JsonFactoryTest {
 
     @Test
     void faccioVedereASamuelePeriComeFunzionaJSON() {
-        CloudWrapper cw = new CloudWrapper(3, 4);
-        try {
-            cw.fillCloud(new Sack(120).draw(4), 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        List<Player> p = new ArrayList<>();
+        p.add(new Player("Davide", 0));
+        p.add(new Player("Samuele", 1));
+        p.add(new Player("Cugola", 2));
+        //p.add(new Player("SPietro", 1));
+        for(Player p0 : p) p0.setPlayerID(p0.getName());
+
+        Game g = new Game(p);
+
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
 
-        String jsonString = gson.toJson(cw);
+        String jsonString = gson.toJson( g.getIslandController().getIslandModel() );
 
         System.out.println(jsonString);
 

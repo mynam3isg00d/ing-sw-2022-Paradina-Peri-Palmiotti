@@ -1,20 +1,18 @@
 package Model;
 import Exceptions.AssistantMissingException;
-import com.google.gson.annotations.Expose;
+import Network.JsonFactory;
+import Observer.Observable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.*;
 
 public class Player extends Observable {
 
-    @Expose
     private String name;
-    @Expose
     private String playerID;
-    @Expose
     private int teamId;
-    @Expose
     private Hand hand;
-    @Expose
     private Assistant assistantInPlay;
 
     //TODO: maybe add playerID to constructor
@@ -40,6 +38,15 @@ public class Player extends Observable {
         name = n;
         teamId = -1;
         hand = null;
+    }
+
+    //-----Copy Constructor------
+    private Player(String name, String playerID, int teamId, Hand hand, Assistant assistantInPlay) {
+        this.name = name;
+        this.playerID = playerID;
+        this.teamId = teamId;
+        this.hand = hand;
+        this.assistantInPlay = assistantInPlay;
     }
 
     //TODO: what if two players choose the same wizard
@@ -73,7 +80,7 @@ public class Player extends Observable {
     }
 
     /**
-     * Set the player's ID
+     * S
      * @param pid id to set
      */
     public void setPlayerID(String pid) { playerID = pid; }
@@ -99,6 +106,10 @@ public class Player extends Observable {
 
     public Assistant getAssistantInPlay() { return assistantInPlay; }
 
+    private Player getCopy() {
+        return new Player(name, playerID, teamId, hand, assistantInPlay);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,13 +118,14 @@ public class Player extends Observable {
         return teamId == player.teamId && name.equals(player.name) && playerID.equals(player.playerID);
     }
 
+    //what the fuck is this
     @Override
     public int hashCode() {
         return Objects.hash(name, playerID, teamId);
     }
 
     public void sendPlayer() {
-        setChanged();
-        notifyObservers();
+        Gson b = new GsonBuilder().create();
+        notify(b.toJson(getCopy()));
     }
 }

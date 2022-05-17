@@ -10,7 +10,7 @@ public enum Student {
     RED(3),
     PINK(4);
 
-    @Expose
+    
     private int colorId;
 
     Student(int colorId){

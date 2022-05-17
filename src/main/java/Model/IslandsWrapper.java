@@ -1,21 +1,22 @@
 package Model;
 
+import Network.JsonFactory;
+import Observer.Observable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Contains the references to all the islands (model).
  * Allows changes to the model by providing island indexes
  */
 public class IslandsWrapper extends Observable {
-    @Expose
-    final private List<Island> islands;
 
-    @Expose
+    private List<Island> islands;
     private int motherNaturePos;
 
     /**
@@ -57,8 +58,8 @@ public class IslandsWrapper extends Observable {
     }
 
     public void sendIslands() {
-        setChanged();
-        notifyObservers(this);
+        Gson b = new GsonBuilder().create();
+        notify(b.toJson(getCopy()));
     }
 
     /**
@@ -191,5 +192,21 @@ public class IslandsWrapper extends Observable {
      */
     public int getIslandDimension(int islandIndex) {
         return islands.get(islandIndex).getDimension();
+    }
+
+    private IslandsWrapper getCopy() {
+        IslandsWrapper iw = new IslandsWrapper();
+        iw.setIslands(islands);
+        iw.setMotherNaturePos(motherNaturePos);
+        return iw;
+    }
+
+
+    private void setIslands(List<Island> islands) {
+        this.islands = islands;
+    }
+
+    private void setMotherNaturePos(int motherNaturePos) {
+        this.motherNaturePos = motherNaturePos;
     }
 }

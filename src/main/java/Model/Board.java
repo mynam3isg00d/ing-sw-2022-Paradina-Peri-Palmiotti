@@ -1,29 +1,24 @@
 package Model;
 import Exceptions.*;
-import com.google.gson.annotations.Expose;
+import Network.JsonFactory;
+import Observer.Observable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.*;
 
-public class Board extends Observable{
+public class Board extends Observable {
 
-    @Expose
     private final int MAXTABLESEATS = 10;
-    @Expose
     private final int MAXENTRANCEPLACES;
-    @Expose
     private final int MAXTOWERS;
-    @Expose
+
     private int[] diners;
-    @Expose
     private Student[] entrance;
-    @Expose
     private boolean[] professors;
-    @Expose
     private int towersNum;
-    @Expose
-    String playerName;
-    @Expose
-    int teamID;
+    private String playerName;
+    private int teamID;
 
     public Board(int towersNum, int maxEntrancePlaces) {
         diners = new int[]{0, 0, 0, 0, 0};
@@ -45,11 +40,12 @@ public class Board extends Observable{
         this.teamID = teamID;
     }
 
-
     public void sendBoard() {
-        setChanged();
-        notifyObservers(this);
+        Gson b = new GsonBuilder().create();
+        notify(b.toJson(getCopy()));
     }
+
+
     /**
      * Adds a student to dining
      * @param s single student to add
@@ -153,27 +149,21 @@ public class Board extends Observable{
     public int[] getDinings() {
         return diners;
     }
-
     public Student[] getEntrance() {
         return entrance.clone();
     }
-
     public boolean[] getProfessors() {
         return professors;
     }
-
     public int getTowersNum() {
         return towersNum;
     }
-
     public int getTeamID() {
         return teamID;
     }
-
     public String getPlayerName() {
         return playerName;
     }
-
     public int getProfNum() {
         int ret = 0;
         for(int i=0; i<professors.length; i++) {
@@ -186,26 +176,45 @@ public class Board extends Observable{
         return MAXENTRANCEPLACES;
     }
 
+    public Board getCopy() {
+        Board b = new Board(7, 8);
+        b.setDiners(diners);
+        b.setEntrance(entrance);
+        b.setProfessors(professors);
+        b.setPlayerName(playerName);
+        b.setTowersNum(towersNum);
+        b.setTeamID(teamID);
+        return b;
+    }
+
     //************************//
 
 
     //********setters*********//
-    /*
-    public void setDiners(ArrayList<Integer> diners) {
+
+    public void setDiners(int[] diners) {
         this.diners = diners;
     }
 
-    public void setEntrance(List<Student> entrance) {
+    public void setEntrance(Student[] entrance) {
         this.entrance = entrance;
     }
 
-    public void setProfessors(ArrayList<Boolean> professors) {
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public void setProfessors(boolean[] professors) {
         this.professors = professors;
+    }
+
+    public void setTeamID(int teamID) {
+        this.teamID = teamID;
     }
 
     public void setTowersNum(int towersNum) {
         this.towersNum = towersNum;
     }
-     */
+
     //************************//
 }

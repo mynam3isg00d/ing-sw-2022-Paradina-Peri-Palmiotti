@@ -1,15 +1,16 @@
 package Model;
 
 import Exceptions.EmptyCloudException;
-import com.google.gson.annotations.Expose;
+import Network.JsonFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import Observer.Observable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class CloudWrapper extends Observable {
-    @Expose
+
     private List<Cloud> clouds;
 
     /**
@@ -22,11 +23,6 @@ public class CloudWrapper extends Observable {
         for (int i = 0; i < numOfClouds; i++) {
             clouds.add(new Cloud(studentsPerCloud));
         }
-
-        System.out.println("created cloudwrapper");
-
-        setChanged();
-        notifyObservers(this);
     }
 
     /**
@@ -72,17 +68,20 @@ public class CloudWrapper extends Observable {
 
     public Cloud getCloud(int cloudIndex) { return clouds.get(cloudIndex); }
 
-    /*@Override
-    /*public synchronized void addObserver(Observer o) {
-        System.out.println("ADDED");
-        super.addObserver(o);
-
-        setChanged();
-        notifyObservers(this);
-    }*/
-
     public void sendClouds(){
-        setChanged();
-        notifyObservers(this);
+        Gson b = new GsonBuilder().create();
+        notify(b.toJson(getCopy()));
+    }
+
+    public CloudWrapper getCopy() {
+        CloudWrapper cw = new CloudWrapper(3, 3);
+        cw.setClouds(clouds);
+        return cw;
+    }
+
+    //------------setters----------
+
+    public void setClouds(List<Cloud> clouds) {
+        this.clouds = clouds;
     }
 }

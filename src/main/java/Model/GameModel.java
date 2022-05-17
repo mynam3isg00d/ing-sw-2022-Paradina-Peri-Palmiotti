@@ -1,25 +1,18 @@
 package Model;
 
-import com.google.gson.annotations.Expose;
-
-import java.util.Observable;
+import Observer.Observable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class GameModel extends Observable {
-    @Expose
+    
     private int roundCount;
-
-    @Expose
     private boolean isLastRound;
-
-    @Expose
     private final int STUDENTS_PER_TURN;
-    @Expose
     private Phase gamePhase;
-    @Expose
     private Player currentPlayer;
-
-    @Expose
     private TurnInfo turnInfo;
+
     private class TurnInfo {
         private int numOfStudentsMoved;
         private boolean motherNatureMoved;
@@ -29,6 +22,25 @@ public class GameModel extends Observable {
             numOfStudentsMoved = 0;
             motherNatureMoved = false;
             cloudChosen = false;
+        }
+
+        //----Copy constructor??-----
+        private TurnInfo(int numOfStudentsMoved, boolean motherNatureMoved, boolean cloudChosen) {
+            this.numOfStudentsMoved = numOfStudentsMoved;
+            this.motherNatureMoved = motherNatureMoved;
+            this.cloudChosen = cloudChosen;
+        }
+
+        public int getNumOfStudentsMoved() {
+            return numOfStudentsMoved;
+        }
+
+        public boolean getMotherNatureMoved() {
+            return motherNatureMoved;
+        }
+
+        public boolean getCloudChosen() {
+            return cloudChosen;
         }
     }
 
@@ -48,9 +60,19 @@ public class GameModel extends Observable {
         }
     }
 
+    //-------Copy constructor----------
+    public GameModel(int roundCount, boolean isLastRound, int STUDENTS_PER_TURN, Phase gamePhase, Player currentPlayer, TurnInfo turnInfo) {
+        this.roundCount = roundCount;
+        this.isLastRound = isLastRound;
+        this.STUDENTS_PER_TURN = STUDENTS_PER_TURN;
+        this.gamePhase = gamePhase;
+        this.currentPlayer = currentPlayer;
+        this.turnInfo = turnInfo;
+    }
+
     public void sendGameModel() {
-        setChanged();
-        notifyObservers(this);
+        Gson b = new GsonBuilder().create();
+        notify(b.toJson(getCopy()));
     }
 
     public void setGamePhase(Phase gamePhase) {
@@ -116,5 +138,9 @@ public class GameModel extends Observable {
 
     public boolean isLastRound() {
         return isLastRound;
+    }
+
+    private GameModel getCopy() {
+        return new GameModel(roundCount, isLastRound, STUDENTS_PER_TURN, gamePhase, currentPlayer, new TurnInfo());
     }
 }

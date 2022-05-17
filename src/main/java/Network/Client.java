@@ -12,8 +12,10 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
+
     private String ip;
     private int port;
+
 
     private class LocalInput implements Runnable {
         private PrintWriter out;
@@ -46,6 +48,7 @@ public class Client {
                 try {
                     String line = in.readLine();
 
+                    /*
                     //TODO: delete
                     Gson gson = new GsonBuilder()
                             .setPrettyPrinting()
@@ -54,6 +57,8 @@ public class Client {
                         Board b = gson.fromJson(line.substring(3), Board.class);
                         int c = 0;
                     }
+
+                     */
 
                     System.out.println(line);
                 } catch (IOException e) {

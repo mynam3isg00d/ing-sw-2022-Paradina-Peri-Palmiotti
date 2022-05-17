@@ -11,8 +11,11 @@ package Controller;
 
 import Events.*;
 import Exceptions.*;
+import Observer.Observer;
 import Model.*;
 import View.*;
+import com.google.gson.GsonBuilder;
+
 import java.util.*;
 
 /**
@@ -20,7 +23,7 @@ import java.util.*;
  * Has references to IslandController, CloudController and BoardsController that handle respectively Island, Cloud and Boards elements.
  * Handles events coming from the view and calls the right methods on the right controller.
  */
-public class Game implements Observer{
+public class Game implements Observer {
     protected View view;
 
     protected List<Player> players;
@@ -62,24 +65,23 @@ public class Game implements Observer{
 
     public void sendEntireModel() {
         for (Player p : players) {
-            boardsController.getBoard(p.getPlayerID()).sendBoard();
+            Board b = boardsController.getBoard(p.getPlayerID());
+            b.sendBoard();
         }
         cloudController.getCloudModel().sendClouds();
         islandController.getIslandModel().sendIslands();
         sack.sendSack();
         gameModel.sendGameModel();
-
         for(Player p : players) {
             p.sendPlayer();
         }
     }
     /**
      * Receives updates from the remoteView and calls handleEvent
-     * @param obs
      * @param o The Event coming from the RemoteView
      */
     @Override
-    public void update(Observable obs, Object o) {
+    public void update(Object o) {
         try {
             //handleEvent((GameEvent) o);
         } catch (Exception e) {
