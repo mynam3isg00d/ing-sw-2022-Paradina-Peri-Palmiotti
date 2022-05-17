@@ -1,5 +1,7 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
+
 //each student has a colorId in order to make it easier to know where it should be placed on the Board
 public enum Student {
     YELLOW(0),
@@ -8,6 +10,7 @@ public enum Student {
     RED(3),
     PINK(4);
 
+    @Expose
     private int colorId;
 
     Student(int colorId){

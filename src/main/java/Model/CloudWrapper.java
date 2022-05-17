@@ -1,6 +1,7 @@
 package Model;
 
 import Exceptions.EmptyCloudException;
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class CloudWrapper extends Observable {
+    @Expose
     private List<Cloud> clouds;
 
     /**
@@ -70,11 +72,16 @@ public class CloudWrapper extends Observable {
 
     public Cloud getCloud(int cloudIndex) { return clouds.get(cloudIndex); }
 
-    @Override
-    public synchronized void addObserver(Observer o) {
+    /*@Override
+    /*public synchronized void addObserver(Observer o) {
         System.out.println("ADDED");
         super.addObserver(o);
 
+        setChanged();
+        notifyObservers(this);
+    }*/
+
+    public void sendClouds(){
         setChanged();
         notifyObservers(this);
     }

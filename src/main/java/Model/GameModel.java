@@ -1,16 +1,24 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Observable;
 
 public class GameModel extends Observable {
+    @Expose
     private int roundCount;
 
+    @Expose
     private boolean isLastRound;
 
+    @Expose
     private final int STUDENTS_PER_TURN;
+    @Expose
     private Phase gamePhase;
+    @Expose
     private Player currentPlayer;
 
+    @Expose
     private TurnInfo turnInfo;
     private class TurnInfo {
         private int numOfStudentsMoved;
@@ -38,6 +46,11 @@ public class GameModel extends Observable {
         } else {
             STUDENTS_PER_TURN = 4;
         }
+    }
+
+    public void sendGameModel() {
+        setChanged();
+        notifyObservers(this);
     }
 
     public void setGamePhase(Phase gamePhase) {

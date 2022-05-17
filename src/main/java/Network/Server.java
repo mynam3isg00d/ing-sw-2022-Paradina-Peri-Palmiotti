@@ -90,6 +90,7 @@ public class Server implements Runnable{
                 c.addObserversToModelComponents(rv); //remoteView observes Model
             }
 
+
             //-------------------------------------------
 
             //each connection in the playing list has to be notified of the start of the match
@@ -97,6 +98,10 @@ public class Server implements Runnable{
                 entry.getValue().send("Game Started");
             }
 
+            //--------------------
+            //model gets sent to the client for the first time
+            c.sendEntireModel();
+            //-------------------
         } else {
             for (Map.Entry<String, Connection> entry : waitingLists[listIndex].entrySet()) {
                 entry.getValue().send("Waiting for " + (playerNumber - waitingLists[listIndex].size()) + "player(s) to join");

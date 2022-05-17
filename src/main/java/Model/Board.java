@@ -1,19 +1,28 @@
 package Model;
 import Exceptions.*;
+import com.google.gson.annotations.Expose;
 
 import java.util.*;
 
 public class Board extends Observable{
 
+    @Expose
     private final int MAXTABLESEATS = 10;
+    @Expose
     private final int MAXENTRANCEPLACES;
+    @Expose
     private final int MAXTOWERS;
-
+    @Expose
     private int[] diners;
+    @Expose
     private Student[] entrance;
+    @Expose
     private boolean[] professors;
+    @Expose
     private int towersNum;
+    @Expose
     String playerName;
+    @Expose
     int teamID;
 
     public Board(int towersNum, int maxEntrancePlaces) {
@@ -37,6 +46,10 @@ public class Board extends Observable{
     }
 
 
+    public void sendBoard() {
+        setChanged();
+        notifyObservers(this);
+    }
     /**
      * Adds a student to dining
      * @param s single student to add

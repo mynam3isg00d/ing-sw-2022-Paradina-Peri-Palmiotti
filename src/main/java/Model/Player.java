@@ -1,14 +1,20 @@
 package Model;
 import Exceptions.AssistantMissingException;
+import com.google.gson.annotations.Expose;
 
 import java.util.*;
 
-public class Player {
+public class Player extends Observable {
 
+    @Expose
     private String name;
+    @Expose
     private String playerID;
+    @Expose
     private int teamId;
+    @Expose
     private Hand hand;
+    @Expose
     private Assistant assistantInPlay;
 
     //TODO: maybe add playerID to constructor
@@ -104,5 +110,10 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(name, playerID, teamId);
+    }
+
+    public void sendPlayer() {
+        setChanged();
+        notifyObservers();
     }
 }

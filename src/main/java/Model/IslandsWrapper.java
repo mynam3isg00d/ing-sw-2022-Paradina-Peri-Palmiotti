@@ -1,5 +1,7 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +12,10 @@ import java.util.Observable;
  * Allows changes to the model by providing island indexes
  */
 public class IslandsWrapper extends Observable {
+    @Expose
     final private List<Island> islands;
+
+    @Expose
     private int motherNaturePos;
 
     /**
@@ -49,6 +54,11 @@ public class IslandsWrapper extends Observable {
 
         Collections.shuffle(l);
         return l;
+    }
+
+    public void sendIslands() {
+        setChanged();
+        notifyObservers(this);
     }
 
     /**

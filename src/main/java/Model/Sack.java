@@ -19,6 +19,11 @@ public class Sack extends Observable {
         Collections.shuffle(sack);
     }
 
+    public void sendSack() {
+        setChanged();
+        notifyObservers(this);
+    }
+
     /**
      * Used for drawing students from the bag
      * @param numOfStudents the number of students to draw

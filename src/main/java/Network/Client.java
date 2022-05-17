@@ -1,5 +1,9 @@
 package Network;
 
+import Model.Board;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -41,6 +45,16 @@ public class Client {
             while(true) {
                 try {
                     String line = in.readLine();
+
+                    //TODO: delete
+                    Gson gson = new GsonBuilder()
+                            .setPrettyPrinting()
+                            .create();
+                    if(line.substring(0, 3).equals("200")) {
+                        Board b = gson.fromJson(line.substring(3), Board.class);
+                        int c = 0;
+                    }
+
                     System.out.println(line);
                 } catch (IOException e) {
                     e.printStackTrace();

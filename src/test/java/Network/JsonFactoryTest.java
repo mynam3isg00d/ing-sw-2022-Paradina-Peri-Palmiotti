@@ -19,7 +19,7 @@ class JsonFactoryTest {
         gameEvent.setPlayerId("4");
         gameEvent.parseInput("3");
 
-        String newJson = JsonFactory.toJson(gameEvent);
+        String newJson = JsonFactory.eventToJson(gameEvent);
 
         System.out.println(newJson);
 

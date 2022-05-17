@@ -1,9 +1,12 @@
 package View;
 
+import Controller.Game;
 import Events.EventFactory;
 import Events.GameEvent;
-import Model.Player;
+import Model.*;
 import Network.Connection;
+import Network.JsonFactory;
+
 
 import java.util.Observable;
 import java.util.Observer;
@@ -59,6 +62,9 @@ public class RemoteView extends Observable implements Observer{
     @Override
     public void update(Observable observable, Object o) {
         System.out.println("Arrivato");
-        connection.send("Modello aggiornato");
+
+        //arriva il modello!!!
+        //turns the model component into a json, in order to pass it to the client
+        connection.send(JsonFactory.modelToJson(o));
     }
 }

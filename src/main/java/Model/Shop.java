@@ -93,6 +93,11 @@ public class Shop extends Observable {
     public List<Player> getPlayerList() {
         return playerList;
     }
+
+    public void sendShop() {
+        setChanged();
+        notifyObservers();
+    }
 }
 
 

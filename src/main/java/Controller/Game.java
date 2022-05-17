@@ -59,6 +59,20 @@ public class Game implements Observer{
         islandController.connectBoards(boardsController);
     }
 
+
+    public void sendEntireModel() {
+        for (Player p : players) {
+            boardsController.getBoard(p.getPlayerID()).sendBoard();
+        }
+        cloudController.getCloudModel().sendClouds();
+        islandController.getIslandModel().sendIslands();
+        sack.sendSack();
+        gameModel.sendGameModel();
+
+        for(Player p : players) {
+            p.sendPlayer();
+        }
+    }
     /**
      * Receives updates from the remoteView and calls handleEvent
      * @param obs
@@ -83,6 +97,10 @@ public class Game implements Observer{
         cloudController.addObserverToModel(rv);
         boardsController.addObserverToModel(rv);
         gameModel.addObserver(rv);
+
+        for (Player p : players) {
+            p.addObserver(rv);
+        }
     }
 
     //----------------------------------------------------------------------------------------------------------------

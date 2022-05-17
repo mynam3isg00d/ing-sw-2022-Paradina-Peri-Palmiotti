@@ -2,11 +2,14 @@ package Model;
 import Exceptions.EmptyCloudException;
 import Exceptions.CloudNotEmptyException;
 import Exceptions.InvalidStudentListException;
+import com.google.gson.annotations.Expose;
 
 import java.util.*;
 
 public class Cloud {
+    @Expose
     private List<Student> students;
+    @Expose
     private int numOfStudents;
 
     /**
