@@ -64,6 +64,21 @@ public class Server implements Runnable{
                 remoteViews.add(new RemoteView(p, entry.getValue()));
             }
 
+            //For now ID == name
+            switch (playerNumber) {
+                case 2:
+                case 3:
+                    for(int i=0; i<playerNumber; i++) {
+                        players.get(i).setPlayerID(players.get(i).getName());
+                        players.get(i).setTeamId(i);
+                    }
+                case 4:
+                    for(int i=0; i<playerNumber; i++) {
+                        players.get(i).setPlayerID(players.get(i).getName());
+                        players.get(i).setTeamId(i%2);
+                    }
+            }
+
             //initializes the Controller components
             Game c = new Game(players);
 

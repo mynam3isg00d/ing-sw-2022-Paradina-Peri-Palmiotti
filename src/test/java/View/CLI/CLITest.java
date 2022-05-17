@@ -1,5 +1,6 @@
 package View.CLI;
 
+import Controller.CloudController;
 import Controller.ExpertGame;
 import Controller.Game;
 import Events.BuyPlayCharacterEvent;
@@ -61,13 +62,13 @@ class CLITest {
     */
 
     @Test
-    void displayGame() {
+    void displayGame() throws Exception {
         List<Player> p = new ArrayList<>();
 
         p.add(new Player("Davide", 0));
-        p.add(new Player("Samuele", 0));
-        p.add(new Player("Cugola", 1));
-        p.add(new Player("SPietro", 1));
+        p.add(new Player("Samuele", 1));
+        p.add(new Player("Cugola", 2));
+        //p.add(new Player("SPietro", 1));
         for(Player p0 : p) p0.setPlayerID(p0.getName());
 
         ExpertGame eg = new ExpertGame(p);
@@ -79,6 +80,8 @@ class CLITest {
         CloudWrapper cw = eg.getCloudController().getCloudModel();
         IslandsWrapper iw = eg.getIslandController().getIslandModel();
         Shop s = eg.getCharacterController().getShopReference();
+
+        eg.getCloudController().fillClouds(sc);
 
         CLI c = new CLI(b, g, iw, cw, s, p, sc);
         c.display();

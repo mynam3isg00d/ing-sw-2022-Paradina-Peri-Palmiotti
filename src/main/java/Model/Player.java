@@ -72,6 +72,9 @@ public class Player {
      */
     public void setPlayerID(String pid) { playerID = pid; }
 
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
 
     //Do i need to jdoc this?????????????????????
     public String getPlayerID() { return playerID; }
