@@ -40,15 +40,6 @@ public class Player extends Observable {
         hand = null;
     }
 
-    //-----Copy Constructor------
-    private Player(String name, String playerID, int teamId, Hand hand, Assistant assistantInPlay) {
-        this.name = name;
-        this.playerID = playerID;
-        this.teamId = teamId;
-        this.hand = hand;
-        this.assistantInPlay = assistantInPlay;
-    }
-
     //TODO: what if two players choose the same wizard
     //TODO: handle if wizardID not between 1 and 4
     /**
@@ -106,9 +97,6 @@ public class Player extends Observable {
 
     public Assistant getAssistantInPlay() { return assistantInPlay; }
 
-    private Player getCopy() {
-        return new Player(name, playerID, teamId, hand, assistantInPlay);
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -125,7 +113,7 @@ public class Player extends Observable {
     }
 
     public void sendPlayer() {
-        Gson b = new GsonBuilder().create();
-        notify(b.toJson(getCopy()));
+        String s = new JsonFactory().modelToJson(this);
+        notify(s);
     }
 }

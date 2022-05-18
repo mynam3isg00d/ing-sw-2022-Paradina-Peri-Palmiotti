@@ -11,6 +11,12 @@ public class CLIBoard extends CLIElement {
 
     private Board board;
 
+    //-----Dummy-----
+    public CLIBoard() {
+        lines = new ArrayList<>();
+        for(int i=0; i<8; i++) lines.add(  "........................"  );
+    }
+
     public CLIBoard(Board b) {
         this.board = b;
         lines = new ArrayList<>();
@@ -21,6 +27,10 @@ public class CLIBoard extends CLIElement {
     public void updateBoard(Board board) {
         this.board = board;
         updateLines();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     private void updateLines() {

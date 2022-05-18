@@ -28,13 +28,6 @@ public class Shop extends Observable {
         }
     }
 
-    //-------Copy constructor-----------
-    private Shop (CharacterCard[] shop, HashMap<String, Integer> coinMap, List<Player> playerList) {
-        this.shop = shop;
-        this.coinMap = coinMap;
-        this.playerList = playerList;
-    }
-
     //Mainly for testing purposes
     public Shop(List<Player> playerList, Integer[] AVAILABLE_CHARS) {
         shop = new CharacterCard[3];
@@ -103,13 +96,9 @@ public class Shop extends Observable {
         return playerList;
     }
 
-    private Shop getCopy() {
-        return new Shop(shop, coinMap, playerList);
-    }
-
     public void sendShop() {
-        Gson b = new GsonBuilder().create();
-        notify(b.toJson(getShop()));
+        String s = new JsonFactory().modelToJson(this);
+        notify(s);
     }
 }
 

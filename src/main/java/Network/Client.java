@@ -1,6 +1,9 @@
 package Network;
 
 import Model.Board;
+import View.CLI.CLI;
+import View.MessageInterpreter;
+import View.UI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -15,7 +18,7 @@ public class Client {
 
     private String ip;
     private int port;
-
+    private UI ui;
 
     private class LocalInput implements Runnable {
         private PrintWriter out;
@@ -40,27 +43,17 @@ public class Client {
     private class RemoteInput implements Runnable {
 
         private BufferedReader in;
+        private MessageInterpreter messageInterpreter;
         public RemoteInput (BufferedReader inputSource) {
             this.in = inputSource;
+            this.messageInterpreter = new MessageInterpreter(ui);
         }
         public void run() {
             while(true) {
                 try {
                     String line = in.readLine();
-
-                    /*
-                    //TODO: delete
-                    Gson gson = new GsonBuilder()
-                            .setPrettyPrinting()
-                            .create();
-                    if(line.substring(0, 3).equals("200")) {
-                        Board b = gson.fromJson(line.substring(3), Board.class);
-                        int c = 0;
-                    }
-
-                     */
-
-                    System.out.println(line);
+                    messageInterpreter.interpret(line);
+                    System.out.println("modello aggiornato");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -71,6 +64,7 @@ public class Client {
     public Client(String ip, int port){
         this.ip = ip;
         this.port = port;
+        ui = new CLI();
     }
 
     public void run() throws IOException {
@@ -90,6 +84,7 @@ public class Client {
 
             //thread listening messages from the socket, then prints them
             new Thread(new RemoteInput(in)).start();
+
         } catch (Exception e) {
             System.out.println("Connection closed from the client side");
             e.printStackTrace();

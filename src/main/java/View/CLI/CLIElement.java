@@ -11,7 +11,6 @@ public abstract class CLIElement {
     public int getX() {
         return lines.get(0).length();
     }
-
     public int getY() {
         return lines.size();
     }

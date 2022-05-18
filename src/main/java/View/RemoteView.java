@@ -26,7 +26,7 @@ public class RemoteView extends Observable implements Observer {
 
     @Override
     public void update(Object o) {
-        System.out.println("ArrivatoAA");
+        System.out.println("Arrivato");
 
         connection.send((String) o);
     }

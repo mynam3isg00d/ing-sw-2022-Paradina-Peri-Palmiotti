@@ -11,6 +11,19 @@ public class CLIShop extends CLIElement {
     private Shop shop;
     private CLICharaterCard[] cardArray;
 
+    public CLIShop() {
+        lines = new ArrayList<>();
+        lines.add("+-------------------------------------+");
+        lines.add("|                                     |");
+        lines.add("|                                     |");
+        lines.add("|                                     |");
+        lines.add("|          Expert Game Only!          |");
+        lines.add("|                                     |");
+        lines.add("|                                     |");
+        lines.add("|                                     |");
+        lines.add("+-------------------------------------+");
+    }
+
     public CLIShop(Shop shop) {
         this.shop = shop;
         cardArray = new CLICharaterCard[3];

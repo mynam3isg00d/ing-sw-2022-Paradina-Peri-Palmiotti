@@ -41,8 +41,8 @@ public class Board extends Observable {
     }
 
     public void sendBoard() {
-        Gson b = new GsonBuilder().create();
-        notify(b.toJson(getCopy()));
+        String s = new JsonFactory().modelToJson(this);
+        notify(s);
     }
 
 
@@ -175,23 +175,12 @@ public class Board extends Observable {
     public int getMaxEntrance() {
         return MAXENTRANCEPLACES;
     }
-
-    public Board getCopy() {
-        Board b = new Board(7, 8);
-        b.setDiners(diners);
-        b.setEntrance(entrance);
-        b.setProfessors(professors);
-        b.setPlayerName(playerName);
-        b.setTowersNum(towersNum);
-        b.setTeamID(teamID);
-        return b;
-    }
-
     //************************//
 
 
     //********setters*********//
 
+    /*
     public void setDiners(int[] diners) {
         this.diners = diners;
     }
@@ -215,6 +204,8 @@ public class Board extends Observable {
     public void setTowersNum(int towersNum) {
         this.towersNum = towersNum;
     }
+
+     */
 
     //************************//
 }

@@ -58,8 +58,8 @@ public class IslandsWrapper extends Observable {
     }
 
     public void sendIslands() {
-        Gson b = new GsonBuilder().create();
-        notify(b.toJson(getCopy()));
+        String s = new JsonFactory().modelToJson(this);
+        notify(s);
     }
 
     /**
@@ -192,21 +192,5 @@ public class IslandsWrapper extends Observable {
      */
     public int getIslandDimension(int islandIndex) {
         return islands.get(islandIndex).getDimension();
-    }
-
-    private IslandsWrapper getCopy() {
-        IslandsWrapper iw = new IslandsWrapper();
-        iw.setIslands(islands);
-        iw.setMotherNaturePos(motherNaturePos);
-        return iw;
-    }
-
-
-    private void setIslands(List<Island> islands) {
-        this.islands = islands;
-    }
-
-    private void setMotherNaturePos(int motherNaturePos) {
-        this.motherNaturePos = motherNaturePos;
     }
 }

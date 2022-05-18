@@ -22,6 +22,10 @@ public class CLIPlayer extends CLIElement {
         updateLines();
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     @Override
     public void displayLines(int x0, int y0) {
         super.displayLines(x0, y0);

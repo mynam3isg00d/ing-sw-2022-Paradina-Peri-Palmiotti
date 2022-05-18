@@ -69,19 +69,7 @@ public class CloudWrapper extends Observable {
     public Cloud getCloud(int cloudIndex) { return clouds.get(cloudIndex); }
 
     public void sendClouds(){
-        Gson b = new GsonBuilder().create();
-        notify(b.toJson(getCopy()));
-    }
-
-    public CloudWrapper getCopy() {
-        CloudWrapper cw = new CloudWrapper(3, 3);
-        cw.setClouds(clouds);
-        return cw;
-    }
-
-    //------------setters----------
-
-    public void setClouds(List<Cloud> clouds) {
-        this.clouds = clouds;
+        String s = new JsonFactory().modelToJson(this);
+        notify(s);
     }
 }

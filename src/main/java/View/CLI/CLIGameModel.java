@@ -62,6 +62,7 @@ public class CLIGameModel extends CLIElement {
     }
 
     private String getCurrPlayer(Phase phase) {
+        if (phase == null) return "";
         switch (phase) {
             case SETUP:
             case PLANNING:
@@ -75,6 +76,7 @@ public class CLIGameModel extends CLIElement {
     }
 
     private String getPhaseMessage(Phase phase) {
+        if (phase == null) return "";
         switch (phase) {
             case SETUP:
                 return "choose a wizard!";

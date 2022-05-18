@@ -1,8 +1,8 @@
 package Network;
 
-import Controller.Game;
 import Events.GameEvent;
 import Model.*;
+import Util.AnnotationExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,7 +11,10 @@ public class JsonFactory {
     private Gson builder;
 
     public JsonFactory() {
-        builder = new GsonBuilder().setPrettyPrinting().create();
+        builder = new GsonBuilder()
+                .setExclusionStrategies(new AnnotationExclusionStrategy())
+                .serializeNulls()
+                .create();
     }
 
 

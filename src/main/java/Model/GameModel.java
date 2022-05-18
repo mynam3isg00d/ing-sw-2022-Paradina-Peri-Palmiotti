@@ -1,5 +1,6 @@
 package Model;
 
+import Network.JsonFactory;
 import Observer.Observable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,25 +24,6 @@ public class GameModel extends Observable {
             motherNatureMoved = false;
             cloudChosen = false;
         }
-
-        //----Copy constructor??-----
-        private TurnInfo(int numOfStudentsMoved, boolean motherNatureMoved, boolean cloudChosen) {
-            this.numOfStudentsMoved = numOfStudentsMoved;
-            this.motherNatureMoved = motherNatureMoved;
-            this.cloudChosen = cloudChosen;
-        }
-
-        public int getNumOfStudentsMoved() {
-            return numOfStudentsMoved;
-        }
-
-        public boolean getMotherNatureMoved() {
-            return motherNatureMoved;
-        }
-
-        public boolean getCloudChosen() {
-            return cloudChosen;
-        }
     }
 
     public GameModel(int playerNumber) {
@@ -60,40 +42,26 @@ public class GameModel extends Observable {
         }
     }
 
-    //-------Copy constructor----------
-    public GameModel(int roundCount, boolean isLastRound, int STUDENTS_PER_TURN, Phase gamePhase, Player currentPlayer, TurnInfo turnInfo) {
-        this.roundCount = roundCount;
-        this.isLastRound = isLastRound;
-        this.STUDENTS_PER_TURN = STUDENTS_PER_TURN;
-        this.gamePhase = gamePhase;
-        this.currentPlayer = currentPlayer;
-        this.turnInfo = turnInfo;
-    }
-
     public void sendGameModel() {
-        Gson b = new GsonBuilder().create();
-        notify(b.toJson(getCopy()));
+        String s = new JsonFactory().modelToJson(this);
+        notify(s);
     }
 
     public void setGamePhase(Phase gamePhase) {
         this.gamePhase = gamePhase;
     }
-
     public Phase getGamePhase() {
         return gamePhase;
     }
-
     public int getSTUDENTS_PER_TURN() {
         return STUDENTS_PER_TURN;
     }
     public void setLastRound(boolean lastRound) {
         isLastRound = lastRound;
     }
-
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
-
     public void setCurrentPlayer(Player newCurrentPlayer) {
         currentPlayer = newCurrentPlayer;
     }
@@ -138,9 +106,5 @@ public class GameModel extends Observable {
 
     public boolean isLastRound() {
         return isLastRound;
-    }
-
-    private GameModel getCopy() {
-        return new GameModel(roundCount, isLastRound, STUDENTS_PER_TURN, gamePhase, currentPlayer, new TurnInfo());
     }
 }

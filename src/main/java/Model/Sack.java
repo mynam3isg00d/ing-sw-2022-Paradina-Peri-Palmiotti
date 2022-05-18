@@ -23,14 +23,9 @@ public class Sack extends Observable {
         Collections.shuffle(sack);
     }
 
-    //-------Copy constructor------------
-    private Sack(Stack<Integer> sack) {
-        this.sack = sack;
-    }
-
     public void sendSack() {
-        Gson b = new GsonBuilder().create();
-        notify(b.toJson(getCopy()));
+        String s = new JsonFactory().modelToJson(this);
+        notify(s);
     }
 
     /**
@@ -93,10 +88,6 @@ public class Sack extends Observable {
         x.add(Student.PINK);
 
         return x;
-    }
-
-    private Sack getCopy() {
-        return new Sack(sack);
     }
 }
 
