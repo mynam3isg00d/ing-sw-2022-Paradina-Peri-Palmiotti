@@ -216,7 +216,7 @@ public class Game implements Observer {
      * @throws InvalidMoveException The request is coming from the right player but in the wrong game phase
      * @throws NotYourTurnException The request is coming from the wrong player
      */
-    public void handleEvent(MoveMotherNatureEvent event) throws InvalidMoveException, NotYourTurnException {
+    public void handleEvent(MoveMotherNatureEvent event) throws InvalidMoveException, NotYourTurnException, EmptyElementException, FullElementException {
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 

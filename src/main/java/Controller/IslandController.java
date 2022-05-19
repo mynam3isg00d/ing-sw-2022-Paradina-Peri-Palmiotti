@@ -1,9 +1,9 @@
 package Controller;
 import Controller.CharacterEffects.Strategies.DefaultInfluenceStrategy;
 import Controller.CharacterEffects.Strategies.InfluenceStrategy;
+import Exceptions.EmptyElementException;
+import Exceptions.FullElementException;
 import Exceptions.InvalidMoveException;
-import Exceptions.NoSuchIslandException;
-import Exceptions.NoSuchStudentsException;
 import Model.*;
 import View.RemoteView;
 
@@ -56,7 +56,7 @@ public class IslandController {
      * @throws InvalidMoveException
      */
     //TODO pass the maximumSteps parameter in a smart way from the controller
-    public void moveMother(int steps) throws InvalidMoveException{
+    public void moveMother(int steps) throws InvalidMoveException, EmptyElementException, FullElementException {
         //gets the old mother nature position
         int oldPosition = islandModel.getMotherNaturePos();
 
@@ -86,9 +86,10 @@ public class IslandController {
      * Calculates the most influent team on the island and acts accordingly
      * @param islandIndex The island
      */
-    public void calcInfluence(int islandIndex){
+    public void calcInfluence(int islandIndex) throws EmptyElementException, FullElementException {
         int mostInfluentTeam = influenceStrategy.calcInfluence(islandIndex, islandModel, boardsController);
 
+        //case: tie
         if (mostInfluentTeam == -1) return;
 
         checkAndMerge(mostInfluentTeam, islandIndex);
@@ -99,11 +100,22 @@ public class IslandController {
      * @param mostInfluentTeam the new most influent team
      * @param islandIndex the index of the island
      */
-    private void checkAndMerge(Integer mostInfluentTeam, int islandIndex) {
+    private void checkAndMerge(Integer mostInfluentTeam, int islandIndex) throws EmptyElementException, FullElementException {
+            //updates the tower counts of the two involved teams
+            //removes a tower from the new owner
+            String newOwnerId = boardsController.getTeamLeaderId(mostInfluentTeam);
+            boardsController.removeTowers(newOwnerId, islandModel.getIslandDimension(islandIndex));
+
+            //adds back the removed towers to the board of the previous most influent team (if existing)
+            if (islandModel.getInfluence(islandIndex) != null) {
+                String oldOwnerId = boardsController.getTeamLeaderId(islandModel.getInfluence(islandIndex));
+                boardsController.addTowers(oldOwnerId, islandModel.getIslandDimension(islandIndex));
+            }
+
+
             //sets the influence on the island
             islandModel.setInfluence(islandIndex, mostInfluentTeam);
             System.out.println("CONTROLLER SAYS: Set influence " + mostInfluentTeam + " on island " + islandIndex);
-
 
             //checks if a merge is needed with the nearby islands
             boolean mergedPrev = false;
