@@ -19,6 +19,7 @@ public class Board extends Observable {
     private int towersNum;
     private String playerName;
     private int teamID;
+    private boolean isTeamLeaderBoard;
 
     public Board(int towersNum, int maxEntrancePlaces) {
         diners = new int[]{0, 0, 0, 0, 0};
@@ -27,6 +28,7 @@ public class Board extends Observable {
         Arrays.fill(entrance, null);
         professors = new boolean[]{false, false, false, false, false};
         this.MAXTOWERS = this.towersNum = towersNum;
+        isTeamLeaderBoard = true;
     }
 
     public Board(String name, int teamID, int towersNum, int maxEntrancePlaces) {
@@ -38,6 +40,7 @@ public class Board extends Observable {
         this.MAXTOWERS = this.towersNum = towersNum;
         playerName = name;
         this.teamID = teamID;
+        isTeamLeaderBoard = towersNum != 0;
     }
 
     public void sendBoard() {
@@ -164,6 +167,10 @@ public class Board extends Observable {
     public String getPlayerName() {
         return playerName;
     }
+    public boolean isTeamLeaderBoard() {
+        return isTeamLeaderBoard;
+    }
+
     public int getProfNum() {
         int ret = 0;
         for(int i=0; i<professors.length; i++) {

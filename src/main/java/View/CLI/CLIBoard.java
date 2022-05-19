@@ -11,12 +11,6 @@ public class CLIBoard extends CLIElement {
 
     private Board board;
 
-    //-----Dummy-----
-    public CLIBoard() {
-        lines = new ArrayList<>();
-        for(int i=0; i<8; i++) lines.add(  "........................"  );
-    }
-
     public CLIBoard(Board b) {
         this.board = b;
         lines = new ArrayList<>();
@@ -34,7 +28,7 @@ public class CLIBoard extends CLIElement {
     }
 
     private void updateLines() {
-        String n = formatName(board.getPlayerName());
+        String n = formatName(board.getPlayerName(), board.isTeamLeaderBoard());
         String te = getTeamString(board.getTeamID());
         String[] e = getCorrespondingASCIArray(board.getEntrance());
         int[] d = board.getDinings();
@@ -90,10 +84,13 @@ public class CLIBoard extends CLIElement {
         return "G";
     }
 
-    private String formatName(String name) {
-        if(name.length() == 5) return name;
-        if(name.length() > 5) return name.substring(0, 5);
-        return name + " ".repeat(5 - name.length());
+    private String formatName(String name, boolean teamLeader) {
+        String n = "";
+        if(name.length() == 5) n = name;
+        if(name.length() > 5) n = name.substring(0, 5);
+        if(name.length() < 5) n = name + " ".repeat(5 - name.length());
+        if(teamLeader) n = "@|underline " + n + "|@";
+        return n;
     }
 
     private char[] getCorrespondingCharArray(boolean[] bool) {

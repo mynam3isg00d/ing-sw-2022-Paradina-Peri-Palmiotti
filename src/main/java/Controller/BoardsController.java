@@ -201,6 +201,14 @@ public class BoardsController {
         return professors[colorId];
     }
 
+    public Board getTeamLeaderBoard(int teamID) {
+        for(Player p : players) {
+            Board b = playerBoardMap.get(p.getPlayerID());
+            if (p.getTeamID() == teamID && b.isTeamLeaderBoard()) return b;
+        }
+        return null;
+    }
+
     public void addTowers(String playerID, int numToAdd) throws FullElementException {
         Board b = playerBoardMap.get(playerID);
         b.addTower(numToAdd);
