@@ -172,7 +172,7 @@ public class CLI extends UI {
 
     public void updateModel(Sack s) {
         sack.updateSack(s);
-        sack.displayLines(shop.getX() + players.get(0).getX() + 1, boards.get(0).getY() + 1 + islandWrapper.getY() + 5);
+        sack.displayLines(shop.getX() + 80, boards.get(0).getY() + 1 + islandWrapper.getY() + 5);
         System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2));
     }
 }

@@ -95,7 +95,10 @@ public class Server implements Runnable{
 
             //each connection in the playing list has to be notified of the start of the match
             for (Map.Entry<String, Connection> entry : playingLists[listIndex].entrySet()) {
-                entry.getValue().send("Game Started");
+                //entry.getValue().send("Game Started");
+
+                //Clear screen command
+                entry.getValue().send("300");
             }
 
             //--------------------

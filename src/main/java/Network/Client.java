@@ -53,7 +53,6 @@ public class Client {
                 try {
                     String line = in.readLine();
                     messageInterpreter.interpret(line);
-                    System.out.println("modello aggiornato");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

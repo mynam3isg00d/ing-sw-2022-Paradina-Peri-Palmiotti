@@ -85,7 +85,7 @@ public class Game implements Observer {
         try {
             //handleEvent((GameEvent) o);
         } catch (Exception e) {
-            //obs.send(e);
+            //obs.send("400" + e);
         }
     }
 

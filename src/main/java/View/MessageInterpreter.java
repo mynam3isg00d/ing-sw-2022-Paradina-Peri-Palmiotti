@@ -5,6 +5,8 @@ import Util.Message;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class MessageInterpreter {
 
     private UI ui;
@@ -21,9 +23,20 @@ public class MessageInterpreter {
             case '1':
                 //Simple message, cut the code and print as such
                 System.out.println(new Message(message.substring(3)).toString());
+                break;
+            case '3':
+                //Command message
+                switch (code.substring(1)) {
+                    case "00":
+                        //Clear screen
+                        System.out.print( ansi().eraseScreen() );
+                        break;
+                }
+                break;
             case '4':
                 //Error message, cut the code and print as such
                 System.out.println(new Message(message.substring(3), true).toString());
+                break;
             case '2':
                 //Json message, deserialize
                 String json = message.substring(3);
@@ -60,6 +73,7 @@ public class MessageInterpreter {
                         ui.updateModel(sack);
                         break;
                 }
+                break;
             default:
                 //Default to simple message
                 System.out.println(message);

@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class Connection extends Observable implements Runnable {
     private Socket socket;
     private Scanner in;
@@ -64,7 +66,6 @@ public class Connection extends Observable implements Runnable {
                     e.printStackTrace();
                 }
             } while(!validEntry);
-
 
             server.lobby(this, name, playerNumber);
 
