@@ -47,11 +47,15 @@ public class Shop extends Observable {
         } catch (EmptySackException e) {
             e.printStackTrace();
         }
+
+        sendShop();
     }
 
     public void addCoins(String playerID, int num) {
         int prev = coinMap.get(playerID);
         coinMap.put(playerID, prev + num);
+
+        sendShop();
     }
 
     public void removeCoins(String playerID, int num) {
@@ -65,7 +69,7 @@ public class Shop extends Observable {
     }
 
     //TODO: maybe use factory!!!
-    public void fillShop(List<Integer> indexArray, Sack sack) throws EmptySackException {
+    private void fillShop(List<Integer> indexArray, Sack sack) throws EmptySackException {
         if (indexArray.size() != 3) return;
         for(int i=0; i<indexArray.size(); i++) {
             int c = indexArray.get(i);
@@ -81,9 +85,6 @@ public class Shop extends Observable {
         }
     }
 
-    //TODO: this is wrong
-    //      it returns a shop that has refrences to the original cards
-    //      meaning the cards themselves are not copies! (idk why it happens tho)
     public CharacterCard[] getShop() {
         return shop.clone();
     }

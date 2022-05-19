@@ -33,6 +33,8 @@ public class CloudWrapper extends Observable {
      */
     public void fillCloud(List<Student> students, int cloudIndex) throws Exception {
         clouds.get(cloudIndex).fill(students);
+
+        sendClouds();
     }
 
     /**
@@ -42,7 +44,10 @@ public class CloudWrapper extends Observable {
      * @throws EmptyCloudException Thrown if the selected island is already empty
      */
     public List<Student> getFromCloud(int cloudIndex) throws EmptyCloudException {
-        return clouds.get(cloudIndex).empty();
+        List<Student> ret = clouds.get(cloudIndex).empty();
+
+        sendClouds();
+        return ret;
     }
 
     /**

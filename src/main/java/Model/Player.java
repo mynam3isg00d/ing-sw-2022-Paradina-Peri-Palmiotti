@@ -48,6 +48,8 @@ public class Player extends Observable {
      */
     public void chooseWizard(int wizardID) {
         hand = new Hand(wizardID);
+
+        sendPlayer();
     }
 
     /**
@@ -58,6 +60,8 @@ public class Player extends Observable {
      */
     public Assistant playAssistant(int orderNumber) throws AssistantMissingException {
         assistantInPlay = hand.getAssistantFromOrderNumber(orderNumber);
+
+        sendPlayer();
         return assistantInPlay;
     }
 
@@ -68,6 +72,8 @@ public class Player extends Observable {
     public void playAssistant(Assistant a) {
         assistantInPlay = a;
         getHand().removeAssistant(a);
+
+        sendPlayer();
     }
 
     /**

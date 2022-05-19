@@ -45,6 +45,8 @@ public class Sack extends Observable {
                 throw new EmptySackException();
             }
         }
+
+        sendSack();
         return returnVal;
     }
 

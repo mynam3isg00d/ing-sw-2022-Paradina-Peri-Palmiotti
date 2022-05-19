@@ -49,6 +49,8 @@ public class GameModel extends Observable {
 
     public void setGamePhase(Phase gamePhase) {
         this.gamePhase = gamePhase;
+
+        sendGameModel();
     }
     public Phase getGamePhase() {
         return gamePhase;
@@ -58,22 +60,28 @@ public class GameModel extends Observable {
     }
     public void setLastRound(boolean lastRound) {
         isLastRound = lastRound;
+
+        sendGameModel();
     }
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
     public void setCurrentPlayer(Player newCurrentPlayer) {
         currentPlayer = newCurrentPlayer;
+        sendGameModel();
     }
 
     public void resetTurnInfo() {
         turnInfo.numOfStudentsMoved = 0;
         turnInfo.motherNatureMoved = false;
         turnInfo.cloudChosen = false;
+
+        sendGameModel();
     }
 
     public void studentMoved() {
         turnInfo.numOfStudentsMoved++;
+        sendGameModel();
     }
 
     public int getNumStudentsMoved() {
@@ -82,6 +90,7 @@ public class GameModel extends Observable {
 
     public void motherNatureMoved() {
         turnInfo.motherNatureMoved = true;
+        sendGameModel();
     }
 
     public boolean hasMotherNatureMoved() {
@@ -90,6 +99,7 @@ public class GameModel extends Observable {
 
     public void cloudChosen() {
         turnInfo.cloudChosen = true;
+        sendGameModel();
     }
 
     public boolean isCloudChosen() {
@@ -98,6 +108,7 @@ public class GameModel extends Observable {
 
     public void newRound() {
         roundCount++;
+        sendGameModel();
     }
 
     public int getRoundCount() {

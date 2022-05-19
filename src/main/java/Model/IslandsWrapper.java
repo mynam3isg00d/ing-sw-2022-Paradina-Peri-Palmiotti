@@ -110,6 +110,8 @@ public class IslandsWrapper extends Observable {
         } else {
             islands.add(newIsland);
         }
+
+        sendIslands();
     }
 
     /**
@@ -120,7 +122,7 @@ public class IslandsWrapper extends Observable {
     public void addStudents(int islandIndex, List<Student> students) {
         islands.get(islandIndex).addStudents(students);
 
-        List<Island> islandModelView = new ArrayList<>(islands);
+        sendIslands();
     }
 
     /**
@@ -148,6 +150,8 @@ public class IslandsWrapper extends Observable {
      */
     public void setInfluence(int islandIndex, int team) {
         islands.get(islandIndex).setInfluence(team);
+
+        sendIslands();
     }
 
     /**
@@ -158,6 +162,8 @@ public class IslandsWrapper extends Observable {
         islands.get(motherNaturePos).setMotherNature(false);
         motherNaturePos = newPosition;
         islands.get(newPosition).setMotherNature(true);
+
+        sendIslands();
     }
 
     /**

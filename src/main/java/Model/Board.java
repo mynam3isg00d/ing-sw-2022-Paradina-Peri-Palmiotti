@@ -57,6 +57,8 @@ public class Board extends Observable {
     public void addToDining(Student s) throws FullTableException {
         if (diners[s.getColorId()] == MAXTABLESEATS) throw new FullTableException();
         diners[s.getColorId()]++;
+
+        sendBoard();
     }
 
     /**
@@ -67,6 +69,8 @@ public class Board extends Observable {
     public void removeFromDining(Student s) throws EmptyTableException {
         if (diners[s.getColorId()] == 0) throw new EmptyTableException();
         diners[s.getColorId()]--;
+
+        sendBoard();
     }
 
     /**
@@ -85,6 +89,8 @@ public class Board extends Observable {
         }
 
         for(Student st : s) addToEntrance(st);
+
+        sendBoard();
     }
 
     /**
@@ -95,6 +101,8 @@ public class Board extends Observable {
         for(int i=0; i<entrance.length; i++) {
             if (entrance[i] == null) {
                 entrance[i] = s;
+
+                sendBoard();
                 return;
             }
         }
@@ -107,6 +115,8 @@ public class Board extends Observable {
 
         Student retval = entrance[idx];
         entrance[idx] = null;
+
+        sendBoard();
         return retval;
     }
 
@@ -118,6 +128,8 @@ public class Board extends Observable {
     public void addTower(int n) throws FullElementException {
         if (towersNum + n > MAXTOWERS) throw new FullElementException();
         towersNum += n;
+
+        sendBoard();
     }
 
     /**
@@ -127,6 +139,8 @@ public class Board extends Observable {
     public void removeTower(int n) throws EmptyElementException {
         if (towersNum - n < 0) throw new EmptyElementException();
         towersNum -= n;
+
+        sendBoard();
     }
 
 
@@ -137,6 +151,7 @@ public class Board extends Observable {
      */
     public void addProfessor(int professorID) {
         professors[professorID] = true;
+        sendBoard();
     }
 
     /**
@@ -145,6 +160,7 @@ public class Board extends Observable {
      */
     public void removeProfessor(int professorID) {
         professors[professorID] = false;
+        sendBoard();
     }
 
     //********getters*********//

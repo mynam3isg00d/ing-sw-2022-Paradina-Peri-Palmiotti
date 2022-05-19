@@ -44,6 +44,9 @@ public class CharacterController {
         CharacterEffect ce = getEffect(cc, playerID);
         ce.init(gameReference, cardIndex);
         ce.playEffect(playerInput);
+
+        //Another async send to take StudentCard edits into account
+        shop.sendShop();
     }
 
     public void giveCoins(String playerID, int n) {
