@@ -95,11 +95,11 @@ public class DefaultInfluenceStrategy implements InfluenceStrategy{
         //TODO handle null pointers in currentInfluence
         int mostInfluentTeam;
         if (topInfluences.size() == 1) {
-            mostInfluentTeam = Integer.valueOf(topInfluences.get(0).getKey()); //the team with the maximum influence
+            mostInfluentTeam = topInfluences.get(0).getKey(); //the team with the maximum influence
         } else {
             boolean isOldInfluenceInTheList = false;
             for (Map.Entry<Integer, Integer> e : topInfluences) {
-                if (e.getKey() == currentInfluence) isOldInfluenceInTheList = true;
+                if (e.getKey().equals(currentInfluence)) isOldInfluenceInTheList = true;
             }
 
             if (isOldInfluenceInTheList) {
@@ -110,11 +110,9 @@ public class DefaultInfluenceStrategy implements InfluenceStrategy{
 
         System.out.println("The most influent team on Island " + islandIndex + " is team " + mostInfluentTeam);
 
-        //if the influence has changed, we check if a merge is needed
+        //if the influence has changed, returns the new most influent team
+        //otherwise (influence hasn't changed) returns -1
         if (currentInfluence == null || mostInfluentTeam != currentInfluence) {
-            System.out.println("CONTROLLER SAYS: Checking if a merge is needed");
-
-            //checkAndMerge(mostInfluentTeam, islandIndex);
             return mostInfluentTeam;
         } else {
             return -1;

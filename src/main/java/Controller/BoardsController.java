@@ -201,10 +201,10 @@ public class BoardsController {
         return professors[colorId];
     }
 
-    public Board getTeamLeaderBoard(int teamID) {
+    public String getTeamLeaderId(int teamID) {
         for(Player p : players) {
             Board b = playerBoardMap.get(p.getPlayerID());
-            if (p.getTeamID() == teamID && b.isTeamLeaderBoard()) return b;
+            if (p.getTeamID() == teamID && b.isTeamLeaderBoard()) return p.getPlayerID();
         }
         return null;
     }
