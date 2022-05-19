@@ -110,17 +110,6 @@ public class DefaultInfluenceStrategy implements InfluenceStrategy{
 
         System.out.println("The most influent team on Island " + islandIndex + " is team " + mostInfluentTeam);
 
-        //TODO: Update the boards
-        /*
-
-        Maybe this code works (must throw EmptyElementException and FullElementException)
-
-        if (mostInfluentTeam != -1) {
-            boardsController.getTeamLeaderBoard(mostInfluentTeam).removeTower(islandModel.getIslandDimension(islandIndex));
-            boardsController.getTeamLeaderBoard(previousMostInfluentTeam).addTower(islandModel.getIslandDimension(islandIndex));
-        }
-         */
-
         //if the influence has changed, we check if a merge is needed
         if (currentInfluence == null || mostInfluentTeam != currentInfluence) {
             System.out.println("CONTROLLER SAYS: Checking if a merge is needed");
