@@ -32,8 +32,8 @@ public class MessageInterpreter {
                         System.out.print( ansi().eraseScreen() );
                         break;
                     case "01":
-                        //set client id
-                        //??
+                        //Set client id
+                        ui.setPlayerID( message.substring(3) );
                         break;
                 }
                 break;

@@ -1,6 +1,9 @@
 package Events;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.regex.Pattern;
 
 public class EventFactory {
 
@@ -30,5 +33,19 @@ public class EventFactory {
         return gson.fromJson(jsonObject, PlayAssistantEvent.class);
     }
 
+    public static String stringToEventJson(String playerID, String line) {
+        Gson b = new GsonBuilder().serializeNulls().create();
+
+        //Regex patterns
+        Pattern wizard = Pattern.compile("^(choose wizard )[0123]");
+
+        if (wizard.matcher(line).find()) {
+            int wint = Integer.parseInt(line.split(" ")[2]);
+            ChooseWizardEvent event = new ChooseWizardEvent(playerID, wint);
+            return b.toJson(event);
+        }
+
+        return "ERROR";
+    }
 
 }

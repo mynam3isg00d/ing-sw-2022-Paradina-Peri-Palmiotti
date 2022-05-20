@@ -1,10 +1,17 @@
 package Events;
 
 public class ChooseWizardEvent extends GameEvent{
+    private int wizardID;
+
     public ChooseWizardEvent() {
         eventId = "0000";
     }
-    private int wizardID;
+
+    public ChooseWizardEvent(String playerID, int wizardID) {
+        eventId = "0000";
+        this.playerId = playerID;
+        this.wizardID = wizardID;
+    }
 
     public int getWizardID() {
         return wizardID;

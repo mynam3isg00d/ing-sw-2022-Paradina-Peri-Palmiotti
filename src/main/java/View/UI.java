@@ -4,6 +4,16 @@ import Model.*;
 
 public abstract class UI {
 
+    private String playerID;
+
+    public void setPlayerID(String playerID) {
+        this.playerID = playerID;
+    }
+
+    public String getPlayerID() {
+        return playerID;
+    }
+
     public abstract void display();
 
     public abstract void updateModel(Board b);

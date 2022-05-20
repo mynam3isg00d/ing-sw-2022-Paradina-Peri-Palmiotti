@@ -1,5 +1,6 @@
 package Network;
 
+import Events.EventFactory;
 import Model.Board;
 import View.CLI.CLI;
 import View.MessageInterpreter;
@@ -34,6 +35,9 @@ public class Client {
         public void run() {
             while(true) {
                 String line = in.nextLine();
+
+                line = EventFactory.stringToEventJson(ui.getPlayerID(), line);
+
                 out.println(line);
                 out.flush();
             }

@@ -60,7 +60,7 @@ public class RemoteView extends Observable implements Observer {
     }
 
     public void processChoice(GameEvent event) {
-        notifyAll();
+        notify(event);
     }
 
     public void sendError(Exception e) {
