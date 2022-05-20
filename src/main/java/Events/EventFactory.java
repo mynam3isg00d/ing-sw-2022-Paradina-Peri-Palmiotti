@@ -45,7 +45,7 @@ public class EventFactory {
             return b.toJson(event);
         }
 
-        return "ERROR";
+        return line;
     }
 
 }

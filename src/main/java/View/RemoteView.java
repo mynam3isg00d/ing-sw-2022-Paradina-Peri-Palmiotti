@@ -42,7 +42,8 @@ public class RemoteView extends Observable implements Observer {
          */
         @Override
         public void update(Object o) {
-            System.out.println("MESSAGE RECEIVER SAYS: Event Received");
+            String line = (String) o;
+            System.out.println("MESSAGE RECEIVER SAYS: Event Received" + line);
             try{
                 //Factory che crea eventi
                 //GameEvent e = EventFactory.getEvent();
@@ -52,10 +53,6 @@ public class RemoteView extends Observable implements Observer {
             }
         }
 
-        public void update(Observable obs, String s) {
-            System.out.println("MESSAGE RECEIVER SAYS: String Received");
-            System.out.println(s);
-        }
 
     }
 
