@@ -2,10 +2,16 @@ package Events;
 
 public class PlayAssistantEvent extends GameEvent {
 
+    private int playedAssistant;
+
     public PlayAssistantEvent() {
         eventId = "0001";
     }
-    private int playedAssistant;
+    public PlayAssistantEvent(String playerID, int playedAssistant) {
+        eventId = "0001";
+        this.playerId = playerID;
+        this.playedAssistant = playedAssistant;
+    }
 
     public int getPlayedAssistant() {
         return playedAssistant;

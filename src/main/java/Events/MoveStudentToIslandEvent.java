@@ -5,11 +5,19 @@ import Model.Student;
 
 public class MoveStudentToIslandEvent extends GameEvent {
 
+    private int studentBoardIndex;
+    private int islandID;
+
     public MoveStudentToIslandEvent() {
         eventId = "0003";
     }
-    private int studentBoardIndex;
-    private int islandID;
+
+    public MoveStudentToIslandEvent(String playerID, int studentBoardIndex, int islandID) {
+        eventId = "0003";
+        this.playerId = playerID;
+        this.studentBoardIndex = studentBoardIndex;
+        this.islandID = islandID;
+    }
 
 
     public int getIslandID() {

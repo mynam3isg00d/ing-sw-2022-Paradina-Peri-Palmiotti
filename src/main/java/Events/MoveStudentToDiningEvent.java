@@ -4,10 +4,17 @@ import Model.Student;
 
 public class MoveStudentToDiningEvent extends GameEvent{
 
+    private int studentIndex;
+
     public MoveStudentToDiningEvent() {
         eventId = "0002";
     }
-    private int studentIndex;
+
+    public MoveStudentToDiningEvent(String playerID, int studentIndex) {
+        eventId = "0002";
+        this.playerId = playerID;
+        this.studentIndex = studentIndex;
+    }
 
     public int getStudentIndex() {
         return studentIndex;
