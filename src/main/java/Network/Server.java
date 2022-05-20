@@ -39,6 +39,8 @@ public class Server implements Runnable{
      * @param newConnection The connection just created
      */
     public synchronized String lobby(Connection newConnection, String name, int playerNumber, boolean expert) {
+        System.out.println("called lobby with name = " + name);
+
         //lobby for 2 players is in position 0 of the array
         //lobby for 3 players is in position 1 of the array
         //lobby for 4 players is in position 2 of the array
@@ -47,32 +49,36 @@ public class Server implements Runnable{
         //expert lobbies are 3 position forward
         if (expert) listIndex += 3;
 
-        //adds a new connection to the correct waiting list
-        waitingLists[listIndex].put(name, newConnection);
+        //duplicate id handling
+        int idCount = 0;
+        for (Map.Entry<String, Connection> entry : waitingLists[listIndex].entrySet()) {
+            System.out.println("considerando connessione con nome = " + entry.getValue().getName().equals(name));
+            if (entry.getValue().getName().equals(name)) {
+                System.out.println("duplicate alert!");
+                idCount++;
+            }
+        }
+        newConnection.setProgressive(idCount);
 
         //sets client id in the connection
         //for now ID == name
-        String clientId = name;
-        newConnection.setId(clientId);
+        newConnection.setId(name); //if progressive > 0, puts id = name_[progressive]
 
-        //duplicate id handling
-        int idCount = 0;
-        for (Map.Entry<String, Connection> entry : playingLists[listIndex].entrySet()) {
-            if (entry.getValue().getId().equals(clientId)) idCount++;
-        }
-        newConnection.setProgressive(idCount);
+        //adds a new connection to the correct waiting list
+        waitingLists[listIndex].put(newConnection.getId(), newConnection);
+
 
         //if the waiting list has reached the right number of players, the game is initialized
         if (waitingLists[listIndex].size() == playerNumber) {
             //gets the keySet of the waitingList map in order to remove the first ones
-            List<String> names = new ArrayList<>(waitingLists[listIndex].keySet());
-            for (String n : names) {
-                System.out.println("DEBUG: "+n);
+            List<String> IDs = new ArrayList<>(waitingLists[listIndex].keySet());
+            for (String id : IDs) {
+                System.out.println("DEBUG: playing with "+ id);
             }
 
             //removes the first playersPerMatch connections from the waitingList and puts them in the playingList
-            for (String n :names) playingLists[listIndex].put(n, waitingLists[listIndex].get(n));
-            for (String n :names) waitingLists[listIndex].remove(n);
+            for (String id : IDs) playingLists[listIndex].put(id, waitingLists[listIndex].get(id));
+            for (String id : IDs) waitingLists[listIndex].remove(id);
 
             //adds to the remoteViews list as many remoteViews as the players playing
             List<RemoteView> remoteViews = new ArrayList<>();
@@ -103,7 +109,7 @@ public class Server implements Runnable{
 
             //initializes the Controller components
             Game c;
-            if (expert) {
+            if (!expert) {
                 c = new Game(players);
             } else {
                 c = new ExpertGame(players);

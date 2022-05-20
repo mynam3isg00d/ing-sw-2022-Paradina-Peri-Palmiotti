@@ -106,19 +106,21 @@ public class Connection extends Observable implements Runnable {
         }
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String name) {
+        if (name.equals(this.name)) this.id = name + "_" + progressive;
     }
 
     public String getId() {
-        if (progressive == 0) return id;
-
-        return id += ("_" + progressive);
+        return id;
     }
+
 
     public void setProgressive(int p) {
         progressive = p;
     }
 
 
+    public String getName() {
+        return name;
+    }
 }
