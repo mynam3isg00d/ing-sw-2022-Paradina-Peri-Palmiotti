@@ -1,5 +1,6 @@
 package Network;
 
+import Controller.ExpertGame;
 import Controller.Game;
 import Model.Player;
 import View.RemoteView;
@@ -17,14 +18,14 @@ public class Server implements Runnable{
     private final ServerSocket serverSocket;
     private final ExecutorService executor;
 
-    private final Map<String, Connection>[] waitingLists = new Map[3];
-    private final Map<String, Connection>[] playingLists = new Map[3];
+    private final Map<String, Connection>[] waitingLists = new Map[6];
+    private final Map<String, Connection>[] playingLists = new Map[6];
 
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
         this.executor = Executors.newFixedThreadPool(128);
 
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < 6; i++) {
             waitingLists[i] = new HashMap<>();
             playingLists[i] = new HashMap<>();
         }
@@ -37,11 +38,29 @@ public class Server implements Runnable{
      * Synchronized in order to avoid concurrent changes to the lists
      * @param newConnection The connection just created
      */
-    public synchronized void lobby(Connection newConnection, String name, int playerNumber) {
+    public synchronized String lobby(Connection newConnection, String name, int playerNumber, boolean expert) {
+        //lobby for 2 players is in position 0 of the array
+        //lobby for 3 players is in position 1 of the array
+        //lobby for 4 players is in position 2 of the array
         int listIndex = playerNumber - 2;
+
+        //expert lobbies are 3 position forward
+        if (expert) listIndex += 3;
 
         //adds a new connection to the correct waiting list
         waitingLists[listIndex].put(name, newConnection);
+
+        //sets client id in the connection
+        //for now ID == name
+        String clientId = name;
+        newConnection.setId(clientId);
+
+        //duplicate id handling
+        int idCount = 0;
+        for (Map.Entry<String, Connection> entry : playingLists[listIndex].entrySet()) {
+            if (entry.getValue().getId().equals(clientId)) idCount++;
+        }
+        newConnection.setProgressive(idCount);
 
         //if the waiting list has reached the right number of players, the game is initialized
         if (waitingLists[listIndex].size() == playerNumber) {
@@ -60,27 +79,35 @@ public class Server implements Runnable{
             List<Player> players = new ArrayList<>();
             for(Map.Entry<String, Connection> entry : playingLists[listIndex].entrySet()) {
                 Player p = new Player(entry.getKey());
+
+                //sets the id in the connection to the player
+                p.setPlayerID(entry.getValue().getId());
+
                 players.add(p);
                 remoteViews.add(new RemoteView(p, entry.getValue()));
             }
 
-            //For now ID == name
+
+            //TODO choose squad?
             switch (playerNumber) {
                 case 2:
                 case 3:
                     for(int i=0; i<playerNumber; i++) {
-                        players.get(i).setPlayerID(players.get(i).getName());
                         players.get(i).setTeamId(i);
                     }
                 case 4:
                     for(int i=0; i<playerNumber; i++) {
-                        players.get(i).setPlayerID(players.get(i).getName());
                         players.get(i).setTeamId(i%2);
                     }
             }
 
             //initializes the Controller components
-            Game c = new Game(players);
+            Game c;
+            if (expert) {
+                c = new Game(players);
+            } else {
+                c = new ExpertGame(players);
+            }
 
             //for each remote view:
             //Controller is made observer of RemoteView
@@ -97,6 +124,11 @@ public class Server implements Runnable{
             for (Map.Entry<String, Connection> entry : playingLists[listIndex].entrySet()) {
                 //entry.getValue().send("Game Started");
 
+                //id setting in client
+                String idSignal = "301" + entry.getValue().getId();
+                //sends a message to the client containing his id in the match
+                entry.getValue().send(idSignal);
+
                 //Clear screen command
                 entry.getValue().send("300");
             }
@@ -107,9 +139,11 @@ public class Server implements Runnable{
             //-------------------
         } else {
             for (Map.Entry<String, Connection> entry : waitingLists[listIndex].entrySet()) {
-                entry.getValue().send("Waiting for " + (playerNumber - waitingLists[listIndex].size()) + "player(s) to join");
+                entry.getValue().send("Waiting for " + (playerNumber - waitingLists[listIndex].size()) + " player(s) to join");
             }
         }
+
+        return "";
     }
 
     public Map<String, Connection> getWaitingList(int playerNumber) {

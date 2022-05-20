@@ -31,6 +31,10 @@ public class MessageInterpreter {
                         //Clear screen
                         System.out.print( ansi().eraseScreen() );
                         break;
+                    case "01":
+                        //set client id
+                        //??
+                        break;
                 }
                 break;
             case '4':

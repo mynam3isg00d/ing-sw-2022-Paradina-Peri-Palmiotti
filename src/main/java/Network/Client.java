@@ -42,6 +42,7 @@ public class Client {
 
     private class RemoteInput implements Runnable {
 
+        private String id;
         private BufferedReader in;
         private MessageInterpreter messageInterpreter;
         public RemoteInput (BufferedReader inputSource) {

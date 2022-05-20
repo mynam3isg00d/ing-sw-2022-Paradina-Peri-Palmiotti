@@ -16,6 +16,9 @@ public class Connection extends Observable implements Runnable {
     private Server server;
     private String name;
 
+    private String id;
+    private int progressive;
+
     private boolean isActive;
 
     public Connection(Socket socket, Server server){
@@ -55,22 +58,41 @@ public class Connection extends Observable implements Runnable {
 
             int playerNumber = 0;
             boolean validEntry;
+            boolean expert = false;
             do{
                 validEntry = true;
-                send("How many players would you like to play with??");
+                send("How many players would you like to play with?? Would you like to play the expert variant? [players number] [Y/N]");
                 try {
-                    playerNumber = Integer.parseInt(in.nextLine());
+                    String received = in.nextLine();
+
+                    //player number
+                    playerNumber = Integer.parseInt(received.split(" ")[0]);
                     if (playerNumber != 2 && playerNumber != 3 && playerNumber != 4) validEntry = false;
+
+                    //expert game YES vs expert game NO
+                    if (received.contains(" ")) {
+                        String expertMessage = received.split(" ")[1];
+                        if (expertMessage.equals("Y")) {
+                            expert = true;
+                        } else if (expertMessage.equals("N")) {
+                            expert = false;
+                        } else {
+                            validEntry = false;
+                        }
+                    } else {
+                        validEntry = false;
+                    }
+
+
                 } catch (NumberFormatException e) {
                     validEntry = false;
                     e.printStackTrace();
                 }
             } while(!validEntry);
 
-            server.lobby(this, name, playerNumber);
+            server.lobby(this, name, playerNumber, expert);
 
             while (isActive) {
-                //currently, only works with strings
                 String message = in.nextLine();
                 notify(message);
 
@@ -83,4 +105,20 @@ public class Connection extends Observable implements Runnable {
             close();
         }
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        if (progressive == 0) return id;
+
+        return id += ("_" + progressive);
+    }
+
+    public void setProgressive(int p) {
+        progressive = p;
+    }
+
+
 }
