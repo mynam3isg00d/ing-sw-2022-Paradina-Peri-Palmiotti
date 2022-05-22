@@ -5,9 +5,7 @@ import Exceptions.UnknownMessageException;
 import Model.*;
 import Util.AnnotationExclusionStrategy;
 import Util.Message;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.google.gson.*;
 
 public class JsonFactory {
 
@@ -34,7 +32,8 @@ public class JsonFactory {
             throw new UnknownMessageException();
         }
 
-        JsonElement jsonElement = builder.toJsonTree(m);
+        Message message = new Message(m);
+        JsonElement jsonElement = builder.toJsonTree(message);
         jsonElement.getAsJsonObject().addProperty("messageCode", code);
         String jsonStr = builder.toJson(jsonElement);
 

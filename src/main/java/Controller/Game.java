@@ -14,7 +14,9 @@ import Exceptions.*;
 import Observer.Observer;
 import Model.*;
 import View.*;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.util.*;
 
@@ -82,9 +84,11 @@ public class Game implements Observer {
      */
     @Override
     public void update(Object o) {
+        String json = (String) o;
         try {
-            //handleEvent((GameEvent) o);
+            jsonToEvent(json);
         } catch (Exception e) {
+            e.printStackTrace();
             //obs.send("400" + e);
         }
     }
@@ -278,6 +282,7 @@ public class Game implements Observer {
 
     }
 
+    //TODO: Jdoc
     public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException, WizardAlreadyChosenException{
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
@@ -580,5 +585,38 @@ public class Game implements Observer {
 
         //round count is updated
         gameModel.newRound();
+    }
+
+    public void jsonToEvent(String json) throws Exception {
+        Gson b = new GsonBuilder().serializeNulls().create();
+
+        JsonObject messageAsJsonObject = b.fromJson(json, JsonObject.class);
+        String code = messageAsJsonObject.get("eventId").getAsString();
+
+        switch (code) {
+            case "0000":
+                handleEvent(b.fromJson(json, ChooseWizardEvent.class));
+                break;
+            case "0001":
+                handleEvent(b.fromJson(json, PlayAssistantEvent.class));
+                break;
+            case "0002":
+                handleEvent(b.fromJson(json, MoveStudentToDiningEvent.class));
+                break;
+            case "0003":
+                handleEvent(b.fromJson(json, MoveStudentToIslandEvent.class));
+                break;
+            case "0004":
+                handleEvent(b.fromJson(json, MoveMotherNatureEvent.class));
+                break;
+            case "0005":
+                handleEvent(b.fromJson(json, PickStudentsFromCloudEvent.class));
+                break;
+                /*
+            case "0006":
+                handleEvent(b.fromJson(json, BuyPlayCharacterEvent.class));
+                break;
+                 */
+        }
     }
 }

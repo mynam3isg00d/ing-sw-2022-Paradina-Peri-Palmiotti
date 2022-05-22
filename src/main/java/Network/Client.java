@@ -58,7 +58,7 @@ public class Client {
             while(true) {
                 try {
                     String line = in.readLine();
-                    System.out.println("Received:\n" + line);
+                    //System.out.println("Received:\n" + line);
                     messageInterpreter.interpret(line);
                 } catch (IOException | UnknownMessageException e) {
                     e.printStackTrace();

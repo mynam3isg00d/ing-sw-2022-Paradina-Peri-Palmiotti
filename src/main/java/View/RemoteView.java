@@ -26,7 +26,6 @@ public class RemoteView extends Observable implements Observer {
 
     @Override
     public void update(Object o) {
-        System.out.println("Arrivato");
 
         //o is a json string representing the updated model
         //the json string also includes a messageCode signaling the received message is, indeed, a model update (the code is added by JsonFactory)
@@ -47,11 +46,15 @@ public class RemoteView extends Observable implements Observer {
         @Override
         public void update(Object o) {
             String line = (String) o;
-            System.out.println("MESSAGE RECEIVER SAYS: Event Received" + line);
+            RemoteView.this.notify(line);
+            //System.out.println("MESSAGE RECEIVER SAYS: Event Received" + line);
             try{
                 //Factory che crea eventi
-                //GameEvent e = EventFactory.getEvent();
+                //GameEvent e = EventFactory.jsonToEvent(line);
                 //processChoice(e);
+
+                //Davide: Provo sta cazzata
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
