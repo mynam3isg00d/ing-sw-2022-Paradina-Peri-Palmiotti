@@ -30,18 +30,18 @@ public class MessageInterpreter {
                         System.out.println(new Message(messageAsJsonObject.get("message").getAsString()));
                         break;
                 }
-
+                break;
             case 3:
                 //game init messages
                 switch (code%100) {
                     case 0:
                         //Game Started Message - @deprecated
-                        System.out.print( ansi().eraseScreen() );
+                        //System.out.print( ansi().eraseScreen() );
                         break;
                     case 1:
                         //Set client id
                         ui.setPlayerID( messageAsJsonObject.get("message").getAsString() );
-                        System.out.print( ansi().eraseScreen() );
+                        ui.init();
                         break;
                 }
                 break;
@@ -51,7 +51,7 @@ public class MessageInterpreter {
                 break;
             case 2:
                 //Json message, deserialize
-                String json = message.substring(3);
+                String json = b.toJson(messageAsJsonObject);
                 switch (code%100) {
                     case 0:
                         //Board

@@ -35,7 +35,7 @@ public class CLI extends UI {
         this.cloudWrapper = new CLICloudWrapper(cloudWrapper);
         this.shop = new CLIShop(shop);
         this.players = new ArrayList<>();
-        for (Player player : players) this.players.add(new CLIPlayer(player));
+        for (Player player : players) this.players.add(new CLIPlayer(player, false));
         this.sack = new CLISack(sack);
     }
 
@@ -50,10 +50,15 @@ public class CLI extends UI {
         this.sack = new CLISack(new Sack(999));
     }
 
+    @Override
+    public void init() {
+        AnsiConsole.systemInstall();
+        System.out.print(ansi().eraseScreen());
+    }
+
     //Rough display :p
     @Override
     public void display() {
-        AnsiConsole.systemInstall();
         System.out.print( ansi().eraseScreen() );
         for(int i=0; i<boards.size(); i++) boards.get(i).displayLines(i * (2+boards.get(0).getX()), 0);
         gameModel.displayLines(4 * (2+boards.get(0).getX()), 0);
@@ -160,7 +165,14 @@ public class CLI extends UI {
             System.out.println("no new players addable ERROR");
             return;
         } else {
-            CLIPlayer newP = new CLIPlayer(p);
+            CLIPlayer newP;
+            if (p.getPlayerID().equals(this.getPlayerID())) {
+                //This is you!!
+                newP = new CLIPlayer(p, false);
+            } else {
+                //this is not you, hide his hand
+                newP = new CLIPlayer(p, true);
+            }
             players.add(newP);
             i = players.indexOf(newP);
         }

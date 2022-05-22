@@ -98,7 +98,7 @@ public class Server implements Runnable{
             }
 
 
-            //TODO choose squad?
+            //TODO choose squad? fuck no lmao
             switch (playerNumber) {
                 case 2:
                 case 3:

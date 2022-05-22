@@ -15,6 +15,7 @@ public abstract class UI {
     }
 
     public abstract void display();
+    public abstract void init();
 
     public abstract void updateModel(Board b);
     public abstract void updateModel(GameModel gm);

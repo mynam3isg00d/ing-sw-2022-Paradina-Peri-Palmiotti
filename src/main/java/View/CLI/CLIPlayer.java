@@ -9,9 +9,11 @@ import java.util.List;
 public class CLIPlayer extends CLIElement {
 
     private Player player;
+    private boolean masked;
 
-    public CLIPlayer(Player player) {
+    public CLIPlayer(Player player, boolean masked) {
         this.player = player;
+        this.masked = masked;
         lines = new ArrayList<>();
 
         updateLines();
@@ -33,10 +35,19 @@ public class CLIPlayer extends CLIElement {
             List<Assistant> assistants = player.getHand().getHand();
             int offset = 0;
 
-            for (int i=0; i<assistants.size(); i++) {
-                CLIAssistant clia = new CLIAssistant(assistants.get(i));
-                clia.displayLines(x0 + 14 + offset, y0 + 1);
-                offset += clia.getX();
+            if (masked) {
+                //Display hidden hand
+                for (int i=0; i<assistants.size(); i++) {
+                    CLIAssistant clia = new CLIAssistant(assistants.get(i), true);
+                    clia.displayLines(x0 + 14 + offset, y0 + 1);
+                    offset += clia.getX();
+                }
+            } else {
+                for (int i=0; i<assistants.size(); i++) {
+                    CLIAssistant clia = new CLIAssistant(assistants.get(i));
+                    clia.displayLines(x0 + 14 + offset, y0 + 1);
+                    offset += clia.getX();
+                }
             }
         }
         try {
