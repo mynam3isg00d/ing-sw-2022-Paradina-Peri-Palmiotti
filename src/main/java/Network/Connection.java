@@ -2,6 +2,8 @@ package Network;
 
 import java.io.BufferedReader;
 import Observer.Observable;
+import Util.Message;
+
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
@@ -19,11 +21,14 @@ public class Connection extends Observable implements Runnable {
     private String id;
     private int progressive;
 
+    private final JsonFactory jsonFactory;
+
     private boolean isActive;
 
     public Connection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
+        this.jsonFactory = new JsonFactory();
         isActive = true;
     }
 
@@ -52,8 +57,11 @@ public class Connection extends Observable implements Runnable {
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream());
 
-            send("What's your name??");
+            //asks for the player's name
+            Message namePrompt = new Message("What's your name");
+            send(jsonFactory.messageToJson(namePrompt));
             name = in.nextLine();
+
             System.out.println("RECEIVED: " + name);
 
             int playerNumber = 0;
@@ -61,7 +69,8 @@ public class Connection extends Observable implements Runnable {
             boolean expert = false;
             do{
                 validEntry = true;
-                send("How many players would you like to play with?? Would you like to play the expert variant? [players number] [Y/N]");
+                Message gameInfoPrompt = new Message("How many players would you like to play with?? Would you like to play the expert variant? [players number] [Y/N]");
+                send(jsonFactory.messageToJson(gameInfoPrompt));
                 try {
                     String received = in.nextLine();
 

@@ -1,6 +1,7 @@
 package Network;
 
 import Events.EventFactory;
+import Exceptions.UnknownMessageException;
 import Model.Board;
 import View.CLI.CLI;
 import View.MessageInterpreter;
@@ -57,8 +58,9 @@ public class Client {
             while(true) {
                 try {
                     String line = in.readLine();
+                    System.out.println("Received:\n" + line);
                     messageInterpreter.interpret(line);
-                } catch (IOException e) {
+                } catch (IOException | UnknownMessageException e) {
                     e.printStackTrace();
                 }
             }
@@ -79,10 +81,6 @@ public class Client {
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
         try {
-            //the first message is sent by the server
-            String firstMessage = in.readLine();
-            System.out.println(firstMessage);
-
             //thread listening the player input
             new Thread(new LocalInput(out)).start();
 

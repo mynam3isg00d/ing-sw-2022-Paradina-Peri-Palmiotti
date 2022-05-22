@@ -7,6 +7,7 @@ import Model.*;
 import Network.Connection;
 import Network.JsonFactory;
 import Observer.*;
+import com.google.gson.JsonElement;
 
 
 public class RemoteView extends Observable implements Observer {
@@ -21,14 +22,17 @@ public class RemoteView extends Observable implements Observer {
         json = new JsonFactory();
 
         connection.addObserver(new MessageReceiver());
-        //connection.send("Qualcosa");
     }
 
     @Override
     public void update(Object o) {
         System.out.println("Arrivato");
 
-        connection.send((String) o);
+        //o is a json string representing the updated model
+        //the json string also includes a messageCode signaling the received message is, indeed, a model update (the code is added by JsonFactory)
+        String jsonModelUpdate = (String) o;
+
+        connection.send(jsonModelUpdate);
     }
 
     /**
