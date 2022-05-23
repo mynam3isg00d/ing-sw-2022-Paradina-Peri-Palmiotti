@@ -147,7 +147,7 @@ public class Game implements Observer {
         //plays the selected assistant. Throws an exception if the provided index is not valid
         requestingPlayer.playAssistant(selectedAssistant);
 
-        //checkHandEnd();
+        checkHandEnd();
 
         //ends the turn (this changes the player order too)
         endTurn(event.getPlayerId());
@@ -242,7 +242,6 @@ public class Game implements Observer {
         //set mother nature moved
         gameModel.motherNatureMoved();
 
-        /*
         //Check end conditions
         int islandEnd = checkIslandEnd();
         int towerEnd = checkTowerEnd();
@@ -258,10 +257,13 @@ public class Game implements Observer {
             gameModel.setGamePhase(Phase.END);
             return;
         }
-         */
 
-        //once mother nature has moved we get to the cloud phase
-        gameModel.setGamePhase(Phase.ACTION_CLOUDS);
+        //once mother nature has moved we get to the cloud phase, if it's last round we skip it
+        if (gameModel.isLastRound()) {
+            endTurn(event.getPlayerId());
+        } else {
+            gameModel.setGamePhase(Phase.ACTION_CLOUDS);
+        }
     }
 
     /**
@@ -343,7 +345,7 @@ public class Game implements Observer {
             int emptyBlack = 0;
             for(Player p : players) {
                 Board b = boardsController.getBoard(p.getPlayerID());
-                if (b.getTowersNum() == 0) {
+                if (b.getTowersNum() <= 0) {
                     if (p.getTeamID() == 0) emptyWhite++;
                     if (p.getTeamID() == 1) emptyBlack++;
                 }
@@ -353,7 +355,7 @@ public class Game implements Observer {
         } else {
             for(Player p : players) {
                 Board b = boardsController.getBoard(p.getPlayerID());
-                if (b.getTowersNum() == 0) return p.getTeamID();
+                if (b.getTowersNum() <= 0) return p.getTeamID();
             }
         }
         return -1;
@@ -375,7 +377,7 @@ public class Game implements Observer {
         }
     }
 
-    private int getWinningTeam() {
+    public int getWinningTeam() {
         //white counters
         int whiteSum = 0;
         int whiteProf = 0;
@@ -436,7 +438,7 @@ public class Game implements Observer {
     }
 
     public List<Player> getPlayers() {
-        return new ArrayList<Player>(players);
+        return new ArrayList<>(players);
     }
 
     public IslandController getIslandController() {
@@ -518,13 +520,6 @@ public class Game implements Observer {
         return true;
     }
 
-    /*
-    private void initNewRound() {
-        //riempie nuvole eccetera
-        cloudController.fillClouds(sack);
-    }
-    */
-
     /**
      * A player has finished his turn in one of the phases of the game
      * If the player was the last one to move, then the phase can change
@@ -553,7 +548,8 @@ public class Game implements Observer {
             //resets turn info in player turn
             gameModel.resetTurnInfo();
 
-            if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) {
+            if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS) ||
+                    (gameModel.getGamePhase().equals(Phase.ACTION_MOTHERNATURE) && gameModel.isLastRound())) {
                 gameModel.setGamePhase(Phase.ACTION_STUDENTS);
             }
         } catch (Exception e) {
@@ -600,12 +596,19 @@ public class Game implements Observer {
 
             //phase changes to action. Game is now waiting for student-type events
             gameModel.setGamePhase(Phase.ACTION_STUDENTS);
-        } else if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) {
+        } else if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS) ||
+                (gameModel.getGamePhase().equals(Phase.ACTION_MOTHERNATURE) && gameModel.isLastRound())) {
             initNewRound();
         }
     }
 
     private void initNewRound() {
+        if(gameModel.isLastRound()) {
+            gameModel.setWinnerTeam(getWinningTeam());
+            gameModel.setGamePhase(Phase.END);
+            return;
+        }
+
         //phase is now planning phase
         gameModel.setGamePhase(Phase.PLANNING);
 
@@ -616,7 +619,11 @@ public class Game implements Observer {
 
         //refill clouds
         try {
-            cloudController.fillClouds(sack);
+            if (sack.getSackSize() < (cloudController.getNumOfClouds() * cloudController.getCloudModel().getCloudSize())) {
+                gameModel.setLastRound(true);
+            } else {
+                cloudController.fillClouds(sack);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import Model.GameModel;
 import Model.Phase;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -25,24 +26,36 @@ public class CLIGameModel extends CLIElement {
 
     @Override
     public void displayLines(int x0, int y0) {
-        super.displayLines(x0, y0);
-        String pl = getCurrPlayer(gameModel.getGamePhase());
-        String ph = getPhaseMessage(gameModel.getGamePhase());
+        if(gameModel.getGamePhase().equals(Phase.END)) {
+            System.out.print( ansi().eraseScreen() );
+            try {
+                String win = getWinningString();
 
-        System.out.print(ansi().cursor(0,0).cursorRight(x0 + 2).cursorDown(y0 + 4).render(pl));
-        System.out.print(ansi().cursorDown(1).cursorLeft(pl.length()).render(ph));
+                Random r = new Random();
+                for(int i=0; i<150; i++) {
+                    CLIFirework firework = new CLIFirework(i%7);
+                    firework.displayLines(r.nextInt(100), r.nextInt(40));
+                }
+                System.out.print(ansi().cursor(0, 0).cursorRight(50).cursorDown(21));
+                System.out.print("Team " + win + " won!!!!");
+            } catch (NullPointerException ignored) {}
+        } else {
+            super.displayLines(x0, y0);
+            if (gameModel.isLastRound()) System.out.print( ansi().cursor(0,0).cursorRight(x0).cursorDown(y0)
+                    .render("+--@|red /!\\---Last round---/!\\|@--+"));
+            String pl = getCurrPlayer(gameModel.getGamePhase());
+            String ph = getPhaseMessage(gameModel.getGamePhase());
 
+            System.out.print(ansi().cursor(0,0).cursorRight(x0 + 2).cursorDown(y0 + 4).render(pl));
+            System.out.print(ansi().cursorDown(1).cursorLeft(pl.length()).render(ph));
+        }
     }
 
     private void updateLines() {
         String r = getNumString(gameModel.getRoundCount());
 
         lines.clear();
-        if (gameModel.isLastRound()) {
-            lines.add( "+--@|red /!\\|@---@|red Last round|@---@|red /!\\|@--+" );
-        } else {
-            lines.add( "+--------------------------+");
-        }
+        lines.add( "+--------------------------+");
         lines.add( "| Game info                |" );
         lines.add( "| Round: " + r + "                |" );
         lines.add( "|                          |");
@@ -76,15 +89,21 @@ public class CLIGameModel extends CLIElement {
             case SETUP:
                 return "choose a wizard!";
             case PLANNING:
-                return "choose an assistant!";
+                return "play an assistant!";
             case ACTION_STUDENTS:
-                return "move your students! (" + (3 - gameModel.getNumStudentsMoved()) + ")";
+                return "move your students! (" + (gameModel.getSTUDENTS_PER_TURN() - gameModel.getNumStudentsMoved()) + ")";
             case ACTION_MOTHERNATURE:
                 return "move Mother Nature!";
             case ACTION_CLOUDS:
                 return "pick a cloud!";
         }
         return "ERROR";
+    }
+
+    private String getWinningString() {
+        if (gameModel.getWinnerTeam() == 0) return "WHITE";
+        if (gameModel.getWinnerTeam() == 1) return "BLACK";
+        return "GREY";
     }
 
 }
