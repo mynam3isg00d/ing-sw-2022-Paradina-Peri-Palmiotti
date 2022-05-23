@@ -147,6 +147,7 @@ public class Game implements Observer {
         //plays the selected assistant. Throws an exception if the provided index is not valid
         requestingPlayer.playAssistant(selectedAssistant);
 
+        //checkHandEnd();
 
         //ends the turn (this changes the player order too)
         endTurn(event.getPlayerId());
@@ -170,6 +171,7 @@ public class Game implements Observer {
         if (gameModel.getNumStudentsMoved() >= gameModel.getSTUDENTS_PER_TURN()) throw new InvalidMoveException("You can't move any more students");
 
         boardsController.moveFromEntranceToDining(event.getPlayerId(), event.getStudentIndex());
+        boardsController.updateProfessors();
 
         //add one student to the turn info
         gameModel.studentMoved();
@@ -240,6 +242,24 @@ public class Game implements Observer {
         //set mother nature moved
         gameModel.motherNatureMoved();
 
+        /*
+        //Check end conditions
+        int islandEnd = checkIslandEnd();
+        int towerEnd = checkTowerEnd();
+
+        if (islandEnd != -1) {
+            gameModel.setWinnerTeam(islandEnd);
+            gameModel.setGamePhase(Phase.END);
+            return;
+        }
+
+        if (towerEnd != -1) {
+            gameModel.setWinnerTeam(towerEnd);
+            gameModel.setGamePhase(Phase.END);
+            return;
+        }
+         */
+
         //once mother nature has moved we get to the cloud phase
         gameModel.setGamePhase(Phase.ACTION_CLOUDS);
     }
@@ -303,7 +323,6 @@ public class Game implements Observer {
         requestingPlayer.chooseWizard(event.getWizardID());
 
 
-
         endTurn(event.getPlayerId());
         //if all players have chosen a wizard the first round can begin
         if (allWizardsChosen()) {
@@ -345,17 +364,15 @@ public class Game implements Observer {
         return -1;
     }
 
-    private int checkSackEnd() {
+    private void checkSackEnd() {
         if (sack.isEmpty()) gameModel.setLastRound(true);
-        return -1;
     }
 
     //This could be handled with the roundCount, 10 rounds is max number of playable rounds
-    private int checkHandEnd() {
+    private void checkHandEnd() {
         for (Player p : players) {
             if(p.getHand().getHandSize() == 0) gameModel.setLastRound(true);
         }
-        return -1;
     }
 
     private int getWinningTeam() {
@@ -444,7 +461,8 @@ public class Game implements Observer {
     //-----------------------------------------------------------------------------------------------------------------
 
     /**
-     * Update player order will be called whenever, just before the start of the action phase of a turn, all players will have chosen an assistant
+     * Update player order will be called whenever, just before the start of the action phase of a turn,
+     * all players will have chosen an assistant
      */
     public void updatePlayerOrder() {
         //TODO: doesn't consider same assistant play for now
@@ -463,7 +481,7 @@ public class Game implements Observer {
             playersCopy.remove(minPlayer);
             temp.add(minPlayer);
         }
-        players = temp;
+        players = new ArrayList<>(temp);
     }
 
     /**
@@ -513,16 +531,24 @@ public class Game implements Observer {
      * @param pid The id of the player who has just moved
      */
     private void endTurn(String pid) {
+        //If the planning phase just ended, the next player is not the "next" but the first of the new order list
+        boolean planningJustEnded = false;
+
         //if the player requesting the move was the last one THEN the (macro)phase ends
         if (players.get(players.size() - 1).getPlayerID().equals(pid)) {     //the player is the last one if it's the last in the players list
             System.out.println("phase to end");
+            if (gameModel.getGamePhase().equals(Phase.PLANNING)) planningJustEnded = true;
             endPhase();
         }
 
         try {
             //changes current player to the next one
-            Player nextPlayer = getNextPlayer();
-            gameModel.setCurrentPlayer(nextPlayer);
+            if (planningJustEnded) {
+                gameModel.setCurrentPlayer(players.get(0));
+            } else {
+                Player nextPlayer = getNextPlayer();
+                gameModel.setCurrentPlayer(nextPlayer);
+            }
 
             //resets turn info in player turn
             gameModel.resetTurnInfo();
@@ -582,6 +608,18 @@ public class Game implements Observer {
     private void initNewRound() {
         //phase is now planning phase
         gameModel.setGamePhase(Phase.PLANNING);
+
+        //clear players' assistant
+        for(Player p : players) {
+            p.clearAssistant();
+        }
+
+        //refill clouds
+        try {
+            cloudController.fillClouds(sack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //round count is updated
         gameModel.newRound();

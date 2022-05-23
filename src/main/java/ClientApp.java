@@ -1,10 +1,15 @@
 import Network.Client;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class ClientApp {
     public static void main(String[] args) {
-        Client c = new Client("127.0.0.1", 42069);
+        Scanner s = new Scanner(System.in);
+        System.out.print("IP Address: ");
+        String ip = s.nextLine();
+
+        Client c = new Client(ip, 42069);
 
         try {
             c.run();

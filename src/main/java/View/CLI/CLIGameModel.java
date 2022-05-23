@@ -38,7 +38,11 @@ public class CLIGameModel extends CLIElement {
         String r = getNumString(gameModel.getRoundCount());
 
         lines.clear();
-        lines.add( "+--------------------------+" );
+        if (gameModel.isLastRound()) {
+            lines.add( "+--@|red /!\\|@---@|red Last round|@---@|red /!\\|@--+" );
+        } else {
+            lines.add( "+--------------------------+");
+        }
         lines.add( "| Game info                |" );
         lines.add( "| Round: " + r + "                |" );
         lines.add( "|                          |");
@@ -63,16 +67,7 @@ public class CLIGameModel extends CLIElement {
 
     private String getCurrPlayer(Phase phase) {
         if (phase == null) return "";
-        switch (phase) {
-            case SETUP:
-            case PLANNING:
-                return "Everybody,";
-            case ACTION_STUDENTS:
-            case ACTION_MOTHERNATURE:
-            case ACTION_CLOUDS:
-                return formatName(gameModel.getCurrentPlayer().getName()) + ",";
-        }
-        return "ERROR";
+        return formatName(gameModel.getCurrentPlayer().getName()) + ",";
     }
 
     private String getPhaseMessage(Phase phase) {

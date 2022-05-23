@@ -58,6 +58,7 @@ public class CLIPlayer extends CLIElement {
 
     private void updateLines() {
         String n = formatName(player.getName());
+        if (!masked) n = "@|green " + n + "|@";
         String t = getTeamString(player.getTeamID());
 
         lines.clear();

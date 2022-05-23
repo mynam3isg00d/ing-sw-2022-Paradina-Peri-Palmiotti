@@ -105,10 +105,12 @@ public class Server implements Runnable{
                     for(int i=0; i<playerNumber; i++) {
                         players.get(i).setTeamId(i);
                     }
+                    break;
                 case 4:
                     for(int i=0; i<playerNumber; i++) {
                         players.get(i).setTeamId(i%2);
                     }
+                    break;
             }
 
             //initializes the Controller components

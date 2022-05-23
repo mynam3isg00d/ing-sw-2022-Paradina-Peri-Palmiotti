@@ -55,7 +55,6 @@ public class IslandController {
      * @param steps number of steps selected by the player
      * @throws InvalidMoveException
      */
-    //TODO pass the maximumSteps parameter in a smart way from the controller
     public void moveMother(int steps) throws InvalidMoveException, EmptyElementException, FullElementException {
         //gets the old mother nature position
         int oldPosition = islandModel.getMotherNaturePos();
