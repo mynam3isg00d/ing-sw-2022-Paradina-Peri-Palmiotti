@@ -120,19 +120,34 @@ public class IslandController {
             //checks if a merge is needed with the nearby islands
             boolean mergedPrev = false;
             boolean mergedNext = false;
-            if (islandModel.getInfluence(islandIndex + 1)!=null && islandModel.getInfluence(islandIndex).equals(islandModel.getInfluence(islandIndex + 1))) {
+
+            int rightIndex = islandIndex + 1;
+            if (islandIndex == getIslandsQuantity() - 1) {
+                rightIndex = 0;
+            }
+
+            if (islandModel.getInfluence(rightIndex)!=null && islandModel.getInfluence(islandIndex).equals(islandModel.getInfluence(rightIndex))) {
                 mergedNext = true;
                 System.out.println("CONTROLLER SAYS: merge needed with island on the right");
             }
-            if (islandModel.getInfluence(islandIndex + 1)!=null && islandModel.getInfluence(islandIndex).equals(islandModel.getInfluence(islandIndex - 1))) {
+
+
+            int leftIndex = islandIndex - 1;
+            if (islandIndex == 0) {
+                leftIndex = getIslandsQuantity() - 1;
+            }
+
+            if (islandModel.getInfluence(leftIndex)!=null && islandModel.getInfluence(islandIndex).equals(islandModel.getInfluence(leftIndex))) {
                 mergedPrev = true;
                 System.out.println("CONTROLLER SAYS: merge needed with island on the left");
             }
 
+
+
             if (mergedPrev && mergedNext) {
-                islandModel.mergeIslands(islandIndex-1, 3);
+                islandModel.mergeIslands(leftIndex, 3);
             } else if (mergedPrev) {
-                islandModel.mergeIslands(islandIndex-1, 2);
+                islandModel.mergeIslands(leftIndex, 2);
             } else if (mergedNext) {
                 islandModel.mergeIslands(islandIndex,2);
             } else {

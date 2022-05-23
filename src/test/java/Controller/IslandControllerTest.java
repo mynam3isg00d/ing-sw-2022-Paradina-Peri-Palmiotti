@@ -126,6 +126,56 @@ class IslandControllerTest {
     }
 
     @Test
+    void moveMotherOnIslandToMergeEdge() {
+        //init
+        IslandController islandController = new IslandController();
+
+        IslandsWrapper islandModel = new IslandsWrapper();
+
+        //puts mother nature on island 9
+        islandModel.moveMotherNature(9);
+
+        islandController.connectIslandModel(islandModel);
+
+        List<Player> players = new ArrayList<>();
+        players.add(new Player("1", "Jay-Z", 1));
+        players.add(new Player("2", "Achille Frigeri", 2));
+        BoardsController boardsController = new BoardsController(players, new Sack(120));
+        islandController.connectBoards(boardsController);
+
+        //adds some students on the island 11
+        List<Student> toAdd = new ArrayList<>();
+        toAdd.add(Student.YELLOW);
+        toAdd.add(Student.RED);
+        toAdd.add(Student.PINK);
+        toAdd.add(Student.PINK);
+        islandModel.addStudents(11, toAdd);
+
+        //sets professors in boardController. The resulting influence is: 3 for team 1 - 0 for team 2
+        boardsController.setProfessor("Y", players.get(0));
+        boardsController.setProfessor("B", players.get(1));
+        boardsController.setProfessor("G", players.get(1));
+        boardsController.setProfessor("P", players.get(0));
+
+        //puts influence 1 on island 11 in order to test the merge of the islands
+        islandModel.setInfluence(0, 1);
+
+        try {
+            //moves from island 9 to island 11
+            islandController.moveMother(2);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(islandModel.getIsland(10));
+
+        //tests if the influence has actually changed and the islands have been merged
+        assertEquals(1, islandModel.getInfluence(10));
+        assertEquals(2, islandModel.getIslandDimension(10));
+    }
+
+    @Test
     void moveStudent() {
         IslandController ic = new IslandController();
         IslandsWrapper iw = new IslandsWrapper();
