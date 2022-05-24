@@ -14,7 +14,9 @@ import Exceptions.*;
 import Observer.Observer;
 import Model.*;
 import View.*;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.util.*;
 
@@ -82,9 +84,11 @@ public class Game implements Observer {
      */
     @Override
     public void update(Object o) {
+        String json = (String) o;
         try {
-            //handleEvent((GameEvent) o);
+            jsonToEvent(json);
         } catch (Exception e) {
+            e.printStackTrace();
             //obs.send("400" + e);
         }
     }
@@ -143,6 +147,7 @@ public class Game implements Observer {
         //plays the selected assistant. Throws an exception if the provided index is not valid
         requestingPlayer.playAssistant(selectedAssistant);
 
+        checkHandEnd();
 
         //ends the turn (this changes the player order too)
         endTurn(event.getPlayerId());
@@ -166,6 +171,7 @@ public class Game implements Observer {
         if (gameModel.getNumStudentsMoved() >= gameModel.getSTUDENTS_PER_TURN()) throw new InvalidMoveException("You can't move any more students");
 
         boardsController.moveFromEntranceToDining(event.getPlayerId(), event.getStudentIndex());
+        boardsController.updateProfessors();
 
         //add one student to the turn info
         gameModel.studentMoved();
@@ -236,8 +242,28 @@ public class Game implements Observer {
         //set mother nature moved
         gameModel.motherNatureMoved();
 
-        //once mother nature has moved we get to the cloud phase
-        gameModel.setGamePhase(Phase.ACTION_CLOUDS);
+        //Check end conditions
+        int islandEnd = checkIslandEnd();
+        int towerEnd = checkTowerEnd();
+
+        if (islandEnd != -1) {
+            gameModel.setWinnerTeam(islandEnd);
+            gameModel.setGamePhase(Phase.END);
+            return;
+        }
+
+        if (towerEnd != -1) {
+            gameModel.setWinnerTeam(towerEnd);
+            gameModel.setGamePhase(Phase.END);
+            return;
+        }
+
+        //once mother nature has moved we get to the cloud phase, if it's last round we skip it
+        if (gameModel.isLastRound()) {
+            endTurn(event.getPlayerId());
+        } else {
+            gameModel.setGamePhase(Phase.ACTION_CLOUDS);
+        }
     }
 
     /**
@@ -278,6 +304,7 @@ public class Game implements Observer {
 
     }
 
+    //TODO: Jdoc
     public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException, WizardAlreadyChosenException{
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
@@ -296,7 +323,6 @@ public class Game implements Observer {
 
         //sets wizard and initializes hand
         requestingPlayer.chooseWizard(event.getWizardID());
-
 
 
         endTurn(event.getPlayerId());
@@ -319,7 +345,7 @@ public class Game implements Observer {
             int emptyBlack = 0;
             for(Player p : players) {
                 Board b = boardsController.getBoard(p.getPlayerID());
-                if (b.getTowersNum() == 0) {
+                if (b.getTowersNum() <= 0) {
                     if (p.getTeamID() == 0) emptyWhite++;
                     if (p.getTeamID() == 1) emptyBlack++;
                 }
@@ -329,7 +355,7 @@ public class Game implements Observer {
         } else {
             for(Player p : players) {
                 Board b = boardsController.getBoard(p.getPlayerID());
-                if (b.getTowersNum() == 0) return p.getTeamID();
+                if (b.getTowersNum() <= 0) return p.getTeamID();
             }
         }
         return -1;
@@ -340,20 +366,18 @@ public class Game implements Observer {
         return -1;
     }
 
-    private int checkSackEnd() {
+    private void checkSackEnd() {
         if (sack.isEmpty()) gameModel.setLastRound(true);
-        return -1;
     }
 
     //This could be handled with the roundCount, 10 rounds is max number of playable rounds
-    private int checkHandEnd() {
+    private void checkHandEnd() {
         for (Player p : players) {
             if(p.getHand().getHandSize() == 0) gameModel.setLastRound(true);
         }
-        return -1;
     }
 
-    private int getWinningTeam() {
+    public int getWinningTeam() {
         //white counters
         int whiteSum = 0;
         int whiteProf = 0;
@@ -414,7 +438,7 @@ public class Game implements Observer {
     }
 
     public List<Player> getPlayers() {
-        return new ArrayList<Player>(players);
+        return new ArrayList<>(players);
     }
 
     public IslandController getIslandController() {
@@ -439,7 +463,8 @@ public class Game implements Observer {
     //-----------------------------------------------------------------------------------------------------------------
 
     /**
-     * Update player order will be called whenever, just before the start of the action phase of a turn, all players will have chosen an assistant
+     * Update player order will be called whenever, just before the start of the action phase of a turn,
+     * all players will have chosen an assistant
      */
     public void updatePlayerOrder() {
         //TODO: doesn't consider same assistant play for now
@@ -458,7 +483,7 @@ public class Game implements Observer {
             playersCopy.remove(minPlayer);
             temp.add(minPlayer);
         }
-        players = temp;
+        players = new ArrayList<>(temp);
     }
 
     /**
@@ -495,34 +520,36 @@ public class Game implements Observer {
         return true;
     }
 
-    /*
-    private void initNewRound() {
-        //riempie nuvole eccetera
-        cloudController.fillClouds(sack);
-    }
-    */
-
     /**
      * A player has finished his turn in one of the phases of the game
      * If the player was the last one to move, then the phase can change
      * @param pid The id of the player who has just moved
      */
     private void endTurn(String pid) {
+        //If the planning phase just ended, the next player is not the "next" but the first of the new order list
+        boolean planningJustEnded = false;
+
         //if the player requesting the move was the last one THEN the (macro)phase ends
         if (players.get(players.size() - 1).getPlayerID().equals(pid)) {     //the player is the last one if it's the last in the players list
             System.out.println("phase to end");
+            if (gameModel.getGamePhase().equals(Phase.PLANNING)) planningJustEnded = true;
             endPhase();
         }
 
         try {
             //changes current player to the next one
-            Player nextPlayer = getNextPlayer();
-            gameModel.setCurrentPlayer(nextPlayer);
+            if (planningJustEnded) {
+                gameModel.setCurrentPlayer(players.get(0));
+            } else {
+                Player nextPlayer = getNextPlayer();
+                gameModel.setCurrentPlayer(nextPlayer);
+            }
 
             //resets turn info in player turn
             gameModel.resetTurnInfo();
 
-            if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) {
+            if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS) ||
+                    (gameModel.getGamePhase().equals(Phase.ACTION_MOTHERNATURE) && gameModel.isLastRound())) {
                 gameModel.setGamePhase(Phase.ACTION_STUDENTS);
             }
         } catch (Exception e) {
@@ -569,16 +596,72 @@ public class Game implements Observer {
 
             //phase changes to action. Game is now waiting for student-type events
             gameModel.setGamePhase(Phase.ACTION_STUDENTS);
-        } else if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS)) {
+        } else if (gameModel.getGamePhase().equals(Phase.ACTION_CLOUDS) ||
+                (gameModel.getGamePhase().equals(Phase.ACTION_MOTHERNATURE) && gameModel.isLastRound())) {
             initNewRound();
         }
     }
 
     private void initNewRound() {
+        if(gameModel.isLastRound()) {
+            gameModel.setWinnerTeam(getWinningTeam());
+            gameModel.setGamePhase(Phase.END);
+            return;
+        }
+
         //phase is now planning phase
         gameModel.setGamePhase(Phase.PLANNING);
 
+        //clear players' assistant
+        for(Player p : players) {
+            p.clearAssistant();
+        }
+
+        //refill clouds
+        try {
+            if (sack.getSackSize() < (cloudController.getNumOfClouds() * cloudController.getCloudModel().getCloudSize())) {
+                gameModel.setLastRound(true);
+            } else {
+                cloudController.fillClouds(sack);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //round count is updated
         gameModel.newRound();
+    }
+
+    public void jsonToEvent(String json) throws Exception {
+        Gson b = new GsonBuilder().serializeNulls().create();
+
+        JsonObject messageAsJsonObject = b.fromJson(json, JsonObject.class);
+        String code = messageAsJsonObject.get("eventId").getAsString();
+
+        switch (code) {
+            case "0000":
+                handleEvent(b.fromJson(json, ChooseWizardEvent.class));
+                break;
+            case "0001":
+                handleEvent(b.fromJson(json, PlayAssistantEvent.class));
+                break;
+            case "0002":
+                handleEvent(b.fromJson(json, MoveStudentToDiningEvent.class));
+                break;
+            case "0003":
+                handleEvent(b.fromJson(json, MoveStudentToIslandEvent.class));
+                break;
+            case "0004":
+                handleEvent(b.fromJson(json, MoveMotherNatureEvent.class));
+                break;
+            case "0005":
+                handleEvent(b.fromJson(json, PickStudentsFromCloudEvent.class));
+                break;
+                /*
+            case "0006":
+                handleEvent(b.fromJson(json, BuyPlayCharacterEvent.class));
+                break;
+                 */
+        }
     }
 }

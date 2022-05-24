@@ -9,9 +9,10 @@ public class GameModel extends Observable {
     
     private int roundCount;
     private boolean isLastRound;
-    private final int STUDENTS_PER_TURN;
+    private int STUDENTS_PER_TURN;
     private Phase gamePhase;
     private Player currentPlayer;
+    private int winnerTeam;
     private TurnInfo turnInfo;
 
     private class TurnInfo {
@@ -117,5 +118,13 @@ public class GameModel extends Observable {
 
     public boolean isLastRound() {
         return isLastRound;
+    }
+
+    public void setWinnerTeam(int winnerTeam) {
+        this.winnerTeam = winnerTeam;
+    }
+
+    public int getWinnerTeam() {
+        return winnerTeam;
     }
 }

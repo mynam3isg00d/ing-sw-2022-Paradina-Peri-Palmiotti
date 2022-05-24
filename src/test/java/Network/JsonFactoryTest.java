@@ -9,6 +9,7 @@ import Events.PlayAssistantEvent;
 import Model.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Test;
 
@@ -38,6 +39,29 @@ class JsonFactoryTest {
                 assertEquals(3, casted.getPlayedAssistant());
                 break;
         }
+    }
+
+    @Test
+    void addAttributeTest() {
+        Board board = new Board("Gigi", 0, 7, 9);
+
+        //board -> json
+        JsonFactory fac = new JsonFactory();
+        String jsonBoard = fac.modelToJson(board);
+        System.out.println(jsonBoard);
+
+        //json -> board
+        Gson gson = new GsonBuilder().create();
+        JsonObject decodedBoardObject = gson.fromJson(jsonBoard, JsonObject.class);
+
+        //the messageCode will be useful to interpret the message
+        System.out.println(decodedBoardObject.get("messageCode").getAsInt());
+
+
+        //now we can correctly cast the json to a board
+        Board decodedBoard = gson.fromJson(jsonBoard, Board.class);
+
+        System.out.println("debug");
     }
 
     @Test

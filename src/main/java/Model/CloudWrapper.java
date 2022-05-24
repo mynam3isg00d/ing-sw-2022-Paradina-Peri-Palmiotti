@@ -71,6 +71,8 @@ public class CloudWrapper extends Observable {
 
     public int getNumOfClouds() {return clouds.size(); }
 
+    public int getCloudSize() {return clouds.get(0).getNumOfStudents();}
+
     public Cloud getCloud(int cloudIndex) { return clouds.get(cloudIndex); }
 
     public void sendClouds(){

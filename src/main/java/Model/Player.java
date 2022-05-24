@@ -76,6 +76,10 @@ public class Player extends Observable {
         sendPlayer();
     }
 
+    public void clearAssistant() {
+        assistantInPlay = null;
+    }
+
     /**
      * S
      * @param pid id to set

@@ -138,7 +138,7 @@ public class BoardsController {
     }
 
     /**
-     * Called each time //TODO a student gets moved to a diner (?)
+     * Called each time a student gets moved to a diner
      */
     public void updateProfessors() {
 

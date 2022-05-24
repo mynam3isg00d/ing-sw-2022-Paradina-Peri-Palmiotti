@@ -3,6 +3,7 @@ package Network;
 import Controller.ExpertGame;
 import Controller.Game;
 import Model.Player;
+import Util.Message;
 import View.RemoteView;
 
 import java.io.IOException;
@@ -21,9 +22,12 @@ public class Server implements Runnable{
     private final Map<String, Connection>[] waitingLists = new Map[6];
     private final Map<String, Connection>[] playingLists = new Map[6];
 
+    private final JsonFactory jsonFactory;
+
     public Server() throws IOException {
         this.serverSocket = new ServerSocket(PORT);
         this.executor = Executors.newFixedThreadPool(128);
+        this.jsonFactory = new JsonFactory();
 
         for(int i = 0; i < 6; i++) {
             waitingLists[i] = new HashMap<>();
@@ -94,17 +98,19 @@ public class Server implements Runnable{
             }
 
 
-            //TODO choose squad?
+            //TODO choose squad? fuck no lmao
             switch (playerNumber) {
                 case 2:
                 case 3:
                     for(int i=0; i<playerNumber; i++) {
                         players.get(i).setTeamId(i);
                     }
+                    break;
                 case 4:
                     for(int i=0; i<playerNumber; i++) {
                         players.get(i).setTeamId(i%2);
                     }
+                    break;
             }
 
             //initializes the Controller components
@@ -130,13 +136,21 @@ public class Server implements Runnable{
             for (Map.Entry<String, Connection> entry : playingLists[listIndex].entrySet()) {
                 //entry.getValue().send("Game Started");
 
-                //id setting in client
-                String idSignal = "301" + entry.getValue().getId();
-                //sends a message to the client containing his id in the match
-                entry.getValue().send(idSignal);
+                try {
+                    //id setting in client
+                    String idSignal = jsonFactory.initToJson(entry.getValue().getId(), 301);
 
+                    //sends a message to the client containing his id in the match
+                    entry.getValue().send(idSignal);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                /* NOT REQUIRED ANYMORE - client clears the screen each time the id is set
                 //Clear screen command
                 entry.getValue().send("300");
+                */
+
             }
 
             //--------------------
@@ -145,7 +159,9 @@ public class Server implements Runnable{
             //-------------------
         } else {
             for (Map.Entry<String, Connection> entry : waitingLists[listIndex].entrySet()) {
-                entry.getValue().send("Waiting for " + (playerNumber - waitingLists[listIndex].size()) + " player(s) to join");
+                Message waitingMessage = new Message("Waiting for " + (playerNumber - waitingLists[listIndex].size()) + " player(s) to join");
+
+                entry.getValue().send(jsonFactory.messageToJson(waitingMessage));
             }
         }
 

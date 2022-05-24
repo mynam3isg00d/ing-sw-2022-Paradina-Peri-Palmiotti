@@ -9,7 +9,9 @@ public enum Phase {
 
     ACTION_MOTHERNATURE(3),
 
-    ACTION_CLOUDS(4);
+    ACTION_CLOUDS(4),
+
+    END(5);
 
     private int order;
     Phase(int order) {

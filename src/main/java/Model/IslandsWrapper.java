@@ -111,6 +111,11 @@ public class IslandsWrapper extends Observable {
             islands.add(newIsland);
         }
 
+        //Crude way to set current mother nature position after merge
+        for(int k=0; k<islands.size(); k++) {
+            if(islands.get(k).isMotherNature()) motherNaturePos = k;
+        }
+
         sendIslands();
     }
 

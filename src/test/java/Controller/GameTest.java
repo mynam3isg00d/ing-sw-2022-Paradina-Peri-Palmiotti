@@ -31,6 +31,7 @@ class GameTest {
         assertTrue(actual.contains(p3));
     }
 
+
     @Test
     public void setupPhase() {
         //init a game with 3 players
