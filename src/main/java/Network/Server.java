@@ -146,10 +146,6 @@ public class Server implements Runnable{
                     e.printStackTrace();
                 }
 
-                /* NOT REQUIRED ANYMORE - client clears the screen each time the id is set
-                //Clear screen command
-                entry.getValue().send("300");
-                */
 
             }
 

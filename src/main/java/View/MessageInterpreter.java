@@ -35,8 +35,7 @@ public class MessageInterpreter {
                 //game init messages
                 switch (code%100) {
                     case 0:
-                        //Game Started Message - @deprecated
-                        //System.out.print( ansi().eraseScreen() );
+
                         break;
                     case 1:
                         //Set client id

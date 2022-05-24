@@ -3,6 +3,8 @@ package Network;
 import java.io.BufferedReader;
 import Observer.Observable;
 import Util.Message;
+import Util.PlayerInfoMessage;
+import com.google.gson.GsonBuilder;
 
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -57,43 +59,26 @@ public class Connection extends Observable implements Runnable {
             in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream());
 
-            //asks for the player's name
-            Message namePrompt = new Message("What's your name");
-            send(jsonFactory.messageToJson(namePrompt));
-            name = in.nextLine();
-
-            System.out.println("RECEIVED: " + name);
 
             int playerNumber = 0;
             boolean validEntry;
             boolean expert = false;
-            do{
+            do {
                 validEntry = true;
-                Message gameInfoPrompt = new Message("How many players would you like to play with?? Would you like to play the expert variant? [players number] [Y/N]");
-                send(jsonFactory.messageToJson(gameInfoPrompt));
                 try {
                     String received = in.nextLine();
+                    System.out.println(received);
+
+                    PlayerInfoMessage pim = new GsonBuilder().serializeNulls().create().fromJson(received, PlayerInfoMessage.class);
+
+                    name = pim.getName();
+                    playerNumber = pim.getPlayerNumber();
+                    expert = pim.isExpert();
 
                     //player number
-                    playerNumber = Integer.parseInt(received.split(" ")[0]);
-                    if (playerNumber != 2 && playerNumber != 3 && playerNumber != 4) validEntry = false;
+                    if (playerNumber != 2 && playerNumber != 3 && playerNumber != 4) throw new Exception();
 
-                    //expert game YES vs expert game NO
-                    if (received.contains(" ")) {
-                        String expertMessage = received.split(" ")[1];
-                        if (expertMessage.equals("Y")) {
-                            expert = true;
-                        } else if (expertMessage.equals("N")) {
-                            expert = false;
-                        } else {
-                            validEntry = false;
-                        }
-                    } else {
-                        validEntry = false;
-                    }
-
-
-                } catch (NumberFormatException e) {
+                } catch (Exception e) {
                     validEntry = false;
                     e.printStackTrace();
                 }

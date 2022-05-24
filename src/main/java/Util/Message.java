@@ -19,4 +19,8 @@ public class Message {
             return "@|red ERROR: " + message + "|@";
         return message;
     }
+
+    public String getMessage() {
+        return message;
+    }
 }

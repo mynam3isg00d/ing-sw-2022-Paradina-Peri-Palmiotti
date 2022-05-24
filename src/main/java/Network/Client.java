@@ -2,12 +2,13 @@ package Network;
 
 import Events.EventFactory;
 import Exceptions.UnknownMessageException;
-import Model.Board;
+import Util.PlayerInfoMessage;
 import View.CLI.CLI;
 import View.MessageInterpreter;
 import View.UI;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -77,8 +78,55 @@ public class Client {
         Socket clientSocket = new Socket(ip, port);
         System.out.println("Connection OK");
 
+        Scanner firstScanner = new Scanner(System.in);
+
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+        try {
+            //PrintWriter firstOutput = new PrintWriter(clientSocket.getOutputStream());
+
+            String name = null;
+            while (name == null) {
+                System.out.println("What's your name?");
+                name = firstScanner.nextLine();
+            }
+
+            Integer pNumber = null;
+            while (pNumber == null) {
+                System.out.println("How many players you want to play with?");
+
+                try {
+                    pNumber = Integer.parseInt(firstScanner.nextLine());
+
+                    if (!pNumber.equals(2) && !pNumber.equals(3) && !pNumber.equals(4)) throw new Exception();
+                } catch (Exception e) {
+                    pNumber = null;
+                }
+            }
+
+            String expert = null;
+            while (expert == null) {
+                System.out.println("Expert? [Y/N]");
+                expert = firstScanner.nextLine();
+
+                if (!expert.equals("Y") && !expert.equals("N")) {
+                    expert = null;
+                }
+            }
+
+            System.out.println("DEBUG: " + name + "-" + pNumber + "-" + expert);
+
+            out.println(new GsonBuilder().serializeNulls().create().toJson(new PlayerInfoMessage(name, pNumber, expert)));
+
+        } catch (Exception e) {
+            System.out.println("Connection closed from the client side");
+            e.printStackTrace();
+            firstScanner.close();
+        }
+
+
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
 
         try {
             //thread listening the player input
