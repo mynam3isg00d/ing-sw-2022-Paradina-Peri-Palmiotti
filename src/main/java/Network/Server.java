@@ -19,8 +19,8 @@ public class Server implements Runnable{
     private final ServerSocket serverSocket;
     private final ExecutorService executor;
 
-    private final Map<String, Connection>[] waitingLists = new Map[6];
-    private final Map<String, Connection>[] playingLists = new Map[6];
+    private final Map<Player, Connection>[] waitingLists = new Map[6];
+    private final Map<Player, Connection>[] playingLists = new Map[6];
 
     private final JsonFactory jsonFactory;
 
@@ -55,8 +55,8 @@ public class Server implements Runnable{
 
         //duplicate id handling
         int idCount = 0;
-        for (Map.Entry<String, Connection> entry : waitingLists[listIndex].entrySet()) {
-            System.out.println("considerando connessione con nome = " + entry.getValue().getName().equals(name));
+        for (Map.Entry<Player, Connection> entry : waitingLists[listIndex].entrySet()) {
+            System.out.println("considerando connessione con nome = " + entry.getValue().getName());
             if (entry.getValue().getName().equals(name)) {
                 System.out.println("duplicate alert!");
                 idCount++;
@@ -69,32 +69,25 @@ public class Server implements Runnable{
         newConnection.setId(name); //if progressive > 0, puts id = name_[progressive]
 
         //adds a new connection to the correct waiting list
-        waitingLists[listIndex].put(newConnection.getId(), newConnection);
+        waitingLists[listIndex].put(new Player(newConnection.getId(), newConnection.getName(), -1), newConnection);
 
 
         //if the waiting list has reached the right number of players, the game is initialized
         if (waitingLists[listIndex].size() == playerNumber) {
             //gets the keySet of the waitingList map in order to remove the first ones
-            List<String> IDs = new ArrayList<>(waitingLists[listIndex].keySet());
-            for (String id : IDs) {
-                System.out.println("DEBUG: playing with "+ id);
+            List<Player> players = new ArrayList<>(waitingLists[listIndex].keySet());
+            for (Player p : players) {
+                System.out.println("DEBUG: playing with "+ p.getName());
             }
 
             //removes the first playersPerMatch connections from the waitingList and puts them in the playingList
-            for (String id : IDs) playingLists[listIndex].put(id, waitingLists[listIndex].get(id));
-            for (String id : IDs) waitingLists[listIndex].remove(id);
+            for (Player p : players) playingLists[listIndex].put(p, waitingLists[listIndex].get(p));
+            for (Player p : players) waitingLists[listIndex].remove(p);
 
             //adds to the remoteViews list as many remoteViews as the players playing
             List<RemoteView> remoteViews = new ArrayList<>();
-            List<Player> players = new ArrayList<>();
-            for(Map.Entry<String, Connection> entry : playingLists[listIndex].entrySet()) {
-                Player p = new Player(entry.getKey());
-
-                //sets the id in the connection to the player
-                p.setPlayerID(entry.getValue().getId());
-
-                players.add(p);
-                remoteViews.add(new RemoteView(p, entry.getValue()));
+            for(Player p : players) {
+                remoteViews.add(new RemoteView(p, playingLists[listIndex].get(p)));
             }
 
 
@@ -133,7 +126,7 @@ public class Server implements Runnable{
             //-------------------------------------------
 
             //each connection in the playing list has to be notified of the start of the match
-            for (Map.Entry<String, Connection> entry : playingLists[listIndex].entrySet()) {
+            for (Map.Entry<Player, Connection> entry : playingLists[listIndex].entrySet()) {
                 //entry.getValue().send("Game Started");
 
                 try {
@@ -154,7 +147,7 @@ public class Server implements Runnable{
             c.sendEntireModel();
             //-------------------
         } else {
-            for (Map.Entry<String, Connection> entry : waitingLists[listIndex].entrySet()) {
+            for (Map.Entry<Player, Connection> entry : waitingLists[listIndex].entrySet()) {
                 Message waitingMessage = new Message("Waiting for " + (playerNumber - waitingLists[listIndex].size()) + " player(s) to join");
 
                 entry.getValue().send(jsonFactory.messageToJson(waitingMessage));
@@ -164,11 +157,11 @@ public class Server implements Runnable{
         return "";
     }
 
-    public Map<String, Connection> getWaitingList(int playerNumber) {
+    public Map<Player, Connection> getWaitingList(int playerNumber) {
         return new HashMap<>(waitingLists[playerNumber-2]);
     }
 
-    public Map<String, Connection> getPlayingList(int playerNumber) {
+    public Map<Player, Connection> getPlayingList(int playerNumber) {
         return new HashMap<>(playingLists[playerNumber-2]);
     }
 
