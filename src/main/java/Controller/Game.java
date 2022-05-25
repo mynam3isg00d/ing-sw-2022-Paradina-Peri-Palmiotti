@@ -9,6 +9,7 @@ Possible implementation for Game constructors:
 */
 package Controller;
 
+import Controller.CharacterEffects.Strategies.DefaultInfluenceStrategy;
 import Events.*;
 import Exceptions.*;
 import Observer.Observer;
@@ -525,7 +526,7 @@ public class Game implements Observer {
      * If the player was the last one to move, then the phase can change
      * @param pid The id of the player who has just moved
      */
-    private void endTurn(String pid) {
+    protected void endTurn(String pid) {
         //If the planning phase just ended, the next player is not the "next" but the first of the new order list
         boolean planningJustEnded = false;
 
@@ -657,11 +658,8 @@ public class Game implements Observer {
             case "0005":
                 handleEvent(b.fromJson(json, PickStudentsFromCloudEvent.class));
                 break;
-                /*
-            case "0006":
-                handleEvent(b.fromJson(json, BuyPlayCharacterEvent.class));
-                break;
-                 */
+            default:
+                System.out.println("Error from Game.jsonToEvent: code not supported");
         }
     }
 }

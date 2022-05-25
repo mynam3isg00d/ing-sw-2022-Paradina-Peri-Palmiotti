@@ -18,10 +18,14 @@ public class MushroomEffect extends InfluenceEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
+    public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 
-        //TODO: Check input format
-        int cid = (Integer) playerInput.get(0);
+        //Expects:
+        //{cid : int}
+        if (playerInput.size() != 1) throw new InvalidPlayerInputException();
+
+        int cid = Integer.parseInt(playerInput.get(0));
+        if (cid < 0 || cid > 4) throw new InvalidPlayerInputException();
 
         ic.setInfluenceStrategy(new MushroomStrategy(cid));
     }

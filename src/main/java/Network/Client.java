@@ -7,7 +7,6 @@ import View.CLI.CLI;
 import View.MessageInterpreter;
 import View.UI;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 
 
 import java.io.BufferedReader;
@@ -37,7 +36,6 @@ public class Client {
         public void run() {
             while(true) {
                 String line = in.nextLine();
-
                 line = EventFactory.stringToEventJson(ui.getPlayerID(), line);
 
                 out.println(line);
@@ -113,8 +111,6 @@ public class Client {
                     expert = null;
                 }
             }
-
-            System.out.println("DEBUG: " + name + "-" + pNumber + "-" + expert);
 
             out.println(new GsonBuilder().serializeNulls().create().toJson(new PlayerInfoMessage(name, pNumber, expert)));
 

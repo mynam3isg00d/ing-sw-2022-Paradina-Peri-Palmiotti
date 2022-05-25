@@ -13,6 +13,7 @@ public class CLIShop extends CLIElement {
 
     public CLIShop() {
         lines = new ArrayList<>();
+        cardArray = new CLICharaterCard[3];
         lines.add("+-------------------------------------+");
         lines.add("|                                     |");
         lines.add("|                                     |");

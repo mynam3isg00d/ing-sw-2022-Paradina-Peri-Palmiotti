@@ -7,6 +7,7 @@ import Events.EventFactory;
 import Events.GameEvent;
 import Events.PlayAssistantEvent;
 import Model.*;
+import Util.ShopDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -86,6 +87,31 @@ class JsonFactoryTest {
         System.out.println(jsonString);
 
         CloudWrapper cw1 = gson.fromJson(jsonString, CloudWrapper.class);
+        int a = 0;
+    }
+
+    @Test
+    void cercoDiCapireComeFunzionaJSON() {
+
+        List<Player> p = new ArrayList<>();
+        p.add(new Player("Davide", 0));
+        p.add(new Player("Samuele", 1));
+        p.add(new Player("Cugola", 2));
+        //p.add(new Player("SPietro", 1));
+        for(Player p0 : p) p0.setPlayerID(p0.getName());
+
+        Shop s = new Shop(p, new Integer[]{0, 2, 6});
+        s.initShop(new Sack(120));
+
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Shop.class, new ShopDeserializer())
+                .setPrettyPrinting()
+                .create();
+        String jsonString = gson.toJson(s);
+
+        System.out.println(jsonString);
+
+        Shop s1 = gson.fromJson(jsonString, Shop.class);
         int a = 0;
     }
 }

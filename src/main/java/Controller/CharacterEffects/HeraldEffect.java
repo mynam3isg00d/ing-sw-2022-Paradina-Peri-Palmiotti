@@ -12,7 +12,6 @@ public class HeraldEffect extends CharacterEffect {
 
     public HeraldEffect(String playerID) {
         super(playerID);
-        expectedInputSize = 1;
     }
 
     @Override
@@ -21,13 +20,16 @@ public class HeraldEffect extends CharacterEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
+    public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
+
         //Expects:
-        //{islandID : Integer}
-        if (playerInput.size() != expectedInputSize || !((playerInput.get(0) instanceof Integer))) {
-            throw new InvalidPlayerInputException();
-        }
-        int islandID = (int)playerInput.get(0);
+        //{islandID : int}
+        if (playerInput.size() != 1) throw new InvalidPlayerInputException();
+
+        int islandID = Integer.parseInt(playerInput.get(0));
+
+        if (islandID < 0 || islandID > ic.getIslandsQuantity() - 1) throw new InvalidPlayerInputException();
+
         ic.calcInfluence(islandID);
     }
 }

@@ -4,8 +4,6 @@ package Controller.CharacterEffects;
 
 import Controller.BoardsController;
 import Controller.ExpertGame;
-import Exceptions.EmptySackException;
-import Exceptions.FullElementException;
 import Exceptions.InvalidPlayerInputException;
 import Model.StudentCard;
 
@@ -29,13 +27,14 @@ public class PrincessEffect extends StudentsEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
+    public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 
         //Expects
         //{int studentToTake}
-        int studentToTake = (Integer) playerInput.get(0);
+        if (playerInput.size() != 1) throw new InvalidPlayerInputException();
 
-        //TODO: check player input
+        int studentToTake = Integer.parseInt(playerInput.get(0));
+        if (studentToTake < 0 || studentToTake > sc.getMAX_STUDENTS()) throw new InvalidPlayerInputException();
 
         bc.addToDining(playerID, sc.getStudent(studentToTake));
         sc.addStudent(sack.draw(1).get(0));

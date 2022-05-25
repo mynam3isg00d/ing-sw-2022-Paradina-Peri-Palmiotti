@@ -97,6 +97,10 @@ public class Shop extends Observable {
         return playerList;
     }
 
+    public void setCard(CharacterCard cc, int i) {
+        shop[i] = cc;
+    }
+
     public void sendShop() {
         String s = new JsonFactory().modelToJson(this);
         notify(s);

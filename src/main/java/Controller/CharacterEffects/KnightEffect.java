@@ -1,13 +1,12 @@
 package Controller.CharacterEffects;
 
-import Controller.CharacterEffects.Strategies.CentaurStrategy;
 import Controller.CharacterEffects.Strategies.KnightStrategy;
 import Controller.ExpertGame;
-import Controller.IslandController;
 import Exceptions.InvalidPlayerInputException;
 import Model.Player;
 
 import java.util.List;
+import java.util.Objects;
 
 public class KnightEffect extends InfluenceEffect {
 
@@ -23,12 +22,17 @@ public class KnightEffect extends InfluenceEffect {
     public void init(ExpertGame g, int cardIndex) {
         ic = g.getIslandController();
         for(Player p : g.getPlayers()) {
-            if (p.getPlayerID() == playerID) teamID = p.getTeamID();
+            if (Objects.equals(p.getPlayerID(), playerID)) teamID = p.getTeamID();
         }
     }
 
     @Override
-    public void playEffect(List<Object> playerInput)throws InvalidPlayerInputException, Exception {
+    public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
+
+        // Expects:
+        // {}
+        if(playerInput.size() != 0) throw new InvalidPlayerInputException();
+
         ic.setInfluenceStrategy(new KnightStrategy(teamID));
     }
 }

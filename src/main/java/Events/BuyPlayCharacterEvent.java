@@ -1,22 +1,29 @@
 package Events;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BuyPlayCharacterEvent extends GameEvent {
 
+    private int cardID;
+    private List<String> parameters;
+
     public BuyPlayCharacterEvent() {
         eventId = "0006";
     }
-    private int cardID;
-    private List<Object> parameters;
+
+    public BuyPlayCharacterEvent(String playerID, int cardID, List<String> parameters) {
+        eventId = "0006";
+        this.playerId = playerID;
+        this.cardID = cardID;
+        this.parameters = parameters;
+    }
 
     public int getCardID() {
         return cardID;
     }
 
-    public List<Object> getParameters() {
+    public List<String> getParameters() {
         return parameters;
     }
 

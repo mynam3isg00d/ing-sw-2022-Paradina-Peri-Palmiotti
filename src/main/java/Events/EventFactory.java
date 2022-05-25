@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -47,6 +49,7 @@ public class EventFactory {
         Pattern moveToIsland = Pattern.compile("^(move student \\d* to island \\d*)$");
         Pattern moveMotherNature = Pattern.compile("^(move mother nature \\d*)$");
         Pattern pickCloud = Pattern.compile("^(pick cloud \\d*)$");
+        Pattern buyCharacter = Pattern.compile("^(buy character \\d*)");
 
         if (wizard.matcher(line).find()) {
             int wint = Integer.parseInt(line.split(" ")[2]);
@@ -85,9 +88,13 @@ public class EventFactory {
             return b.toJson(event);
         }
 
-        //TODO: ---------------
-        //      SHOP EVENT ????
-        //      ---------------
+        if(buyCharacter.matcher(line).find()) {
+            int chint = Integer.parseInt(line.split(" ")[2]);
+            List<String> plist = Arrays.asList(line.split(" "));
+            plist = plist.subList(3, plist.size());
+            BuyPlayCharacterEvent event = new BuyPlayCharacterEvent(playerID, chint, plist);
+            return b.toJson(event);
+        }
 
         return line;
     }

@@ -134,10 +134,9 @@ public class Board extends Observable {
 
     /**
      * Removes towers from the board (decreases towerNum)
+     * I'm choosing to allow negative towers since the win condition should already be called by then, we will see if it works
      */
-    //TODO: if the towersNum reaches 0, a win condition should be called!!!!!
-    public void removeTower(int n) throws EmptyElementException {
-        if (towersNum - n < 0) throw new EmptyElementException();
+    public void removeTower(int n) {
         towersNum -= n;
 
         sendBoard();

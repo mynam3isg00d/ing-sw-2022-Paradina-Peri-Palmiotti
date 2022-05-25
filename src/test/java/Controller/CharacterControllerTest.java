@@ -34,7 +34,7 @@ class CharacterControllerTest {
         g.setCharacterController(new CharacterController(g, new Integer[]{0, 0, 0}));
         CharacterController cc = g.getCharacterController();
 
-        List<Object> playerInput = List.of(1, 2);
+        List<String> playerInput = List.of("1", "2");
         cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
 
         //use debugger but it works lol
@@ -48,7 +48,7 @@ class CharacterControllerTest {
         g.setCharacterController(new CharacterController(g, new Integer[]{2, 2, 2}));
         CharacterController cc = g.getCharacterController();
 
-        List<Object> playerInput = List.of(1);
+        List<String> playerInput = List.of("1");
         assertThrows(InsufficientCoinsException.class, () -> { cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);});
         cc.giveCoins(pl.get(0).getPlayerID(), 9999);
         cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
@@ -61,9 +61,9 @@ class CharacterControllerTest {
         g.setCharacterController(new CharacterController(g, new Integer[]{5, 5, 5}));
         CharacterController cc = g.getCharacterController();
 
-        assertThrows(InsufficientCoinsException.class, () -> { cc.buyCard(0, pl.get(0).getPlayerID(), null);});
+        assertThrows(InsufficientCoinsException.class, () -> { cc.buyCard(0, pl.get(0).getPlayerID(), new ArrayList<String>());});
         cc.giveCoins(pl.get(0).getPlayerID(), 9999);
-        cc.buyCard(0, pl.get(0).getPlayerID(), null);
+        cc.buyCard(0, pl.get(0).getPlayerID(), new ArrayList<String>());
         assertTrue(g.getIslandController().getInfluenceStrategy() instanceof CentaurStrategy);
     }
 

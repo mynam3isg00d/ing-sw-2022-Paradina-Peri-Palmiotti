@@ -4,8 +4,6 @@ package Controller.CharacterEffects;
 
 import Controller.ExpertGame;
 import Controller.IslandController;
-import Exceptions.EmptySackException;
-import Exceptions.FullElementException;
 import Exceptions.InvalidPlayerInputException;
 import Model.Student;
 import Model.StudentCard;
@@ -31,14 +29,16 @@ public class ClerkEffect extends StudentsEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
+    public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 
-        //TODO: player input check
-
-        //Expects
+        //Expects:
         //{studentIndex : int, islandIndex : int}
-        int studentIndex = (Integer)playerInput.get(0);
-        int islandIndex = (Integer)playerInput.get(1);
+        if (playerInput.size() != 2) throw new InvalidPlayerInputException();
+
+        int studentIndex = Integer.parseInt(playerInput.get(0));
+        if (studentIndex < 0 || studentIndex > sc.getMAX_STUDENTS() - 1) throw new InvalidPlayerInputException();
+        int islandIndex = Integer.parseInt(playerInput.get(1));
+        if (islandIndex < 0 || islandIndex > ic.getIslandsQuantity() - 1) throw new InvalidPlayerInputException();
 
         //Get the student at said index
         Student s = sc.getStudent(studentIndex);

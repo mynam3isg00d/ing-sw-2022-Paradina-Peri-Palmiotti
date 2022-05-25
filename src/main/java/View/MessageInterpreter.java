@@ -3,6 +3,7 @@ package View;
 import Exceptions.UnknownMessageException;
 import Model.*;
 import Util.Message;
+import Util.ShopDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -16,7 +17,7 @@ public class MessageInterpreter {
 
     public MessageInterpreter(UI ui) {
         this.ui = ui;
-        this.b = new GsonBuilder().create();
+        this.b = new GsonBuilder().registerTypeAdapter(Shop.class, new ShopDeserializer()).create();
     }
 
     public void interpret(String message) throws UnknownMessageException{

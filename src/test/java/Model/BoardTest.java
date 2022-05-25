@@ -61,7 +61,6 @@ class BoardTest {
         assertEquals(8, b.getTowersNum());
         assertThrows(FullElementException.class, () -> {b.addTower(1);});
         assertDoesNotThrow(() -> {b.removeTower(8);});
-        assertThrows(EmptyElementException.class, () -> {b.removeTower(1);});
         assertThrows(FullElementException.class, () -> {b.addTower(9);});
         assertDoesNotThrow(() -> {b.addTower(8);});
     }

@@ -2,7 +2,6 @@ package Controller.CharacterEffects;
 
 import Controller.CharacterEffects.Strategies.CentaurStrategy;
 import Controller.ExpertGame;
-import Controller.IslandController;
 import Exceptions.InvalidPlayerInputException;
 
 import java.util.List;
@@ -19,7 +18,12 @@ public class CentaurEffect extends InfluenceEffect {
     }
 
     @Override
-    public void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception {
+    public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
+
+        // Expects:
+        // {}
+        if(playerInput.size() != 0) throw new InvalidPlayerInputException();
+
         ic.setInfluenceStrategy(new CentaurStrategy());
     }
 }

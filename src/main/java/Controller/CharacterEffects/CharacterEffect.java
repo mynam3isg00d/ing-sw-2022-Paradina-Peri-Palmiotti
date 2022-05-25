@@ -1,16 +1,13 @@
 package Controller.CharacterEffects;
 
 import Controller.ExpertGame;
-import Controller.Game;
 import Exceptions.InvalidPlayerInputException;
-import Model.Shop;
 
 import java.util.List;
 
 public abstract class CharacterEffect {
 
     protected String boughtByID;
-    protected int expectedInputSize;
 
     public CharacterEffect(String playerID) {
         boughtByID = playerID;
@@ -23,6 +20,6 @@ public abstract class CharacterEffect {
     //OPPURE bisogna mettere un metodo per cambiarlo
 
     //TODO: Generic Exception should be replaced with a "Model Related Exception" for clarity
-    public abstract void playEffect(List<Object> playerInput) throws InvalidPlayerInputException, Exception;
+    public abstract void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception;
 
 }
