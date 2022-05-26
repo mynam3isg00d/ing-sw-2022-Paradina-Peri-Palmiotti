@@ -89,6 +89,7 @@ public class IslandController {
         int mostInfluentTeam = influenceStrategy.calcInfluence(islandIndex, islandModel, boardsController);
 
         //case: tie
+        //case: no one has influence
         if (mostInfluentTeam == -1) return;
 
         checkAndMerge(mostInfluentTeam, islandIndex);

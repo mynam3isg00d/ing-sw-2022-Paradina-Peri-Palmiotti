@@ -70,6 +70,13 @@ public class KnightStrategy implements InfluenceStrategy{
             }
         }
 
+        //if no teams have influence -> return -1
+        boolean hasSomeoneInfluence = false;
+        for (Map.Entry<Integer, Integer> e : influences.entrySet()) {
+            if (e.getValue() != 0) hasSomeoneInfluence = true;
+        }
+        if (!hasSomeoneInfluence) return -1;
+
         //empties the map in order to obtain a list of map entries sorted by influence
         List<Map.Entry<Integer, Integer>> topInfluences = new ArrayList<>();
         int influencesSize = influences.size();

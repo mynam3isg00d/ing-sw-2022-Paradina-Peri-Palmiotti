@@ -653,6 +653,53 @@ class GameTest {
         assertEquals(Phase.PLANNING, gameModel.getGamePhase());
     }
 
+
+
+    @Test
+    public void islandBugTest() {
+        Game game = doPlanningPhase();
+        GameModel gm = game.getGameModel();
+
+        MoveStudentToIslandEvent e1 = new MoveStudentToIslandEvent();
+        e1.setPlayerId("id2");
+        e1.parseInput("0 + 10");
+
+        assertDoesNotThrow(() -> {
+            game.handleEvent(e1);
+        });
+
+        e1.parseInput("1 + 10");
+        assertDoesNotThrow(() -> {
+            game.handleEvent(e1);
+        });
+
+        e1.parseInput("2 + 10");
+        assertDoesNotThrow(() -> {
+            game.handleEvent(e1);
+        });
+
+        e1.parseInput("3 + 10");
+        assertDoesNotThrow(() -> {
+            game.handleEvent(e1);
+        });
+
+        assertEquals(Phase.ACTION_MOTHERNATURE, gm.getGamePhase());
+
+        MoveMotherNatureEvent e2 = new MoveMotherNatureEvent();
+        e2.setPlayerId("id2");
+        e2.parseInput("1");
+
+        assertDoesNotThrow(() -> {
+            game.handleEvent(e2);
+        });
+
+
+        //no towers should be placed on island 1
+        IslandController ic = game.getIslandController();
+        IslandsWrapper im = ic.getIslandModel();
+        assertEquals(1, im.getMotherNaturePos());
+        assertNull(im.getInfluence(1));
+    }
     /**
      * Counts the number of students in an array
      * @param s

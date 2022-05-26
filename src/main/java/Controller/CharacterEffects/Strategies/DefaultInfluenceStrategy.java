@@ -32,12 +32,14 @@ public class DefaultInfluenceStrategy implements InfluenceStrategy{
         //every team influence will be stored in a hashmap like:
         //teamId -> influence
         HashMap<Integer, Integer> influences = new HashMap<>();
-        //checks which teams have some influence on the island (ie: the teams which have at least one professor) and puts them on the infuences map
+
+        //checks which teams COULD have some influence on the island (ie: the teams which have at least one professor) and puts them on the infuences map
         List<Student> colors = Sack.getColors();
         for (Student s : colors) {
             Player owner = boardsController.getProfessorOwner(s.getColorId());
             if (owner != null && !influences.containsKey(owner.getTeamID())) influences.put(owner.getTeamID(), 0);
         }
+
         //if no professor is assigned, no team can have influence>0 on the island
         if (influences.isEmpty()) {
             System.out.println("CONTROLLER SAYS: no professor is assigned. Nothing changes");
@@ -66,6 +68,13 @@ public class DefaultInfluenceStrategy implements InfluenceStrategy{
                 influences.put(playerKey.getTeamID(), oldInfluence+studentsOnIsland);
             }
         }
+
+        //if no teams have influence -> return -1
+        boolean hasSomeoneInfluence = false;
+        for (Map.Entry<Integer, Integer> e : influences.entrySet()) {
+            if (e.getValue() != 0) hasSomeoneInfluence = true;
+        }
+        if (!hasSomeoneInfluence) return -1;
 
         //empties the map in order to obtain a list of map entries sorted by influence
         List<Map.Entry<Integer, Integer>> topInfluences = new ArrayList<>();
