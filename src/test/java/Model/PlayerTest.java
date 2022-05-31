@@ -1,6 +1,7 @@
 package Model;
 
 import Exceptions.AssistantMissingException;
+import Exceptions.IllegalWizardException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
 
     @Test
-    public void chooseWizardTest() {
+    public void chooseWizardTest() throws IllegalWizardException {
         Player p = new Player("1234", 0);
         assertNotNull(p);
         assertNull(p.getHand());
@@ -17,7 +18,7 @@ class PlayerTest {
     }
 
     @Test
-    public void playAssistantTest() throws AssistantMissingException {
+    public void playAssistantTest() throws AssistantMissingException, IllegalWizardException {
         Player p = new Player("1234", 0);
         p.chooseWizard(0);
         assertThrows(AssistantMissingException.class, () -> {p.playAssistant(15);});

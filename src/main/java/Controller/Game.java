@@ -13,6 +13,7 @@ import Controller.CharacterEffects.Strategies.DefaultInfluenceStrategy;
 import Events.*;
 import Exceptions.*;
 import Observer.Observer;
+import Observer.Observable;
 import Model.*;
 import View.*;
 import com.google.gson.Gson;
@@ -84,13 +85,14 @@ public class Game implements Observer {
      * @param o The Event coming from the RemoteView
      */
     @Override
-    public void update(Object o) {
+    public void update(Observable obs, Object o) {
         String json = (String) o;
         try {
             jsonToEvent(json);
         } catch (Exception e) {
             e.printStackTrace();
-            //obs.send("400" + e);
+            RemoteView rv = (RemoteView) obs;
+            rv.sendError(e);
         }
     }
 
@@ -306,7 +308,7 @@ public class Game implements Observer {
     }
 
     //TODO: Jdoc
-    public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException, WizardAlreadyChosenException{
+    public void handleEvent(ChooseWizardEvent event) throws NotYourTurnException, InvalidMoveException, WizardAlreadyChosenException, IllegalWizardException{
         //not your turn
         if (!gameModel.getCurrentPlayer().getPlayerID().equals(event.getPlayerId())) throw new NotYourTurnException();
 
@@ -662,4 +664,6 @@ public class Game implements Observer {
                 System.out.println("Error from Game.jsonToEvent: code not supported");
         }
     }
+
+
 }

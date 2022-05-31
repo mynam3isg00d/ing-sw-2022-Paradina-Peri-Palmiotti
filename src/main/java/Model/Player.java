@@ -1,5 +1,6 @@
 package Model;
 import Exceptions.AssistantMissingException;
+import Exceptions.IllegalWizardException;
 import Network.JsonFactory;
 import Observer.Observable;
 import com.google.gson.Gson;
@@ -46,7 +47,8 @@ public class Player extends Observable {
      * Creates the player's hand from the wizardID
      * @param wizardID id of the wizard (identifies the hand aswell)
      */
-    public void chooseWizard(int wizardID) {
+    public void chooseWizard(int wizardID) throws  IllegalWizardException{
+        if (wizardID < 0 || wizardID > 3) throw new IllegalWizardException();
         hand = new Hand(wizardID);
 
         sendPlayer();

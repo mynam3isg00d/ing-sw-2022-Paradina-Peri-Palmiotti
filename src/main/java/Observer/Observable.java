@@ -26,7 +26,7 @@ public class Observable {
     protected void notify(Object o){
         synchronized (observers) {
             for(Observer observer : observers){
-                observer.update(o);
+                observer.update(this, o);
             }
         }
     }

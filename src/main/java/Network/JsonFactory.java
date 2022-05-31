@@ -27,6 +27,15 @@ public class JsonFactory {
         return jsonStr;
     }
 
+    public String errorToJson(Exception e) {
+        Message m = new Message(e.toString());
+        JsonElement jsonElement = builder.toJsonTree(m);
+        jsonElement.getAsJsonObject().addProperty("messageCode", 400);
+        String jsonStr = builder.toJson(jsonElement);
+
+        return jsonStr;
+    }
+
     public String initToJson(String m, int code) throws UnknownMessageException {
         if (code / 100 != 3) {
             throw new UnknownMessageException();
