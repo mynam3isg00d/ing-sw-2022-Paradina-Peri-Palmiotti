@@ -25,6 +25,16 @@ public class Client {
     private class LocalInput implements Runnable {
         private PrintWriter out;
         private Scanner in;
+
+        private final String HELP = "Available Commands:\n" +
+                "choose wizard X\n" +
+                "play assistant X\n" +
+                "move student X to dining - X is the position in the Entrance\n" +
+                "move student X to island Y - X is the position in the Entrance\n" +
+                "move mother nature X - X is the number of steps\n" +
+                "pick cloud X\n" +
+                "buy character X";
+
         public LocalInput(PrintWriter out) {
             this.out = out;
             in = new Scanner(System.in);
@@ -36,10 +46,16 @@ public class Client {
         public void run() {
             while(true) {
                 String line = in.nextLine();
-                line = EventFactory.stringToEventJson(ui.getPlayerID(), line);
 
-                out.println(line);
-                out.flush();
+                if (line.equals("help")) {
+                    System.out.println(HELP);
+                } else {
+                    line = EventFactory.stringToEventJson(ui.getPlayerID(), line);
+
+                    out.println(line);
+                    out.flush();
+                }
+
             }
         }
     }
@@ -49,6 +65,8 @@ public class Client {
         private String id;
         private BufferedReader in;
         private MessageInterpreter messageInterpreter;
+
+
         public RemoteInput (BufferedReader inputSource) {
             this.in = inputSource;
             this.messageInterpreter = new MessageInterpreter(ui);
@@ -57,8 +75,9 @@ public class Client {
             while(true) {
                 try {
                     String line = in.readLine();
-                    //System.out.println("Received:\n" + line);
+
                     messageInterpreter.interpret(line);
+
                 } catch (IOException | UnknownMessageException e) {
                     e.printStackTrace();
                 }

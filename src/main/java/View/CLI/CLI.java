@@ -210,7 +210,7 @@ public class CLI extends UI {
     private void resetCursor() {
         System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 1)
                 .render("-----------------------Enter a command---------------------"));
-        for(int i=6; i>2; i--) {
+        for(int i=10; i>2; i--) {
             System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + i).eraseLine());
         }
     }

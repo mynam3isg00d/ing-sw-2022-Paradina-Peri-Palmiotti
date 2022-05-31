@@ -13,9 +13,9 @@ import com.google.gson.JsonElement;
 
 public class RemoteView extends Observable implements Observer {
 
-    private Player player;
-    private Connection connection;
-    private JsonFactory json;
+    private final Player player;
+    private final Connection connection;
+    private final JsonFactory json;
 
     public RemoteView(Player p, Connection c) {
         player = p;
@@ -47,31 +47,17 @@ public class RemoteView extends Observable implements Observer {
         @Override
         public void update(Observable obs, Object o) {
             String line = (String) o;
-            RemoteView.this.notify(line);
-            //System.out.println("MESSAGE RECEIVER SAYS: Event Received" + line);
-            try{
-                //Factory che crea eventi
-                //GameEvent e = EventFactory.jsonToEvent(line);
-                //processChoice(e);
-
-                //Davide: Provo sta cazzata
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            processChoice(line);
         }
 
 
     }
 
-    public void processChoice(GameEvent event) {
+    public void processChoice(String event) {
         notify(event);
     }
 
     public void sendError(Exception e) {
-        //connection.send(e);   JSON
-        System.out.println("eee");
-
         JsonFactory jf = new JsonFactory();
         connection.send(jf.errorToJson(e));
     }
