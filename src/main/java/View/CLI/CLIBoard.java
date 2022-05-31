@@ -37,7 +37,7 @@ public class CLIBoard extends CLIElement {
 
         lines.clear();
         lines.add(  "+-------+----------+---+"  );
-        lines.add(  "| "+ n +" |  D    P  |[" + te + "]|"  );
+        lines.add(  "| " + n + " |  D    P  |[" + te + "]|"  );
         lines.add(  "|[" + e[0] + "] [" + e[1] + "]| [@|yellow " + d[0] +"|@]  [@|bold,yellow " + p[0] + "|@] |   |"  );
         lines.add(  "|[" + e[2] + "] [" + e[3] + "]| [@|blue " + d[1] +"|@]  [@|bold,blue " + p[1] + "|@] |[" + t +  "]|"  );
         lines.add(  "|[" + e[4] + "] [" + e[5] + "]| [@|green " + d[2] +"|@]  [@|bold,green " + p[2] + "|@] |   |"  );

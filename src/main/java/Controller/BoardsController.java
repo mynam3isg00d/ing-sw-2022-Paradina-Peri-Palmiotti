@@ -144,7 +144,15 @@ public class BoardsController {
 
         Player[] old_professors = professors.clone();
 
-        int[] maxNumOfStudents = {0, 0, 0, 0, 0};
+        int[] maxNumOfStudents = new int[5];
+        for(int i=0; i<5; i++) {
+            if (old_professors[i] == null) {
+                maxNumOfStudents[i] = 0;
+            } else {
+                maxNumOfStudents[i] = playerBoardMap.get(old_professors[i].getPlayerID()).getDinings()[i];
+            }
+        }
+
         for(Player p : players) {
             int[] diners = playerBoardMap.get(p.getPlayerID()).getDinings();
             for(int i=0; i<5; i++) {

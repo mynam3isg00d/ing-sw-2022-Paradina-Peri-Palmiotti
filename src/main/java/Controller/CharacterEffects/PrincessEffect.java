@@ -3,8 +3,11 @@
 package Controller.CharacterEffects;
 
 import Controller.BoardsController;
+import Controller.CharacterController;
 import Controller.ExpertGame;
 import Exceptions.InvalidPlayerInputException;
+import Model.Board;
+import Model.Student;
 import Model.StudentCard;
 
 import java.util.List;
@@ -13,6 +16,7 @@ public class PrincessEffect extends StudentsEffect {
 
     private String playerID;
     private BoardsController bc;
+    private CharacterController cc;
 
     public PrincessEffect(String playerID) {
         super(playerID);
@@ -24,6 +28,7 @@ public class PrincessEffect extends StudentsEffect {
         bc = g.getBoardsController();
         sack = g.getSack();
         sc = (StudentCard) g.getCharacterController().getShopReference().getShop()[cardIndex];
+        cc = g.getCharacterController();
     }
 
     @Override
@@ -36,7 +41,13 @@ public class PrincessEffect extends StudentsEffect {
         int studentToTake = Integer.parseInt(playerInput.get(0));
         if (studentToTake < 0 || studentToTake > sc.getMAX_STUDENTS()) throw new InvalidPlayerInputException();
 
-        bc.addToDining(playerID, sc.getStudent(studentToTake));
+        Student student = sc.getStudent(studentToTake);
+
+        bc.addToDining(playerID, student);
+        bc.updateProfessors();
+        Board b = bc.getBoard(playerID);
+        if (b.getDinings()[student.getColorId()] % 3 == 0) cc.giveCoins(playerID, 1);
+
         sc.addStudent(sack.draw(1).get(0));
     }
 }

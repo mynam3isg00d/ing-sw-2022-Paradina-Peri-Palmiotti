@@ -47,7 +47,7 @@ public class MessageInterpreter {
                 break;
             case 4:
                 //Error message, cut the code and print as such
-                System.out.print(new Message(messageAsJsonObject.get("message").getAsString(), true));
+                ui.renderError(new Message(messageAsJsonObject.get("message").getAsString(), true));
                 break;
             case 2:
                 //Json message, deserialize

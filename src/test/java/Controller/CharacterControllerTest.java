@@ -4,10 +4,7 @@ import Controller.CharacterEffects.CentaurEffect;
 import Controller.CharacterEffects.Strategies.CentaurStrategy;
 import Exceptions.InsufficientCoinsException;
 import Exceptions.InvalidPlayerInputException;
-import Model.CharacterCard;
-import Model.Player;
-import Model.Shop;
-import Model.StudentCard;
+import Model.*;
 import org.junit.jupiter.api.Test;
 
 import javax.naming.event.ObjectChangeListener;
@@ -65,6 +62,21 @@ class CharacterControllerTest {
         cc.giveCoins(pl.get(0).getPlayerID(), 9999);
         cc.buyCard(0, pl.get(0).getPlayerID(), new ArrayList<String>());
         assertTrue(g.getIslandController().getInfluenceStrategy() instanceof CentaurStrategy);
+    }
+
+    @Test
+    void bardEffectTest() throws Exception {
+        List<Player> pl = getPlayerList(2);
+        ExpertGame g = new ExpertGame(pl);
+        g.setCharacterController(new CharacterController(g, new Integer[]{9, 9, 9}));
+        CharacterController cc = g.getCharacterController();
+
+        g.boardsController.addToDining(pl.get(0).getPlayerID(), Student.BLUE);
+        g.boardsController.addToDining(pl.get(0).getPlayerID(), Student.GREEN);
+
+        List<String> playerInput = List.of("1", "2", "1", "2");
+        cc.giveCoins(pl.get(0).getPlayerID(), 9999);
+        cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
     }
 
     private List<Player> getPlayerList(int n) {

@@ -15,7 +15,6 @@ public class JsonFactory {
         builder = new GsonBuilder()
                 .setExclusionStrategies(new AnnotationExclusionStrategy())
                 .serializeNulls()
-                //.setPrettyPrinting()
                 .create();
     }
 

@@ -1,6 +1,7 @@
 package View;
 
 import Model.*;
+import Util.Message;
 
 public abstract class UI {
 
@@ -24,5 +25,7 @@ public abstract class UI {
     public abstract void updateModel(Shop s);
     public abstract void updateModel(Player p);
     public abstract void updateModel(Sack s);
+
+    public abstract void renderError(Message m);
 
 }

@@ -1,6 +1,7 @@
 package View.CLI;
 
 import Model.*;
+import Util.Message;
 import View.UI;
 import org.fusesource.jansi.AnsiConsole;
 
@@ -121,6 +122,12 @@ public class CLI extends UI {
         resetCursor();
     }
 
+    @Override
+    public void renderError(Message m) {
+        System.out.print(ansi().eraseLine().render(m.toString()));
+        resetDeleteCursor();
+    }
+
     public void updateModel(GameModel g) {
         gameModel.updateGameModel(g);
         gameModel.displayLines(4 * (2+boards.get(0).getX()), 0);
@@ -201,6 +208,14 @@ public class CLI extends UI {
     }
 
     private void resetCursor() {
+        System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 1)
+                .render("-----------------------Enter a command---------------------"));
+        for(int i=6; i>2; i--) {
+            System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + i).eraseLine());
+        }
+    }
+
+    private void resetDeleteCursor() {
         System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 1)
                 .render("-----------------------Enter a command---------------------"));
         System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2).eraseLine());

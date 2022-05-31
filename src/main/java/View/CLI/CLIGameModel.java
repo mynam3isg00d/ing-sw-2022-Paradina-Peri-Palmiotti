@@ -38,6 +38,8 @@ public class CLIGameModel extends CLIElement {
                 }
                 System.out.print(ansi().cursor(0, 0).cursorRight(50).cursorDown(21));
                 System.out.print("Team " + win + " won!!!!");
+                if (win.equals("LOVE")) System.out.print( " (it's a draw)");
+                if (win.equals("404")) System.out.print(" (Game interrupted)");
             } catch (NullPointerException ignored) {}
         } else {
             super.displayLines(x0, y0);
@@ -103,7 +105,9 @@ public class CLIGameModel extends CLIElement {
     private String getWinningString() {
         if (gameModel.getWinnerTeam() == 0) return "WHITE";
         if (gameModel.getWinnerTeam() == 1) return "BLACK";
-        return "GREY";
+        if (gameModel.getWinnerTeam() == 2) return "GREY";
+        if (gameModel.getWinnerTeam() == -2) return "LOVE";
+        return "404";
     }
 
 }

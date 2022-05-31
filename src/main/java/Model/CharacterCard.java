@@ -23,7 +23,6 @@ public class CharacterCard {
     private int cost;
     private boolean isIncremented;
 
-    //TODO: Connect cardID and cost somehow? maybe a big if
     public CharacterCard(int cardID) {
         this.cardID = cardID;
         this.cost = (cardID % 3) + 1;

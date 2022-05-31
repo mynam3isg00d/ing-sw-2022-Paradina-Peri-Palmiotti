@@ -175,6 +175,11 @@ public class Game implements Observer {
 
         boardsController.moveFromEntranceToDining(event.getPlayerId(), event.getStudentIndex());
         boardsController.updateProfessors();
+        System.out.print("DEBUG Professores: ");
+        for(int i=0; i<5; i++) {
+            if (boardsController.getProfessorOwner(i) != null) System.out.print("["+boardsController.getProfessorOwner(i).getName()+"]");
+            else System.out.print("[NULL]");
+        }
 
         //add one student to the turn info
         gameModel.studentMoved();
@@ -416,7 +421,7 @@ public class Game implements Observer {
 
         if (whiteSum == minTowers) possibleWinners.add(0);
         if (blackSum == minTowers) possibleWinners.add(1);
-        if (greySum == minTowers) possibleWinners.add(2);
+        if (players.size() == 3 && greySum == minTowers) possibleWinners.add(2); //Only count grey if it's a 3p game
         if (possibleWinners.size() == 1) return possibleWinners.get(0);
 
         //Tower draw!! Check professors
@@ -425,7 +430,7 @@ public class Game implements Observer {
 
         if (whiteProf == minProfessors && possibleWinners.contains(0)) newPossibleWinners.add(0);
         if (blackProf == minProfessors && possibleWinners.contains(1)) newPossibleWinners.add(1);
-        if (greyProf == minProfessors && possibleWinners.contains(2)) newPossibleWinners.add(2);
+        if (players.size() == 3 && greyProf == minProfessors && possibleWinners.contains(2)) newPossibleWinners.add(2);
         if (newPossibleWinners.size() == 1) return newPossibleWinners.get(0);
 
         //DRAW!

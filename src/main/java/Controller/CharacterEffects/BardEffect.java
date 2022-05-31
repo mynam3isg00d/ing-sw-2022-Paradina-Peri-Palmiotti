@@ -1,8 +1,11 @@
 package Controller.CharacterEffects;
 
 import Controller.BoardsController;
+import Controller.CharacterController;
 import Controller.ExpertGame;
+import Exceptions.EmptyElementException;
 import Exceptions.InvalidPlayerInputException;
+import Model.Board;
 import Model.Sack;
 import Model.Student;
 
@@ -13,6 +16,7 @@ public class BardEffect extends CharacterEffect {
 
     private String playerID;
     private BoardsController bc;
+    private CharacterController cc;
 
     public BardEffect(String playerID) {
         super(playerID);
@@ -22,6 +26,7 @@ public class BardEffect extends CharacterEffect {
     @Override
     public void init(ExpertGame g, int cardIndex) {
         bc = g.getBoardsController();
+        cc = g.getCharacterController();
     }
 
     @Override
@@ -49,6 +54,18 @@ public class BardEffect extends CharacterEffect {
             studentsToEntrance.add(ste);
         }
 
+
+        //Check that the inputs are valid
+        int[] check = new int[]{0, 0, 0, 0, 0};
+        for(Integer i : studentsToEntrance) {
+            check[i]++;
+            if (check[i] > bc.getBoard(playerID).getDinings()[i]) throw new EmptyElementException();
+        }
+
+        for(Integer i : studentsToDining) {
+            if (bc.getBoard(playerID).getEntrance()[i] == null) throw new EmptyElementException();
+        }
+
         //remove students from the dining...
         List<Student> toAdd = new ArrayList<>();
         for(Integer i : studentsToEntrance) {
@@ -59,6 +76,9 @@ public class BardEffect extends CharacterEffect {
         //add entrance students to the dining
         for(Integer i : studentsToDining) {
             bc.moveFromEntranceToDining(playerID, i);
+            bc.updateProfessors();
+            Board b = bc.getBoard(playerID);
+            if (b.getDinings()[i] % 3 == 0) cc.giveCoins(playerID, 1);
         }
 
         bc.addToEntrance(playerID, toAdd);
