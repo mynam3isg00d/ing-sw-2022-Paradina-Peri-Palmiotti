@@ -1,4 +1,4 @@
-package Util;
+package Network.Messages;
 
 public class PlayerInfoMessage {
     private String name;

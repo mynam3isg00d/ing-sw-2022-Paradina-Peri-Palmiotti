@@ -4,7 +4,7 @@ import Events.GameEvent;
 import Exceptions.UnknownMessageException;
 import Model.*;
 import Util.AnnotationExclusionStrategy;
-import Util.Message;
+import Network.Messages.Message;
 import com.google.gson.*;
 
 public class JsonFactory {

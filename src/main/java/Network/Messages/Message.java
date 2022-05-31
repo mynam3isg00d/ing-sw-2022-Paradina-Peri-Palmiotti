@@ -1,4 +1,4 @@
-package Util;
+package Network.Messages;
 
 public class Message {
     private String message;

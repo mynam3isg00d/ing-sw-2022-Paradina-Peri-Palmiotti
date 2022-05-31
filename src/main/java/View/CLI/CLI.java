@@ -1,7 +1,8 @@
 package View.CLI;
 
 import Model.*;
-import Util.Message;
+import Network.Messages.Message;
+import Util.HelpInterpreter;
 import View.UI;
 import org.fusesource.jansi.AnsiConsole;
 
@@ -210,7 +211,7 @@ public class CLI extends UI {
     private void resetCursor() {
         System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 1)
                 .render("-----------------------Enter a command---------------------"));
-        for(int i=10; i>2; i--) {
+        for(int i=8; i>=2; i--) {
             System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + i).eraseLine());
         }
     }
@@ -219,5 +220,10 @@ public class CLI extends UI {
         System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 1)
                 .render("-----------------------Enter a command---------------------"));
         System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 2).eraseLine());
+    }
+
+    public void displayHelp(String line) {
+        resetCursor();
+        System.out.print(HelpInterpreter.getHelpMessage(line) + "\n");
     }
 }

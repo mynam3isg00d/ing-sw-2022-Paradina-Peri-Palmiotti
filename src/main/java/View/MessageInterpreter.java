@@ -2,7 +2,7 @@ package View;
 
 import Exceptions.UnknownMessageException;
 import Model.*;
-import Util.Message;
+import Network.Messages.Message;
 import Util.ShopDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

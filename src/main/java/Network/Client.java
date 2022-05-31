@@ -2,7 +2,8 @@ package Network;
 
 import Events.EventFactory;
 import Exceptions.UnknownMessageException;
-import Util.PlayerInfoMessage;
+import Network.Messages.PlayerInfoMessage;
+import Util.HelpInterpreter;
 import View.CLI.CLI;
 import View.MessageInterpreter;
 import View.UI;
@@ -26,15 +27,6 @@ public class Client {
         private PrintWriter out;
         private Scanner in;
 
-        private final String HELP = "Available Commands:\n" +
-                "choose wizard X\n" +
-                "play assistant X\n" +
-                "move student X to dining - X is the position in the Entrance\n" +
-                "move student X to island Y - X is the position in the Entrance\n" +
-                "move mother nature X - X is the number of steps\n" +
-                "pick cloud X\n" +
-                "buy character X";
-
         public LocalInput(PrintWriter out) {
             this.out = out;
             in = new Scanner(System.in);
@@ -43,18 +35,18 @@ public class Client {
         public void asyncSend(String message) {
             out.println(message);
         }
+
         public void run() {
             while(true) {
                 String line = in.nextLine();
-
-                if (line.equals("help")) {
-                    System.out.println(HELP);
+                if (HelpInterpreter.isHelp(line)) {
+                    ((CLI) ui).displayHelp(line);
                 } else {
                     line = EventFactory.stringToEventJson(ui.getPlayerID(), line);
-
                     out.println(line);
                     out.flush();
                 }
+
 
             }
         }

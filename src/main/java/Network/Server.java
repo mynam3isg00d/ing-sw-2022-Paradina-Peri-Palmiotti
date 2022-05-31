@@ -3,7 +3,7 @@ package Network;
 import Controller.ExpertGame;
 import Controller.Game;
 import Model.Player;
-import Util.Message;
+import Network.Messages.Message;
 import View.RemoteView;
 
 import java.io.IOException;

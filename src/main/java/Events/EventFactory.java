@@ -39,7 +39,6 @@ public class EventFactory {
     }
 
     public static String stringToEventJson(String playerID, String line) {
-        //TODO: SHOP EVENT ????
         Gson b = new GsonBuilder().serializeNulls().create();
 
         //Regex patterns

@@ -2,8 +2,7 @@ package Network;
 
 import java.io.BufferedReader;
 import Observer.Observable;
-import Util.Message;
-import Util.PlayerInfoMessage;
+import Network.Messages.PlayerInfoMessage;
 import com.google.gson.GsonBuilder;
 
 import java.io.PrintWriter;

@@ -1,7 +1,7 @@
 package View;
 
 import Model.*;
-import Util.Message;
+import Network.Messages.Message;
 
 public abstract class UI {
 

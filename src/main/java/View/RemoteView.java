@@ -1,14 +1,9 @@
 package View;
 
-import Controller.Game;
-import Events.EventFactory;
-import Events.GameEvent;
 import Model.*;
 import Network.Connection;
 import Network.JsonFactory;
 import Observer.*;
-import Util.Message;
-import com.google.gson.JsonElement;
 
 
 public class RemoteView extends Observable implements Observer {
