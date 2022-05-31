@@ -10,6 +10,11 @@ public class HeraldEffect extends CharacterEffect {
 
     IslandController ic;
 
+    @Override
+    public String explainEffect() {
+        return "Choose an island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.";
+    }
+
     public HeraldEffect(String playerID) {
         super(playerID);
     }

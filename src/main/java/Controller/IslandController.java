@@ -65,8 +65,10 @@ public class IslandController {
         //changes the motherNature position in the model
         islandModel.moveMotherNature(newPosition);
 
-        //calculates the influences on the new position
-        calcInfluence(newPosition);
+        if (!islandModel.isNewEntry(newPosition)) {
+            //calculates the influences on the new position
+            calcInfluence(newPosition);
+        }
     }
 
     /**
@@ -169,5 +171,13 @@ public class IslandController {
 
     public IslandsWrapper getIslandModel() {
         return islandModel;
+    }
+
+    public void setNoEntry(int islandIndex) throws InvalidMoveException{
+        islandModel.setNoEntry(islandIndex);
+    }
+
+    public void removeNoEntry(int islandIndex) throws InvalidMoveException{
+        islandModel.removeNoEntry(islandIndex);
     }
 }

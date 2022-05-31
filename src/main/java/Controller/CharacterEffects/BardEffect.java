@@ -18,6 +18,10 @@ public class BardEffect extends CharacterEffect {
     private BoardsController bc;
     private CharacterController cc;
 
+    public String explainEffect() {
+        return "You may exchange up to 2 students between your Entrance and your Dining Room";
+    }
+
     public BardEffect(String playerID) {
         super(playerID);
         this.playerID = playerID;

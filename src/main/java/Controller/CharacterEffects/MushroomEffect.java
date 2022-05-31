@@ -8,6 +8,11 @@ import java.util.List;
 
 public class MushroomEffect extends InfluenceEffect {
 
+    @Override
+    public String explainEffect() {
+        return "Choose a color of Student: during the influence calculation this turn, that color adds no influence.";
+    }
+
     public MushroomEffect(String playerID) {
         super(playerID);
     }

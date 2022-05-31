@@ -9,6 +9,7 @@ public abstract class CharacterEffect {
 
     protected String boughtByID;
 
+    public abstract String explainEffect();
     public CharacterEffect(String playerID) {
         boughtByID = playerID;
     }

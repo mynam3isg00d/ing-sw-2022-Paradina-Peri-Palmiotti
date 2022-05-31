@@ -1,4 +1,5 @@
 package Model;
+import Exceptions.InvalidMoveException;
 import Exceptions.MergeException;
 import com.google.gson.annotations.Expose;
 
@@ -17,6 +18,8 @@ public class Island {
     
     private boolean motherNature;
 
+    private boolean noEntry;
+
     //builds an empty island, dimension is initialized 1
 
     /**
@@ -27,6 +30,7 @@ public class Island {
         students = new int[5];
         influenceTeam = null;
         motherNature = false;
+        noEntry = false;
     }
 
     /**
@@ -39,6 +43,8 @@ public class Island {
         students = i.getStudents();
         influenceTeam = i.getInfluence();
         motherNature = i.isMotherNature();
+
+        noEntry = i.isNoEntry();
     }
 
     //merges two islands: creates the resulting island. The dimension of the resulting island is sum of the dimensions of the other two
@@ -66,6 +72,9 @@ public class Island {
 
         influenceTeam = i1.getInfluence();
         motherNature = true;
+
+        //if any of the islands to merge had a noEntry tile, the resulting island has a noEntry tile
+        if (i1.noEntry || i2.noEntry) noEntry = true;
     }
 
     /**
@@ -141,6 +150,19 @@ public class Island {
             if(students[j] != i.getStudents()[j]) return false;
         }
         return true;
+    }
+
+    public void setNoEntry() throws  InvalidMoveException {
+        if (noEntry) throw new InvalidMoveException("You can not place more than one No-Entry tile on an island");
+        noEntry = true;
+    }
+
+    public void removeNoEntry() {
+        noEntry = false;
+    }
+
+    public boolean isNoEntry() {
+        return noEntry;
     }
 
     @Override

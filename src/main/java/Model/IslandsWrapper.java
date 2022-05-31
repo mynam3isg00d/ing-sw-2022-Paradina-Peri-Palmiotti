@@ -1,5 +1,6 @@
 package Model;
 
+import Exceptions.InvalidMoveException;
 import Network.JsonFactory;
 import Observer.Observable;
 import com.google.gson.Gson;
@@ -203,5 +204,17 @@ public class IslandsWrapper extends Observable {
      */
     public int getIslandDimension(int islandIndex) {
         return islands.get(islandIndex).getDimension();
+    }
+
+    public void setNoEntry(int islandIndex) throws InvalidMoveException {
+        islands.get(islandIndex).setNoEntry();
+    }
+
+    public void removeNoEntry(int islandIndex) {
+        islands.get(islandIndex).removeNoEntry();
+    }
+
+    public boolean isNewEntry(int islandIndex) {
+        return islands.get(islandIndex).isNoEntry();
     }
 }

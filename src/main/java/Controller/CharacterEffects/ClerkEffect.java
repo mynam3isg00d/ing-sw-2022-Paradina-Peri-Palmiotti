@@ -1,5 +1,3 @@
-//I hate this, i do not know if it works
-
 package Controller.CharacterEffects;
 
 import Controller.ExpertGame;
@@ -13,6 +11,11 @@ import java.util.List;
 public class ClerkEffect extends StudentsEffect {
 
     private IslandController ic;
+
+    @Override
+    public String explainEffect() {
+        return "Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card.";
+    }
 
     public ClerkEffect(String playerID) {
         super(playerID);

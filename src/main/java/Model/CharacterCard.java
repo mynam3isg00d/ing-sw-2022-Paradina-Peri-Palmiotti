@@ -55,6 +55,7 @@ public class CharacterCard {
         return isIncremented;
     }
 
+
     //TODO: could be useful, but it was made for testing
     //      this means that it's not an *ideal* equals
     //      (for example it doesn't check isIncremented)

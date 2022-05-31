@@ -14,6 +14,11 @@ public class JesterEffect extends StudentsEffect {
     private BoardsController bc;
     private String playerID;
 
+    @Override
+    public String explainEffect() {
+        return "You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance";
+    }
+
     public JesterEffect(String playerID) {
         super(playerID);
         this.playerID = playerID;
