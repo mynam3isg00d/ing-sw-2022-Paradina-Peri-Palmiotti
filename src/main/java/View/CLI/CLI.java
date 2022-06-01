@@ -13,33 +13,13 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class CLI extends UI {
 
-    private List<CLIBoard> boards;
-    private CLIGameModel gameModel;
-    private CLIIslandWrapper islandWrapper;
-    private CLICloudWrapper cloudWrapper;
-    private CLIShop shop;                       //Maybe expert cli?
-    private List<CLIPlayer> players;
-    private CLISack sack;
-
-    @Deprecated
-    public CLI(Board[] boards,
-               GameModel gameModel,
-               IslandsWrapper islandsWrapper,
-               CloudWrapper cloudWrapper,
-               Shop shop,
-               List<Player> players,
-               Sack sack) {
-
-        this.boards = new ArrayList<>();
-        for (Board board : boards) this.boards.add(new CLIBoard(board));
-        this.gameModel = new CLIGameModel(gameModel);
-        this.islandWrapper = new CLIIslandWrapper(islandsWrapper);
-        this.cloudWrapper = new CLICloudWrapper(cloudWrapper);
-        this.shop = new CLIShop(shop);
-        this.players = new ArrayList<>();
-        for (Player player : players) this.players.add(new CLIPlayer(player, false));
-        this.sack = new CLISack(sack);
-    }
+    private final List<CLIBoard> boards;
+    private final CLIGameModel gameModel;
+    private final CLIIslandWrapper islandWrapper;
+    private final CLICloudWrapper cloudWrapper;
+    private final CLIShop shop;
+    private final List<CLIPlayer> players;
+    private final CLISack sack;
 
     public CLI() {
         //Dummy values that will be replaced by updates
@@ -211,7 +191,7 @@ public class CLI extends UI {
     private void resetCursor() {
         System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + 1)
                 .render("-----------------------Enter a command---------------------"));
-        for(int i=8; i>=2; i--) {
+        for(int i=12; i>=2; i--) {
             System.out.print( ansi().cursor(0,0).cursorDown(boards.get(0).getY() + 1 + islandWrapper.getY() + 2 + shop.getY() + i).eraseLine());
         }
     }

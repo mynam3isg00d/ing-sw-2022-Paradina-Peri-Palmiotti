@@ -95,7 +95,7 @@ public class EventFactory {
             return b.toJson(event);
         }
 
-        return line;
+        return "not an event";
     }
 
     public static GameEvent jsonToEvent(String json) {

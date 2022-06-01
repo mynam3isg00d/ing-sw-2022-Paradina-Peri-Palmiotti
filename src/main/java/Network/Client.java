@@ -2,6 +2,7 @@ package Network;
 
 import Events.EventFactory;
 import Exceptions.UnknownMessageException;
+import Network.Messages.Message;
 import Network.Messages.PlayerInfoMessage;
 import Util.HelpInterpreter;
 import View.CLI.CLI;
@@ -43,11 +44,12 @@ public class Client {
                     ((CLI) ui).displayHelp(line);
                 } else {
                     line = EventFactory.stringToEventJson(ui.getPlayerID(), line);
+                    if (line.contains("not an event")) {
+                        ui.renderError(new Message(line, true));
+                    }
                     out.println(line);
                     out.flush();
                 }
-
-
             }
         }
     }
@@ -88,11 +90,9 @@ public class Client {
         System.out.println("Connection OK");
 
         Scanner firstScanner = new Scanner(System.in);
-
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
         try {
-            //PrintWriter firstOutput = new PrintWriter(clientSocket.getOutputStream());
 
             String name = null;
             while (name == null) {
