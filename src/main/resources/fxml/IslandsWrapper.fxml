@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="446.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.IslandsWrapperController">
+<children>
+    <fx:include fx:id="island0" layoutY="200.0" source="Island.fxml" />
+    <fx:include fx:id="island1" source="Island.fxml" />
+    <fx:include fx:id="island2" layoutX="200.0" source="Island.fxml" />
+    <fx:include fx:id="island3" layoutX="400.0" source="Island.fxml" />
+    <fx:include fx:id="island4" layoutX="600.0" source="Island.fxml" />
+    <fx:include fx:id="island5" layoutX="800.0" source="Island.fxml" />
+    <fx:include fx:id="island6" layoutX="800.0" layoutY="200.0" source="Island.fxml" />
+    <fx:include fx:id="island7" layoutX="800.0" layoutY="400.0" source="Island.fxml" />
+    <fx:include fx:id="island8" layoutX="600.0" layoutY="400.0" source="Island.fxml" />
+    <fx:include fx:id="island9" layoutX="400.0" layoutY="400.0" source="Island.fxml" />
+    <fx:include fx:id="island10" layoutX="200.0" layoutY="400.0" source="Island.fxml" />
+    <fx:include fx:id="island11" layoutY="400.0" source="Island.fxml" />
+</children>
+</AnchorPane>

@@ -83,7 +83,7 @@ class CLITest {
 
         eg.getCloudController().fillClouds(sc);
 
-        CLI c = new CLI(b, g, iw, cw, s, p, sc);
+        CLI c = new CLI();
         c.display();
 
         GameModel model = new GameModel(3);

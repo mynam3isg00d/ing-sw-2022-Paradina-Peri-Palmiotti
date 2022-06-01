@@ -71,7 +71,6 @@ public class Client {
                     String line = in.readLine();
 
                     messageInterpreter.interpret(line);
-
                 } catch (IOException | UnknownMessageException e) {
                     e.printStackTrace();
                 }
