@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="327.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.BoardController">
+   <children>
+      <ImageView fitHeight="371.0" fitWidth="786.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Plancia_DEF_Comp.png" />
+         </image>
+      </ImageView>
+      <GridPane fx:id="entrance" layoutX="21.0" layoutY="55.0" prefHeight="250.0" prefWidth="88.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="55.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+      <AnchorPane fx:id="dinings" layoutX="136.0" layoutY="32.0" prefHeight="278.0" prefWidth="391.0">
+         <children>
+            <FlowPane fx:id="greenTable" hgap="2.3" layoutX="8.0" layoutY="8.0" prefHeight="43.0" prefWidth="391.0" />
+            <FlowPane fx:id="redTable" hgap="2.3" layoutX="5.0" layoutY="66.0" prefHeight="43.0" prefWidth="391.0" />
+            <FlowPane fx:id="yellowTable" hgap="2.3" layoutX="8.0" layoutY="117.0" prefHeight="43.0" prefWidth="391.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></FlowPane>
+            <FlowPane fx:id="pinkTable" hgap="2.3" layoutX="8.0" layoutY="178.0" prefHeight="43.0" prefWidth="391.0" />
+            <FlowPane fx:id="blueTable" hgap="2.3" layoutX="9.0" layoutY="233.0" prefHeight="37.0" prefWidth="391.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="558.0" layoutY="39.0" prefHeight="278.0" prefWidth="30.0">
+         <children>
+            <ImageView fx:id="greenProf" fitHeight="32.0" fitWidth="30.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, #000000, 2, 0.3, 1, 1);">
+               <image>
+                  <Image url="@../graphics/wooden_pieces/teacher_green.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="redProf" fitHeight="32.0" fitWidth="30.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, #000000, 2, 0.3, 1, 1);">
+               <image>
+                  <Image url="@../graphics/wooden_pieces/teacher_red.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="yellowProf" fitHeight="32.0" fitWidth="30.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, #000000, 2, 0.3, 1, 1);">
+               <image>
+                  <Image url="@../graphics/wooden_pieces/teacher_yellow.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="pinkProf" fitHeight="32.0" fitWidth="30.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, #000000, 2, 0.3, 1, 1);">
+               <image>
+                  <Image url="@../graphics/wooden_pieces/teacher_pink.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="blueProf" fitHeight="32.0" fitWidth="30.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, #000000, 2, 0.3, 1, 1);">
+               <image>
+                  <Image url="@../graphics/wooden_pieces/teacher_blue.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <GridPane fx:id="towers" layoutX="636.0" layoutY="66.0" prefHeight="208.0" prefWidth="109.0" AnchorPane.bottomAnchor="67.0" AnchorPane.topAnchor="66.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>
