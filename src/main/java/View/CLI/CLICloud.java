@@ -26,7 +26,7 @@ public class CLICloud extends CLIElement {
 
     private void updateLines() {
         if(cloud.getNumOfStudents() == 3) {
-            String[] s = getCorrespondingASCIArray(cloud.getStudents());
+            String[] s = getCorrespondingASCIArray(cloud.peek());
             if (s == null) s = new String[]{" ", " ", " "};
 
             lines.clear();
@@ -38,7 +38,7 @@ public class CLICloud extends CLIElement {
             lines.add( " (   _       ) " );
             lines.add( "  (_) (___)))  " );
         } else {
-            String[] s = getCorrespondingASCIArray(cloud.getStudents());
+            String[] s = getCorrespondingASCIArray(cloud.peek());
             if (s == null) s = new String[]{" ", " ", " ", " "};
 
             lines.clear();

@@ -7,16 +7,18 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="327.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.BoardController">
+
+<Pane fx:id="main" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.BoardController">
    <children>
       <ImageView fitHeight="371.0" fitWidth="786.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/wooden_pieces/Plancia_DEF_Comp.png" />
          </image>
       </ImageView>
-      <GridPane fx:id="entrance" layoutX="21.0" layoutY="55.0" prefHeight="250.0" prefWidth="88.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="55.0">
+      <GridPane fx:id="entrance" layoutX="21.0" layoutY="55.0" prefHeight="250.0" prefWidth="88.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -36,7 +38,8 @@
             <FlowPane fx:id="yellowTable" hgap="2.3" layoutX="8.0" layoutY="117.0" prefHeight="43.0" prefWidth="391.0">
                <opaqueInsets>
                   <Insets />
-               </opaqueInsets></FlowPane>
+               </opaqueInsets>
+            </FlowPane>
             <FlowPane fx:id="pinkTable" hgap="2.3" layoutX="8.0" layoutY="178.0" prefHeight="43.0" prefWidth="391.0" />
             <FlowPane fx:id="blueTable" hgap="2.3" layoutX="9.0" layoutY="233.0" prefHeight="37.0" prefWidth="391.0" />
          </children>
@@ -70,7 +73,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <GridPane fx:id="towers" layoutX="636.0" layoutY="66.0" prefHeight="208.0" prefWidth="109.0" AnchorPane.bottomAnchor="67.0" AnchorPane.topAnchor="66.0">
+      <GridPane fx:id="towers" layoutX="636.0" layoutY="66.0" prefHeight="208.0" prefWidth="109.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -83,4 +86,4 @@
         </rowConstraints>
       </GridPane>
    </children>
-</AnchorPane>
+</Pane>

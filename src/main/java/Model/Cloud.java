@@ -47,17 +47,15 @@ public class Cloud {
         return studentsOnCloud;
     }
 
-    //i'm not gonna jdoc this
-
-    public List<Student> getStudents() {
-        return new ArrayList<>(this.students);
-    }
-
     public boolean isEmpty() {
         if (students.size() == 0) return true;
         return false;
     }
 
+    /**
+     * Returns the list of students on the cloud without taking the students from it
+     * @return an arraylist of the students on the cloud
+     */
     public List<Student> peek() {
         return new ArrayList<>(students);
     }

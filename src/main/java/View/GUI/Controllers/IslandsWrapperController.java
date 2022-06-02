@@ -13,6 +13,7 @@ public class IslandsWrapperController {
 
     public void update(IslandsWrapper islandsWrapper) {
         int num = islandsWrapper.getIslandLength();
+        int mpos = islandsWrapper.getMotherNaturePos();
 
         //Can't be done with a loop since controllers have to be accessed with [id]Controller
 
@@ -22,7 +23,8 @@ public class IslandsWrapperController {
             island0Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island0Controller.update(islandsWrapper.getIsland(0));
+            island0Controller.update(islandsWrapper.getIsland(0), 0);
+            island0Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 1
@@ -31,7 +33,8 @@ public class IslandsWrapperController {
             island1Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island1Controller.update(islandsWrapper.getIsland(1));
+            island1Controller.update(islandsWrapper.getIsland(1), 1);
+            island1Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 2
@@ -40,7 +43,8 @@ public class IslandsWrapperController {
             island2Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island2Controller.update(islandsWrapper.getIsland(2));
+            island2Controller.update(islandsWrapper.getIsland(2), 2);
+            island2Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 3
@@ -49,7 +53,8 @@ public class IslandsWrapperController {
             island3Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island3Controller.update(islandsWrapper.getIsland(3));
+            island3Controller.update(islandsWrapper.getIsland(3), 3);
+            island3Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 4
@@ -58,7 +63,8 @@ public class IslandsWrapperController {
             island4Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island4Controller.update(islandsWrapper.getIsland(4));
+            island4Controller.update(islandsWrapper.getIsland(4), 4);
+            island4Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 5
@@ -67,7 +73,8 @@ public class IslandsWrapperController {
             island5Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island5Controller.update(islandsWrapper.getIsland(5));
+            island5Controller.update(islandsWrapper.getIsland(5), 5);
+            island5Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 6
@@ -76,7 +83,8 @@ public class IslandsWrapperController {
             island6Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island6Controller.update(islandsWrapper.getIsland(6));
+            island6Controller.update(islandsWrapper.getIsland(6), 6);
+            island6Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 7
@@ -85,7 +93,8 @@ public class IslandsWrapperController {
             island7Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island7Controller.update(islandsWrapper.getIsland(7));
+            island7Controller.update(islandsWrapper.getIsland(7), 7);
+            island7Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 8
@@ -94,7 +103,8 @@ public class IslandsWrapperController {
             island8Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island8Controller.update(islandsWrapper.getIsland(8));
+            island8Controller.update(islandsWrapper.getIsland(8), 8);
+            island8Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 9
@@ -103,7 +113,8 @@ public class IslandsWrapperController {
             island9Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island9Controller.update(islandsWrapper.getIsland(9));
+            island9Controller.update(islandsWrapper.getIsland(9), 9);
+            island9Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 10
@@ -112,7 +123,8 @@ public class IslandsWrapperController {
             island10Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island10Controller.update(islandsWrapper.getIsland(10));
+            island10Controller.update(islandsWrapper.getIsland(10), 10);
+            island10Controller.setDistanceFromMother(mpos, num);
         }
 
         //island 11
@@ -121,7 +133,8 @@ public class IslandsWrapperController {
             island11Controller.show(false);
         } else {
             //There is an island, show appropriate info
-            island11Controller.update(islandsWrapper.getIsland(11));
+            island11Controller.update(islandsWrapper.getIsland(11), 11);
+            island11Controller.setDistanceFromMother(mpos, num);
         }
 
     }

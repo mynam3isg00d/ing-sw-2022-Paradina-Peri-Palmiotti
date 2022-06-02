@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:controller="View.GUI.Controllers.GameSceneController" layoutX="-100.0" layoutY="-50.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <fx:include fx:id="islandsWrapper" scaleX="0.8" scaleY="0.8" source="IslandsWrapper.fxml" />
-        <fx:include fx:id="boardMain" layoutX="750.0" minHeight="-Infinity" scaleX="0.6" scaleY="0.6" source="Board.fxml" />
-    </children>
 
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.GameSceneController">
+   <children>
+      <ImageView fitHeight="938.0" fitWidth="1567.0" opacity="0.21" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Background/gameScene_bg.jpg" />
+         </image>
+      </ImageView>
+      <fx:include fx:id="islandsWrapper" layoutX="-80.0" layoutY="-40.0" scaleX="0.8" scaleY="0.8" source="IslandsWrapper.fxml" />
+      <fx:include fx:id="boardMain" layoutX="520.0" layoutY="250.0" rotate="90.0" scaleX="0.9" scaleY="0.9" source="Board.fxml" />
+      <fx:include fx:id="board1" layoutX="880.0" layoutY="-17.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
+      <fx:include fx:id="board2" layoutX="880.0" layoutY="160.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
+      <fx:include fx:id="board3" layoutX="880.0" layoutY="340.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
+      <fx:include fx:id="cloudWrapper" layoutX="600.0" layoutY="-70.0" scaleX="0.75" scaleY="0.75" source="CloudWrapper.fxml" />
+      <ImageView fitHeight="128.0" fitWidth="81.0" layoutX="1078.0" layoutY="611.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="128.0" fitWidth="81.0" layoutX="1169.0" layoutY="611.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="128.0" fitWidth="81.0" layoutX="1261.0" layoutY="611.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="177.0" fitWidth="131.0" layoutX="1352.0" layoutY="611.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

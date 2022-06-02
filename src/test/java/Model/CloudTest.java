@@ -15,7 +15,7 @@ class CloudTest {
     @Test
     void cloudConstructorTest() {
         Cloud c = new Cloud(453);
-        assertNotNull(c.getStudents());
+        assertNotNull(c.peek());
         assertTrue(c.isEmpty());
     }
 

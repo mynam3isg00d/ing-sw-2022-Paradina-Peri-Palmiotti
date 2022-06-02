@@ -5,12 +5,22 @@ import Model.Student;
 import View.GUI.Nodes.StudentTile;
 import View.GUI.Nodes.TowerTile;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class BoardController {
+
+    private boolean interactable;
+    private String name = null;
+    @FXML
+    private Pane main;
     @FXML
     private GridPane entrance;
     @FXML
@@ -22,12 +32,46 @@ public class BoardController {
     @FXML
     private GridPane towers;
 
+    private void init() {
+        if(interactable) {
+            dinings.setOnDragOver(dragEvent -> {
+                /* data is dragged over the target */
+                /* accept it only if it is not dragged from the same node
+                 * and if it has a string data */
+                if (dragEvent.getGestureSource().getClass().equals(StudentTile.class) &&
+                        dragEvent.getDragboard().hasString()) {
+                    /* allow for both copying and moving, whatever user chooses */
+                    dragEvent.acceptTransferModes(TransferMode.ANY);
+                }
+
+                dragEvent.consume();
+            });
+
+            dinings.setOnDragDropped(dragEvent -> {
+                Dragboard db = dragEvent.getDragboard();
+                boolean success = false;
+                if (db.getString().contains("id")) {
+                    String s = ((Node)dragEvent.getGestureTarget()).getId();
+                    success = true;
+                }
+                /* let the source know whether the string was successfully
+                 * transferred and used */
+                int id = ((StudentTile) dragEvent.getGestureSource()).getIndex();
+                System.out.println("move student " + id + " to dining");
+                dragEvent.setDropCompleted(success);
+
+                dragEvent.consume();}
+            );
+        }
+    }
+
     public void update(Board board) {
+        this.name = board.getPlayerName();
 
         //Entrance
         Student[] bentr = board.getEntrance();
         for(int i=0; i<bentr.length; i++) {
-            if(bentr[i] != null) entrance.add(new StudentTile(bentr[i].getColorId(), true, i), i%2, i/2);
+            if(bentr[i] != null) entrance.add(new StudentTile(bentr[i].getColorId(), interactable, i), i%2, i/2);
         }
 
         //Dinings
@@ -55,5 +99,18 @@ public class BoardController {
         //Towers
         int btow = board.getTowersNum();
         for(int i=0; i<btow; i++) towers.add(new TowerTile(board.getTeamID(), 70), i%2, i/2);
+    }
+
+    public void setInteractable(boolean b) {
+        this.interactable = b;
+        init();
+    }
+
+    public void show(boolean b) {
+        main.setVisible(b);
+    }
+
+    public String getName() {
+        return name;
     }
 }

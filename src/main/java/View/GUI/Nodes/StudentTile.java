@@ -1,8 +1,11 @@
 package View.GUI.Nodes;
 
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 
@@ -40,7 +43,6 @@ public class StudentTile extends ImageView {
             //Define drag methods
 
             this.setOnDragDetected(mouseEvent -> {
-                System.out.println("begin drag");
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
 
                 ClipboardContent content = new ClipboardContent();
@@ -79,9 +81,7 @@ public class StudentTile extends ImageView {
 
         if(this.draggable) {
             //Define drag methods
-
             this.setOnDragDetected(mouseEvent -> {
-                System.out.println("begin drag");
                 Dragboard db = this.startDragAndDrop(TransferMode.ANY);
 
                 ClipboardContent content = new ClipboardContent();
@@ -94,4 +94,6 @@ public class StudentTile extends ImageView {
             //TODO: follow mouse cursor
         }
     }
+
+    public int getIndex() {return this.id;}
 }
