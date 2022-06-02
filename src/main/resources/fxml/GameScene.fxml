@@ -4,7 +4,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.GameSceneController">
    <children>
       <ImageView fitHeight="938.0" fitWidth="1567.0" opacity="0.21" pickOnBounds="true" preserveRatio="true">
@@ -38,5 +37,6 @@
             <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
          </image>
       </ImageView>
+      <fx:include fx:id="hand" layoutX="250.0" layoutY="800.0" source="Hand.fxml" />
    </children>
 </Pane>

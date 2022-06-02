@@ -3,6 +3,7 @@ package View.GUI.Controllers;
 import Model.Board;
 import Model.CloudWrapper;
 import Model.IslandsWrapper;
+import Model.Player;
 import javafx.fxml.FXML;
 
 public class GameSceneController {
@@ -13,6 +14,8 @@ public class GameSceneController {
     IslandsWrapperController islandsWrapperController;
     @FXML
     CloudWrapperController cloudWrapperController;
+    @FXML
+    HandController handController;
 
     @FXML
     public void initialize() {
@@ -53,8 +56,9 @@ public class GameSceneController {
             board3Controller.update(b);
             board3Controller.show(true);
         }
-
     }
+
+    public void updatePlayer(Player p) {handController.update(p);}
     public void updateIslandsWrapper(IslandsWrapper iw) {islandsWrapperController.update(iw);}
     public void updateCloudWrapper(CloudWrapper cw) {cloudWrapperController.update(cw);}
 }

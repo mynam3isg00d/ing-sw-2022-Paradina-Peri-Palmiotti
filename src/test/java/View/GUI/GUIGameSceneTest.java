@@ -62,12 +62,17 @@ public class GUIGameSceneTest extends Application {
             e.printStackTrace();
         }
 
+        //Player (for now 1)
+        Player p = new Player("ccc");
+        p.chooseWizard(0);
+
         gameSceneController.updateCloudWrapper(cw);
         gameSceneController.updateMainBoard(b);
         gameSceneController.updateIslandsWrapper(iw);
         gameSceneController.updateBoard(b1);
         gameSceneController.updateBoard(b2);
-        //gameSceneController.updateBoard(b3);
+        gameSceneController.updateBoard(b3);
+        gameSceneController.updatePlayer(p);
 
         primaryStage.setScene(scene);
         primaryStage.show();
