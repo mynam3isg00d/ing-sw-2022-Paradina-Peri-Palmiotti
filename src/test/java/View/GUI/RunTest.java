@@ -28,4 +28,9 @@ public class RunTest {
     public void testIpChoiceGui() {
         Application.launch(GUILoginTest.class);
     }
+
+    @Test
+    public void testGameConfigGui() {
+        Application.launch(GUIConfigTest.class);
+    }
 }
