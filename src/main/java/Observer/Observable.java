@@ -9,7 +9,7 @@ import java.util.List;
 public class Observable {
 
     @Exclude
-    private final List<Observer> observers = new ArrayList<>();
+    protected final List<Observer> observers = new ArrayList<>();
 
     public void addObserver(Observer observer){
         synchronized (observers) {

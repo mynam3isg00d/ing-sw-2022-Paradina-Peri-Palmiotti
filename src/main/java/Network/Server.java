@@ -166,6 +166,17 @@ public class Server implements Runnable{
     }
 
     /**
+     *
+     * @param id
+     */
+    public void deregisterConnection(String name, String id) {
+        for (int i = 0; i < 6; i++) {
+            waitingLists[i].remove(new Player(id, name, -1));
+        }
+        System.out.println("removed " + name + ", " + id + " from waitingList");
+    }
+
+    /**
      * The server listens in order to accept connections.
      * Each new connection is executed by the thread pool.
      */

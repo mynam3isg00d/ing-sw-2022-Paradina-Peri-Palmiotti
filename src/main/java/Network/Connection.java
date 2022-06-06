@@ -62,6 +62,8 @@ public class Connection extends Observable implements Runnable {
             int playerNumber = 0;
             boolean validEntry;
             boolean expert = false;
+
+            boolean disconnectedEarly = false;
             do {
                 validEntry = true;
                 try {
@@ -77,20 +79,33 @@ public class Connection extends Observable implements Runnable {
                     //player number
                     if (playerNumber != 2 && playerNumber != 3 && playerNumber != 4) throw new Exception();
 
+                }  catch (NoSuchElementException e) {
+                    disconnectedEarly = true;
                 } catch (Exception e) {
                     validEntry = false;
                     e.printStackTrace();
                 }
-            } while(!validEntry);
+            } while(!validEntry && !disconnectedEarly);
 
-            server.lobby(this, name, playerNumber, expert);
+            if (!disconnectedEarly) {
+                server.lobby(this, name, playerNumber, expert);
 
-            while (isActive) {
-                String message = in.nextLine();
-                notify(message);
+                while (isActive) {
+                    try {
+                        String message = in.nextLine();
+                        notify(message);
+                    } catch (NoSuchElementException e) { //thrown if one disconnects
+                        System.out.println("Client with name " + name + " disconnected");
 
-                //Object o = in.get??
-                //notifica virtual view
+                        if(observers.isEmpty()) {  //if the observers list is empty, the game hasn't started
+                            server.deregisterConnection(name, id);
+                        } else {    //else the game has started
+                            notify("{\"eventId\":\"0010\"}");
+                        }
+
+                        isActive = false;
+                    }
+                }
             }
         }  catch (Exception e) {
             e.printStackTrace();

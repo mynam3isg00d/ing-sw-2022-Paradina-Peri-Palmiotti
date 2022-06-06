@@ -640,9 +640,14 @@ public class Game implements Observer {
         gameModel.newRound();
     }
 
+    private void forceEnd() {
+        gameModel.setGamePhase(Phase.END);
+    }
+
     public void jsonToEvent(String json) throws Exception {
         Gson b = new GsonBuilder().serializeNulls().create();
 
+        System.out.println(json);
         JsonObject messageAsJsonObject = b.fromJson(json, JsonObject.class);
         String code = messageAsJsonObject.get("eventId").getAsString();
 
@@ -664,6 +669,9 @@ public class Game implements Observer {
                 break;
             case "0005":
                 handleEvent(b.fromJson(json, PickStudentsFromCloudEvent.class));
+                break;
+            case "0010":
+                forceEnd();
                 break;
             default:
                 System.out.println("Error from Game.jsonToEvent: code not supported");
