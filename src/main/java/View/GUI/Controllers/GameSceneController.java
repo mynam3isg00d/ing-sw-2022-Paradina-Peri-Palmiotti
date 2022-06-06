@@ -4,6 +4,7 @@ import Model.Board;
 import Model.CloudWrapper;
 import Model.IslandsWrapper;
 import Model.Player;
+import View.GUI.GUI;
 import javafx.fxml.FXML;
 
 public class GameSceneController {
@@ -15,14 +16,19 @@ public class GameSceneController {
     @FXML
     CloudWrapperController cloudWrapperController;
     @FXML
-    HandController handController;
+    PlayerController playerMainController, player1Controller, player2Controller, player3Controller;
 
     @FXML
     public void initialize() {
         boardMainController.setInteractable(true);
-        board1Controller.setInteractable(false); board1Controller.show(false);
-        board2Controller.setInteractable(false); board2Controller.show(false);
-        board3Controller.setInteractable(false); board3Controller.show(false);
+        playerMainController.setInteractable(true);
+
+        player1Controller.setMouseTransparent(true);
+        player2Controller.setMouseTransparent(true);
+        player3Controller.setMouseTransparent(true);
+        board1Controller.show(false);
+        board2Controller.show(false);
+        board3Controller.show(false);
     }
 
     public void updateMainBoard(Board b) {
@@ -33,10 +39,13 @@ public class GameSceneController {
         if(board1Controller.getName() != null && board1Controller.getName().equals(b.getPlayerName())) {
             //It's board 1, update
             board1Controller.update(b);
-        } else if (board2Controller.getName() != null && board1Controller.getName().equals(b.getPlayerName())) {
+            return;
+        } else if (board2Controller.getName() != null && board2Controller.getName().equals(b.getPlayerName())) {
             board2Controller.update(b);
+            return;
         } else if (board3Controller.getName() != null && board3Controller.getName().equals(b.getPlayerName())) {
             board3Controller.update(b);
+            return;
         }
 
         //Name not found, update the first empty board (new player)
@@ -58,7 +67,50 @@ public class GameSceneController {
         }
     }
 
-    public void updatePlayer(Player p) {handController.update(p);}
+    public void updateMainPlayer(Player p) {
+        playerMainController.update(p);
+    }
+    
+    public void updatePlayer(Player p) {
+        if(player1Controller.getName() != null && player1Controller.getName().equals(p.getName())) {
+            //It's player 1, update
+            player1Controller.update(p);
+            return;
+        } else if (player2Controller.getName() != null && player2Controller.getName().equals(p.getName())) {
+            player2Controller.update(p);
+            return;
+        } else if (player3Controller.getName() != null && player3Controller.getName().equals(p.getName())) {
+            player3Controller.update(p);
+            return;
+        }
+
+        //Name not found, update the first empty player (new player)
+        if(player1Controller.getName() == null) {
+            player1Controller.update(p);
+            return;
+        }
+
+        if(player2Controller.getName() == null) {
+            player2Controller.update(p);
+            return;
+        }
+
+        if(player3Controller.getName() == null) {
+            player3Controller.update(p);
+            return;
+        }
+    }
     public void updateIslandsWrapper(IslandsWrapper iw) {islandsWrapperController.update(iw);}
     public void updateCloudWrapper(CloudWrapper cw) {cloudWrapperController.update(cw);}
+
+    public void connectGUI(GUI gui) {
+        boardMainController.connectGUI(gui);
+        board1Controller.connectGUI(gui);
+        board2Controller.connectGUI(gui);
+        board3Controller.connectGUI(gui);
+
+        islandsWrapperController.connectGUI(gui);
+        cloudWrapperController.connectGUI(gui);
+        playerMainController.connectGUI(gui);
+    }
 }

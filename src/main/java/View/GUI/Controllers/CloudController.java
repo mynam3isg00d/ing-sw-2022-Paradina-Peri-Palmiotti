@@ -2,6 +2,7 @@ package View.GUI.Controllers;
 
 import Model.Cloud;
 import Model.Student;
+import View.GUI.Nodes.GUILeaf;
 import View.GUI.Nodes.StudentTile;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -10,7 +11,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.List;
 
-public class CloudController {
+public class CloudController extends GUILeaf {
 
     private int cloudId;
     @FXML
@@ -27,7 +28,7 @@ public class CloudController {
     }
 
     public void mouseClicked(MouseEvent mouseEvent) {
-        System.out.println("pick cloud " + cloudId);
+        sendEvent("pick cloud " + cloudId);
     }
 
     public void update(Cloud cloud, int id) {
@@ -35,7 +36,8 @@ public class CloudController {
         List<Student> cstud = cloud.peek();
 
         //Update grid
-        cloudGrid.getChildren().removeAll();
+        int prevSize = cloudGrid.getChildren().size();
+        cloudGrid.getChildren().remove(0, prevSize);
         for(int i=0; i<cstud.size(); i++) {
             cloudGrid.add(new StudentTile(cstud.get(i).getColorId(), false, -1, 35), i%2, i/2);
         }

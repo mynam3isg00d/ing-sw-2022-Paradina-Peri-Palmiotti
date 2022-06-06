@@ -1,16 +1,19 @@
 package View.GUI.Nodes;
 
-import javafx.event.EventHandler;
+import View.GUI.Controllers.PlayerController;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 public class AssistantCard extends ImageView {
 
+    private PlayerController handController;
+    private String playerID;
     private int index;
     private double sizex, sizey;
 
-    public AssistantCard(int cardId, int index, double sizex, double sizey) {
+    //Assistant in hand
+    public AssistantCard(PlayerController hand, int cardId, int index, double sizex, double sizey) {
+        this.handController = hand;
         this.sizex = sizex;
         this.sizey = sizey;
         this.setFitWidth(sizex); this.setFitHeight(sizey);
@@ -28,8 +31,7 @@ public class AssistantCard extends ImageView {
         });
 
         this.setOnMouseClicked(mouseEvent -> {
-            System.out.println("play assistant " + index);
+            hand.sendEvent("play assistant " + index);
         });
     }
-
 }

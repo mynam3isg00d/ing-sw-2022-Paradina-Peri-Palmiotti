@@ -13,7 +13,7 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class MessageInterpreter {
 
     private UI ui;
-    Gson b;
+    private Gson b;
 
     public MessageInterpreter(UI ui) {
         this.ui = ui;
@@ -87,8 +87,6 @@ public class MessageInterpreter {
                 }
                 break;
             default:
-                //Default to simple message
-                //System.out.println(message);
                 throw new UnknownMessageException();
         }
     }

@@ -1,6 +1,7 @@
 package View.GUI.Controllers;
 
 import Model.CloudWrapper;
+import View.GUI.GUI;
 import javafx.fxml.FXML;
 
 public class CloudWrapperController {
@@ -34,5 +35,12 @@ public class CloudWrapperController {
         } else {
             cloud3Controller.update(cw.getCloud(3), 3);
         }
+    }
+
+    public void connectGUI(GUI gui) {
+        cloud0Controller.connectGUI(gui);
+        cloud1Controller.connectGUI(gui);
+        cloud2Controller.connectGUI(gui);
+        cloud3Controller.connectGUI(gui);
     }
 }

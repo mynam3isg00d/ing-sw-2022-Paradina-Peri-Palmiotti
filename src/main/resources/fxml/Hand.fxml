@@ -3,10 +3,19 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.Pane?>
 
-
-<FlowPane fx:id="hand" fx:controller="View.GUI.Controllers.HandController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="main" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.PlayerController">
    <children>
+      <FlowPane fx:id="hand" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="1200.0">
+         <children>
 
+          </children>
+      </FlowPane>
+      <ImageView fx:id="assistantInPlay" fitHeight="177.0" fitWidth="131.0" layoutX="1099.0" layoutY="-199.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
+         </image>
+      </ImageView>
    </children>
-</FlowPane>
+</Pane>

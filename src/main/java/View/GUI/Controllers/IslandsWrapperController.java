@@ -1,15 +1,14 @@
 package View.GUI.Controllers;
 
 import Model.IslandsWrapper;
+import View.GUI.GUI;
 import javafx.fxml.FXML;
 
 public class IslandsWrapperController {
     @FXML
-    IslandController island0Controller, island1Controller, island2Controller, island3Controller;
-    @FXML
-    IslandController island4Controller, island5Controller, island6Controller, island7Controller;
-    @FXML
-    IslandController island8Controller, island9Controller, island10Controller, island11Controller;
+    private IslandController island0Controller, island1Controller, island2Controller, island3Controller,
+                             island4Controller, island5Controller, island6Controller, island7Controller,
+                             island8Controller, island9Controller, island10Controller, island11Controller;
 
     public void update(IslandsWrapper islandsWrapper) {
         int num = islandsWrapper.getIslandLength();
@@ -137,5 +136,21 @@ public class IslandsWrapperController {
             island11Controller.setDistanceFromMother(mpos, num);
         }
 
+    }
+
+    public void connectGUI(GUI gui) {
+        //I generated this in python, if it's worth anything
+        island0Controller.connectGUI(gui);
+        island1Controller.connectGUI(gui);
+        island2Controller.connectGUI(gui);
+        island3Controller.connectGUI(gui);
+        island4Controller.connectGUI(gui);
+        island5Controller.connectGUI(gui);
+        island6Controller.connectGUI(gui);
+        island7Controller.connectGUI(gui);
+        island8Controller.connectGUI(gui);
+        island9Controller.connectGUI(gui);
+        island10Controller.connectGUI(gui);
+        island11Controller.connectGUI(gui);
     }
 }

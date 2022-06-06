@@ -27,7 +27,7 @@ public class GUIBoardTest extends Application {
         Scene scene = new Scene(root.load());
         BoardController boardController = root.getController();
 
-        Board b = new Board("aa", 0, 8, 7);
+        Board b = new Board("aa","aa", 0, 8, 7);
         try {
             b.addToEntrance(Student.RED);
             b.addToEntrance(Student.BLUE);

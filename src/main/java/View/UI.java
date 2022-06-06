@@ -2,6 +2,7 @@ package View;
 
 import Model.*;
 import Network.Messages.Message;
+import javafx.application.Application;
 
 public abstract class UI {
 

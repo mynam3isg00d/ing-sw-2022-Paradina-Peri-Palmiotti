@@ -1,9 +1,7 @@
 package View.GUI;
 
-import Controller.IslandController;
 import Model.*;
 import View.GUI.Controllers.GameSceneController;
-import View.GUI.Controllers.IslandsWrapperController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -29,7 +27,7 @@ public class GUIGameSceneTest extends Application {
 
 
         //Main Board
-        Board b = new Board("aa", 0, 8, 7);
+        Board b = new Board("aa", "aa", 0, 8, 7);
         try {
             b.addToEntrance(new Sack(120).draw(7));
             for(int i=0; i<10; i++) b.addToDining(Student.YELLOW);
@@ -44,11 +42,11 @@ public class GUIGameSceneTest extends Application {
         }
 
         //More boards
-        Board b1 = new Board("b", 1, 8, 7);
+        Board b1 = new Board("b", "b", 1, 8, 7);
         b1.addToEntrance(new Sack(120).draw(7));
-        Board b2 = new Board("bb", 1, 8, 7);
+        Board b2 = new Board("bb","bb", 1, 8, 7);
         b2.addToEntrance(new Sack(120).draw(7));
-        Board b3 = new Board("bbb", 1, 8, 7);
+        Board b3 = new Board("bbb","bbb", 1, 8, 7);
         b3.addToEntrance(new Sack(120).draw(7));
 
         //CloudWrapper
@@ -72,7 +70,7 @@ public class GUIGameSceneTest extends Application {
         gameSceneController.updateBoard(b1);
         gameSceneController.updateBoard(b2);
         gameSceneController.updateBoard(b3);
-        gameSceneController.updatePlayer(p);
+        gameSceneController.updateMainPlayer(p);
 
         primaryStage.setScene(scene);
         primaryStage.show();

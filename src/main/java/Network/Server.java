@@ -91,7 +91,7 @@ public class Server implements Runnable{
             }
 
 
-            //TODO choose squad? fuck no lmao
+            //TODO choose squad?
             switch (playerNumber) {
                 case 2:
                 case 3:
@@ -127,7 +127,6 @@ public class Server implements Runnable{
 
             //each connection in the playing list has to be notified of the start of the match
             for (Map.Entry<Player, Connection> entry : playingLists[listIndex].entrySet()) {
-                //entry.getValue().send("Game Started");
 
                 try {
                     //id setting in client
@@ -144,6 +143,7 @@ public class Server implements Runnable{
 
             //--------------------
             //model gets sent to the client for the first time
+            System.out.println("Game start: sending entire model!");
             c.sendEntireModel();
             //-------------------
         } else {

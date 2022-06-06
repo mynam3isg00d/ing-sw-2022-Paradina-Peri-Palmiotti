@@ -1,7 +1,9 @@
 package View.GUI.Controllers;
 
 
+import Network.Messages.PlayerInfoMessage;
 import Observer.Observable;
+import View.GUI.GUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,7 +15,9 @@ import javafx.scene.control.TextField;
 
 public class GameConfigController {
 
-    ObservableList<String> playersNumberList = FXCollections.observableArrayList("Two", "Three", "Four");
+    private GUI gui;
+
+    ObservableList<String> playersNumberList = FXCollections.observableArrayList("2", "3", "4");
     @FXML
     private TextField name;
 
@@ -26,14 +30,18 @@ public class GameConfigController {
 
     @FXML
     private void initialize() {
-        playerNumberBox.setValue("Two");
+        playerNumberBox.setValue("2");
         playerNumberBox.setItems(playersNumberList);
     }
 
     public void playButton(ActionEvent actionEvent) {
-        System.out.println(name.getText());
-        System.out.println(playerNumberBox.getValue());
-        System.out.println(expert);
+        //Adapt values
+        String toSend_name = name.getText();
+        Integer toSend_playerNum = Integer.parseInt((String)playerNumberBox.getValue());
+        String toSend_expert = (expert) ? "Y" : "N";
+
+        PlayerInfoMessage toSend = new PlayerInfoMessage(toSend_name, toSend_playerNum, toSend_expert);
+        gui.sendPlayerInfoMessage(toSend);
     }
 
     @FXML
@@ -41,4 +49,6 @@ public class GameConfigController {
         if (expert) expert = false;
         else expert = true;
     }
+
+    public void connectGUI(GUI gui) {this.gui = gui;}
 }

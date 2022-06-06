@@ -6,9 +6,11 @@ import Network.Messages.Message;
 import Network.Messages.PlayerInfoMessage;
 import Util.HelpInterpreter;
 import View.CLI.CLI;
+import View.GUI.GUI;
 import View.MessageInterpreter;
 import View.UI;
 import com.google.gson.GsonBuilder;
+import javafx.application.Application;
 
 
 import java.io.BufferedReader;
@@ -69,7 +71,6 @@ public class Client {
             while(true) {
                 try {
                     String line = in.readLine();
-
                     messageInterpreter.interpret(line);
                 } catch (IOException | UnknownMessageException e) {
                     e.printStackTrace();
@@ -85,6 +86,7 @@ public class Client {
     }
 
     public void run() throws IOException {
+
         Socket clientSocket = new Socket(ip, port);
         System.out.println("Connection OK");
 
@@ -129,7 +131,6 @@ public class Client {
             e.printStackTrace();
             firstScanner.close();
         }
-
 
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 

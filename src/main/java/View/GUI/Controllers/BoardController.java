@@ -2,6 +2,8 @@ package View.GUI.Controllers;
 
 import Model.Board;
 import Model.Student;
+import View.GUI.GUI;
+import View.GUI.Nodes.GUILeaf;
 import View.GUI.Nodes.StudentTile;
 import View.GUI.Nodes.TowerTile;
 import javafx.fxml.FXML;
@@ -15,9 +17,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class BoardController {
+public class BoardController extends GUILeaf {
 
-    private boolean interactable;
+    private boolean interactable = false;
     private String name = null;
     @FXML
     private Pane main;
@@ -49,15 +51,10 @@ public class BoardController {
 
             dinings.setOnDragDropped(dragEvent -> {
                 Dragboard db = dragEvent.getDragboard();
-                boolean success = false;
-                if (db.getString().contains("id")) {
-                    String s = ((Node)dragEvent.getGestureTarget()).getId();
-                    success = true;
-                }
-                /* let the source know whether the string was successfully
-                 * transferred and used */
+                boolean success = db.getString().contains("id");
                 int id = ((StudentTile) dragEvent.getGestureSource()).getIndex();
-                System.out.println("move student " + id + " to dining");
+
+                sendEvent("move student " + id + " to dining");
                 dragEvent.setDropCompleted(success);
 
                 dragEvent.consume();}
@@ -66,10 +63,15 @@ public class BoardController {
     }
 
     public void update(Board board) {
+        //TODO: if possible make removeAll method
         this.name = board.getPlayerName();
+        int prevSize;
 
         //Entrance
         Student[] bentr = board.getEntrance();
+
+        prevSize = entrance.getChildren().size();
+        entrance.getChildren().remove(0, prevSize);
         for(int i=0; i<bentr.length; i++) {
             if(bentr[i] != null) entrance.add(new StudentTile(bentr[i].getColorId(), interactable, i), i%2, i/2);
         }
@@ -77,11 +79,16 @@ public class BoardController {
         //Dinings
         int[] bdins = board.getDinings();
 
-        yellowTable.getChildren().removeAll();
-        blueTable.getChildren().removeAll();
-        greenTable.getChildren().removeAll();
-        redTable.getChildren().removeAll();
-        pinkTable.getChildren().removeAll();
+        prevSize = yellowTable.getChildren().size();
+        yellowTable.getChildren().remove(0, prevSize);
+        prevSize = blueTable.getChildren().size();
+        blueTable.getChildren().remove(0, prevSize);
+        prevSize = greenTable.getChildren().size();
+        greenTable.getChildren().remove(0, prevSize);
+        prevSize = redTable.getChildren().size();
+        redTable.getChildren().remove(0, prevSize);
+        prevSize = pinkTable.getChildren().size();
+        pinkTable.getChildren().remove(0, prevSize);
             for(int j=0; j<bdins[0]; j++) yellowTable.getChildren().add(new StudentTile(Student.YELLOW.getColorId(), false, -1, 35));
             for(int j=0; j<bdins[1]; j++) blueTable.getChildren().add(new StudentTile(Student.BLUE.getColorId(), false, -1, 35));
             for(int j=0; j<bdins[2]; j++) greenTable.getChildren().add(new StudentTile(Student.GREEN.getColorId(), false, -1, 35));
@@ -98,6 +105,8 @@ public class BoardController {
 
         //Towers
         int btow = board.getTowersNum();
+        prevSize = towers.getChildren().size();
+        towers.getChildren().remove(0, prevSize);
         for(int i=0; i<btow; i++) towers.add(new TowerTile(board.getTeamID(), 70), i%2, i/2);
     }
 
@@ -113,4 +122,5 @@ public class BoardController {
     public String getName() {
         return name;
     }
+
 }

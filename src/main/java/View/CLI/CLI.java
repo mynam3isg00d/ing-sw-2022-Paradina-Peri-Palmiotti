@@ -4,6 +4,8 @@ import Model.*;
 import Network.Messages.Message;
 import Util.HelpInterpreter;
 import View.UI;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import org.fusesource.jansi.AnsiConsole;
 
 import java.util.ArrayList;

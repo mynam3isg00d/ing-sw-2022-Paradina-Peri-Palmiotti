@@ -17,7 +17,9 @@ public class Board extends Observable {
     private Student[] entrance;
     private boolean[] professors;
     private int towersNum;
+
     private String playerName;
+    private String playerID;
     private int teamID;
     private boolean isTeamLeaderBoard;
 
@@ -31,7 +33,7 @@ public class Board extends Observable {
         isTeamLeaderBoard = true;
     }
 
-    public Board(String name, int teamID, int towersNum, int maxEntrancePlaces) {
+    public Board(String playerID, String name, int teamID, int towersNum, int maxEntrancePlaces) {
         diners = new int[]{0, 0, 0, 0, 0};
         MAXENTRANCEPLACES = maxEntrancePlaces;
         entrance = new Student[MAXENTRANCEPLACES];
@@ -41,6 +43,7 @@ public class Board extends Observable {
         playerName = name;
         this.teamID = teamID;
         isTeamLeaderBoard = towersNum != 0;
+        this.playerID = playerID;
     }
 
     public void sendBoard() {
@@ -178,6 +181,9 @@ public class Board extends Observable {
     }
     public int getTeamID() {
         return teamID;
+    }
+    public String getPlayerID() {
+        return playerID;
     }
     public String getPlayerName() {
         return playerName;

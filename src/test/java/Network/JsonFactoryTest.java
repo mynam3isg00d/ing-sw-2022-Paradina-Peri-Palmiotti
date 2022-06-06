@@ -44,7 +44,7 @@ class JsonFactoryTest {
 
     @Test
     void addAttributeTest() {
-        Board board = new Board("Gigi", 0, 7, 9);
+        Board board = new Board("Gigi", "Gigi", 0, 7, 9);
 
         //board -> json
         JsonFactory fac = new JsonFactory();

@@ -17,26 +17,9 @@
       <fx:include fx:id="board2" layoutX="880.0" layoutY="160.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
       <fx:include fx:id="board3" layoutX="880.0" layoutY="340.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
       <fx:include fx:id="cloudWrapper" layoutX="600.0" layoutY="-70.0" scaleX="0.75" scaleY="0.75" source="CloudWrapper.fxml" />
-      <ImageView fitHeight="128.0" fitWidth="81.0" layoutX="1078.0" layoutY="611.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="128.0" fitWidth="81.0" layoutX="1169.0" layoutY="611.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="128.0" fitWidth="81.0" layoutX="1261.0" layoutY="611.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="177.0" fitWidth="131.0" layoutX="1352.0" layoutY="611.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />
-         </image>
-      </ImageView>
-      <fx:include fx:id="hand" layoutX="250.0" layoutY="800.0" source="Hand.fxml" />
+      <fx:include fx:id="playerMain" layoutX="250.0" layoutY="800.0" source="Hand.fxml" />
+      <fx:include fx:id="player1" layoutX="124.0" layoutY="711.0" scaleX="0.7" scaleY="0.7" source="Hand.fxml" />
+      <fx:include fx:id="player2" layoutX="216.0" layoutY="711.0" scaleX="0.7" scaleY="0.7" source="Hand.fxml" />
+      <fx:include fx:id="player3" layoutX="307.0" layoutY="711.0" scaleX="0.7" scaleY="0.7" source="Hand.fxml" />
    </children>
 </Pane>
