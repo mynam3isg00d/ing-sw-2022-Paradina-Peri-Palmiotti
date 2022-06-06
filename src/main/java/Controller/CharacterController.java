@@ -64,7 +64,7 @@ public class CharacterController {
             case 0: return new ClerkEffect(playerID);
             //case 1: return new FarmerEffect();
             case 2: return new HeraldEffect(playerID);
-            //case 3: return new PostmanEffect();
+            case 3: return new PostmanEffect(playerID);
             //case 4: return new GrandmaEffect();
             case 5: return new CentaurEffect(playerID);
             case 6: return new JesterEffect(playerID);
