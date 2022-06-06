@@ -83,13 +83,10 @@ class CLITest {
 
         eg.getCloudController().fillClouds(sc);
 
-        CLI c = new CLI(b, g, iw, cw, s, p, sc);
-        c.display();
 
         GameModel model = new GameModel(3);
         model.setWinnerTeam(0);
         model.setGamePhase(Phase.END);
-        c.updateModel(model);
     }
 
     private List<Player> getPlayerList(int n) {
