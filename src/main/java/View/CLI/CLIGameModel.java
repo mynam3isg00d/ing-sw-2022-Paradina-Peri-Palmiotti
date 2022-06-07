@@ -89,7 +89,13 @@ public class CLIGameModel extends CLIElement {
         if (phase == null) return "";
         switch (phase) {
             case SETUP:
-                return "choose a wizard!";
+                String s = "choose a wizard!";
+                for(int i=0; i<4; i++) {
+                    if(!gameModel.getPickedWizards()[i]) {
+                        s += "" + i;
+                    }
+                }
+                return s;
             case PLANNING:
                 return "play an assistant!";
             case ACTION_STUDENTS:

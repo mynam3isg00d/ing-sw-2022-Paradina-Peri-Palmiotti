@@ -16,11 +16,6 @@ import java.io.IOException;
 
 public class GUICloudTest extends Application {
 
-    @Test
-    public void CloudTest() {
-        launch();
-    }
-
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/fxml/CloudWrapper.fxml"));

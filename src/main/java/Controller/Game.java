@@ -336,6 +336,8 @@ public class Game implements Observer {
         //sets wizard and initializes hand
         requestingPlayer.chooseWizard(event.getWizardID());
 
+        //update gameModel
+        gameModel.updatePickedWizard(event.getWizardID());
 
         endTurn(event.getPlayerId());
         //if all players have chosen a wizard the first round can begin

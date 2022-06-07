@@ -11,12 +11,12 @@
    <children>
       <ImageView fitHeight="1121.0" fitWidth="1960.0" layoutX="-22.0" layoutY="-19.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/background.png" />
+            <Image url="@../graphics/wooden_pieces/Background/background.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="380.0" fitWidth="960.0" layoutX="488.0" layoutY="519.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/welcomeMessage.png" />
+            <Image url="@../graphics/wooden_pieces/assets/welcomeMessage.png" />
          </image>
       </ImageView>
       <TextField fx:id="ip" text="localhost" alignment="CENTER" layoutX="827.0" layoutY="625.0" prefHeight="77.0" prefWidth="289.0" promptText="IP ADDRESS">

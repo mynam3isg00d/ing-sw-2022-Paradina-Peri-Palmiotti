@@ -1,9 +1,6 @@
 package View.GUI.Controllers;
 
-import Model.Board;
-import Model.CloudWrapper;
-import Model.IslandsWrapper;
-import Model.Player;
+import Model.*;
 import View.GUI.GUI;
 import javafx.fxml.FXML;
 
@@ -17,6 +14,8 @@ public class GameSceneController {
     CloudWrapperController cloudWrapperController;
     @FXML
     PlayerController playerMainController, player1Controller, player2Controller, player3Controller;
+    @FXML
+    PickWizardController wizardsController;
 
     @FXML
     public void initialize() {
@@ -112,5 +111,10 @@ public class GameSceneController {
         islandsWrapperController.connectGUI(gui);
         cloudWrapperController.connectGUI(gui);
         playerMainController.connectGUI(gui);
+        wizardsController.connectGUI(gui);
+    }
+
+    public void updateGameModel(GameModel gm) {
+        wizardsController.update(gm);
     }
 }

@@ -37,7 +37,7 @@ public class GUIAdapter extends UI {
 
     @Override
     public void updateModel(GameModel gm) {
-
+        gameSceneController.updateGameModel(gm);
     }
 
     @Override

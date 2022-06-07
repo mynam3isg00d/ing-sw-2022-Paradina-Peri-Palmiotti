@@ -16,11 +16,6 @@ import java.io.IOException;
 
 public class GUIBoardTest extends Application {
 
-    @Test
-    public void BoardTest() {
-        launch();
-    }
-
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader root = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));

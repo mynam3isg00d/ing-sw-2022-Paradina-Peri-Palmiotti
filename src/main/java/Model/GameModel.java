@@ -14,6 +14,7 @@ public class GameModel extends Observable {
     private Player currentPlayer;
     private int winnerTeam;
     private TurnInfo turnInfo;
+    private final boolean[] pickedWizards = new boolean[]{false, false, false, false};
 
     private class TurnInfo {
         private int numOfStudentsMoved;
@@ -35,6 +36,7 @@ public class GameModel extends Observable {
         currentPlayer = null;
         gamePhase = Phase.SETUP;
         turnInfo = new TurnInfo();
+        winnerTeam = -1;
 
         if (playerNumber == 2 || playerNumber == 4) {
             STUDENTS_PER_TURN = 3;
@@ -126,5 +128,13 @@ public class GameModel extends Observable {
 
     public int getWinnerTeam() {
         return winnerTeam;
+    }
+
+    public void updatePickedWizard(int wizardID) {
+        pickedWizards[wizardID] = true;
+    }
+
+    public boolean[] getPickedWizards() {
+        return pickedWizards;
     }
 }

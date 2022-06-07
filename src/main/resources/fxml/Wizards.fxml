@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.PickWizardController">
+   <children>
+      <Text fx:id="text" layoutX="7.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="x, choose your Wizard!" textAlignment="CENTER" wrappingWidth="386.2301025390625">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ImageView fx:id="w0" fitHeight="150.0" fitWidth="200.0" layoutX="91.0" layoutY="66.0" onMouseClicked="#pickWizard" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, black, 10, 0.1, 0, 0);">
+         <image>
+            <Image url="@../graphics/wooden_pieces/wizard0.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="w1" fitHeight="150.0" fitWidth="200.0" layoutX="211.0" layoutY="66.0" onMouseClicked="#pickWizard" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, black, 10, 0.1, 0, 0);">
+         <image>
+            <Image url="@../graphics/wooden_pieces/wizard1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="w3" fitHeight="150.0" fitWidth="200.0" layoutX="211.0" layoutY="236.0" onMouseClicked="#pickWizard" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, black, 10, 0.1, 0, 0);">
+         <image>
+            <Image url="@../graphics/wooden_pieces/wizard3.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="w2" fitHeight="150.0" fitWidth="200.0" layoutX="91.0" layoutY="236.0" onMouseClicked="#pickWizard" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, black, 10, 0.1, 0, 0);">
+         <image>
+            <Image url="@../graphics/wooden_pieces/wizard2.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>

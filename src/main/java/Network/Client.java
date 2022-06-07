@@ -25,10 +25,9 @@ public class Client {
     private UI ui;
 
     private class LocalInput implements Runnable {
+
         private PrintWriter out;
         private Scanner in;
-
-
 
         public LocalInput(PrintWriter out) {
             this.out = out;
@@ -73,7 +72,6 @@ public class Client {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
                 if (line != null) {
                     try {
@@ -142,16 +140,14 @@ public class Client {
             firstScanner.close();
         }
 
-
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
 
         try {
             //thread listening the player input
-            new Thread(new LocalInput(out)).start();
+            new Thread(new Client.LocalInput(out)).start();
 
             //thread listening messages from the socket, then prints them
-            new Thread(new RemoteInput(in)).start();
+            new Thread(new Client.RemoteInput(in)).start();
 
         } catch (Exception e) {
             System.out.println("Connection closed from the client side");

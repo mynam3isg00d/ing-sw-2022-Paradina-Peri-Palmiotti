@@ -9,10 +9,6 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 
 public class GUIGameSceneTest extends Application {
-    @Test
-    public void test() {
-        launch();
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
