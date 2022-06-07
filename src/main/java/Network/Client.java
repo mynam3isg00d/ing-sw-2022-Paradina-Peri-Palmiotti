@@ -6,11 +6,9 @@ import Network.Messages.Message;
 import Network.Messages.PlayerInfoMessage;
 import Util.HelpInterpreter;
 import View.CLI.CLI;
-import View.GUI.GUI;
 import View.MessageInterpreter;
 import View.UI;
 import com.google.gson.GsonBuilder;
-import javafx.application.Application;
 
 
 import java.io.BufferedReader;
@@ -21,7 +19,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-
+    boolean isActive = true;
     private String ip;
     private int port;
     private UI ui;
@@ -30,27 +28,27 @@ public class Client {
         private PrintWriter out;
         private Scanner in;
 
+
+
         public LocalInput(PrintWriter out) {
             this.out = out;
             in = new Scanner(System.in);
         }
 
-        public void asyncSend(String message) {
-            out.println(message);
-        }
-
         public void run() {
-            while(true) {
+            while(isActive) {
                 String line = in.nextLine();
-                if (HelpInterpreter.isHelp(line)) {
-                    ((CLI) ui).displayHelp(line);
-                } else {
-                    line = EventFactory.stringToEventJson(ui.getPlayerID(), line);
-                    if (line.contains("not an event")) {
-                        ui.renderError(new Message(line, true));
+                if (isActive) {
+                    if (HelpInterpreter.isHelp(line)) {
+                        ((CLI) ui).displayHelp(line);
+                    } else {
+                        line = EventFactory.stringToEventJson(ui.getPlayerID(), line);
+                        if (line.contains("not an event")) {
+                            ui.renderError(new Message(line, true));
+                        }
+                        out.println(line);
+                        out.flush();
                     }
-                    out.println(line);
-                    out.flush();
                 }
             }
         }
@@ -68,12 +66,25 @@ public class Client {
             this.messageInterpreter = new MessageInterpreter(ui);
         }
         public void run() {
-            while(true) {
+            while(isActive) {
+                String line = null;
                 try {
-                    String line = in.readLine();
-                    messageInterpreter.interpret(line);
-                } catch (IOException | UnknownMessageException e) {
+                    line = in.readLine();
+                } catch (IOException e) {
                     e.printStackTrace();
+                }
+
+
+                if (line != null) {
+                    try {
+                        messageInterpreter.interpret(line);
+                    } catch (UnknownMessageException e) {
+
+                        e.printStackTrace();
+                    }
+                } else {
+                    isActive = false;
+                    System.out.println("Server RIP\nPress enter to close the app");
                 }
             }
         }
@@ -86,7 +97,6 @@ public class Client {
     }
 
     public void run() throws IOException {
-
         Socket clientSocket = new Socket(ip, port);
         System.out.println("Connection OK");
 
@@ -131,6 +141,7 @@ public class Client {
             e.printStackTrace();
             firstScanner.close();
         }
+
 
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 

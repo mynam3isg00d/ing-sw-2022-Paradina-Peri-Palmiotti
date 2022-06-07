@@ -38,6 +38,8 @@ public class Game implements Observer {
 
     protected GameModel gameModel;
 
+    private boolean isPostmanActive = false;
+
     /**
      * Once the lobby is filled, the Game can be initialized
      * @param players The list of players accepted by the lobby.
@@ -242,6 +244,8 @@ public class Game implements Observer {
 
         //illegal number of steps requested
         int maximumSteps = gameModel.getCurrentPlayer().getAssistantInPlay().getMotherNumber();
+        if (isPostmanActive) maximumSteps += 2;
+
         int numberOfSteps = event.getNumberOfSteps();
         if (numberOfSteps > maximumSteps || numberOfSteps <= 0) throw new InvalidMoveException("You must move mother nature a number of steps which is between 0 and the number indicated on the Assistant card you played");
 
@@ -347,7 +351,7 @@ public class Game implements Observer {
     //Returns the teamID of the winning team,
     //                      otherwise returns -1 if there are no winners
     //                      otherwise returns -2 if it's a draw
-    private int checkTowerEnd() {
+    protected int checkTowerEnd() {
         if (players.size() == 4) {
             int emptyWhite = 0;
             int emptyBlack = 0;
@@ -369,7 +373,7 @@ public class Game implements Observer {
         return -1;
     }
 
-    private int checkIslandEnd() {
+    protected int checkIslandEnd() {
         if (islandController.getIslandsQuantity() == 3) return getWinningTeam();
         return -1;
     }
@@ -640,9 +644,14 @@ public class Game implements Observer {
         gameModel.newRound();
     }
 
+    private void forceEnd() {
+        gameModel.setGamePhase(Phase.END);
+    }
+
     public void jsonToEvent(String json) throws Exception {
         Gson b = new GsonBuilder().serializeNulls().create();
 
+        System.out.println(json);
         JsonObject messageAsJsonObject = b.fromJson(json, JsonObject.class);
         String code = messageAsJsonObject.get("eventId").getAsString();
 
@@ -664,6 +673,9 @@ public class Game implements Observer {
                 break;
             case "0005":
                 handleEvent(b.fromJson(json, PickStudentsFromCloudEvent.class));
+                break;
+            case "0010":
+                forceEnd();
                 break;
             default:
                 System.out.println("Error from Game.jsonToEvent: code not supported");
