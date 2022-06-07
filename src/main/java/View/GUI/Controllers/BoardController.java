@@ -63,7 +63,7 @@ public class BoardController extends GUILeaf {
     }
 
     public void update(Board board) {
-        //TODO: if possible make removeAll method
+
         this.name = board.getPlayerName();
         int prevSize;
 
@@ -73,7 +73,7 @@ public class BoardController extends GUILeaf {
         prevSize = entrance.getChildren().size();
         entrance.getChildren().remove(0, prevSize);
         for(int i=0; i<bentr.length; i++) {
-            if(bentr[i] != null) entrance.add(new StudentTile(bentr[i].getColorId(), interactable, i), i%2, i/2);
+            if(bentr[i] != null) entrance.add(new StudentTile(bentr[i].getColorId(), interactable, interactable, i, 35), i%2, i/2);
         }
 
         //Dinings
@@ -89,25 +89,30 @@ public class BoardController extends GUILeaf {
         redTable.getChildren().remove(0, prevSize);
         prevSize = pinkTable.getChildren().size();
         pinkTable.getChildren().remove(0, prevSize);
-            for(int j=0; j<bdins[0]; j++) yellowTable.getChildren().add(new StudentTile(Student.YELLOW.getColorId(), false, -1, 35));
-            for(int j=0; j<bdins[1]; j++) blueTable.getChildren().add(new StudentTile(Student.BLUE.getColorId(), false, -1, 35));
-            for(int j=0; j<bdins[2]; j++) greenTable.getChildren().add(new StudentTile(Student.GREEN.getColorId(), false, -1, 35));
-            for(int j=0; j<bdins[3]; j++) redTable.getChildren().add(new StudentTile(Student.RED.getColorId(), false, -1, 35));
-            for(int j=0; j<bdins[4]; j++) pinkTable.getChildren().add(new StudentTile(Student.PINK.getColorId(), false, -1, 35));
+            for(int j=0; j<bdins[0]; j++) yellowTable.getChildren().add(new StudentTile(Student.YELLOW.getColorId(), false, interactable, -1, 35));
+            for(int j=0; j<bdins[1]; j++) blueTable.getChildren().add(new StudentTile(Student.BLUE.getColorId(), false, interactable, -1, 35));
+            for(int j=0; j<bdins[2]; j++) greenTable.getChildren().add(new StudentTile(Student.GREEN.getColorId(), false, interactable,-1, 35));
+            for(int j=0; j<bdins[3]; j++) redTable.getChildren().add(new StudentTile(Student.RED.getColorId(), false,interactable, -1, 35));
+            for(int j=0; j<bdins[4]; j++) pinkTable.getChildren().add(new StudentTile(Student.PINK.getColorId(), false, interactable,-1, 35));
 
         //Professors
         boolean[] bprof = board.getProfessors();
         yellowProf.setVisible(bprof[0]);
+        if (interactable) yellowProf.setRotate(-90);
         blueProf.setVisible(bprof[1]);
+        if (interactable) blueProf.setRotate(-90);
         greenProf.setVisible(bprof[2]);
+        if (interactable) greenProf.setRotate(-90);
         redProf.setVisible(bprof[3]);
+        if (interactable) redProf.setRotate(-90);
         pinkProf.setVisible(bprof[4]);
+        if (interactable) pinkProf.setRotate(-90);
 
         //Towers
         int btow = board.getTowersNum();
         prevSize = towers.getChildren().size();
         towers.getChildren().remove(0, prevSize);
-        for(int i=0; i<btow; i++) towers.add(new TowerTile(board.getTeamID(), 70), i%2, i/2);
+        for(int i=0; i<btow; i++) towers.add(new TowerTile(board.getTeamID(), 70, interactable), i%2, i/2);
     }
 
     public void setInteractable(boolean b) {

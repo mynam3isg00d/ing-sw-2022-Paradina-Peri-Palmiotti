@@ -39,7 +39,7 @@ public class CloudController extends GUILeaf {
         int prevSize = cloudGrid.getChildren().size();
         cloudGrid.getChildren().remove(0, prevSize);
         for(int i=0; i<cstud.size(); i++) {
-            cloudGrid.add(new StudentTile(cstud.get(i).getColorId(), false, -1, 35), i%2, i/2);
+            cloudGrid.add(new StudentTile(cstud.get(i).getColorId(), false, false, -1, 35), i%2, i/2);
         }
     }
 
