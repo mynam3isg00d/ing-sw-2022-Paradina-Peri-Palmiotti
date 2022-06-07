@@ -15,7 +15,7 @@ public class KnightEffect extends InfluenceEffect {
 
     @Override
     public String explainEffect() {
-        return "During the i+influence calculation this turn, you count as having two more influence.";
+        return "During the influence calculation this turn, you count as having two more influence.";
     }
 
     public KnightEffect(String playerID) {

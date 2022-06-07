@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.CharacterEffects.*;
+import Controller.CharacterEffects.FarmerEffect;
 import Exceptions.InsufficientCoinsException;
 import Exceptions.InvalidPlayerInputException;
 import Model.CharacterCard;
@@ -62,7 +63,7 @@ public class CharacterController {
         int charID = cc.getCardID();
         switch(charID) {
             case 0: return new ClerkEffect(playerID);
-            //case 1: return new FarmerEffect();
+            case 1: return new FarmerEffect(playerID);
             case 2: return new HeraldEffect(playerID);
             case 3: return new PostmanEffect(playerID);
             //case 4: return new GrandmaEffect();

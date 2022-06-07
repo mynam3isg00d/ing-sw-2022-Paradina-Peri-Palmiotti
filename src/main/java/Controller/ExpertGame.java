@@ -1,6 +1,7 @@
 package Controller;
 
 import Controller.CharacterEffects.Strategies.DefaultInfluenceStrategy;
+import Controller.CharacterEffects.Strategies.DefaultProfessorStrategy;
 import Events.*;
 import Exceptions.*;
 import Model.Board;
@@ -140,6 +141,7 @@ public class ExpertGame extends Game {
         //resets all strategies
         islandController.setInfluenceStrategy(new DefaultInfluenceStrategy()); //Reset the default influence strategy
         isPostmanActive = false;
+        boardsController.setProfessorStrategy(new DefaultProfessorStrategy()); //resets the update professors strategy
 
         super.endTurn(pid);
     }
