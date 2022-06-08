@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     @Test
-    public void construtor() {
+    public void construtor() throws InvalidNumberOfPlayersException{
         //init a game with 3 players
         List<Player> players = new ArrayList<>();
         Player p1 = new Player("id1", "1", 0);
@@ -33,7 +33,7 @@ class GameTest {
 
 
     @Test
-    public void setupPhase() {
+    public void setupPhase() throws InvalidNumberOfPlayersException{
         //init a game with 3 players
         List<Player> players = new ArrayList<>();
         Player p1 = new Player("id1", "1", 0);
@@ -136,7 +136,7 @@ class GameTest {
 
     }
 
-    public Game doSetupPhase() {
+    public Game doSetupPhase() throws InvalidNumberOfPlayersException{
         //init a game with 3 players
         List<Player> players = new ArrayList<>();
         Player p1 = new Player("id1", "1", 0);
@@ -180,7 +180,7 @@ class GameTest {
         return game;
     }
     @Test
-    public void planningPhase() {
+    public void planningPhase() throws InvalidNumberOfPlayersException {
         Game game = doSetupPhase();
 
         List<Player> initialPlayers = game.getPlayers();
@@ -258,7 +258,7 @@ class GameTest {
         assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
     }
 
-    public Game doPlanningPhase() {
+    public Game doPlanningPhase() throws InvalidNumberOfPlayersException{
         Game game = doSetupPhase();
 
         List<Player> initialPlayers = game.getPlayers();
@@ -304,7 +304,7 @@ class GameTest {
     }
 
     @Test
-    public void action_phase() {
+    public void action_phase() throws InvalidNumberOfPlayersException{
         Game game = doPlanningPhase();
 
         GameModel gameModel = game.getGameModel();
@@ -656,7 +656,7 @@ class GameTest {
 
 
     @Test
-    public void islandBugTest() {
+    public void islandBugTest() throws InvalidNumberOfPlayersException{
         Game game = doPlanningPhase();
         GameModel gm = game.getGameModel();
 

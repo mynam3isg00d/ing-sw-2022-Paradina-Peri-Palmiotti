@@ -14,8 +14,6 @@ import View.RemoteView;
 
 import java.util.*;
 
-//TODO javadoc
-
 /**
  * The Controller in charge of the operations regarding the player boards.
  */
@@ -32,7 +30,7 @@ public class BoardsController {
      * @param players The list of players participating in the game
      * @param s Reference to the sack, used to fill the boards
      */
-    public BoardsController(List<Player> players, Sack s) {
+    public BoardsController(List<Player> players, Sack s) throws InvalidNumberOfPlayersException {
         professors = new Player[5];
         this.players = players;
         playerBoardMap = new HashMap<>();
@@ -51,7 +49,7 @@ public class BoardsController {
                 System.out.println("EXCEPTION NEEDED: Invalid number of players");
         }
 
-        //fills boards entrance with the right number of students, accordingly to the number of players
+        // Fills board's entrance with the right number of students, accordingly to the number of players
         try {
             init(s, studentsPerEntrance);
         } catch (Exception e) {
@@ -80,7 +78,15 @@ public class BoardsController {
         }
     }
 
-    private void createBoards(int playerNum) {
+    /**
+     * Creates a number of boards determined by how many players are playing:
+     * 2 players -> 2 boards
+     * 3 players -> 3 boards
+     * 4 players -> 2 boards
+     * @param playerNum number of players
+     * @throws InvalidNumberOfPlayersException
+     */
+    private void createBoards(int playerNum) throws InvalidNumberOfPlayersException{
         switch(playerNum) {
             case 2:
                 for (Player p : players) playerBoardMap.put(p.getPlayerID(), new Board(p.getPlayerID(), p.getName(), p.getTeamID(), 8, 7));
@@ -103,7 +109,7 @@ public class BoardsController {
                 }
                 break;
             default:
-                System.out.println("EXCEPTION NEEDED: Invalid number of players");
+                throw new InvalidNumberOfPlayersException();
         }
     }
 
@@ -133,6 +139,7 @@ public class BoardsController {
         b.addToDining(s);
     }
 
+
     public void removeFromDining(String playerID, Student s) throws EmptyTableException {
         Board b = playerBoardMap.get(playerID);
         b.removeFromDining(s);
@@ -150,13 +157,20 @@ public class BoardsController {
         professorStrategy.updateProfessors(professors, playerBoardMap, players);
     }
 
+    /**
+     * Sets professor strategy for expert game
+     */
     public void setProfessorStrategy(ProfessorStrategy newStrategy) {
         professorStrategy = newStrategy;
     }
 
-    //if the move is not valid throws an exception
-    //else, removes the students in s from the board of the right player
-    //called by islandHandler when a player wants to move some students to an island
+    /**
+     * Removes a student from the board of the specified player.
+     * @param playerID The student must be removed from this player's boards
+     * @param studentBoardIndex Position on the board of the student that needs to be removed
+     * @return The removed student
+     * @throws NoSuchStudentsException
+     */
     public Student removeFromEntrance(String playerID, int studentBoardIndex) throws NoSuchStudentsException {
         Student s = playerBoardMap.get(playerID).removeFromEntrance(studentBoardIndex);
         return s;
@@ -172,10 +186,23 @@ public class BoardsController {
         b.addToEntrance(ss);
     }
 
+    /**
+     * Returns the player that owns the specified professor
+     * @param colorId Color of the professor
+     * @return professor[colorId] The player that owns the professor
+     */
     public Player getProfessorOwner(int colorId) {
         return professors[colorId];
     }
 
+    /**
+     * Teams are made up like this:
+     * 2 or 3 players game -> each team has 1 player
+     * 4 players game -> each team has 2 players
+     * Each team has a leader. This method returns the player that is the leader of the specified team
+     * @param teamID The ID of the team
+     * @return p.getPlayerId() The ID of the team leader
+     */
     public String getTeamLeaderId(int teamID) {
         for(Player p : players) {
             Board b = playerBoardMap.get(p.getPlayerID());
@@ -184,11 +211,23 @@ public class BoardsController {
         return null;
     }
 
+    /**
+     * Adds towers to the board of the player
+     * @param playerID The ID of the player requesting the move
+     * @param numToAdd The number of towers to add
+     * @throws FullElementException
+     */
     public void addTowers(String playerID, int numToAdd) throws FullElementException {
         Board b = playerBoardMap.get(playerID);
         b.addTower(numToAdd);
     }
 
+    /**
+     * Removes towers from the board of the player
+     * @param playerID The ID of the player requesting the move
+     * @param numToRemove The number of towers to remove
+     * @throws EmptyElementException
+     */
     public void removeTowers(String playerID, int numToRemove) throws EmptyElementException {
         Board b = playerBoardMap.get(playerID);
         b.removeTower(numToRemove);

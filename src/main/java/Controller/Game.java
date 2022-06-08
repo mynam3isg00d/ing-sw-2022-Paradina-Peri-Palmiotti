@@ -44,7 +44,7 @@ public class Game implements Observer {
      * Once the lobby is filled, the Game can be initialized
      * @param players The list of players accepted by the lobby.
      */
-    public Game(List<Player> players) {
+    public Game(List<Player> players) throws InvalidNumberOfPlayersException{
         this.players = players;
         int n = players.size();
 

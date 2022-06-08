@@ -6,6 +6,7 @@ import Controller.IslandController;
 import Events.EventFactory;
 import Events.GameEvent;
 import Events.PlayAssistantEvent;
+import Exceptions.InvalidNumberOfPlayersException;
 import Model.*;
 import Util.ShopDeserializer;
 import com.google.gson.Gson;
@@ -66,7 +67,7 @@ class JsonFactoryTest {
     }
 
     @Test
-    void faccioVedereASamuelePeriComeFunzionaJSON() {
+    void faccioVedereASamuelePeriComeFunzionaJSON() throws InvalidNumberOfPlayersException {
 
         List<Player> p = new ArrayList<>();
         p.add(new Player("Davide", 0));

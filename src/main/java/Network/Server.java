@@ -2,6 +2,7 @@ package Network;
 
 import Controller.ExpertGame;
 import Controller.Game;
+import Exceptions.InvalidNumberOfPlayersException;
 import Model.Player;
 import Network.Messages.Message;
 import View.RemoteView;
@@ -42,7 +43,7 @@ public class Server implements Runnable{
      * Synchronized in order to avoid concurrent changes to the lists
      * @param newConnection The connection just created
      */
-    public synchronized String lobby(Connection newConnection, String name, int playerNumber, boolean expert) {
+    public synchronized String lobby(Connection newConnection, String name, int playerNumber, boolean expert) throws InvalidNumberOfPlayersException {
         System.out.println("called lobby with name = " + name);
 
         //lobby for 2 players is in position 0 of the array

@@ -12,6 +12,7 @@ import View.RemoteView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import javafx.beans.InvalidationListener;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ExpertGame extends Game {
 
     private boolean isPostmanActive = false;
 
-    public ExpertGame(List<Player> players) {
+    public ExpertGame(List<Player> players) throws InvalidNumberOfPlayersException {
         super(players);
         characterController = new CharacterController(this);
     }
