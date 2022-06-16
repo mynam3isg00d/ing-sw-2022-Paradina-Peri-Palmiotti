@@ -53,9 +53,8 @@ public class IslandController {
     /**
      * A method that gets the number of steps and moves mother nature accordingly. Only moves if the move is valid
      * @param steps number of steps selected by the player
-     * @throws InvalidMoveException
      */
-    public void moveMother(int steps) throws InvalidMoveException, EmptyElementException, FullElementException {
+    public void moveMother(int steps) throws EmptyElementException, FullElementException {
         //gets the old mother nature position
         int oldPosition = islandModel.getMotherNaturePos();
 
@@ -158,6 +157,11 @@ public class IslandController {
     }
 
 
+    /**
+     * Adds a student to an island
+     * @param islandIndex Island where the student must be moved
+     * @param student Student that must be moved
+     */
     public void moveStudent(int islandIndex, Student student){
         List<Student> toAdd = new ArrayList<>();
         toAdd.add(student);
@@ -165,6 +169,10 @@ public class IslandController {
         islandModel.addStudents(islandIndex, toAdd);
     }
 
+
+    /**
+     * @return how many islands are in the game at the moment
+     */
     public int getIslandsQuantity() {
         return islandModel.getIslandLength();
     }
@@ -173,11 +181,21 @@ public class IslandController {
         return islandModel;
     }
 
+
+    /**
+     * Used by Grandma character card. It adds a No Entry tile to the island
+     * @param islandIndex Index of the island where the card needs to be added
+     * @throws InvalidMoveException There is a No Entry tile on the island already
+     */
     public void setNoEntry(int islandIndex) throws InvalidMoveException{
         islandModel.setNoEntry(islandIndex);
     }
 
-    public void removeNoEntry(int islandIndex) throws InvalidMoveException{
+    /**
+     * Used by Grandma character card. It removes a No Entry tile from the island
+     * @param islandIndex Index of the island from which the tile needs to be removed
+     */
+    public void removeNoEntry(int islandIndex){
         islandModel.removeNoEntry(islandIndex);
     }
 }
