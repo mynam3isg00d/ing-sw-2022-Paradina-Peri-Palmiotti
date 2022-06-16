@@ -1,10 +1,7 @@
 package Controller;
 
 import Controller.CharacterEffects.CentaurEffect;
-import Controller.CharacterEffects.Strategies.CentaurStrategy;
-import Controller.CharacterEffects.Strategies.DefaultInfluenceStrategy;
-import Controller.CharacterEffects.Strategies.DefaultProfessorStrategy;
-import Controller.CharacterEffects.Strategies.FarmerStrategy;
+import Controller.CharacterEffects.Strategies.*;
 import Events.EventFactory;
 import Events.MoveStudentToDiningEvent;
 import Exceptions.InsufficientCoinsException;
@@ -84,6 +81,35 @@ class CharacterControllerTest {
 
         //calculates influence on island 0 - since the tower doesn't count, should return p1's team id
         assertEquals(pl.get(1).getTeamID(), g.islandController.getInfluenceStrategy().calcInfluence(0, g.islandController.getIslandModel(), g.boardsController));
+    }
+    @Test
+    void MushroomEffectTest() throws Exception, InvalidNumberOfPlayersException {
+        List<Player> pl = getPlayerList(2);
+        ExpertGame g = new ExpertGame(pl);
+        g.setCharacterController(new CharacterController(g, new Integer[]{8, 8, 8}));
+        CharacterController cc = g.getCharacterController();
+
+        //puts one blue student on island 0
+        g.islandController.moveStudent(0, Student.BLUE);
+
+        //assigns blue professor to p1
+        g.boardsController.setProfessor("B", pl.get(1));
+
+        //calculates influence on island 0 - since every color caount, should return p1's team id
+        assertTrue(g.getIslandController().getInfluenceStrategy() instanceof DefaultInfluenceStrategy);
+        assertEquals(pl.get(1).getTeamID(), g.islandController.getInfluenceStrategy().calcInfluence(0, g.islandController.getIslandModel(), g.boardsController));
+
+        //p0 plays mushroom
+        assertThrows(InsufficientCoinsException.class, () -> { cc.buyCard(0, pl.get(0).getPlayerID(), new ArrayList<String>());});
+        cc.giveCoins(pl.get(0).getPlayerID(), 9999);
+
+        List<String> playerInput = new ArrayList<String>();
+        playerInput.add("1");
+        cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
+        assertTrue(g.getIslandController().getInfluenceStrategy() instanceof MushroomStrategy);
+
+        //calculates influence on island 0 - since blue students don't count should return -1
+        assertEquals(-1, g.islandController.getInfluenceStrategy().calcInfluence(0, g.islandController.getIslandModel(), g.boardsController));
     }
 
     @Test
