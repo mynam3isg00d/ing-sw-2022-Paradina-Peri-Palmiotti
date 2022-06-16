@@ -15,7 +15,6 @@ import Observer.Observer;
 import Observer.Observable;
 import Model.*;
 import View.RemoteView;
-import View.View;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -28,8 +27,6 @@ import java.util.*;
  * Handles events coming from the view and calls the right methods on the right controller.
  */
 public class Game implements Observer {
-    protected View view;
-
     protected List<Player> players;
     protected Sack sack;
     protected IslandController islandController;
@@ -261,7 +258,6 @@ public class Game implements Observer {
 
         //illegal number of steps requested
         int maximumSteps = gameModel.getCurrentPlayer().getAssistantInPlay().getMotherNumber();
-        if (isPostmanActive) maximumSteps += 2;
 
         int numberOfSteps = event.getNumberOfSteps();
         if (numberOfSteps > maximumSteps || numberOfSteps <= 0) throw new InvalidMoveException("You must move mother nature a number of steps which is between 0 and the number indicated on the Assistant card you played");
@@ -700,7 +696,7 @@ public class Game implements Observer {
     /**
      * Sets the game phase to END
      */
-    private void forceEnd() {
+    protected void forceEnd() {
         gameModel.setGamePhase(Phase.END);
     }
 
@@ -743,6 +739,4 @@ public class Game implements Observer {
                 System.out.println("Error from Game.jsonToEvent: code not supported");
         }
     }
-
-
 }

@@ -10,9 +10,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameTest {
+class ExpertGameTest {
     @Test
-    public void construtor() throws InvalidNumberOfPlayersException{
+    public void setupPhase() throws Exception{
         //init a game with 3 players
         List<Player> players = new ArrayList<>();
         Player p1 = new Player("id1", "1", 0);
@@ -22,28 +22,7 @@ class GameTest {
         players.add(p2);
         players.add(p3);
 
-        Game game = new Game(players);
-        List<Player> actual = game.getPlayers();
-
-        //checks if the players provided have been added to the list in game
-        assertTrue(actual.contains(p1));
-        assertTrue(actual.contains(p2));
-        assertTrue(actual.contains(p3));
-    }
-
-
-    @Test
-    public void setupPhase() throws InvalidNumberOfPlayersException{
-        //init a game with 3 players
-        List<Player> players = new ArrayList<>();
-        Player p1 = new Player("id1", "1", 0);
-        Player p2 = new Player("id2", "2", 1);
-        Player p3 = new Player("id3", "3", 2);
-        players.add(p1);
-        players.add(p2);
-        players.add(p3);
-
-        Game game = new Game(players);
+        ExpertGame game = new ExpertGame(players);
         GameModel gameModel = game.getGameModel();
 
         //---------------checking the game has been initialized correctly
@@ -136,7 +115,7 @@ class GameTest {
 
     }
 
-    public Game doSetupPhase() throws InvalidNumberOfPlayersException{
+    public ExpertGame doSetupPhase() throws Exception{
         //init a game with 3 players
         List<Player> players = new ArrayList<>();
         Player p1 = new Player("id1", "1", 0);
@@ -146,7 +125,7 @@ class GameTest {
         players.add(p2);
         players.add(p3);
 
-        Game game = new Game(players);
+        ExpertGame game = new ExpertGame(players);
 
         ChooseWizardEvent wizardEvent1 = new ChooseWizardEvent();
         wizardEvent1.setPlayerId("id1");
@@ -180,8 +159,8 @@ class GameTest {
         return game;
     }
     @Test
-    public void planningPhase() throws InvalidNumberOfPlayersException {
-        Game game = doSetupPhase();
+    public void planningPhase() throws Exception{
+        ExpertGame game = doSetupPhase();
 
         List<Player> initialPlayers = game.getPlayers();
 
@@ -258,8 +237,8 @@ class GameTest {
         assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
     }
 
-    public Game doPlanningPhase() throws InvalidNumberOfPlayersException{
-        Game game = doSetupPhase();
+    public ExpertGame doPlanningPhase() throws Exception{
+        ExpertGame game = doSetupPhase();
 
         List<Player> initialPlayers = game.getPlayers();
 
@@ -304,8 +283,8 @@ class GameTest {
     }
 
     @Test
-    public void action_phase() throws InvalidNumberOfPlayersException{
-        Game game = doPlanningPhase();
+    public void action_phase() throws Exception {
+        ExpertGame game = doPlanningPhase();
 
         GameModel gameModel = game.getGameModel();
         IslandController ic = game.getIslandController();
@@ -653,58 +632,6 @@ class GameTest {
         assertEquals(Phase.PLANNING, gameModel.getGamePhase());
     }
 
-
-
-    @Test
-    public void islandBugTest() throws InvalidNumberOfPlayersException{
-        Game game = doPlanningPhase();
-        GameModel gm = game.getGameModel();
-
-        MoveStudentToIslandEvent e1 = new MoveStudentToIslandEvent();
-        e1.setPlayerId("id2");
-        e1.parseInput("0 + 10");
-
-        assertDoesNotThrow(() -> {
-            game.handleEvent(e1);
-        });
-
-        e1.parseInput("1 + 10");
-        assertDoesNotThrow(() -> {
-            game.handleEvent(e1);
-        });
-
-        e1.parseInput("2 + 10");
-        assertDoesNotThrow(() -> {
-            game.handleEvent(e1);
-        });
-
-        e1.parseInput("3 + 10");
-        assertDoesNotThrow(() -> {
-            game.handleEvent(e1);
-        });
-
-        assertEquals(Phase.ACTION_MOTHERNATURE, gm.getGamePhase());
-
-        MoveMotherNatureEvent e2 = new MoveMotherNatureEvent();
-        e2.setPlayerId("id2");
-        e2.parseInput("1");
-
-        assertDoesNotThrow(() -> {
-            game.handleEvent(e2);
-        });
-
-
-        //no towers should be placed on island 1
-        IslandController ic = game.getIslandController();
-        IslandsWrapper im = ic.getIslandModel();
-        assertEquals(1, im.getMotherNaturePos());
-        assertNull(im.getInfluence(1));
-    }
-    /**
-     * Counts the number of students in an array
-     * @param s
-     * @return
-     */
     private int countStudents(int[] s) {
         return s[0] + s[1] + s[2] + s[3] +s[4];
     }
@@ -717,17 +644,5 @@ class GameTest {
         return count;
     }
 
-
-    private List<Player> getPlayerList(int n) {
-        List<Player> ret = new ArrayList<>();
-        String name = "a";
-        for(int i=0; i<n; i++) {
-            Player p = new Player(name, i);
-            p.setPlayerID(name);
-            ret.add(p);
-            name = name + "a";
-        }
-        return ret;
-    }
 
 }

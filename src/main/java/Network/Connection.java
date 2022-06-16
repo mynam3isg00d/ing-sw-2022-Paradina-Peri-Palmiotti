@@ -109,11 +109,11 @@ public class Connection extends Observable implements Runnable {
                     }
                 }
             }
-        }  catch (Exception e) {
-            e.printStackTrace();
         } catch (InvalidNumberOfPlayersException e) {
             throw new RuntimeException(e);
-        } finally {
+        }  catch (Exception e) {
+            e.printStackTrace();
+        }  finally {
             close();
         }
     }

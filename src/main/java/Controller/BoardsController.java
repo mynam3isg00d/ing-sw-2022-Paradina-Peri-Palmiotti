@@ -259,4 +259,8 @@ public class BoardsController {
                 break;
         }
     }
+
+    public ProfessorStrategy getProfessorStrategy() {
+        return professorStrategy;
+    }
 }

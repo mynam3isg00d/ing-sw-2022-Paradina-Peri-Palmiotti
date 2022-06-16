@@ -227,6 +227,9 @@ public class ExpertGame extends Game {
             case "0006":
                 handleEvent(b.fromJson(json, BuyPlayCharacterEvent.class));
                 break;
+            case "0010":
+                forceEnd();
+                break;
             default:
                 System.out.println("Error in ExpertGame.jsonToEvent: code not supported");
         }

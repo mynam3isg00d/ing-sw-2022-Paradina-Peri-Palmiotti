@@ -2,6 +2,10 @@ package Controller;
 
 import Controller.CharacterEffects.CentaurEffect;
 import Controller.CharacterEffects.Strategies.CentaurStrategy;
+import Controller.CharacterEffects.Strategies.DefaultProfessorStrategy;
+import Controller.CharacterEffects.Strategies.FarmerStrategy;
+import Events.EventFactory;
+import Events.MoveStudentToDiningEvent;
 import Exceptions.InsufficientCoinsException;
 import Exceptions.InvalidNumberOfPlayersException;
 import Exceptions.InvalidPlayerInputException;
@@ -78,6 +82,46 @@ class CharacterControllerTest {
         List<String> playerInput = List.of("1", "2", "1", "2");
         cc.giveCoins(pl.get(0).getPlayerID(), 9999);
         cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
+    }
+
+    @Test
+    void FarmerEffectTest() throws Exception {
+        List<Player> pl = getPlayerList(2);
+        ExpertGame g = new ExpertGame(pl);
+        g.setCharacterController(new CharacterController(g, new Integer[]{1, 1, 1}));
+        CharacterController cc = g.getCharacterController();
+
+        //before any character being played, the professor strategy is the default one
+        assertTrue(g.boardsController.getProfessorStrategy() instanceof DefaultProfessorStrategy);
+
+        //assigning the red professor to player 0
+        g.boardsController.setProfessor("R", pl.get(0));
+        //puts one red student in player 0's dining
+        g.boardsController.addToDining(pl.get(0).getPlayerID(), Student.RED);
+        //professor red is now owned by player 0
+        assertEquals(pl.get(0), g.boardsController.getProfessorOwner(3));
+
+        //player 1 activates the farmer effect
+        List<String> playerInput = List.of();
+        cc.giveCoins(pl.get(1).getPlayerID(), 90);
+        cc.buyCard(0, pl.get(1).getPlayerID(), playerInput);
+
+        //now boardscontroller has set a farmer strategy
+        assertTrue(g.boardsController.getProfessorStrategy() instanceof FarmerStrategy);
+
+        //puts one red student in player 1's dining
+        g.boardsController.addToDining(pl.get(1).getPlayerID(), Student.RED);
+
+        //updates professors
+        g.boardsController.updateProfessors();
+
+        //red professor should be owned by player 1, despite the same number of red students in the dining room
+        assertEquals(pl.get(1), g.boardsController.getProfessorOwner(3));
+
+        //resets to default
+        g.boardsController.setProfessorStrategy(new DefaultProfessorStrategy());
+        assertTrue(g.boardsController.getProfessorStrategy() instanceof DefaultProfessorStrategy);
+
     }
 
     private List<Player> getPlayerList(int n) {

@@ -4,7 +4,7 @@ import javafx.application.Application;
 import org.junit.jupiter.api.Test;
 
 public class RunTest {
-    /*
+/*
     @Test
     public void testIslandGui() {
         Application.launch(GUIIslandTest.class);
@@ -36,10 +36,11 @@ public class RunTest {
     }
 
 
-    @Test
-    public void testGameConfigGui() {
+
+   // @Test
+   /* public void testGameConfigGui() {
         Application.launch(GUIWizardTest.class);
-    }
-    */
+    }*/
+
 
 }
