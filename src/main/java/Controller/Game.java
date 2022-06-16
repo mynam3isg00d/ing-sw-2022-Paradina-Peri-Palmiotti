@@ -69,6 +69,9 @@ public class Game implements Observer {
     }
 
 
+    /**
+     * TODO javadocs
+     */
     public void sendEntireModel() {
         for (Player p : players) {
             Board b = boardsController.getBoard(p.getPlayerID());
@@ -82,6 +85,7 @@ public class Game implements Observer {
             p.sendPlayer();
         }
     }
+
     /**
      * Receives updates from the remoteView and calls handleEvent
      * @param o The Event coming from the RemoteView
