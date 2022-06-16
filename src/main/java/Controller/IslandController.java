@@ -5,7 +5,7 @@ import Exceptions.EmptyElementException;
 import Exceptions.FullElementException;
 import Exceptions.InvalidMoveException;
 import Model.*;
-import View.RemoteView;
+import Observer.View.RemoteView;
 
 import java.util.*;
 

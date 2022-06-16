@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.Pane?>
 
-<Pane prefHeight="446.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.IslandsWrapperController">
+<Pane prefHeight="446.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Observer.View.GUI.Controllers.IslandsWrapperController">
 <children>
     <fx:include fx:id="island0" layoutY="150.0" source="Island.fxml" />
     <fx:include fx:id="island1" source="Island.fxml" />

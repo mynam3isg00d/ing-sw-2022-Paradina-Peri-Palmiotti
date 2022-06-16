@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.Pane?>
 
-<Pane fx:controller="View.GUI.Controllers.CloudWrapperController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="151.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:controller="Observer.View.GUI.Controllers.CloudWrapperController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="151.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <fx:include fx:id="cloud0" source="Cloud.fxml" />
       <fx:include fx:id="cloud1" layoutY="175.0" source="Cloud.fxml" />

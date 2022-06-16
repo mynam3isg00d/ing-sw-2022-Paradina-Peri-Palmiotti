@@ -5,7 +5,7 @@ import Controller.Game;
 import Exceptions.InvalidNumberOfPlayersException;
 import Model.Player;
 import Network.Messages.Message;
-import View.RemoteView;
+import Observer.View.RemoteView;
 
 import java.io.IOException;
 import java.net.*;

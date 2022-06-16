@@ -34,10 +34,12 @@ public class RunTest {
     public void testGameConfigGui() {
         Application.launch(GUIConfigTest.class);
     }
-     */
+
 
     @Test
     public void testGameConfigGui() {
         Application.launch(GUIWizardTest.class);
     }
+    */
+
 }

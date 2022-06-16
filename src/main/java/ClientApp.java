@@ -1,5 +1,5 @@
 import Network.Client;
-import View.GUI.GUI;
+import Observer.View.GUI.GUI;
 import javafx.application.Application;
 
 import java.io.IOException;

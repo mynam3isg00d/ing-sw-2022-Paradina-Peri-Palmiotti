@@ -1,16 +1,12 @@
 package View.GUI;
 
 import Model.CloudWrapper;
-import Model.IslandsWrapper;
 import Model.Sack;
-import View.GUI.Controllers.CloudController;
-import View.GUI.Controllers.CloudWrapperController;
-import View.GUI.Controllers.IslandsWrapperController;
+import Observer.View.GUI.Controllers.CloudWrapperController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 

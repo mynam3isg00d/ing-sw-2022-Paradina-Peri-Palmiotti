@@ -1,12 +1,15 @@
 package Controller;
 import Exceptions.EmptyCloudException;
-import Exceptions.EmptySackException;
 import Model.CloudWrapper;
 import Model.Sack;
 import Model.Student;
-import View.RemoteView;
+import Observer.View.RemoteView;
 
 import java.util.*;
+
+/**
+ * The Controller in charge of the operations regarding the clouds.
+ */
 
 public class CloudController {
     private CloudWrapper cloudModel;

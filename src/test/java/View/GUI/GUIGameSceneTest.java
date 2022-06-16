@@ -1,12 +1,11 @@
 package View.GUI;
 
 import Model.*;
-import View.GUI.Controllers.GameSceneController;
+import Observer.View.GUI.Controllers.GameSceneController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.Test;
 
 public class GUIGameSceneTest extends Application {
 

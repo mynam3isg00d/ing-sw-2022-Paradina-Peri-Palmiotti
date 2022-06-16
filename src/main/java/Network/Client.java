@@ -5,9 +5,9 @@ import Exceptions.UnknownMessageException;
 import Network.Messages.Message;
 import Network.Messages.PlayerInfoMessage;
 import Util.HelpInterpreter;
-import View.CLI.CLI;
-import View.MessageInterpreter;
-import View.UI;
+import Observer.View.CLI.CLI;
+import Observer.View.MessageInterpreter;
+import Observer.View.UI;
 import com.google.gson.GsonBuilder;
 
 

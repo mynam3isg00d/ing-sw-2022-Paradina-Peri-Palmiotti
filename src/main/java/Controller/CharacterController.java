@@ -6,12 +6,13 @@ import Exceptions.InsufficientCoinsException;
 import Exceptions.InvalidPlayerInputException;
 import Model.CharacterCard;
 import Model.Shop;
-import View.RemoteView;
+import Observer.View.RemoteView;
 
 import java.util.List;
 
-//TODO javadocs
-
+/**
+ * Controller in charge of operations regarding character cards in the expert game
+ */
 public class CharacterController {
 
     private Shop shop;
@@ -33,6 +34,17 @@ public class CharacterController {
         shop.addObserver(rv);
     }
 
+
+    /**
+     * Method to buy and play a character card at the same time
+     * @param cardIndex index of the card to buy
+     * @param playerID ID of the player that is buying the card
+     * @param playerInput the player chooses, among some options, how to play the character effect. These choices
+     *                    are expressed in playerInput
+     * @throws InsufficientCoinsException
+     * @throws InvalidPlayerInputException
+     * @throws Exception
+     */
     public void buyCard(int cardIndex, String playerID, List<String> playerInput) throws InsufficientCoinsException, InvalidPlayerInputException, Exception {
 
         CharacterCard cc = shop.getShop()[cardIndex];
@@ -52,6 +64,11 @@ public class CharacterController {
         shop.sendShop();
     }
 
+
+    /**
+     * @param playerID ID of the player to whom coins are given
+     * @param n number of coins given to the player
+     */
     public void giveCoins(String playerID, int n) {
         shop.addCoins(playerID, n);
     }
@@ -61,6 +78,14 @@ public class CharacterController {
     }
     public Shop getShopReference() { return shop; }
 
+    /**
+     * @param cc character card that we want the effect of
+     * @param playerID player that is playing the character card. The effect can be
+     *                 different for each player because it depends on what options
+     *                 a player chooses when playing a character (see playerInput parameter in buyCard method).
+     * @return the effect of the character card. Each effect has a class containing a method
+     *         that allows to play the character's effect.
+     */
     private static CharacterEffect getEffect(CharacterCard cc, String playerID) {
         int charID = cc.getCardID();
         switch(charID) {

@@ -1,16 +1,12 @@
 package View.GUI;
 
-import Exceptions.FullEntranceException;
 import Model.Board;
-import Model.IslandsWrapper;
 import Model.Student;
-import View.GUI.Controllers.BoardController;
-import View.GUI.Controllers.IslandsWrapperController;
+import Observer.View.GUI.Controllers.BoardController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 

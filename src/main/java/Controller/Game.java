@@ -9,12 +9,13 @@ Possible implementation for Game constructors:
 */
 package Controller;
 
-import Controller.CharacterEffects.Strategies.DefaultInfluenceStrategy;
 import Events.*;
 import Exceptions.*;
 import Observer.Observer;
 import Observer.Observable;
 import Model.*;
+import Observer.View.RemoteView;
+import Observer.View.View;
 import View.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

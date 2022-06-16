@@ -7,12 +7,10 @@ import Exceptions.*;
 import Model.Board;
 import Model.Phase;
 import Model.Player;
-import Model.Student;
-import View.RemoteView;
+import Observer.View.RemoteView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import javafx.beans.InvalidationListener;
 
 import java.util.List;
 
