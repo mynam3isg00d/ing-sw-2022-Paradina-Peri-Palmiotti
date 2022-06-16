@@ -10,6 +10,8 @@ import View.RemoteView;
 
 import java.util.List;
 
+//TODO javadocs
+
 public class CharacterController {
 
     private Shop shop;

@@ -1,9 +1,6 @@
 package Controller;
 
-import Exceptions.EmptyElementException;
-import Exceptions.FullElementException;
-import Exceptions.FullTableException;
-import Exceptions.NoSuchStudentsException;
+import Exceptions.*;
 import Model.Board;
 import Model.Player;
 import Model.Sack;
@@ -18,7 +15,7 @@ import java.util.Random;
 class BoardsControllerTest {
 
     @Test
-    public void createTwoBoardsTest() {
+    public void createTwoBoardsTest() throws InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
         BoardsController bc = new BoardsController(pl, new Sack(120));
 
@@ -51,7 +48,7 @@ class BoardsControllerTest {
     }
 
     @Test
-    public void createThreeBoardsTest() {
+    public void createThreeBoardsTest() throws InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(3);
         BoardsController bc = new BoardsController(pl, new Sack(120));
 
@@ -84,7 +81,7 @@ class BoardsControllerTest {
     }
 
     @Test
-    public void createFourBoardsTest() {
+    public void createFourBoardsTest() throws InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(4);
         BoardsController bc = new BoardsController(pl, new Sack(120));
 
@@ -117,7 +114,7 @@ class BoardsControllerTest {
     }
 
     @Test
-    void someRoundTesting() throws NoSuchStudentsException, FullElementException, EmptyElementException {
+    void someRoundTesting() throws NoSuchStudentsException, FullElementException, EmptyElementException, InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
         BoardsController bc = new BoardsController(pl, new Sack(120));
 

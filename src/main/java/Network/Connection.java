@@ -1,6 +1,8 @@
 package Network;
 
 import java.io.BufferedReader;
+
+import Exceptions.InvalidNumberOfPlayersException;
 import Observer.Observable;
 import Network.Messages.PlayerInfoMessage;
 import com.google.gson.GsonBuilder;
@@ -109,6 +111,8 @@ public class Connection extends Observable implements Runnable {
             }
         }  catch (Exception e) {
             e.printStackTrace();
+        } catch (InvalidNumberOfPlayersException e) {
+            throw new RuntimeException(e);
         } finally {
             close();
         }

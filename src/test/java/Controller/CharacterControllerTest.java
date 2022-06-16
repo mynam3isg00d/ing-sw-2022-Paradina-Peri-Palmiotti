@@ -3,6 +3,7 @@ package Controller;
 import Controller.CharacterEffects.CentaurEffect;
 import Controller.CharacterEffects.Strategies.CentaurStrategy;
 import Exceptions.InsufficientCoinsException;
+import Exceptions.InvalidNumberOfPlayersException;
 import Exceptions.InvalidPlayerInputException;
 import Model.*;
 import org.junit.jupiter.api.Test;
@@ -18,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class CharacterControllerTest {
 
     @Test
-    void constructorTest() {
+    void constructorTest() throws InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
         ExpertGame g = new ExpertGame(pl);
         CharacterController cc = new CharacterController(g, new Integer[]{5, 6, 7});
     }
 
     @Test
-    void clerkEffectTest() throws Exception {
+    void clerkEffectTest() throws Exception, InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
         ExpertGame g = new ExpertGame(pl);
         g.setCharacterController(new CharacterController(g, new Integer[]{0, 0, 0}));
@@ -39,7 +40,7 @@ class CharacterControllerTest {
 
     //No idea how to test this so i trust it works
     @Test
-    void heraldEffectTest() throws Exception {
+    void heraldEffectTest() throws Exception, InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
         ExpertGame g = new ExpertGame(pl);
         g.setCharacterController(new CharacterController(g, new Integer[]{2, 2, 2}));
@@ -52,7 +53,7 @@ class CharacterControllerTest {
     }
 
     @Test
-    void centaurEffectTest() throws Exception {
+    void centaurEffectTest() throws Exception, InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
         ExpertGame g = new ExpertGame(pl);
         g.setCharacterController(new CharacterController(g, new Integer[]{5, 5, 5}));
@@ -65,7 +66,7 @@ class CharacterControllerTest {
     }
 
     @Test
-    void bardEffectTest() throws Exception {
+    void bardEffectTest() throws Exception, InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
         ExpertGame g = new ExpertGame(pl);
         g.setCharacterController(new CharacterController(g, new Integer[]{9, 9, 9}));

@@ -5,6 +5,7 @@ import Controller.ExpertGame;
 import Controller.Game;
 import Events.BuyPlayCharacterEvent;
 import Exceptions.EmptySackException;
+import Exceptions.InvalidNumberOfPlayersException;
 import Model.*;
 import org.fusesource.jansi.AnsiConsole;
 import org.junit.jupiter.api.Test;
@@ -62,7 +63,7 @@ class CLITest {
     */
 
     @Test
-    void displayGame() throws Exception {
+    void displayGame() throws Exception, InvalidNumberOfPlayersException {
         List<Player> p = new ArrayList<>();
 
         p.add(new Player("Davide", 0));

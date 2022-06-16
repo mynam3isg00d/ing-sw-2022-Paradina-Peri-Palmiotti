@@ -32,6 +32,7 @@ public class CloudController {
     public void addObserverToModel(RemoteView rv) {
         cloudModel.addObserver(rv);
     }
+
     /**
      * Fills all the clouds initialized in the model and handles the relative exceptions
      * @param s The Sack

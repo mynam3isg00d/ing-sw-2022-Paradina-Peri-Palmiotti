@@ -1,5 +1,6 @@
 package Controller;
 
+import Exceptions.InvalidNumberOfPlayersException;
 import Model.IslandsWrapper;
 import Model.Player;
 import Model.Sack;
@@ -40,7 +41,7 @@ class IslandControllerTest {
         return s[0] + s[1] + s[2] + s[3] + s[4];
     }
     @Test
-    void moveMotherOnNullIsland() {
+    void moveMotherOnNullIsland() throws InvalidNumberOfPlayersException {
         //init
         IslandController islandController = new IslandController();
 
@@ -80,7 +81,7 @@ class IslandControllerTest {
     }
 
     @Test
-    void moveMotherOnIslandToMerge() {
+    void moveMotherOnIslandToMerge() throws InvalidNumberOfPlayersException {
         //init
         IslandController islandController = new IslandController();
 
@@ -126,7 +127,7 @@ class IslandControllerTest {
     }
 
     @Test
-    void moveMotherOnIslandToMergeEdge() {
+    void moveMotherOnIslandToMergeEdge() throws InvalidNumberOfPlayersException {
         //init
         IslandController islandController = new IslandController();
 
