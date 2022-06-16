@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<Pane fx:id="main" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Observer.View.GUI.Controllers.BoardController">
+<Pane fx:id="main" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.BoardController">
    <children>
       <ImageView fitHeight="371.0" fitWidth="786.0" pickOnBounds="true" preserveRatio="true">
          <image>

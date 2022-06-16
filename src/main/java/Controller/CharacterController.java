@@ -6,7 +6,7 @@ import Exceptions.InsufficientCoinsException;
 import Exceptions.InvalidPlayerInputException;
 import Model.CharacterCard;
 import Model.Shop;
-import Observer.View.RemoteView;
+import View.RemoteView;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import Model.Board;
 import Model.Player;
 import Model.Sack;
 import Model.Student;
-import Observer.View.RemoteView;
+import View.RemoteView;
 
 import java.util.*;
 

@@ -2,7 +2,7 @@ package View.GUI;
 
 import Model.CloudWrapper;
 import Model.Sack;
-import Observer.View.GUI.Controllers.CloudWrapperController;
+import View.GUI.Controllers.CloudWrapperController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

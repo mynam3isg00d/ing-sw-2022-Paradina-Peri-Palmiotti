@@ -2,7 +2,7 @@ package View.GUI;
 
 import Model.Board;
 import Model.Student;
-import Observer.View.GUI.Controllers.BoardController;
+import View.GUI.Controllers.BoardController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

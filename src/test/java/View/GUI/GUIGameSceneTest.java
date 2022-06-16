@@ -1,7 +1,7 @@
 package View.GUI;
 
 import Model.*;
-import Observer.View.GUI.Controllers.GameSceneController;
+import View.GUI.Controllers.GameSceneController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -3,7 +3,7 @@ import Exceptions.EmptyCloudException;
 import Model.CloudWrapper;
 import Model.Sack;
 import Model.Student;
-import Observer.View.RemoteView;
+import View.RemoteView;
 
 import java.util.*;
 
