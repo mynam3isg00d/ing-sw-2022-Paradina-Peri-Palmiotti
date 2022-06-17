@@ -283,6 +283,51 @@ class ExpertGameTest {
     }
 
     @Test
+    public void postmanEffect() throws Exception {
+        ExpertGame g = doPlanningPhase();
+
+        //p2 (the player in turn) moves 4 students, in order to get to the phase in which to move mother nature
+        MoveStudentToDiningEvent e1 = new MoveStudentToDiningEvent();
+        e1.setPlayerId("id2");
+        e1.parseInput("0");
+        g.handleEvent(e1);
+
+        e1.parseInput("1");
+        g.handleEvent(e1);
+
+        e1.parseInput("2");
+        g.handleEvent(e1);
+
+        e1.parseInput("3");
+        g.handleEvent(e1);
+
+        //we in move mother nature phase
+        assertEquals(Phase.ACTION_MOTHERNATURE , g.gameModel.getGamePhase());
+
+        //p2 had played assistant 0 in doPlanningPhase
+        //so he shouldn't be able to move mother nature more than one step
+        MoveMotherNatureEvent e2 = new MoveMotherNatureEvent();
+        e2.setPlayerId("id2");
+        e2.parseInput("3");
+        assertThrows(InvalidMoveException.class , () -> {
+            g.handleEvent(e2);
+        });
+
+        //puts postman in the shop
+        g.setCharacterController(new CharacterController(g, new Integer[]{3, 3, 3}));
+        CharacterController cc = g.getCharacterController();
+
+        //p2 plays postman
+        List<String> playerInput = List.of();
+        cc.giveCoins("id2", 9999);
+        cc.buyCard(0, "id2", playerInput);
+
+        //now id2 should be able to move mother nature 3 steps
+        assertDoesNotThrow(() -> {
+            g.handleEvent(e2);
+        });
+    }
+    @Test
     public void action_phase() throws Exception {
         ExpertGame game = doPlanningPhase();
 

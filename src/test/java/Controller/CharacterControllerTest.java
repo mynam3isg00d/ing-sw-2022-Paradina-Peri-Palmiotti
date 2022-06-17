@@ -40,6 +40,33 @@ class CharacterControllerTest {
         //use debugger but it works lol
     }
 
+    @Test
+    void knightEffectTest() throws Exception, InvalidNumberOfPlayersException {
+        List<Player> pl = getPlayerList(2);
+        ExpertGame g = new ExpertGame(pl);
+        g.setCharacterController(new CharacterController(g, new Integer[]{7, 7, 7}));
+        CharacterController cc = g.getCharacterController();
+
+        //assigns red professor to p1
+        g.boardsController.setProfessor("R", pl.get(1));
+
+        //puts two red students on island 0
+        g.islandController.moveStudent(0, Student.RED);
+        g.islandController.moveStudent(0, Student.RED);
+
+        //for now the most influent team is p1's team (p0 -> 0, p1 -> 2)
+        int mostInfluentTeam = g.islandController.getInfluenceStrategy().calcInfluence(0, g.islandController.getIslandModel(), g.boardsController);
+        assertEquals(pl.get(1).getTeamID(), mostInfluentTeam);
+
+        List<String> playerInput = List.of();
+        cc.giveCoins(pl.get(0).getPlayerID(), 9999);
+        cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
+
+        //now should result in a tie (p0 -> 0+2, p1 -> 2)
+         mostInfluentTeam = g.islandController.getInfluenceStrategy().calcInfluence(0, g.islandController.getIslandModel(), g.boardsController);
+        assertEquals(-1, mostInfluentTeam);
+    }
+
     //No idea how to test this so i trust it works
     @Test
     void heraldEffectTest() throws Exception, InvalidNumberOfPlayersException {
