@@ -16,7 +16,6 @@ public class Player extends Observable {
     private Hand hand;
     private Assistant assistantInPlay;
 
-    //TODO: maybe add playerID to constructor
     /**
      * Creates a new Player
      * @param n player's name
@@ -28,6 +27,12 @@ public class Player extends Observable {
         hand = null;
     }
 
+    /**
+     * Cretes a player
+     * @param pid player ID
+     * @param n name of the player
+     * @param tid team ID
+     */
     public Player(String pid, String n, int tid) {
         playerID = pid;
         name = n;
@@ -35,17 +40,19 @@ public class Player extends Observable {
         hand = null;
     }
 
+    /**
+     * Creates a player
+     * @param n name of the player
+     */
     public Player(String n) {
         name = n;
         teamId = -1;
         hand = null;
     }
 
-    //TODO: what if two players choose the same wizard
-    //TODO: handle if wizardID not between 1 and 4
     /**
      * Creates the player's hand from the wizardID
-     * @param wizardID id of the wizard (identifies the hand aswell)
+     * @param wizardID id of the selected wizard (identifies the hand as well)
      */
     public void chooseWizard(int wizardID) throws  IllegalWizardException{
         if (wizardID < 0 || wizardID > 3) throw new IllegalWizardException();
@@ -55,7 +62,7 @@ public class Player extends Observable {
     }
 
     /**
-     * Plays the corrisponding assistant, making it the assistant in play
+     * Plays the corresponding assistant, making it the assistant in play
      * @param orderNumber assistant's order number (identifier)
      * @return the assistant's now in play
      * @throws AssistantMissingException if the assistant is missing from the player's hand
@@ -69,7 +76,7 @@ public class Player extends Observable {
 
     /**
      * Plays the provided assistant and removes it from the hand
-     * @param a
+     * @param a The assistant played
      */
     public void playAssistant(Assistant a) {
         assistantInPlay = a;
@@ -78,21 +85,19 @@ public class Player extends Observable {
         sendPlayer();
     }
 
+    /**
+     * Sets the assistant in play to null
+     */
     public void clearAssistant() {
         assistantInPlay = null;
     }
 
-    /**
-     * S
-     * @param pid id to set
-     */
     public void setPlayerID(String pid) { playerID = pid; }
 
     public void setTeamId(int teamId) {
         this.teamId = teamId;
     }
 
-    //Do i need to jdoc this?????????????????????
     public String getPlayerID() { return playerID; }
 
     public Hand getHand() {
@@ -109,7 +114,6 @@ public class Player extends Observable {
 
     public Assistant getAssistantInPlay() { return assistantInPlay; }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -118,12 +122,18 @@ public class Player extends Observable {
         return teamId == player.teamId && name.equals(player.name) && playerID.equals(player.playerID);
     }
 
-    //what the fuck is this
+    /**
+     * TODO javadocs
+     * @return
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, playerID, teamId);
     }
 
+    /**
+     * Sends Player to the class' observers
+     */
     public void sendPlayer() {
         String s = new JsonFactory().modelToJson(this);
         notify(s);

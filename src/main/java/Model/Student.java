@@ -2,7 +2,9 @@ package Model;
 
 import com.google.gson.annotations.Expose;
 
-//each student has a colorId in order to make it easier to know where it should be placed on the Board
+/**
+ * Each student has a colorId in order to make it easier to know where it should be placed on the Board
+ */
 public enum Student {
     YELLOW(0),
     BLUE(1),
@@ -21,6 +23,15 @@ public enum Student {
         return colorId;
     }
 
+    /**
+     * Returns the first letter of the student's color. See below for further explanation
+     * @return The character corresponding to the color of the student
+     * Y = YELLOW
+     * B = BLUE
+     * G = GREEN
+     * R = RED
+     * P = PINK
+     */
     public char getChar() {
         switch(colorId) {
             case 0: return 'Y';

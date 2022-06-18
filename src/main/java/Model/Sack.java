@@ -23,6 +23,9 @@ public class Sack extends Observable {
         Collections.shuffle(sack);
     }
 
+    /**
+     * Sends the class to its observers
+     */
     public void sendSack() {
         String s = new JsonFactory().modelToJson(this);
         notify(s);
@@ -56,9 +59,8 @@ public class Sack extends Observable {
      */
     public boolean isEmpty() {return sack.empty();}
 
-    //TODO: make this better
     /**
-     * int to student converter
+     * Converts an integer to a student: each integer corresponds to a student color
      * @param i number (0, 4) for color id
      * @return corresponding color
      */
@@ -81,6 +83,11 @@ public class Sack extends Observable {
 
     public int getSackSize() {return sack.size();}
 
+    /**
+     * Gives a list with one student of each color
+     * Used by character cards to play effects.
+     * @return a list with one student of each color
+     */
     public static List<Student> getColors() {
         List<Student> x = new ArrayList<>();
         x.add(Student.YELLOW);
