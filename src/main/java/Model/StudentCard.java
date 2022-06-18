@@ -1,5 +1,3 @@
-//TODO: Jdocs
-
 package Model;
 
 import Exceptions.FullElementException;
@@ -24,6 +22,12 @@ public class StudentCard extends CharacterCard {
         MAX_STUDENTS = students.size();
     }
 
+
+    /**
+     * Adds students to the student card
+     * @param s The student to add
+     * @throws FullElementException The student card is already full
+     */
     public void addStudent(Student s) throws FullElementException {
         if(students.size() >= MAX_STUDENTS) {
             throw new FullElementException();
@@ -32,13 +36,27 @@ public class StudentCard extends CharacterCard {
         }
     }
 
+
+    /**
+     * Returns the student in the selected position and removes it from the card
+     * @param index Position of the student
+     * @return The student in the selected position
+     * @throws IndexOutOfBoundsException The selected position does not exist
+     */
     public Student getStudent(int index) throws IndexOutOfBoundsException {
         Student ret = students.get(index);
         students.remove(index);
         return ret;
     }
 
-    public List<Student> getStudents(List<Integer> indexes) {
+
+    /**
+     * Returns the students at the selected positions and removes them from the student card
+     * @param indexes Positions of the students to be removes
+     * @return A list containing the students in the selected positions
+     * @throws IndexOutOfBoundsException One of more of the selected positions do not exist
+     */
+    public List<Student> getStudents(List<Integer> indexes) throws IndexOutOfBoundsException {
         List<Student> retVal = new ArrayList<>();
         for(Integer i : indexes) {
             retVal.add(students.get(i));
