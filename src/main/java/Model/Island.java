@@ -20,8 +20,6 @@ public class Island {
 
     private boolean noEntry;
 
-    //builds an empty island, dimension is initialized 1
-
     /**
      * Builds an empty island, with no students, no towers, no mother nature on top and dimension = 1
      */
@@ -46,8 +44,6 @@ public class Island {
 
         noEntry = i.isNoEntry();
     }
-
-    //merges two islands: creates the resulting island. The dimension of the resulting island is sum of the dimensions of the other two
 
     /**
      * Merges i1 and i2 in order to build a new island.
@@ -85,7 +81,9 @@ public class Island {
         return dimension;
     }
 
-    //methods regarding students attribute
+    //----------------------------------------------------------------------------------------------------------------
+    // methods regarding student's attributes
+    //----------------------------------------------------------------------------------------------------------------
 
     /**
      * Returns a representation of the students currently on the selected island
@@ -141,7 +139,9 @@ public class Island {
         return motherNature;
     }
 
-    //only used in testing, in an actual game two islands with the same state ARE NOT equal
+    /**
+     * Only used in testing, in an actual game two islands with the same state ARE NOT equal
+     */
     public boolean equals(Island i) {
         if (influenceTeam != i.influenceTeam) return false;
         if (dimension != i.dimension) return false;

@@ -33,9 +33,15 @@ public class IslandsWrapper extends Observable {
         islands.get(0).setMotherNature(true);
     }
 
+
+    /**
+     * Used to initialize islands at the beginning of the game.
+     * Creates a list containing 2 students per color,
+     * then places randomly 1 student on each island, except for the island mother nature is on (index 0)
+     * and the one opposite to it (index 6).
+     */
     public void initIslands() {
-        //creates a list containing 2 students per color
-        //then places randomly 1 student on each island, except for the island mother nature is on (index 0) and the one opposite to it (index 6)
+        //
         List<Student> initialStudents = initStudents();
         for(int i = 0; i < 12; i++) {
             if (i != 0 && i != 6) {
@@ -45,7 +51,10 @@ public class IslandsWrapper extends Observable {
         }
     }
 
-    //initializes a list with the students to place before the game starts
+    /**
+     * Initializes a list with the students to place before the game starts
+     * @return The initialized list of students
+     */
     private List<Student> initStudents() {
         List<Student> l = new ArrayList<>();
         for (int i=0; i<2; i++) {
@@ -58,6 +67,10 @@ public class IslandsWrapper extends Observable {
         return l;
     }
 
+
+    /**
+     * Sends islands to class' observers
+     */
     public void sendIslands() {
         String s = new JsonFactory().modelToJson(this);
         notify(s);
