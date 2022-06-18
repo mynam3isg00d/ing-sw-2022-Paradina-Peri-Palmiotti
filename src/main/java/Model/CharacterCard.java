@@ -1,23 +1,22 @@
-//TODO: Jdocs
-
-/*
-CharacterIDs in order of apperance in the rulebook
-0 = Clerk
-1 = Farmer
-2 = Herald
-3 = Postman
-4 = Grandma
-5 = Centaur
-6 = Jester
-7 = Knight
-8 = Mushroom
-9 = Bard
-10 = Princess
-11 = Thief
- */
-
 package Model;
 
+/**
+ * Class that represents a character card, used in the expert game mode.
+ *
+ * CharacterIDs in order of appearance in the rulebook
+ * 0 = Clerk
+ * 1 = Farmer
+ * 2 = Herald
+ * 3 = Postman
+ * 4 = Grandma
+ * 5 = Centaur
+ * 6 = Jester
+ * 7 = Knight
+ * 8 = Mushroom
+ * 9 = Bard
+ * 10 = Princess
+ * 11 = Thief
+ */
 public class CharacterCard {
     private int cardID;
     private int cost;
