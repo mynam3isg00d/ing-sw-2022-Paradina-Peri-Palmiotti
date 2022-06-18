@@ -122,10 +122,6 @@ public class Player extends Observable {
         return teamId == player.teamId && name.equals(player.name) && playerID.equals(player.playerID);
     }
 
-    /**
-     * TODO javadocs
-     * @return
-     */
     @Override
     public int hashCode() {
         return Objects.hash(name, playerID, teamId);

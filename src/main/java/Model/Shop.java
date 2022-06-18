@@ -1,6 +1,3 @@
-//TODO: Jdocs
-//TODO: keep coin information here maybe??
-
 package Model;
 
 import Exceptions.EmptySackException;
@@ -39,6 +36,12 @@ public class Shop extends Observable {
         }
     }
 
+    /**
+     * Initializes the shop with 3 randomly selected character cards
+     * @param s The sack to be used by the shop. This will be used by the fillShop method if
+     *          there are student cards to be filled with students, which will be drawn from
+     *          the sack
+     */
     public void initShop(Sack s) {
         List<Integer> charIndex = Arrays.asList(AVAILABLE_CHARS.clone());
         Collections.shuffle(charIndex);
@@ -51,6 +54,11 @@ public class Shop extends Observable {
         sendShop();
     }
 
+    /**
+     * Gives coins to a player
+     * @param playerID The ID of the player that recieves the coins
+     * @param num number of coins to give
+     */
     public void addCoins(String playerID, int num) {
         int prev = coinMap.get(playerID);
         coinMap.put(playerID, prev + num);
@@ -58,17 +66,32 @@ public class Shop extends Observable {
         sendShop();
     }
 
+    /**
+     * Takes coins from a player
+     * @param playerID The ID of the player that coins are taken from
+     * @param num number of coins taken
+     */
     public void removeCoins(String playerID, int num) {
 
         //remember to update only the addCoins
         addCoins(playerID, -num);
     }
 
+    /**
+     * Returns how many coins the selected player has
+     * @param playerID The ID of the selected players
+     * @return How many coins the selected player has
+     */
     public int getPlayerCoins(String playerID) {
         return coinMap.get(playerID);
     }
 
-    //TODO: maybe use factory!!!
+    /**
+     * Fills the shop with 3 given character cards and fills the student cards if there are any
+     * @param indexArray Contains the indexes of the character cards that the shop should be filled with
+     * @param sack The sack used to draw students to fill the student cards
+     * @throws EmptySackException The sack is empty, can't draw any students to fill the student card
+     */
     private void fillShop(List<Integer> indexArray, Sack sack) throws EmptySackException {
         if (indexArray.size() != 3) return;
         for(int i=0; i<indexArray.size(); i++) {
@@ -89,6 +112,10 @@ public class Shop extends Observable {
         return shop.clone();
     }
 
+    /**
+     * Increments the cost of a character card
+     * @param index The index of the selected card
+     */
     public void incrementCost(int index) {
         shop[index].incrementCost();
     }
@@ -101,6 +128,9 @@ public class Shop extends Observable {
         shop[i] = cc;
     }
 
+    /**
+     * Sends the instance to the class' observers
+     */
     public void sendShop() {
         String s = new JsonFactory().modelToJson(this);
         notify(s);

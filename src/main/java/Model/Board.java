@@ -175,8 +175,9 @@ public class Board extends Observable {
         sendBoard();
     }
 
-    //********GETTERS*********//
-
+    //-----------------------------------------------------------------------------------------------------------
+    // Getters
+    //-----------------------------------------------------------------------------------------------------------
     public int[] getDinings() {
         return diners;
     }
@@ -204,7 +205,6 @@ public class Board extends Observable {
 
 
     /**
-     * Gives the number of professors on the board
      * @return number of professors on the board
      */
     public int getProfNum() {
