@@ -3,8 +3,17 @@ package Model;
 import java.util.Objects;
 
 public class Assistant {
-    //orderNumber goes from 1 to 10
+
+    /**
+     * Number written on the card that determines the order in which players play the round:
+     * lower number means higher priority.
+     * orderNumber goes from 1 to 10
+     */
     private int orderNumber;
+
+    /**
+     * Number that says by how many positions a player can move mother nature when playing this assistant.
+     */
     private int motherNumber;
 
     @Override

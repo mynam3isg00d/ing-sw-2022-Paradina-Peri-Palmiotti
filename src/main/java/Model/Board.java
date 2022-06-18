@@ -46,6 +46,10 @@ public class Board extends Observable {
         this.playerID = playerID;
     }
 
+
+    /**
+     * Sends the board to class observers
+     */
     public void sendBoard() {
         String s = new JsonFactory().modelToJson(this);
         notify(s);
@@ -113,6 +117,13 @@ public class Board extends Observable {
         throw new FullEntranceException();
     }
 
+
+    /**
+     * Removes a student from the entrance and returns it
+     * @param idx position of the student in the entrance
+     * @return The removed student
+     * @throws NoSuchStudentsException There is no student at the specified position
+     */
     public Student removeFromEntrance(int idx) throws NoSuchStudentsException {
         if (entrance[idx] == null) throw new NoSuchStudentsException();
 
@@ -123,10 +134,10 @@ public class Board extends Observable {
         return retval;
     }
 
-
-    //TODO: maybe set these like addTower(int n)? so that we don't send 200.000 models
     /**
      * Adds towers to the board (increases towerNum)
+     * @param n number of towers to add
+     * @throws FullElementException The board already has the maximum number of towers possible
      */
     public void addTower(int n) throws FullElementException {
         if (towersNum + n > MAXTOWERS) throw new FullElementException();
@@ -137,7 +148,8 @@ public class Board extends Observable {
 
     /**
      * Removes towers from the board (decreases towerNum)
-     * I'm choosing to allow negative towers since the win condition should already be called by then, we will see if it works
+     * I'm choosing to allow negative towers since the win condition should already be called by then.
+     * @param n number of towers to remove
      */
     public void removeTower(int n) {
         towersNum -= n;
@@ -145,11 +157,9 @@ public class Board extends Observable {
         sendBoard();
     }
 
-
-    //TODO: better names?
     /**
      * Adds the professor to the board
-     * @param professorID
+     * @param professorID the ID of the professor to add
      */
     public void addProfessor(int professorID) {
         professors[professorID] = true;
@@ -158,14 +168,14 @@ public class Board extends Observable {
 
     /**
      * Removes the professor from the board
-     * @param professorID
+     * @param professorID ht eID of the professor to be removed
      */
     public void removeProfessor(int professorID) {
         professors[professorID] = false;
         sendBoard();
     }
 
-    //********getters*********//
+    //********GETTERS*********//
 
     public int[] getDinings() {
         return diners;
@@ -192,6 +202,11 @@ public class Board extends Observable {
         return isTeamLeaderBoard;
     }
 
+
+    /**
+     * Gives the number of professors on the board
+     * @return number of professors on the board
+     */
     public int getProfNum() {
         int ret = 0;
         for(int i=0; i<professors.length; i++) {
@@ -203,37 +218,4 @@ public class Board extends Observable {
     public int getMaxEntrance() {
         return MAXENTRANCEPLACES;
     }
-    //************************//
-
-
-    //********setters*********//
-
-    /*
-    public void setDiners(int[] diners) {
-        this.diners = diners;
-    }
-
-    public void setEntrance(Student[] entrance) {
-        this.entrance = entrance;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public void setProfessors(boolean[] professors) {
-        this.professors = professors;
-    }
-
-    public void setTeamID(int teamID) {
-        this.teamID = teamID;
-    }
-
-    public void setTowersNum(int towersNum) {
-        this.towersNum = towersNum;
-    }
-
-     */
-
-    //************************//
 }

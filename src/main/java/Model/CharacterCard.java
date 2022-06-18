@@ -21,6 +21,12 @@ package Model;
 public class CharacterCard {
     private int cardID;
     private int cost;
+
+
+    /**
+     * This is set to true when a card is played, so the next time someone tries to buy it, the cost will be
+     * incremented first and then shown to the buyer
+     */
     private boolean isIncremented;
 
     public CharacterCard(int cardID) {
@@ -29,6 +35,10 @@ public class CharacterCard {
         isIncremented = false;
     }
 
+
+    /**
+     * Increments the cost if the isIncremented attribute is set to false
+     */
     public void incrementCost() {
         if(!isIncremented) {
             cost++;
@@ -56,9 +66,10 @@ public class CharacterCard {
     }
 
 
-    //TODO: could be useful, but it was made for testing
-    //      this means that it's not an *ideal* equals
-    //      (for example it doesn't check isIncremented)
+    /**
+     * This was made for testing purposes and is not an "ideal" equals,
+     * in fact it does not check the cost and isIncremented attributes
+     */
     @Override
     public boolean equals(Object o) {
         if(!(o instanceof CharacterCard)) return false;
