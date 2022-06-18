@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Contains the references to all the islands (model).
- * Allows changes to the model by providing island indexes
+ * Allows to change to the model by providing island indexes
  */
 public class IslandsWrapper extends Observable {
 

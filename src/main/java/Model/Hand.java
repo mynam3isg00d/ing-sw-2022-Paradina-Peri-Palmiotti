@@ -38,18 +38,14 @@ public class Hand {
 
     /**
      * Gets the Assistant card in the selected position, without removing it
-     * @param index
-     * @return
-     * @throws AssistantMissingException
+     * @param index position of the assistant
+     * @return the assistant in the selected position
+     * @throws AssistantMissingException The position given is out of range: there is no such position in this hand
      */
     public Assistant getAssistantByIndex(int index) throws AssistantMissingException {
         if (index >= hand.size()) throw new AssistantMissingException();
         else return hand.get(index);
     }
-
-    //TODO: check if it's a valid assistant (it should be because
-    //      Hand is the only one able to create assistants...)
-    //      (therefore maybe unnecessary...)
 
     /**
      * Adds assistant to hand

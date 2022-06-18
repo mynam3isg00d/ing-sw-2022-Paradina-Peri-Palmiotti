@@ -9,6 +9,10 @@ import Observer.Observable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * Class that contains references to all clouds.
+ * Allows to change the model by providing cloud indexes
+ */
 public class CloudWrapper extends Observable {
 
     private List<Cloud> clouds;

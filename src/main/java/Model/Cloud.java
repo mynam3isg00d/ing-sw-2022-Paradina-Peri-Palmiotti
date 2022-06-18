@@ -47,6 +47,11 @@ public class Cloud {
         return studentsOnCloud;
     }
 
+
+    /**
+     * Tells it a cloud has any students on it
+     * @return True if cloud is empty, False otherwise
+     */
     public boolean isEmpty() {
         if (students.size() == 0) return true;
         return false;

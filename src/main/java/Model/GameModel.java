@@ -45,30 +45,84 @@ public class GameModel extends Observable {
         }
     }
 
+    /**
+     * Sends the class to its observers via a json file
+     */
     public void sendGameModel() {
         String s = new JsonFactory().modelToJson(this);
         notify(s);
     }
+
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //      Getters
+    //-----------------------------------------------------------------------------------------------------------------
+
+    public boolean isCloudChosen() {
+        return turnInfo.cloudChosen;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public int getSTUDENTS_PER_TURN() {
+        return STUDENTS_PER_TURN;
+    }
+
+    public Phase getGamePhase() {
+        return gamePhase;
+    }
+
+    public int getNumStudentsMoved() {
+        return turnInfo.numOfStudentsMoved;
+    }
+
+    public boolean hasMotherNatureMoved() {
+        return turnInfo.motherNatureMoved;
+    }
+
+    public int getRoundCount() {
+        return roundCount;
+    }
+
+    public boolean isLastRound() {
+        return isLastRound;
+    }
+
+    public int getWinnerTeam() {
+        return winnerTeam;
+    }
+
+    public boolean[] getPickedWizards() {
+        return pickedWizards;
+    }
+
+    public void setWinnerTeam(int winnerTeam) {
+        this.winnerTeam = winnerTeam;
+    }
+
+
+    //-----------------------------------------------------------------------------------------------------------------
+    //      Setters
+    //-----------------------------------------------------------------------------------------------------------------
 
     public void setGamePhase(Phase gamePhase) {
         this.gamePhase = gamePhase;
 
         sendGameModel();
     }
-    public Phase getGamePhase() {
-        return gamePhase;
+
+    public void updatePickedWizard(int wizardID) {
+        pickedWizards[wizardID] = true;
     }
-    public int getSTUDENTS_PER_TURN() {
-        return STUDENTS_PER_TURN;
-    }
+
     public void setLastRound(boolean lastRound) {
         isLastRound = lastRound;
 
         sendGameModel();
     }
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
+
     public void setCurrentPlayer(Player newCurrentPlayer) {
         currentPlayer = newCurrentPlayer;
         sendGameModel();
@@ -87,26 +141,15 @@ public class GameModel extends Observable {
         sendGameModel();
     }
 
-    public int getNumStudentsMoved() {
-        return turnInfo.numOfStudentsMoved;
-    }
-
     public void motherNatureMoved() {
         turnInfo.motherNatureMoved = true;
         sendGameModel();
     }
 
-    public boolean hasMotherNatureMoved() {
-        return turnInfo.motherNatureMoved;
-    }
 
     public void cloudChosen() {
         turnInfo.cloudChosen = true;
         sendGameModel();
-    }
-
-    public boolean isCloudChosen() {
-        return turnInfo.cloudChosen;
     }
 
     public void newRound() {
@@ -114,27 +157,4 @@ public class GameModel extends Observable {
         sendGameModel();
     }
 
-    public int getRoundCount() {
-        return roundCount;
-    }
-
-    public boolean isLastRound() {
-        return isLastRound;
-    }
-
-    public void setWinnerTeam(int winnerTeam) {
-        this.winnerTeam = winnerTeam;
-    }
-
-    public int getWinnerTeam() {
-        return winnerTeam;
-    }
-
-    public void updatePickedWizard(int wizardID) {
-        pickedWizards[wizardID] = true;
-    }
-
-    public boolean[] getPickedWizards() {
-        return pickedWizards;
-    }
 }
