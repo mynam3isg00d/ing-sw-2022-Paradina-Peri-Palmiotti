@@ -27,8 +27,21 @@ public class PostmanEffect extends CharacterEffect{
         this.g = g;
     }
 
+
+    /**
+     * Sets the postmanActive boolean attribute in Game to True. Now the number of steps that mother nature can
+     * move is increased by 2.
+     * @param playerInput This should be empty for this character card
+     * @throws InvalidPlayerInputException The input is not empty as expected
+     * @throws Exception Something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
+
+        // Expects:
+        // {}
+        if(playerInput.size()!=0) throw new InvalidPlayerInputException();
+
         g.setPostmanActive(true);
     }
 }
