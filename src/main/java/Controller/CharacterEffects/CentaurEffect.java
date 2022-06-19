@@ -23,6 +23,12 @@ public class CentaurEffect extends InfluenceEffect {
     }
 
 
+    /**
+     * Sets the right influenceStrategy in the island controller.
+     * @param playerInput the input given by the player where they select how to play the character card
+     * @throws InvalidPlayerInputException There should be no input for this character card
+     * @throws Exception Something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 

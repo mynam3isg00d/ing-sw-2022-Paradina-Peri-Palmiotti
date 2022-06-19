@@ -14,8 +14,7 @@ public class CentaurStrategy implements InfluenceStrategy {
      * Calculates and returns the ID of the team with the most influence when a centaur character card
      * is played.
      *
-     * Centaur effect: when calculating the influence on an island (or group of islands), the towers on the
-     *                 island don't count.
+     * Centaur effect: when calculating the influence on an island, the towers on the island don't count.
      *
      * @param islandIndex The island in question
      * @param islandModel The reference to the IslandModel
