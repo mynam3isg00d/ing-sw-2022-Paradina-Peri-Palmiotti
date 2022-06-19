@@ -15,9 +15,21 @@ public class MushroomStrategy implements InfluenceStrategy{
         colorId = cid;
     }
 
+    /**
+     * Calculates and returns the ID of the team with the most influence when a mushroom character card
+     * is played.
+     *
+     * Mushroom effect: the player who plays this character card chooses a color among those of the students.
+     *                  The students of that color will not count when calculating the influence during this round.
+     *
+     * @param islandIndex The island in question
+     * @param islandModel The reference to the IslandModel
+     * @param boardsController The reference to the BoardsController
+     * @return The team with the most influence there is one, else -1 (if no further action is needed)
+     */
     @Override
     public int calcInfluence(int islandIndex, IslandsWrapper islandModel, BoardsController boardsController) {
-//gets the students on the island, if there are no students on the island the situation remains unchanged
+        //gets the students on the island, if there are no students on the island the situation remains unchanged
         int[] students = islandModel.getStudents(islandIndex);
         int[] noStudentsArray = new int[] {
                 0,0,0,0,0
@@ -31,7 +43,8 @@ public class MushroomStrategy implements InfluenceStrategy{
         //every team influence will be stored in a hashmap like:
         //teamId -> influence
         HashMap<Integer, Integer> influences = new HashMap<>();
-        //checks which teams have some influence on the island (ie: the teams which have at least one professor) and puts them on the infuences map
+        //checks which teams have some influence on the island (ie: the teams which have at least one professor) and
+        //puts them on the infuences map
         List<Student> colors = Sack.getColors();
         for (Student s : colors) {
             Player owner = boardsController.getProfessorOwner(s.getColorId());

@@ -8,6 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DefaultProfessorStrategy implements ProfessorStrategy{
+
+    /**
+     * Calculates what player should have what professors based on what students are on their board
+     * @param professors a reference to the player's professors
+     * @param playerBoardMap the hash map linking players to their boards
+     * @param players a reference to all the players in the game
+     */
     public void updateProfessors(Player[] professors, HashMap<String, Board> playerBoardMap, List<Player> players) {
 
         Player[] old_professors = professors.clone();

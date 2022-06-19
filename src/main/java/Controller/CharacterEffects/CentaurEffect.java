@@ -22,6 +22,7 @@ public class CentaurEffect extends InfluenceEffect {
         ic = g.getIslandController();
     }
 
+
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 

@@ -8,6 +8,18 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FarmerStrategy implements ProfessorStrategy{
+
+    /**
+     * Calculates what player should have what professors based on what students are on their board when
+     * the farmer character effect card is played.
+     *
+     * Farmer effect: when the player who plays this card is entitled to a professor even if he has the same
+     *                number of students of that professor's color on the board as the other players
+     *
+     * @param professors a reference to the player's professors
+     * @param playerBoardMap the hash map linking players to their boards
+     * @param players a reference to all the players in the game
+     */
     public void updateProfessors(Player[] professors, HashMap<String, Board> playerBoardMap, List<Player> players) {
 
         Player[] old_professors = professors.clone();

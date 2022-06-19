@@ -33,6 +33,13 @@ public class BardEffect extends CharacterEffect {
         cc = g.getCharacterController();
     }
 
+    /**
+     * Plays the effect and updates the boards controller. See explainEffect method in this class for a
+     * description of the effect.
+     * @param playerInput the input given by the player where they select how to play the character card
+     * @throws InvalidPlayerInputException The input given by the player is invalid
+     * @throws Exception Something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 
@@ -57,7 +64,6 @@ public class BardEffect extends CharacterEffect {
             if (ste < 0 || ste > 4) throw new InvalidPlayerInputException();
             studentsToEntrance.add(ste);
         }
-
 
         //Check that the inputs are valid
         int[] check = new int[]{0, 0, 0, 0, 0};

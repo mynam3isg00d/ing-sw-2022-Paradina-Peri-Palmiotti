@@ -10,12 +10,13 @@ import java.util.*;
 
 
 public class DefaultInfluenceStrategy implements InfluenceStrategy{
+
     /**
-     * Calculates the most influent team and returns its id
+     * Calculates and returns the ID of the team with the most influence
      * @param islandIndex The island in question
      * @param islandModel The reference to the IslandModel
      * @param boardsController The reference to the BoardsController
-     * @return The most influent team if there is one, else -1 (if no further action is needed)
+     * @return The team with the most influence there is one, else -1 (if no further action is needed)
      */
     public int calcInfluence(int islandIndex, IslandsWrapper islandModel, BoardsController boardsController){
         //gets the students on the island, if there are no students on the island the situation remains unchanged

@@ -8,6 +8,7 @@ import Model.Student;
 
 import java.util.*;
 
+
 public class KnightStrategy implements InfluenceStrategy{
     private int teamID;
 
@@ -15,6 +16,18 @@ public class KnightStrategy implements InfluenceStrategy{
         teamID = tid;
     }
 
+    /**
+     * Calculates and returns the ID of the team with the most influence when a knight character card
+     * is played.
+     *
+     * Knight effect: when calculating the influence on an island (or group of islands), the player who played
+     *                this character card has 2 additional influence points
+     *
+     * @param islandIndex The island in question
+     * @param islandModel The reference to the IslandModel
+     * @param boardsController The reference to the BoardsController
+     * @return The team with the most influence there is one, else -1 (if no further action is needed)
+     */
     @Override
     public int calcInfluence(int islandIndex, IslandsWrapper islandModel, BoardsController boardsController) {
         //gets the students on the island, if there are no students on the island the situation remains unchanged
