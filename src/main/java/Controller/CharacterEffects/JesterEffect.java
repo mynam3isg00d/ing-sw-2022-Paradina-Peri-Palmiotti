@@ -30,6 +30,18 @@ public class JesterEffect extends StudentsEffect {
         sc = (StudentCard) g.getCharacterController().getShopReference().getShop()[cardIndex];
     }
 
+
+    /**
+     * Swaps the students selected by the user.
+     * @param playerInput the students selected by the user. The user can select up to 3 couples of students, where each
+     *                    couple has 1 student from the student card and 1 from the entrance.
+     *                    Possible inputs:
+     *                    {cardStudent0 : int, entranceStudent0 : int}
+     *                    {cardStudent0 : int, cardStudent1 : int, entranceStudent0 : int, entranceStudent1 : int}
+     *                    {cardStudent0 : int, cardStudent1 : int, cardStudent2 : int, entranceStudent0 : int, entranceStudent1 : int, entranceStudent2 : int}
+     * @throws InvalidPlayerInputException the input given by the user is invalid
+     * @throws Exception something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 
