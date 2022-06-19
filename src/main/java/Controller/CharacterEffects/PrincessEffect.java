@@ -41,6 +41,14 @@ public class PrincessEffect extends StudentsEffect {
         cc = g.getCharacterController();
     }
 
+
+    /**
+     * Moves the selected student from the student card to the dining room.
+     * @param playerInput The student selected by the player to be moved from the card to the dining room
+     *                    Expected input: {studentToTake: int}
+     * @throws InvalidPlayerInputException The input given by the user is invalid
+     * @throws Exception Something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 
