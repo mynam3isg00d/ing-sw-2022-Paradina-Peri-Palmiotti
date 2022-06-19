@@ -31,6 +31,12 @@ public class ClerkEffect extends StudentsEffect {
         sc = (StudentCard)g.getCharacterController().getShopReference().getShop()[cardIndex];
     }
 
+    /**
+     * Moves the selected student to the selected island and updates the model.
+     * @param playerInput the index of the student and of the island selected by the player
+     * @throws InvalidPlayerInputException the input given by the player is invalid
+     * @throws Exception something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 

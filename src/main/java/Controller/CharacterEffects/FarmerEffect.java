@@ -24,6 +24,12 @@ public class FarmerEffect extends CharacterEffect{
         bc = g.getBoardsController();
     }
 
+    /**
+     * Sets the right professorStrategy in the boardController.
+     * @param playerInput Here this should be empty
+     * @throws InvalidPlayerInputException the input is nt empty as it should be
+     * @throws Exception something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
         // Expects:

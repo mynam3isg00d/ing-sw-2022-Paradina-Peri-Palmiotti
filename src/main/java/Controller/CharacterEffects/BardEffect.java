@@ -34,9 +34,11 @@ public class BardEffect extends CharacterEffect {
     }
 
     /**
-     * Plays the effect and updates the boards controller. See explainEffect method in this class for a
-     * description of the effect.
-     * @param playerInput the input given by the player where they select how to play the character card
+     * Swaps the 2 or 4 students selected by the player.
+     * @param playerInput the input given by the player where they select what students to swap.
+     *                    Possible inputs:
+     *                    -swap 1 couple of students: input is {entranceStudent0 : int, diningStudent0 : int}
+     *                    -swap 2 couples of students: input is {entranceStudent0 : int, entranceStudent1 : int, diningStudent0 : int, diningStudent1 : int}
      * @throws InvalidPlayerInputException The input given by the player is invalid
      * @throws Exception Something went wrong
      */
