@@ -19,6 +19,11 @@ public class FarmerEffect extends CharacterEffect{
         return "During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them";
     }
 
+    /**
+     * Initializes the attributes with the appropriate references
+     * @param g reference to expertGame
+     * @param cardIndex index of the Farmer character card
+     */
     @Override
     public void init(ExpertGame g, int cardIndex) {
         bc = g.getBoardsController();

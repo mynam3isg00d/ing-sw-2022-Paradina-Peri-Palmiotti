@@ -17,6 +17,11 @@ public class CentaurEffect extends InfluenceEffect {
         super(playerID);
     }
 
+    /**
+     * Initializes the attributes with the appropriate references
+     * @param g reference to expertGame
+     * @param cardIndex index of the Centaur character card
+     */
     @Override
     public void init(ExpertGame g, int cardIndex) {
         ic = g.getIslandController();

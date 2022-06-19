@@ -23,6 +23,11 @@ public class KnightEffect extends InfluenceEffect {
         this.playerID = playerID;
     }
 
+    /**
+     * Initializes the attributes with the appropriate references
+     * @param g reference to expertGame
+     * @param cardIndex index of the Knight character card
+     */
     @Override
     public void init(ExpertGame g, int cardIndex) {
         ic = g.getIslandController();
@@ -31,6 +36,12 @@ public class KnightEffect extends InfluenceEffect {
         }
     }
 
+    /**
+     * Sets the right influenceStrategy in the island controller.
+     * @param playerInput this should be empty
+     * @throws InvalidPlayerInputException The input is not empty as it should be
+     * @throws Exception Something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 

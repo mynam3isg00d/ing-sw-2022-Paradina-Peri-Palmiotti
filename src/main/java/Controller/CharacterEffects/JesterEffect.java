@@ -24,12 +24,16 @@ public class JesterEffect extends StudentsEffect {
         this.playerID = playerID;
     }
 
+    /**
+     * Initializes the attributes with the appropriate references
+     * @param g reference to expertGame
+     * @param cardIndex index of the Jester character card
+     */
     @Override
     public void init(ExpertGame g, int cardIndex) {
         bc = g.getBoardsController();
         sc = (StudentCard) g.getCharacterController().getShopReference().getShop()[cardIndex];
     }
-
 
     /**
      * Swaps the students selected by the user.

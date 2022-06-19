@@ -17,6 +17,11 @@ public class PostmanEffect extends CharacterEffect{
         return "You may move Mother Nature up to 2 additional islands than is indicated by the assistant card you played";
     }
 
+    /**
+     * Initializes the attributes with the appropriate references
+     * @param g reference to expertGame
+     * @param cardIndex index of the Postman character card
+     */
     @Override
     public void init(ExpertGame g, int cardIndex) {
         this.g = g;
