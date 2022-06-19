@@ -24,6 +24,14 @@ public class HeraldEffect extends CharacterEffect {
         ic = g.getIslandController();
     }
 
+
+    /**
+     * Calculates the influence on the island selected by the player and takes action accordingly.
+     * The island is resolved by calling the usual calcInfluence method in the IslandController class.
+     * @param playerInput the island selected by the player that will be resolved
+     * @throws InvalidPlayerInputException the input given by the user is invalid
+     * @throws Exception something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 
