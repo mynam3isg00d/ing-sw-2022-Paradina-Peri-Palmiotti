@@ -52,7 +52,7 @@ public class GUIAdapter extends UI {
 
     @Override
     public void updateModel(Shop s) {
-
+        gameSceneController.updateShop(s);
     }
 
     @Override

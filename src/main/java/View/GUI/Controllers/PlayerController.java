@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 import java.util.List;
 
@@ -23,9 +24,12 @@ public class PlayerController extends GUILeaf {
     private FlowPane hand;
     @FXML
     private ImageView assistantInPlay;
+    @FXML
+    private Text nametext;
 
     public void initialize() {
         assistantInPlay.setVisible(false);
+        nametext.setVisible(false);
     }
 
     public void update(Player p) {
@@ -47,7 +51,9 @@ public class PlayerController extends GUILeaf {
             assistantInPlay.setVisible(false);
         } else {
             assistantInPlay.setVisible(true);
+            nametext.setVisible(true);
             assistantInPlay.setImage(new Image("/graphics/wooden_pieces/Cards/Assistente (" + p.getAssistantInPlay().getOrderNumber() + ").png"));
+            nametext.setText(name);
         }
     }
 

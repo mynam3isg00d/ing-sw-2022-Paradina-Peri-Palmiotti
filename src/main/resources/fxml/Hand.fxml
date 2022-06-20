@@ -4,14 +4,17 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <Pane fx:id="main" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.PlayerController">
    <children>
-      <FlowPane fx:id="hand" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="1200.0">
-         <children>
-
-          </children>
-      </FlowPane>
+      <Text fx:id="nametext" layoutX="1099.0" layoutY="-8.0" strokeType="OUTSIDE" strokeWidth="0.0" text="XXX" wrappingWidth="120.8780517578125">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Text>
+      <FlowPane fx:id="hand" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="1200.0" />
       <ImageView fx:id="assistantInPlay" fitHeight="177.0" fitWidth="131.0" layoutX="1099.0" layoutY="-199.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/wooden_pieces/Cards/Assistente%20(1).png" />

@@ -16,6 +16,8 @@ public class GameSceneController {
     PlayerController playerMainController, player1Controller, player2Controller, player3Controller;
     @FXML
     PickWizardController wizardsController;
+    @FXML
+    ShopController shopController;
 
     @FXML
     public void initialize() {
@@ -101,6 +103,8 @@ public class GameSceneController {
     }
     public void updateIslandsWrapper(IslandsWrapper iw) {islandsWrapperController.update(iw);}
     public void updateCloudWrapper(CloudWrapper cw) {cloudWrapperController.update(cw);}
+    public void updateShop(Shop s) {shopController.update(s);
+    }
 
     public void connectGUI(GUI gui) {
         boardMainController.connectGUI(gui);
@@ -112,9 +116,12 @@ public class GameSceneController {
         cloudWrapperController.connectGUI(gui);
         playerMainController.connectGUI(gui);
         wizardsController.connectGUI(gui);
+        shopController.connectGUI(gui);
     }
 
     public void updateGameModel(GameModel gm) {
         wizardsController.update(gm);
     }
+
+
 }

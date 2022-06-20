@@ -90,7 +90,12 @@ public class Connection extends Observable implements Runnable {
             } while(!validEntry && !disconnectedEarly);
 
             if (!disconnectedEarly) {
-                server.lobby(this, name, playerNumber, expert);
+                //TODO: maybe move this
+                try {
+                    server.lobby(this, name, playerNumber, expert);
+                } catch (InvalidNumberOfPlayersException e) {
+                    e.printStackTrace();
+                }
 
                 while (isActive) {
                     try {
@@ -109,8 +114,6 @@ public class Connection extends Observable implements Runnable {
                     }
                 }
             }
-        } catch (InvalidNumberOfPlayersException e) {
-            throw new RuntimeException(e);
         }  catch (Exception e) {
             e.printStackTrace();
         }  finally {

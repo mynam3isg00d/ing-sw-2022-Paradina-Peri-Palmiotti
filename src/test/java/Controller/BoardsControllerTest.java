@@ -14,6 +14,8 @@ import java.util.Random;
 
 class BoardsControllerTest {
 
+    //TODO: change InvalidNumberOfPlayersException thrown from tests to assertNotThrows
+
     @Test
     public void createTwoBoardsTest() throws InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);

@@ -29,31 +29,6 @@ public class GUI extends Application {
     private PrintWriter out;
     private BufferedReader in;
 
-    //TODO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    //                               REMOVE!!!!!!!!!!!!!!!
-    private class LocalInput implements Runnable {
-        private PrintWriter out;
-        private Scanner in;
-
-        public LocalInput(PrintWriter out) {
-            this.out = out;
-            in = new Scanner(System.in);
-        }
-
-        public void asyncSend(String message) {
-            out.println(message);
-        }
-
-        public void run() {
-            while(true) {
-                String line = in.nextLine();
-                line = EventFactory.stringToEventJson(guiAdapter.getPlayerID(), line);
-                out.println(line);
-                out.flush();
-            }
-        }
-    }
-
     private class RemoteInput implements Runnable {
 
         private String id;
@@ -147,9 +122,6 @@ public class GUI extends Application {
         }
 
         new Thread(new GUI.RemoteInput(in)).start();
-
-        //TODO: Remove, there's no need
-        new Thread(new GUI.LocalInput(out)).start();
     }
 
     public void sendEvent(String event) {
