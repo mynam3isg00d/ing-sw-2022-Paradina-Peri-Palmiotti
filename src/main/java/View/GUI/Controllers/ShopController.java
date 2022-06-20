@@ -7,22 +7,30 @@ import View.GUI.Nodes.GUILeaf;
 import View.GUI.Nodes.StudentTile;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 public class ShopController extends GUILeaf {
 
+    private CharacterCard[] ccarr;
     @FXML
     private Pane main, player0, player1, player2, player3;
 
     @FXML
-    private ImageView char0, char1, char2;
+    private ImageView char0, char1, char2, bought0, bought1, bought2;
 
     @FXML
     private Text coin0, coin1, coin2, coin3, name0, name1, name2, name3;
@@ -37,10 +45,21 @@ public class ShopController extends GUILeaf {
         player2.setVisible(false);
         player3.setVisible(false);
         stud0.setMouseTransparent(true); stud1.setMouseTransparent(true); stud2.setMouseTransparent(true);
+        bought0.setVisible(false); bought1.setVisible(false); bought2.setVisible(false);
     }
 
     public void buyCharacter(MouseEvent mouseEvent) {
-        System.out.println("buy character " + ((Node)mouseEvent.getTarget()).getId());
+        int index = Integer.parseInt(((Node)mouseEvent.getTarget()).getId().replace("char", ""));
+        try {
+            Stage buyStage = new Stage();
+            FXMLLoader nextLoader = new FXMLLoader(getClass().getResource("/fxml/Char" + ccarr[index].getCardID() + "Scene.fxml"));
+            Parent nextRoot = nextLoader.load();
+            CharacterController cc = nextLoader.getController();
+            cc.connectGUI(this.gui, index);
+            buyStage.initModality(Modality.APPLICATION_MODAL);
+            buyStage.setScene(new Scene(nextRoot));
+            buyStage.show();
+        } catch (IOException ignored) {}
     }
 
     public void mouseEntered(MouseEvent mouseEvent) {
@@ -60,11 +79,15 @@ public class ShopController extends GUILeaf {
     public void update(Shop s) {
         main.setVisible(true);
 
-        CharacterCard[] ccarr = s.getShop();
+        ccarr = s.getShop();
 
         char0.setImage(new Image("graphics/wooden_pieces/Cards/CarteTOT_front" + ccarr[0].getCardID() + ".jpg"));
         char1.setImage(new Image("graphics/wooden_pieces/Cards/CarteTOT_front" + ccarr[1].getCardID() + ".jpg"));
         char2.setImage(new Image("graphics/wooden_pieces/Cards/CarteTOT_front" + ccarr[2].getCardID() + ".jpg"));
+
+        bought0.setVisible(ccarr[0].isIncremented());
+        bought1.setVisible(ccarr[1].isIncremented());
+        bought2.setVisible(ccarr[2].isIncremented());
 
         if (ccarr[0] instanceof StudentCard) {
             StudentCard sc = (StudentCard) ccarr[0];

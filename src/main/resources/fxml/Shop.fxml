@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="main" fx:controller="View.GUI.Controllers.ShopController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.ShopController">
    <children>
       <ImageView fx:id="char0" fitHeight="238.0" fitWidth="218.0" layoutX="40.0" layoutY="26.0" onMouseClicked="#buyCharacter" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, black, 10, 0.3, 0, 0);">
          <image>
@@ -135,5 +135,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
+      <ImageView fx:id="bought0" fitHeight="56.0" fitWidth="60.0" layoutX="153.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, black, 10, 0.3, 0, 0);;">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Moneta_base.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bought1" fitHeight="56.0" fitWidth="60.0" layoutX="335.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, black, 10, 0.3, 0, 0);;">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Moneta_base.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bought2" fitHeight="56.0" fitWidth="60.0" layoutX="511.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, black, 10, 0.3, 0, 0);;">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Moneta_base.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

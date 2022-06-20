@@ -26,21 +26,24 @@ public class RunTest {
     }
 
     @Test
-    public void testIpChoiceGui() {
-        Application.launch(GUILoginTest.class);
-    }
-
-    @Test
     public void testGameConfigGui() {
         Application.launch(GUIConfigTest.class);
     }
 
-
+    @Test
+    public void testIpChoiceGui() {
+        Application.launch(GUILoginTest.class);
+    }
 
    // @Test
-   /* public void testGameConfigGui() {
+    public void testGameConfigGui() {
         Application.launch(GUIWizardTest.class);
-    }*/
+    }
+*/
+    @Test
+    public void testGameSceneGui() {
+        Application.launch(GUIShopTest.class);
+    }
 
 
 }
