@@ -10,6 +10,11 @@ import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Pane;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public abstract class CharacterController extends GUILeaf {
 
     private int cardIndex;
@@ -18,6 +23,10 @@ public abstract class CharacterController extends GUILeaf {
     protected final ObservableList<Integer> entranceIdList = FXCollections.observableArrayList(0,1,2,3,4,5,6,7,8);
     protected final ObservableList<Integer> cardIdList = FXCollections.observableArrayList(0,1,2,3,4,5);
     protected final ObservableList<Integer> studentColorList = FXCollections.observableArrayList(0,1,2,3,4);
+
+    protected final ObservableList<Integer> diningIdList = FXCollections.observableArrayList(IntStream.rangeClosed(0, 50).boxed().collect(Collectors.toList()));
+
+
 
     public void sendOk(ActionEvent actionEvent, Pane main) {
         String toSend = "buy character " + cardIndex;
