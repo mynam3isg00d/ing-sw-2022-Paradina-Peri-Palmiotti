@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="main" fx:controller="View.GUI.Controllers.HeraldController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="600.0" style="-fx-background-color: purple;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="600.0" style="-fx-background-color: purple;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.ClerkController">
    <children>
       <ImageView fitHeight="280.0" fitWidth="223.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -27,7 +27,7 @@
          </font>
       </Text>
       <ChoiceBox fx:id="island" layoutX="213.0" layoutY="165.0" prefWidth="150.0" />
-      <Button onAction="#sendOk" layoutX="460.0" layoutY="242.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="126.0" text="OK">
+      <Button layoutX="460.0" layoutY="242.0" mnemonicParsing="false" onAction="#sendOk" prefHeight="63.0" prefWidth="126.0" text="OK">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="27.0" />
          </font>
