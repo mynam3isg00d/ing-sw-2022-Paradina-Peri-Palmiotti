@@ -24,7 +24,7 @@ public abstract class CharacterController extends GUILeaf {
     protected final ObservableList<Integer> cardIdList = FXCollections.observableArrayList(0,1,2,3,4,5);
     protected final ObservableList<Integer> studentColorList = FXCollections.observableArrayList(0,1,2,3,4);
 
-    protected final ObservableList<Integer> diningIdList = FXCollections.observableArrayList(IntStream.rangeClosed(0, 50).boxed().collect(Collectors.toList()));
+    protected final ObservableList<Integer> diningIdList = FXCollections.observableArrayList(IntStream.rangeClosed(0, 49).boxed().collect(Collectors.toList()));
 
 
 
