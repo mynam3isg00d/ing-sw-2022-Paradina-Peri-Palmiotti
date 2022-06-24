@@ -17,6 +17,7 @@ public abstract class CharacterController extends GUILeaf {
     protected final ObservableList<Integer> islandIdList = FXCollections.observableArrayList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
     protected final ObservableList<Integer> entranceIdList = FXCollections.observableArrayList(0,1,2,3,4,5,6,7,8);
     protected final ObservableList<Integer> cardIdList = FXCollections.observableArrayList(0,1,2,3,4,5);
+    protected final ObservableList<Integer> studentColorList = FXCollections.observableArrayList(0,1,2,3,4);
 
     public void sendOk(ActionEvent actionEvent, Pane main) {
         String toSend = "buy character " + cardIndex;

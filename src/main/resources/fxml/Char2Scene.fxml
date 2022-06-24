@@ -8,26 +8,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="main" fx:controller="View.GUI.Controllers.HeraldController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="600.0" style="-fx-background-color: purple;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="600.0" style="-fx-background-color: purple;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.HeraldController">
    <children>
       <ImageView fitHeight="280.0" fitWidth="223.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/wooden_pieces/Cards/CarteTOT_front0.jpg" />
+            <Image url="@../graphics/wooden_pieces/Cards/CarteTOT_front2.jpg" />
          </image>
       </ImageView>
-      <Text layoutX="213.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Index">
-         <font>
-            <Font size="33.0" />
-         </font>
-      </Text>
-      <ChoiceBox fx:id="student" layoutX="213.0" layoutY="69.0" prefWidth="150.0" />
       <Text layoutX="214.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Island Index" wrappingWidth="184.60057067871094">
          <font>
             <Font size="33.0" />
          </font>
       </Text>
       <ChoiceBox fx:id="island" layoutX="213.0" layoutY="165.0" prefWidth="150.0" />
-      <Button onAction="#sendOk" layoutX="460.0" layoutY="242.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="126.0" text="OK">
+      <Button layoutX="460.0" layoutY="242.0" mnemonicParsing="false" onAction="#sendOk" prefHeight="63.0" prefWidth="126.0" text="OK">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="27.0" />
          </font>
