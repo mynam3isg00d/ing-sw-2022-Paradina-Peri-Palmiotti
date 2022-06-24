@@ -22,8 +22,8 @@ public class BardController extends CharacterController {
     public void initialize() {
         entranceStudent0.setItems(entranceIdList);
         entranceStudent1.setItems(entranceIdList);
-        diningStudent0.setItems(diningIdList);
-        diningStudent1.setItems(diningIdList);
+        diningStudent0.setItems(studentColorList);
+        diningStudent1.setItems(studentColorList);
     }
 
     public void sendOk(ActionEvent actionEvent) {
