@@ -27,8 +27,8 @@ public class HelpInterpreter {
             switch (charID) {
                 case 0: return "Take 1 Student from this card and place it on an Island of your choice.\n" +
                         "buy character X [student index] [island index]";
-                case 1: return "During this turn, you take control of any number of Professors even if you have the smae number of Students as the player who currently controls them.\n" +
-                        "buy character ?";
+                case 1: return "During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them.\n" +
+                        "buy character X";
                 case 2: return "Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.\n" +
                         "buy character X [island index]";
                 case 3: return "You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played\n" +

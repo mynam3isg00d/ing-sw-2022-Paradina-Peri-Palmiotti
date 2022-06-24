@@ -10,7 +10,7 @@ import java.util.*;
 
 public class Shop extends Observable {
 
-    private Integer[] AVAILABLE_CHARS = {0, 2, 5, 6, 7, 8, 9, 10};
+    private Integer[] AVAILABLE_CHARS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
     private CharacterCard[] shop;
     private HashMap<String, Integer> coinMap;
     private List<Player> playerList;
@@ -102,6 +102,8 @@ public class Shop extends Observable {
                     shop[i] = new StudentCard(c, sack.draw(4)); break;
                 case 6:
                     shop[i] = new StudentCard(c, sack.draw(6)); break;
+                case 4:
+                    shop[i] = new NoTileCard(c); break;
                 default:
                     shop[i] = new CharacterCard(c); break;
             }

@@ -64,9 +64,11 @@ public class IslandController {
         //changes the motherNature position in the model
         islandModel.moveMotherNature(newPosition);
 
-        if (!islandModel.isNewEntry(newPosition)) {
+        if (!islandModel.isNoEntry(newPosition)) {
             //calculates the influences on the new position
             calcInfluence(newPosition);
+        } else {
+            islandModel.removeNoEntry(newPosition);
         }
     }
 
@@ -197,5 +199,13 @@ public class IslandController {
      */
     public void removeNoEntry(int islandIndex){
         islandModel.removeNoEntry(islandIndex);
+    }
+
+    public int getNumOfNoEntry() {
+        int ret = 0;
+        for(int i=0; i<islandModel.getIslandLength(); i++) {
+            if (islandModel.isNoEntry(i)) ret++;
+        }
+        return ret;
     }
 }

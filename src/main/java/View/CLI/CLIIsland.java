@@ -25,6 +25,7 @@ public class CLIIsland extends CLIElement {
 
     private void updateLines() {
         String i = getNumString(index);
+        String no = island.isNoEntry() ? "X" : " ";
         int s = island.getDimension();
         String m = getMotherNatureString();
         String n = getInfluenceString(island.getInfluence());
@@ -32,7 +33,7 @@ public class CLIIsland extends CLIElement {
 
         lines.clear();
         lines.add( "   _________    "  );
-        lines.add( "  [" + i + "]      \\   " );
+        lines.add( "  [" + i + "]     [" + no + "]  " );
         lines.add( " /  size: "+ s +"  \\  " );
         lines.add( "/   ["+ m +"] [" + n + "]   \\ " );
         lines.add( "\\ [@|yellow " + c[0] + "|@] [@|blue " + c[1] + "|@] [@|green " + c[2] + "|@] / " );

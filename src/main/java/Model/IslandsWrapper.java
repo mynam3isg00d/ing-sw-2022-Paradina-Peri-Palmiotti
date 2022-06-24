@@ -219,15 +219,24 @@ public class IslandsWrapper extends Observable {
         return islands.get(islandIndex).getDimension();
     }
 
+    /**
+     * Puts a noEntry tile on the island
+     * @param islandIndex the index in the island list
+     * @throws InvalidMoveException if there is already a no entry tile on top.
+     */
     public void setNoEntry(int islandIndex) throws InvalidMoveException {
         islands.get(islandIndex).setNoEntry();
+
+        sendIslands();
     }
 
     public void removeNoEntry(int islandIndex) {
         islands.get(islandIndex).removeNoEntry();
+
+        sendIslands();
     }
 
-    public boolean isNewEntry(int islandIndex) {
+    public boolean isNoEntry(int islandIndex) {
         return islands.get(islandIndex).isNoEntry();
     }
 }

@@ -2,7 +2,7 @@
 Progetto di Ingegneria del Software (3 CFU), 2022
 
 
-* Marco Paradina
+* Marco "Il Puma" Paradina
 
 * Samuele Peri
 

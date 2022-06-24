@@ -1,6 +1,7 @@
 package View.CLI;
 
 import Model.CharacterCard;
+import Model.NoTileCard;
 import Model.Shop;
 import Model.StudentCard;
 
@@ -44,10 +45,10 @@ public class CLIShop extends CLIElement {
 
         CharacterCard[] carr = shop.getShop();
         for(int i=0; i<3; i++) {
-
-            //God i wish i knew how dynamic types worked..
             if (carr[i].getCardID() == 0 || carr[i].getCardID() == 6 || carr[i].getCardID() == 10) {
-                cardArray[i] = new CLIStudentCard((StudentCard)carr[i]);
+                cardArray[i] = new CLIStudentCard((StudentCard) carr[i]);
+            } else if (carr[i].getCardID() == 4){
+                cardArray[i] = new CLINoTileCard((NoTileCard) carr[i]);
             } else {
                 cardArray[i] = new CLICharaterCard(carr[i]);
             }
@@ -99,5 +100,4 @@ public class CLIShop extends CLIElement {
         if(name.length() > 5) return name.substring(0, 5);
         return name + " ".repeat(5 - name.length());
     }
-
 }

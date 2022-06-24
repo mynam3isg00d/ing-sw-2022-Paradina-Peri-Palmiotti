@@ -71,6 +71,11 @@ public class ExpertGame extends Game {
 
         islandController.moveMother(numberOfSteps);
 
+        //modify no entry card
+        //this is the only card whose model is able to be modified without a direct interaction with the user, hence
+        //the weird paradigm for its update
+        characterController.updateGrandma(4 - islandController.getNumOfNoEntry());
+
         //set mother nature moved
         gameModel.motherNatureMoved();
 

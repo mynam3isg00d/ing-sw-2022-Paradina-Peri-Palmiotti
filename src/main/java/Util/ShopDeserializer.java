@@ -1,5 +1,6 @@
 package Util;
 
+import Model.NoTileCard;
 import Model.Shop;
 import Model.StudentCard;
 import com.google.gson.*;
@@ -20,6 +21,9 @@ public class ShopDeserializer implements JsonDeserializer<Shop> {
 
             if(obj.has("MAX_STUDENTS")) {
                 StudentCard card = b.fromJson(obj, StudentCard.class);
+                ret.setCard(card, i);
+            } else if (obj.has("MAX_NOTILES")) {
+                NoTileCard card = b.fromJson(obj, NoTileCard.class);
                 ret.setCard(card, i);
             }
         }

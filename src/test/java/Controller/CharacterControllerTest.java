@@ -2,8 +2,8 @@ package Controller;
 
 import Controller.CharacterEffects.CentaurEffect;
 import Controller.CharacterEffects.Strategies.*;
-import Events.EventFactory;
-import Events.MoveStudentToDiningEvent;
+import Events.*;
+import Exceptions.EmptyElementException;
 import Exceptions.InsufficientCoinsException;
 import Exceptions.InvalidNumberOfPlayersException;
 import Exceptions.InvalidPlayerInputException;
@@ -249,6 +249,133 @@ class CharacterControllerTest {
 
     }
 
+    @Test
+    void GrandmaEffectTest() throws Exception {
+        //Warning: the methods take into account that there will be only 1 grandma card, if any. This test may be buggy
+        //         since the shop is filled with 3 grandmas
+
+        ExpertGame g = doPlanningPhase();
+
+        //p2 (the player in turn) moves 4 students, in order to get to the phase in which to move mother nature
+        MoveStudentToDiningEvent e1 = new MoveStudentToDiningEvent();
+        e1.setPlayerId("id2");
+        e1.parseInput("0");
+        g.handleEvent(e1);
+
+        e1.parseInput("1");
+        g.handleEvent(e1);
+
+        e1.parseInput("2");
+        g.handleEvent(e1);
+
+        e1.parseInput("3");
+        g.handleEvent(e1);
+
+        //we in move mother nature phase
+        assertEquals(Phase.ACTION_MOTHERNATURE , g.gameModel.getGamePhase());
+
+        //puts grandma in the shop
+        g.setCharacterController(new CharacterController(g, new Integer[]{4, 4, 4}));
+        CharacterController cc = g.getCharacterController();
+
+        assertEquals(4, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
+
+        //p2 plays grandma
+        List<String> playerInput = List.of("1");
+        cc.giveCoins("id2", 9999);
+        cc.buyCard(0, "id2", playerInput);
+
+        //island 1 has a no entry tile
+        assertTrue(g.getIslandController().getIslandModel().isNoEntry(1));
+        assertEquals(3, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
+
+        //now motherNature moves
+        MoveMotherNatureEvent event = new MoveMotherNatureEvent("id2", 1);
+        g.handleEvent(event);
+
+        //..and now it doesn't! no entry back on the card
+        assertFalse(g.getIslandController().getIslandModel().isNoEntry(1));
+        assertEquals(4, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
+    }
+
+    @Test
+    void GrandmaEffectTest2() throws Exception {
+
+        //This second test focuses on emptying the no entry card
+
+        //Warning: the methods take into account that there will be only 1 grandma card, if any. This test may be buggy
+        //         since the shop is filled with 3 grandmas
+
+        ExpertGame g = doPlanningPhase();
+
+        //p2 (the player in turn) moves 4 students, in order to get to the phase in which to move mother nature
+        MoveStudentToDiningEvent e1 = new MoveStudentToDiningEvent();
+        e1.setPlayerId("id2");
+        e1.parseInput("0");
+        g.handleEvent(e1);
+
+        e1.parseInput("1");
+        g.handleEvent(e1);
+
+        e1.parseInput("2");
+        g.handleEvent(e1);
+
+        e1.parseInput("3");
+        g.handleEvent(e1);
+
+        //we in move mother nature phase
+        assertEquals(Phase.ACTION_MOTHERNATURE , g.gameModel.getGamePhase());
+
+        //puts grandma in the shop
+        g.setCharacterController(new CharacterController(g, new Integer[]{4, 4, 4}));
+        CharacterController cc = g.getCharacterController();
+
+        assertEquals(4, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
+
+        //---begin mass buy---
+        //p2 plays grandma
+        cc.giveCoins("id2", 9);
+        cc.buyCard(0, "id2", List.of("1"));
+        //island 1 has a no entry tile
+        assertTrue(g.getIslandController().getIslandModel().isNoEntry(1));
+        assertEquals(3, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
+
+        //p2 plays grandma
+        cc.giveCoins("id2", 9);
+        cc.buyCard(0, "id2", List.of("2"));
+        //island 2 has a no entry tile
+        assertTrue(g.getIslandController().getIslandModel().isNoEntry(2));
+        assertEquals(2, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
+
+        //p2 plays grandma
+        cc.giveCoins("id2", 9);
+        cc.buyCard(0, "id2", List.of("3"));
+        //island 2 has a no entry tile
+        assertTrue(g.getIslandController().getIslandModel().isNoEntry(3));
+        assertEquals(1, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
+
+        //p2 plays grandma
+        cc.giveCoins("id2", 9);
+        cc.buyCard(0, "id2", List.of("4"));
+        //island 2 has a no entry tile
+        assertTrue(g.getIslandController().getIslandModel().isNoEntry(4));
+        assertEquals(0, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
+
+        //p2 plays grandma
+        cc.giveCoins("id2", 9);
+        assertThrows(EmptyElementException.class, () -> {cc.buyCard(0, "id2", List.of("5"));});
+
+        //-----
+
+        //now motherNature moves
+        MoveMotherNatureEvent event = new MoveMotherNatureEvent("id2", 1);
+        g.handleEvent(event);
+
+        //no entry back on the card
+        assertFalse(g.getIslandController().getIslandModel().isNoEntry(1));
+        assertEquals(1, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
+    }
+
     private List<Player> getPlayerList(int n) {
         List<Player> ret = new ArrayList<>();
         String name = "a";
@@ -259,5 +386,94 @@ class CharacterControllerTest {
             name = name + "a";
         }
         return ret;
+    }
+
+    public ExpertGame doPlanningPhase() throws Exception{
+        ExpertGame game = doSetupPhase();
+
+        List<Player> initialPlayers = game.getPlayers();
+
+
+        //p1 wants to play the 3rd assistant in his hand
+        PlayAssistantEvent ev1 = new PlayAssistantEvent();
+        ev1.setPlayerId("id1");
+        ev1.parseInput("3");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev1);
+        });
+
+
+        //p2 wants to play the 1st assistant in his hand (no one has played that one yet)
+        PlayAssistantEvent ev3 = new PlayAssistantEvent();
+        ev3.setPlayerId("id2");
+        ev3.parseInput("0");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev3);
+        });
+
+        //p3 wants to play the 10th assistant in his hand (no one has played that one yet)
+        PlayAssistantEvent ev4 = new PlayAssistantEvent();
+        ev4.setPlayerId("id3");
+        ev4.parseInput("9");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(ev4);
+        });
+
+        //all players have played an assistant:
+        //- the player order should have been updated to p2 -> p1 -> p3
+        //- we should be in action phase
+        //- p2 should be the next player to play
+
+        return game;
+    }
+
+    public ExpertGame doSetupPhase() throws Exception{
+        //init a game with 3 players
+        List<Player> players = new ArrayList<>();
+        Player p1 = new Player("id1", "1", 0);
+        Player p2 = new Player("id2", "2", 1);
+        Player p3 = new Player("id3", "3", 2);
+        players.add(p1);
+        players.add(p2);
+        players.add(p3);
+
+        ExpertGame game = new ExpertGame(players);
+
+        ChooseWizardEvent wizardEvent1 = new ChooseWizardEvent();
+        wizardEvent1.setPlayerId("id1");
+        wizardEvent1.parseInput("0");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(wizardEvent1);
+        });
+
+        //creates an event: p2 wants to choose wizard 3
+        ChooseWizardEvent wizardEvent3 = new ChooseWizardEvent();
+        wizardEvent3.setPlayerId("id2");
+        wizardEvent3.parseInput("3");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(wizardEvent3);
+        });
+
+        //creates an event: p3 wants to choose wizard 2
+        ChooseWizardEvent wizardEvent4 = new ChooseWizardEvent();
+        wizardEvent4.setPlayerId("id3");
+        wizardEvent4.parseInput("2");
+
+        //the event is processed correctly and no exception is thrown
+        assertDoesNotThrow(() -> {
+            game.handleEvent(wizardEvent4);
+        });
+
+        return game;
     }
 }

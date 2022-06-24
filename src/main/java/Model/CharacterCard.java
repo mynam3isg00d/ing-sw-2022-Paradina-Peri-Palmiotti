@@ -18,9 +18,9 @@ package Model;
  * 11 = Thief
  */
 public class CharacterCard {
+
     private int cardID;
     private int cost;
-
 
     /**
      * This is set to true when a card is played, so the next time someone tries to buy it, the cost will be

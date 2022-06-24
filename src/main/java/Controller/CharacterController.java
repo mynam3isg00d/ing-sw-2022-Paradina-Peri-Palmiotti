@@ -5,6 +5,7 @@ import Controller.CharacterEffects.FarmerEffect;
 import Exceptions.InsufficientCoinsException;
 import Exceptions.InvalidPlayerInputException;
 import Model.CharacterCard;
+import Model.NoTileCard;
 import Model.Shop;
 import View.RemoteView;
 
@@ -78,6 +79,18 @@ public class CharacterController {
     }
     public Shop getShopReference() { return shop; }
 
+    public void updateGrandma(int newValue) {
+        for(CharacterCard cc : shop.getShop()) {
+            if(cc.getCardID() == 4) {
+                //It's grandma!
+                NoTileCard ntc = (NoTileCard) cc;
+                ntc.setNoTile(newValue);
+            }
+        }
+
+        shop.sendShop();
+    }
+
     /**
      * @param cc character card that we want the effect of
      * @param playerID player that is playing the character card. The effect can be
@@ -93,7 +106,7 @@ public class CharacterController {
             case 1: return new FarmerEffect(playerID);
             case 2: return new HeraldEffect(playerID);
             case 3: return new PostmanEffect(playerID);
-            //case 4: return new GrandmaEffect();
+            case 4: return new GrandmaEffect(playerID);
             case 5: return new CentaurEffect(playerID);
             case 6: return new JesterEffect(playerID);
             case 7: return new KnightEffect(playerID);
