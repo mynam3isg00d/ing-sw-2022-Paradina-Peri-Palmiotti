@@ -15,22 +15,15 @@ public class BardController extends CharacterController {
     @FXML
     ChoiceBox<Integer> entranceStudent1;
     @FXML
-    ChoiceBox<Integer> entranceStudent2;
-    @FXML
     ChoiceBox<Integer> diningStudent0;
     @FXML
     ChoiceBox<Integer> diningStudent1;
-    @FXML
-    ChoiceBox<Integer> diningStudent2;
-
 
     public void initialize() {
         entranceStudent0.setItems(entranceIdList);
         entranceStudent1.setItems(entranceIdList);
-        entranceStudent2.setItems(entranceIdList);
         diningStudent0.setItems(studentColorList);
         diningStudent1.setItems(studentColorList);
-        diningStudent2.setItems(studentColorList);
     }
 
     public void sendOk(ActionEvent actionEvent) {
