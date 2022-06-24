@@ -144,6 +144,28 @@ class BoardsControllerTest {
         bc.updateProfessors();
     }
 
+    @Test
+    public void thiefTest() throws Exception{
+        List<Player> p = getPlayerList(2);
+        BoardsController bc = new BoardsController(p, new Sack(120));
+
+        for (int i = 0; i < 6; i++) {
+            bc.addToDining(p.get(0).getPlayerID(), Student.RED);
+        }
+
+        for (int i = 0; i < 2; i++) {
+            bc.addToDining(p.get(1).getPlayerID(), Student.RED);
+        }
+
+        assertEquals(6, bc.getBoard(p.get(0).getPlayerID()).getDinings()[3]);
+        assertEquals(2, bc.getBoard(p.get(1).getPlayerID()).getDinings()[3]);
+
+        bc.thiefRemove(Student.RED);
+
+        assertEquals(3, bc.getBoard(p.get(0).getPlayerID()).getDinings()[3]);
+        assertEquals(0, bc.getBoard(p.get(1).getPlayerID()).getDinings()[3]);
+    }
+
     private List<Player> getPlayerList(int n) {
         List<Player> ret = new ArrayList<>();
         String name = "a";

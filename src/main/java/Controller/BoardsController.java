@@ -263,4 +263,22 @@ public class BoardsController {
     public ProfessorStrategy getProfessorStrategy() {
         return professorStrategy;
     }
+
+    /**
+     * Removes three students of the provided color from every player's board
+     * If one has less than three, will be removed all possible students
+     * @param s
+     */
+    public void thiefRemove(Student s) {
+        for (Player p : players) {
+            for (int i = 0; i < 3; i++) {
+                try {
+                    playerBoardMap.get(p.getPlayerID()).removeFromDining(s);
+                } catch (EmptyTableException e) {
+                    //if there's no students left -> break
+                    break;
+                }
+            }
+        }
+    }
 }

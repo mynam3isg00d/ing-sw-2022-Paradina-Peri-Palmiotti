@@ -80,6 +80,41 @@ class CharacterControllerTest {
         cc.giveCoins(pl.get(0).getPlayerID(), 9999);
         cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
     }
+    @Test
+    void thiefEffectTest() throws Exception, InvalidNumberOfPlayersException {
+        List<Player> pl = getPlayerList(2);
+        ExpertGame g = new ExpertGame(pl);
+        g.setCharacterController(new CharacterController(g, new Integer[]{11, 11, 11}));
+        CharacterController cc = g.getCharacterController();
+
+        BoardsController bc = g.getBoardsController();
+
+        //adds 6 red students to p0's board
+        for (int i = 0; i < 6; i++) {
+            bc.addToDining(pl.get(0).getPlayerID(), Student.RED);
+        }
+
+        //adds 2 red students to p1's board
+        for (int i = 0; i < 2; i++) {
+            bc.addToDining(pl.get(1).getPlayerID(), Student.RED);
+        }
+
+        //checks the students have actually been added to the right boards
+        assertEquals(6, bc.getBoard(pl.get(0).getPlayerID()).getDinings()[3]);
+        assertEquals(2, bc.getBoard(pl.get(1).getPlayerID()).getDinings()[3]);
+
+        //p0 buys thief character providing "red" as the selected color
+        List<String> playerInput = List.of("3");
+        assertThrows(InsufficientCoinsException.class, () -> { cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);});
+        cc.giveCoins(pl.get(0).getPlayerID(), 9999);
+        assertDoesNotThrow( () -> {
+            cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
+        });
+
+        //3 students have been removed both from p0's and p1's board
+        assertEquals(3, bc.getBoard(pl.get(0).getPlayerID()).getDinings()[3]);
+        assertEquals(0, bc.getBoard(pl.get(1).getPlayerID()).getDinings()[3]);
+    }
 
     @Test
     void centaurEffectTest() throws Exception, InvalidNumberOfPlayersException {

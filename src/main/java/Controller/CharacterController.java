@@ -100,7 +100,7 @@ public class CharacterController {
             case 8: return new MushroomEffect(playerID);
             case 9: return new BardEffect(playerID);
             case 10: return new PrincessEffect(playerID);
-            //case 11: return new ThiefEffect();
+            case 11: return new ThiefEffect(playerID);
             default: return null;
         }
     }

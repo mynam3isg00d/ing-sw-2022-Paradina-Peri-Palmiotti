@@ -23,6 +23,17 @@ public enum Student {
         return colorId;
     }
 
+    public static Student idToStudent(int i) {
+        switch (i) {
+            case 0: return YELLOW;
+            case 1: return BLUE;
+            case 2: return GREEN;
+            case 3: return RED;
+            case 4: return PINK;
+            default: return null;
+        }
+    }
+
     /**
      * Returns the first letter of the student's color. See below for further explanation
      * @return The character corresponding to the color of the student

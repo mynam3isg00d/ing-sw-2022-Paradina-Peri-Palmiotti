@@ -18,32 +18,32 @@ public class RunTest {
     @Test
     public void testGameSceneGui() {
         Application.launch(GUIGameSceneTest.class);
-    }
-
+    }*/
+/*
     @Test
     public void testBoardGui() {
         Application.launch(GUIBoardTest.class);
-    }
-
-    @Test
+    }*/
+/*
+   /* @Test
     public void testGameConfigGui() {
         Application.launch(GUIConfigTest.class);
-    }
-
+    }*/
+/*
     @Test
     public void testIpChoiceGui() {
         Application.launch(GUILoginTest.class);
-    }
-
+    }*/
+/*
    // @Test
     public void testGameConfigGui() {
         Application.launch(GUIWizardTest.class);
     }
 */
-    @Test
+   /* @Test
     public void testGameSceneGui() {
         Application.launch(GUIShopTest.class);
     }
-
+*/
 
 }
