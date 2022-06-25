@@ -11,12 +11,9 @@ public class HeraldController extends CharacterController {
     @FXML
     Pane main;
     @FXML
-    ChoiceBox<Integer> student;
-    @FXML
     ChoiceBox<Integer> island;
 
     public void initialize() {
-        student.setItems(cardIdList);
         island.setItems(islandIdList);
     }
 
