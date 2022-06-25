@@ -15,6 +15,10 @@ public class Shop extends Observable {
     private HashMap<String, Integer> coinMap;
     private List<Player> playerList;
 
+    /**
+     * Main overload of the Shop class constructor
+     * @param playerList Reference to a list of players that are playing the game
+     */
     public Shop(List<Player> playerList) {
         shop = new CharacterCard[3];
         coinMap = new HashMap<>();
@@ -25,6 +29,11 @@ public class Shop extends Observable {
         }
     }
 
+    /**
+     * Overload of the Shop class constructor. Mainly used for testing purposes
+     * @param playerList Reference to a list of players that are playing the game
+     * @param AVAILABLE_CHARS Number of character cards that are available during this game
+     */
     //Mainly for testing purposes
     public Shop(List<Player> playerList, Integer[] AVAILABLE_CHARS) {
         shop = new CharacterCard[3];

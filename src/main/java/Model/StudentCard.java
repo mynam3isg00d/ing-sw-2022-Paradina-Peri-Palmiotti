@@ -10,12 +10,22 @@ public class StudentCard extends CharacterCard {
     private final int MAX_STUDENTS;
     private List<Student> students;
 
+    /**
+     * Overload of the StudentCard class constructor.
+     * @param cardID ID of the card. Each card has a unique ID.
+     * @param maxStudents Maximum number of students that can go on top of the card
+     */
     public StudentCard(int cardID, int maxStudents) {
         super(cardID);
         students = new ArrayList<>();
         MAX_STUDENTS = maxStudents;
     }
 
+    /**
+     * Main overload of the StudentCard class constructor
+     * @param cardID ID of the card. Each card has a unique ID.
+     * @param students A list of students that go on top of the student card
+     */
     public StudentCard(int cardID, List<Student> students) {
         super(cardID);
         this.students = students;

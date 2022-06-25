@@ -23,6 +23,11 @@ public class Board extends Observable {
     private int teamID;
     private boolean isTeamLeaderBoard;
 
+    /**
+     * Overload of the Board class constructor used for testing purposes
+     * @param towersNum Number of towers that can be on the board
+     * @param maxEntrancePlaces Maximum number of students that can be in the entrance
+     */
     public Board(int towersNum, int maxEntrancePlaces) {
         diners = new int[]{0, 0, 0, 0, 0};
         MAXENTRANCEPLACES = maxEntrancePlaces;
@@ -33,6 +38,14 @@ public class Board extends Observable {
         isTeamLeaderBoard = true;
     }
 
+    /**
+     * Main overload for the Board class constructor
+     * @param playerID ID of the player whose board is being constructed
+     * @param name name of the player
+     * @param teamID ID of the team that the player belongs to
+     * @param towersNum Number of towers that can be on the board
+     * @param maxEntrancePlaces Maximum number of students that can be in the entrance
+     */
     public Board(String playerID, String name, int teamID, int towersNum, int maxEntrancePlaces) {
         diners = new int[]{0, 0, 0, 0, 0};
         MAXENTRANCEPLACES = maxEntrancePlaces;

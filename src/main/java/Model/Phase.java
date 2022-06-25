@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * Enum that represents all the phases of the game
+ */
 public enum Phase {
     SETUP(0),
 
