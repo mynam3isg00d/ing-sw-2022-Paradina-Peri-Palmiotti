@@ -53,6 +53,7 @@ public class Player extends Observable {
     /**
      * Creates the player's hand from the wizardID
      * @param wizardID id of the selected wizard (identifies the hand as well)
+     * @throws IllegalWizardException if the wizard is outside the range [0-3]
      */
     public void chooseWizard(int wizardID) throws  IllegalWizardException{
         if (wizardID < 0 || wizardID > 3) throw new IllegalWizardException();

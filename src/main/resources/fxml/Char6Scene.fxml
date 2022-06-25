@@ -9,8 +9,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="600.0" style="-fx-background-color: purple;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.JesterController">
+<Pane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="600.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.JesterController">
    <children>
+      <ImageView fitHeight="329.0" fitWidth="600.0" opacity="0.17" pickOnBounds="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/Background/character_bg.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="452.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance." textAlignment="CENTER" wrappingWidth="141.56256103515625">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
       <ImageView fitHeight="280.0" fitWidth="223.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/wooden_pieces/Cards/CarteTOT_front6.jpg" />

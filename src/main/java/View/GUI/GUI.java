@@ -44,10 +44,6 @@ public class GUI extends Application {
             while(true) {
                 try {
                     String line = in.readLine();
-
-                    //I found this on stack overflow lmfaoooooooooooo
-                    //It breaks without this
-                    //No, I do not know why it works
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {

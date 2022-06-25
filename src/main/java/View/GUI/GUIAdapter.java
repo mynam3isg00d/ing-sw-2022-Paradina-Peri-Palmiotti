@@ -22,7 +22,6 @@ public class GUIAdapter extends UI {
 
     @Override
     public void init() {
-        System.out.println("gui init");
         gameSceneController.connectGUI(gui);
     }
 
@@ -71,6 +70,6 @@ public class GUIAdapter extends UI {
 
     @Override
     public void renderError(Message m) {
-
+        gameSceneController.renderError(m.getMessage());
     }
 }

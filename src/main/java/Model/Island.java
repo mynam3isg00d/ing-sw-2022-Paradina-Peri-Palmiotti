@@ -139,7 +139,7 @@ public class Island {
         return motherNature;
     }
 
-    /**
+    /*
      * Only used in testing, in an actual game two islands with the same state ARE NOT equal
      */
     public boolean equals(Island i) {

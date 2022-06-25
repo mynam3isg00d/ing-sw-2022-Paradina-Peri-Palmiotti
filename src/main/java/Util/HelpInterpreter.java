@@ -31,13 +31,13 @@ public class HelpInterpreter {
                         "buy character X";
                 case 2: return "Choose an Island and resolve the Island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved.\n" +
                         "buy character X [island index]";
-                case 3: return "You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played\n" +
+                case 3: return "You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played.\n" +
                         "buy character X";
                 case 4: return "Place a No Entry tile on and Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card. Influence is not caluclated.\n" +
                         "buy character X [island index]";
                 case 5: return "When resolving a Conquering on an Island, Towers do not count towards influence.\n" +
                         "buy character X";
-                case 6: return "You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance\n" +
+                case 6: return "You may take up to 3 Students from this card and replace them with the same number of Students from your Entrance.\n" +
                         "buy character X [card index] (x 1,2,3) [entrance index] (x 1,2,3)";
                 case 7: return "During the influcence calculation this turn, you count as having 2 more influence.\n" +
                         "buy character X";

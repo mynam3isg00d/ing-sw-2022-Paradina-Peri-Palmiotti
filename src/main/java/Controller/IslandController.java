@@ -53,6 +53,8 @@ public class IslandController {
     /**
      * A method that gets the number of steps and moves mother nature accordingly. Only moves if the move is valid
      * @param steps number of steps selected by the player
+     * @throws EmptyElementException if you can't remove a tower from the player
+     * @throws FullElementException if the opposing player has too many towers
      */
     public void moveMother(int steps) throws EmptyElementException, FullElementException {
         //gets the old mother nature position
@@ -87,6 +89,8 @@ public class IslandController {
     /**
      * Calculates the most influent team on the island and acts accordingly
      * @param islandIndex The island
+     * @throws FullElementException if the losing team has too many towers
+     * @throws EmptyElementException if the winning team has no towers
      */
     public void calcInfluence(int islandIndex) throws EmptyElementException, FullElementException {
         int mostInfluentTeam = influenceStrategy.calcInfluence(islandIndex, islandModel, boardsController);
@@ -102,6 +106,8 @@ public class IslandController {
      * A private method that gets called by calcInfluence() only if the influence on an island has changed. If necessary asks the model to merge the islands
      * @param mostInfluentTeam the new most influent team
      * @param islandIndex the index of the island
+     * @throws FullElementException if the losing team has too many towers
+     * @throws EmptyElementException if the winning team has no towers
      */
     private void checkAndMerge(Integer mostInfluentTeam, int islandIndex) throws EmptyElementException, FullElementException {
             //updates the tower counts of the two involved teams

@@ -42,8 +42,12 @@ public class Server implements Runnable{
      * When the waitingList contains a number of players which is equals to the number of players needed for the game to start the game is initialized
      * Synchronized in order to avoid concurrent changes to the lists
      * @param newConnection The connection just created
+     * @param name player's name
+     * @param playerNumber number of players
+     * @param expert true if expert game, else false
+     * @throws InvalidNumberOfPlayersException if the number of players is outside the normal range [2-4]
      */
-    public synchronized String lobby(Connection newConnection, String name, int playerNumber, boolean expert) throws InvalidNumberOfPlayersException {
+    public synchronized void lobby(Connection newConnection, String name, int playerNumber, boolean expert) throws InvalidNumberOfPlayersException {
         System.out.println("called lobby with name = " + name);
 
         //lobby for 2 players is in position 0 of the array
@@ -154,8 +158,6 @@ public class Server implements Runnable{
                 entry.getValue().send(jsonFactory.messageToJson(waitingMessage));
             }
         }
-
-        return "";
     }
 
     public Map<Player, Connection> getWaitingList(int playerNumber) {
@@ -167,8 +169,9 @@ public class Server implements Runnable{
     }
 
     /**
-     *
-     * @param id
+     * Deregisters the connection from the server
+     * @param id the id to disconnect
+     * @param name the player's name
      */
     public void deregisterConnection(String name, String id) {
         for (int i = 0; i < 6; i++) {
