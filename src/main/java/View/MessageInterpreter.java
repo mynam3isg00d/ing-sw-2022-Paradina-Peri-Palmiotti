@@ -10,6 +10,9 @@ import com.google.gson.JsonObject;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * Interpreter for messages sent via json files
+ */
 public class MessageInterpreter {
 
     private UI ui;
@@ -20,6 +23,10 @@ public class MessageInterpreter {
         this.b = new GsonBuilder().registerTypeAdapter(Shop.class, new ShopDeserializer()).create();
     }
 
+    /**
+     * @param message The json file containing the message
+     * @throws UnknownMessageException The message is not among the expected ones
+     */
     public void interpret(String message) throws UnknownMessageException{
         JsonObject messageAsJsonObject = b.fromJson(message, JsonObject.class);
         int code = messageAsJsonObject.get("messageCode").getAsInt();

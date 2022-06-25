@@ -7,6 +7,7 @@ import Util.AnnotationExclusionStrategy;
 import Network.Messages.Message;
 import com.google.gson.*;
 
+//TODO javadocs
 public class JsonFactory {
 
     private Gson builder;

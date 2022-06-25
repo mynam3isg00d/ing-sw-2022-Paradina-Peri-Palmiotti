@@ -6,6 +6,9 @@ import Model.StudentCard;
 
 import java.util.List;
 
+/**
+ * Displays a card with a No-entry tile on it in the CLI
+ */
 public class CLINoTileCard extends CLICharaterCard {
 
     public CLINoTileCard(NoTileCard sc) {

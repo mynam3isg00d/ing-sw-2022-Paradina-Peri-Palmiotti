@@ -4,6 +4,9 @@ import Model.Assistant;
 
 import java.util.ArrayList;
 
+/**
+ * Displays the assistants in the CLI
+ */
 public class CLIAssistant extends CLIElement {
 
     private Assistant assistant;

@@ -4,6 +4,9 @@ import Model.IslandsWrapper;
 
 import java.util.Arrays;
 
+/**
+ * Handles representation of islands in the CLI
+ */
 public class CLIIslandWrapper {
 
     private IslandsWrapper islandsWrapper;

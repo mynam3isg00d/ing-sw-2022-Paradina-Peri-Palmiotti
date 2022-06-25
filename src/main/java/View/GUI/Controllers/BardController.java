@@ -7,6 +7,9 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * JavaFx controller for Char0Scene.fxml
+ */
 public class BardController extends CharacterController {
     @FXML
     Pane main;

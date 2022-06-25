@@ -1,5 +1,6 @@
 package Network.Messages;
 
+//TODO javadocs
 public class Message {
     private String message;
     private boolean isError;

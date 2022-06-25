@@ -32,7 +32,6 @@ public class StudentCard extends CharacterCard {
         MAX_STUDENTS = students.size();
     }
 
-
     /**
      * Adds students to the student card
      * @param s The student to add

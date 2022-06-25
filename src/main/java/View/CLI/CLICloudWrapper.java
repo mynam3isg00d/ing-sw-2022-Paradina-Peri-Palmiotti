@@ -2,6 +2,9 @@ package View.CLI;
 
 import Model.CloudWrapper;
 
+/**
+ * Handles the representation of clouds in the CLI
+ */
 public class CLICloudWrapper {
 
     private CloudWrapper cloudWrapper;

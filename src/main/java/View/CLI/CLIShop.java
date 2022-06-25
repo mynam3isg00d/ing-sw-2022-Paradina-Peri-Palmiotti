@@ -7,6 +7,9 @@ import Model.StudentCard;
 
 import java.util.ArrayList;
 
+/**
+ * Displays the character cards' shop in the CLI
+ */
 public class CLIShop extends CLIElement {
 
     private Shop shop;

@@ -1,5 +1,3 @@
-//uh oh, how do i connect it to the player lol
-
 package View.CLI;
 
 import Model.Board;
@@ -7,6 +5,9 @@ import Model.Student;
 
 import java.util.ArrayList;
 
+/**
+ * Displays a board in the CLI
+ */
 public class CLIBoard extends CLIElement {
 
     private Board board;

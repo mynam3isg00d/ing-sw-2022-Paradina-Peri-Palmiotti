@@ -8,6 +8,9 @@ import java.util.Random;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * Displays game information in the CLI
+ */
 public class CLIGameModel extends CLIElement {
 
     private GameModel gameModel;

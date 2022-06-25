@@ -4,6 +4,9 @@ import java.util.List;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
+/**
+ * Classes that Displays elements in the CLI inherit from this class
+ */
 public abstract class CLIElement {
 
     protected List<String> lines;

@@ -2,6 +2,9 @@ package View.CLI;
 
 import java.util.ArrayList;
 
+/**
+ * Draws a firework in the CLI when someone wins
+ */
 public class CLIFirework extends CLIElement {
     //lmao
 

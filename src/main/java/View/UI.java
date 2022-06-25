@@ -4,6 +4,9 @@ import Model.*;
 import Network.Messages.Message;
 import javafx.application.Application;
 
+/**
+ * Abstract class for User Interface. CLI and GUI inherit from it
+ */
 public abstract class UI {
 
     private String playerID;

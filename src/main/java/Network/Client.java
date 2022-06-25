@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+//TODO javadocs
 public class Client {
     boolean isActive = true;
     private String ip;

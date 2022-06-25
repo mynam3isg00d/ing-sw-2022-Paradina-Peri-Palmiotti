@@ -5,6 +5,9 @@ import Model.Island;
 
 import java.util.ArrayList;
 
+/**
+ * Displays an island in the CLI
+ */
 public class CLIIsland extends CLIElement {
 
     private Island island;

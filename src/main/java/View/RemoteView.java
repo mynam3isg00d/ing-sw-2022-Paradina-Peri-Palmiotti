@@ -6,6 +6,9 @@ import Network.JsonFactory;
 import Observer.*;
 
 
+/**
+ * The remote view in the Model-View-Controller pattern
+ */
 public class RemoteView extends Observable implements Observer {
 
     private final Player player;

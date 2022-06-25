@@ -4,6 +4,9 @@ import Model.Sack;
 
 import java.util.ArrayList;
 
+/**
+ * Displays the sack in the CLI
+ */
 public class CLISack extends CLIElement {
 
     private Sack sack;

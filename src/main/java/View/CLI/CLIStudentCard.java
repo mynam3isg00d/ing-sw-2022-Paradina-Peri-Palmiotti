@@ -5,6 +5,9 @@ import Model.StudentCard;
 
 import java.util.List;
 
+/**
+ * Displays a student card in the CLI
+ */
 public class CLIStudentCard extends CLICharaterCard {
 
     public CLIStudentCard(StudentCard sc) {

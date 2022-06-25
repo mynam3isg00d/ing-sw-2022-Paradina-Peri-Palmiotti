@@ -1,5 +1,6 @@
 package Network.Messages;
 
+//TODO javadocs
 public class PlayerInfoMessage {
     private String name;
     private int playerNumber;

@@ -6,6 +6,9 @@ import Model.Student;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Displays a character card in the CLI
+ */
 public class CLICharaterCard extends CLIElement {
 
     protected CharacterCard characterCard;

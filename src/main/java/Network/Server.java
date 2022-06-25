@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
+//TODO javadocs
 public class Server implements Runnable{
     private final int  PORT = 42069;
     private final ServerSocket serverSocket;
@@ -36,7 +37,8 @@ public class Server implements Runnable{
         }
     }
 
-    //con synchronized non dovrebbero esserci problemi legati all'ordine "casuale" dei set
+    //Using synchronized, there should be no problems related to the "random" order of the sets
+
     /**
      * Lobby is called every time a new Connection is initialized.
      * When the waitingList contains a number of players which is equals to the number of players needed for the game to start the game is initialized

@@ -6,6 +6,9 @@ import Model.Student;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Displays a cloud in the CLI
+ */
 public class CLICloud extends CLIElement {
 
     private Cloud cloud;

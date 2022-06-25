@@ -42,11 +42,17 @@ public class Connection extends Observable implements Runnable {
 
     }
 
+    /**
+     * Sends the updated model to the client over the network
+     */
     public void send(String message) {
         out.println(message);
         out.flush();
     }
 
+    /**
+     * Closes the connection
+     */
     public void close() {
       isActive = false;
     }

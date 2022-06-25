@@ -6,6 +6,9 @@ import Model.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Displays a player's hand in the CLI
+ */
 public class CLIPlayer extends CLIElement {
 
     private Player player;
