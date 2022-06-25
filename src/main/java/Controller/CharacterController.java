@@ -19,12 +19,21 @@ public class CharacterController {
     private Shop shop;
     private ExpertGame gameReference;
 
+    /**
+     * The main constructor for the CharacterController class
+     * @param g A reference to the main controller, which is an instance of the ExpertGame class
+     */
     public CharacterController(ExpertGame g) {
         gameReference = g;
         shop = new Shop(gameReference.getPlayers());
         shop.initShop(gameReference.getSack());
     }
 
+    /**
+     * Overload of the CharacterController class constructor. Used for testing purposes.
+     * @param g A reference to the main controller, which is an instance of the ExpertGame class
+     * @param shopList A list with the character cards that are available during the current game
+     */
     public CharacterController(ExpertGame g, Integer[] shopList) {
         gameReference = g;
         shop = new Shop(gameReference.getPlayers(), shopList);

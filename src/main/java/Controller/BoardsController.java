@@ -25,6 +25,7 @@ public class BoardsController {
     private ProfessorStrategy professorStrategy;
 
     /**
+     * Constructor for the BoardsController class.
      * Initializes one board per player in the game and links players to their board using a Map
      * Also fills player boards entrances
      * @param players The list of players participating in the game

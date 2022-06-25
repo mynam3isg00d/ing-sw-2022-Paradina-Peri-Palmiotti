@@ -14,6 +14,9 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
+/**
+ * The master controller when the game is in expert mode
+ */
 public class ExpertGame extends Game {
 
     private CharacterController characterController;
