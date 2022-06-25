@@ -164,8 +164,8 @@ public class ExpertGame extends Game {
     }
 
     /**
-     * TODO javadocs
-     * @param rv
+     * Calls the Game addObserversToModelComponents and adds it to the characterController as well
+     * @param rv the remote view to add to the model
      */
     public void addObserversToModelComponents(RemoteView rv) {
         super.addObserversToModelComponents(rv);

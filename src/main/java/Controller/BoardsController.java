@@ -29,6 +29,7 @@ public class BoardsController {
      * Also fills player boards entrances
      * @param players The list of players participating in the game
      * @param s Reference to the sack, used to fill the boards
+     * @throws InvalidNumberOfPlayersException if the number of players is outside the normal range [2-4]
      */
     public BoardsController(List<Player> players, Sack s) throws InvalidNumberOfPlayersException {
         professors = new Player[5];
@@ -80,11 +81,11 @@ public class BoardsController {
 
     /**
      * Creates a number of boards determined by how many players are playing:
-     * 2 players -> 2 boards
-     * 3 players -> 3 boards
-     * 4 players -> 2 boards
+     * 2 players: 2 boards
+     * 3 players: 3 boards
+     * 4 players: 2 boards
      * @param playerNum number of players
-     * @throws InvalidNumberOfPlayersException
+     * @throws InvalidNumberOfPlayersException if the number of players is outside the normal range [2-4]
      */
     private void createBoards(int playerNum) throws InvalidNumberOfPlayersException{
         switch(playerNum) {
@@ -117,8 +118,8 @@ public class BoardsController {
      * A private method that initializes player boards with a number of students decided previously
      * @param s Reference to the Students sack
      * @param studentsPerEntrance The number of students to add to every board
-     * @throws EmptySackException
-     * @throws FullEntranceException
+     * @throws EmptySackException if the sack is empty
+     * @throws FullEntranceException if the entrance is full
      */
     private void init(Sack s, int studentsPerEntrance) throws EmptySackException, FullEntranceException {
         for(Player p : players) {
@@ -131,7 +132,8 @@ public class BoardsController {
      * Moves one student from the entrance of the player requesting the move to his diner
      * @param playerID The player requesting the move
      * @param index index of the student in the entrance
-     * @throws NoSuchStudentsException
+     * @throws NoSuchStudentsException if the student at the index is not present
+     * @throws FullTableException if the table is full (more than 10)
      */
     public void moveFromEntranceToDining(String playerID, int index) throws NoSuchStudentsException, FullTableException {
         Board b = playerBoardMap.get(playerID);
@@ -159,6 +161,7 @@ public class BoardsController {
 
     /**
      * Sets professor strategy for expert game
+     * @param newStrategy the strategy to set
      */
     public void setProfessorStrategy(ProfessorStrategy newStrategy) {
         professorStrategy = newStrategy;
@@ -169,7 +172,7 @@ public class BoardsController {
      * @param playerID The student must be removed from this player's boards
      * @param studentBoardIndex Position on the board of the student that needs to be removed
      * @return The removed student
-     * @throws NoSuchStudentsException
+     * @throws NoSuchStudentsException there is no student at that index
      */
     public Student removeFromEntrance(String playerID, int studentBoardIndex) throws NoSuchStudentsException {
         Student s = playerBoardMap.get(playerID).removeFromEntrance(studentBoardIndex);
@@ -180,6 +183,7 @@ public class BoardsController {
      * Adds a list of students to the entrance of the requesting player
      * @param playerID The ID of the player requesting the move
      * @param ss The list of students to add
+     * @throws FullEntranceException the entrance is full
      */
     public void addToEntrance(String playerID, List<Student> ss) throws FullEntranceException {
         Board b = playerBoardMap.get(playerID);
@@ -197,8 +201,8 @@ public class BoardsController {
 
     /**
      * Teams are made up like this:
-     * 2 or 3 players game -> each team has 1 player
-     * 4 players game -> each team has 2 players
+     * 2 or 3 players game: each team has 1 player
+     * 4 players game: each team has 2 players
      * Each team has a leader. This method returns the player that is the leader of the specified team
      * @param teamID The ID of the team
      * @return p.getPlayerId() The ID of the team leader
@@ -215,7 +219,7 @@ public class BoardsController {
      * Adds towers to the board of the player
      * @param playerID The ID of the player requesting the move
      * @param numToAdd The number of towers to add
-     * @throws FullElementException
+     * @throws FullElementException if tower capacity is at max (8 for 2-4, 6 for 3)
      */
     public void addTowers(String playerID, int numToAdd) throws FullElementException {
         Board b = playerBoardMap.get(playerID);
@@ -226,7 +230,7 @@ public class BoardsController {
      * Removes towers from the board of the player
      * @param playerID The ID of the player requesting the move
      * @param numToRemove The number of towers to remove
-     * @throws EmptyElementException
+     * @throws EmptyElementException if there are no towers
      */
     public void removeTowers(String playerID, int numToRemove) throws EmptyElementException {
         Board b = playerBoardMap.get(playerID);
@@ -267,7 +271,7 @@ public class BoardsController {
     /**
      * Removes three students of the provided color from every player's board
      * If one has less than three, will be removed all possible students
-     * @param s
+     * @param s the student to remove
      */
     public void thiefRemove(Student s) {
         for (Player p : players) {

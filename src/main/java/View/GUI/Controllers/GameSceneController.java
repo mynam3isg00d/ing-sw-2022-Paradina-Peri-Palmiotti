@@ -1,8 +1,11 @@
 package View.GUI.Controllers;
 
 import Model.*;
+import Network.Messages.Message;
 import View.GUI.GUI;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class GameSceneController {
 
@@ -123,5 +126,8 @@ public class GameSceneController {
         wizardsController.update(gm);
     }
 
-
+    public void renderError(String error) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, error, ButtonType.OK);
+        alert.show();
+    }
 }

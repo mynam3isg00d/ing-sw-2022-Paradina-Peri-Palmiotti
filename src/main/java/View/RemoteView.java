@@ -35,17 +35,11 @@ public class RemoteView extends Observable implements Observer {
      * Each time an event/message is received, messageReceiver acts accordingly
      */
     private class MessageReceiver implements Observer {
-        /**
-         * Receives a stream of bytes from the network and turns it into a GameEvent
-         * @param o
-         */
         @Override
         public void update(Observable obs, Object o) {
             String line = (String) o;
             processChoice(line);
         }
-
-
     }
 
     public void processChoice(String event) {

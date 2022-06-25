@@ -42,9 +42,9 @@ public class CharacterController {
      * @param playerID ID of the player that is buying the card
      * @param playerInput the player chooses, among some options, how to play the character effect. These choices
      *                    are expressed in playerInput
-     * @throws InsufficientCoinsException
-     * @throws InvalidPlayerInputException
-     * @throws Exception
+     * @throws InsufficientCoinsException if the player doesn't have enough coins
+     * @throws InvalidPlayerInputException if the player input is formatted badly (thrown from effects)
+     * @throws Exception if there is a failiure in the model update
      */
     public void buyCard(int cardIndex, String playerID, List<String> playerInput) throws InsufficientCoinsException, InvalidPlayerInputException, Exception {
 

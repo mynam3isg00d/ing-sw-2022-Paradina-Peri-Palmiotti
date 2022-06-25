@@ -60,7 +60,7 @@ public class BardEffect extends CharacterEffect {
         List<Integer> studentsToEntrance = new ArrayList<>();
         List<Integer> studentsToDining = new ArrayList<>();
 
-        for(int i=playerInput.size()/2; i<playerInput.size(); i++) {
+        for(int i=0; i<playerInput.size()/2; i++) {
             int std = Integer.parseInt(playerInput.get(i));
             if (std < 0 || std > bc.getBoard(playerID).getMaxEntrance() - 1) throw new InvalidPlayerInputException();
             studentsToDining.add(std);

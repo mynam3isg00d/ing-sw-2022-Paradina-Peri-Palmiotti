@@ -700,11 +700,7 @@ class GameTest {
         assertEquals(1, im.getMotherNaturePos());
         assertNull(im.getInfluence(1));
     }
-    /**
-     * Counts the number of students in an array
-     * @param s
-     * @return
-     */
+
     private int countStudents(int[] s) {
         return s[0] + s[1] + s[2] + s[3] +s[4];
     }

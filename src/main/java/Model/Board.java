@@ -103,6 +103,7 @@ public class Board extends Observable {
     /**
      * Adds a single student to entrance
      * @param s single student to add
+     * @throws FullEntranceException if the entrance is already full
      */
     public void addToEntrance(Student s) throws FullEntranceException {
         for(int i=0; i<entrance.length; i++) {

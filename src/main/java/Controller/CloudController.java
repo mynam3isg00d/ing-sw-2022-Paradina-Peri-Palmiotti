@@ -1,5 +1,6 @@
 package Controller;
 import Exceptions.EmptyCloudException;
+import Exceptions.EmptySackException;
 import Model.CloudWrapper;
 import Model.Sack;
 import Model.Student;
@@ -39,6 +40,7 @@ public class CloudController {
     /**
      * Fills all the clouds initialized in the model and handles the relative exceptions
      * @param s The Sack
+     * @throws Exception if the sack is empty or the clouds can't be filled
      */
     public void fillClouds(Sack s) throws Exception {
         for (int i = 0; i < numOfClouds; i++) {
@@ -55,6 +57,7 @@ public class CloudController {
      * Gets the students on the selected cloud and empties it. Also handles the exceptions that may be thrown
      * @param cloudIndex The selected island index
      * @return The list of students resulting from the operation
+     * @throws EmptyCloudException if the cloud is empty
      */
     public List<Student> getFromCloud(int cloudIndex) throws EmptyCloudException {
         return cloudModel.getFromCloud(cloudIndex);
