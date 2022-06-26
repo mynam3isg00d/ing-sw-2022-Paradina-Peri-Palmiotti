@@ -97,8 +97,6 @@ public class Server implements Runnable{
                 remoteViews.add(new RemoteView(p, playingLists[listIndex].get(p)));
             }
 
-
-            //TODO choose squad?
             switch (playerNumber) {
                 case 2:
                 case 3:

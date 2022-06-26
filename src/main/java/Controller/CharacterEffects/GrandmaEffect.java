@@ -22,12 +22,23 @@ public class GrandmaEffect extends CharacterEffect {
         return "Grandma.txt";
     }
 
+    /**
+     * Initializes the attributes with the appropriate references
+     * @param g reference to expertGame
+     * @param cardIndex index of the Jester character card
+     */
     @Override
     public void init(ExpertGame g, int cardIndex) {
         ic = g.getIslandController();
         ntc = (NoTileCard) g.getCharacterController().getShopReference().getShop()[cardIndex];
     }
 
+    /**
+     * Puts a no-entry tile on the island selected by the user
+     * @param playerInput Contains the ID of the island
+     * @throws InvalidPlayerInputException Input given by the user is invalid
+     * @throws Exception Something went wrong
+     */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
 

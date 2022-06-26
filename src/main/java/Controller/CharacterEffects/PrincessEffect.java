@@ -1,5 +1,3 @@
-//TODO: Jdocs
-
 package Controller.CharacterEffects;
 
 import Controller.BoardsController;
