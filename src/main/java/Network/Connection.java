@@ -11,39 +11,36 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
 
-import static org.fusesource.jansi.Ansi.ansi;
-
+/**
+ * A connection object is initialized every time a new client reaches the server.
+ * Includes the client's name and id that will be used for identification.
+ * The connection object is the endpoint for messages both directed to the server and the client.
+ */
 public class Connection extends Observable implements Runnable {
-    private Socket socket;
+    private final Socket socket;
     private Scanner in;
-    private BufferedReader buf;
     private PrintWriter out;
-    private Server server;
+    private final Server server;
     private String name;
 
     private String id;
     private int progressive;
-
-    private final JsonFactory jsonFactory;
-
     private boolean isActive;
 
+    /**
+     * Initializes the new connection object
+     * @param socket The socket over which the connection will be carried out
+     * @param server The server object that has initialized the connection
+     */
     public Connection(Socket socket, Server server){
         this.socket = socket;
         this.server = server;
-        this.jsonFactory = new JsonFactory();
         isActive = true;
     }
 
-    /**
-     * Sends the updated model to the client over the network
-     */
-    public void send() {
-
-    }
 
     /**
-     * Sends the updated model to the client over the network
+     * Used to send the updated model to the client over the network
      */
     public void send(String message) {
         out.println(message);
@@ -51,14 +48,14 @@ public class Connection extends Observable implements Runnable {
     }
 
     /**
-     * Closes the connection
+     * Closes the connection when the corresponding client disconnects.
      */
     public void close() {
       isActive = false;
     }
 
     /**
-     * Waits for events coming from the client and notifies the remoteView each time a new event is received.
+     * Waits for json events coming from the client and notifies the remoteView each time a new event is received.
      */
     @Override
     public void run() {
@@ -96,7 +93,6 @@ public class Connection extends Observable implements Runnable {
             } while(!validEntry && !disconnectedEarly);
 
             if (!disconnectedEarly) {
-                //TODO: maybe move this
                 try {
                     server.lobby(this, name, playerNumber, expert);
                 } catch (InvalidNumberOfPlayersException e) {
@@ -136,6 +132,10 @@ public class Connection extends Observable implements Runnable {
     }
 
 
+    /**
+     * Sets the progressive attribute, which is used in case of multiple users with the same name
+     * @param p The number of players with the same name connected before this one
+     */
     public void setProgressive(int p) {
         progressive = p;
     }

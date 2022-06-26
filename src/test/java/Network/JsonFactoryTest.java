@@ -22,26 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JsonFactoryTest {
 
-    @Test
-    void toJson() {
-        GameEvent gameEvent = new PlayAssistantEvent();
-        gameEvent.setPlayerId("4");
-        gameEvent.parseInput("3");
-
-        String newJson = JsonFactory.eventToJson(gameEvent);
-
-        System.out.println(newJson);
-
-        GameEvent received = EventFactory.eventFromJson(newJson);
-        switch (received.getEventId()) {
-            case "0001": System.out.println("PlayAssistantEvent received");
-                PlayAssistantEvent casted = (PlayAssistantEvent) received;
-                System.out.println("Adesso posso mostrare il played assistant: " + casted.getPlayedAssistant());
-                assertEquals("4", casted.getPlayerId());
-                assertEquals(3, casted.getPlayedAssistant());
-                break;
-        }
-    }
 
     @Test
     void addAttributeTest() {
