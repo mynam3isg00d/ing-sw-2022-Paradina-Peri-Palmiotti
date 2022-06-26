@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-//TODO javadocs
+
 public class Server implements Runnable{
     private final int  PORT = 42069;
     private final ServerSocket serverSocket;
@@ -97,6 +97,7 @@ public class Server implements Runnable{
                 remoteViews.add(new RemoteView(p, playingLists[listIndex].get(p)));
             }
 
+
             switch (playerNumber) {
                 case 2:
                 case 3:
@@ -135,7 +136,7 @@ public class Server implements Runnable{
 
                 try {
                     //id setting in client
-                    String idSignal = jsonFactory.initToJson(entry.getValue().getId(), 301);
+                    String idSignal = jsonFactory.initToJson(entry.getValue().getId());
 
                     //sends a message to the client containing his id in the match
                     entry.getValue().send(idSignal);
@@ -160,13 +161,6 @@ public class Server implements Runnable{
         }
     }
 
-    public Map<Player, Connection> getWaitingList(int playerNumber) {
-        return new HashMap<>(waitingLists[playerNumber-2]);
-    }
-
-    public Map<Player, Connection> getPlayingList(int playerNumber) {
-        return new HashMap<>(playingLists[playerNumber-2]);
-    }
 
     /**
      * Deregisters the connection from the server

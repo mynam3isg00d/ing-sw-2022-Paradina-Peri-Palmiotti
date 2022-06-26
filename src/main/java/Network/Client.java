@@ -18,13 +18,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-//TODO javadocs
 public class Client {
     boolean isActive = true;
     private String ip;
     private int port;
     private UI ui;
 
+    /**
+     * A runnable class that is listening for input from the client's interface.
+     * When a message is entered, it is sent over the connection
+     */
     private class LocalInput implements Runnable {
 
         private PrintWriter out;
@@ -54,6 +57,10 @@ public class Client {
         }
     }
 
+    /**
+     * A runnable class that is listening for remote input from the server.
+     * When a message is received, it is forwarded to a message interpreter that acts accordingly
+     */
     private class RemoteInput implements Runnable {
 
         private String id;
@@ -95,6 +102,10 @@ public class Client {
         ui = new CLI();
     }
 
+    /**
+     * As long as client is marked as active it's waiting for input coming both from the server and the user.
+     * @throws IOException Signals something went wrong opening input/output streams
+     */
     public void run() throws IOException {
         Socket clientSocket = new Socket(ip, port);
         System.out.println("Connection OK");

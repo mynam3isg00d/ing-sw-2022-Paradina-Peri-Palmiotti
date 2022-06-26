@@ -713,7 +713,6 @@ class GameTest {
         return count;
     }
 
-
     private List<Player> getPlayerList(int n) {
         List<Player> ret = new ArrayList<>();
         String name = "a";
