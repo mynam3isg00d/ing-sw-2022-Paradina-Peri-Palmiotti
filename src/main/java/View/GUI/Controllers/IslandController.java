@@ -28,6 +28,8 @@ public class IslandController extends GUILeaf {
     private ImageView motherNature;
     @FXML
     private Text blueCount, yellowCount, redCount, greenCount, pinkCount;
+    @FXML
+    private ImageView noentry;
 
     public void mouseEntered(MouseEvent mouseEvent) {
         main.setStyle(main.getStyle() + "; -fx-effect: dropshadow(gaussian, red, 3, 2, 0, 0)");
@@ -76,6 +78,9 @@ public class IslandController extends GUILeaf {
         greenCount.setText("x" + students[Student.GREEN.getColorId()]);
         redCount.setText("x" + students[Student.RED.getColorId()]);
         pinkCount.setText("x" + students[Student.PINK.getColorId()]);
+
+        //NoEntry
+        noentry.setVisible(island.isNoEntry());
     }
 
     public void show(boolean b) {

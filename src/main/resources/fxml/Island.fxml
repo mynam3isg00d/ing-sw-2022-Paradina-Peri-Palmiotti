@@ -78,5 +78,10 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Text>
+      <ImageView fx:id="noentry" fitHeight="49.0" fitWidth="57.0" layoutX="57.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/deny_island_icon.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

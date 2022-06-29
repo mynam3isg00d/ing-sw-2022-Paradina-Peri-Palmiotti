@@ -28,6 +28,7 @@ public class GUI extends Application {
     private GUIAdapter guiAdapter;
     private PrintWriter out;
     private BufferedReader in;
+    private boolean isAlive = true;
 
     private class RemoteInput implements Runnable {
 
@@ -41,7 +42,7 @@ public class GUI extends Application {
         }
 
         public void run() {
-            while(true) {
+            while(isAlive) {
                 try {
                     String line = in.readLine();
                     Platform.runLater(new Runnable() {
@@ -57,6 +58,14 @@ public class GUI extends Application {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    try {
+                        FXMLLoader nextLoader = new FXMLLoader(getClass().getResource("/fxml/ServerDied.fxml"));
+                        Parent nextRoot = nextLoader.load();
+                        stage.getScene().setRoot(nextRoot);
+                    } catch (IOException e1) {
+                        System.out.println("failed to load fxml");
+                    }
+                    return;
                 }
             }
         }
@@ -66,7 +75,7 @@ public class GUI extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         //1) Get IP
-        //2) Build PIM
+        //2) Build PlayerInfoMessage
         //3) Waiting room
         //4) Connection
 
@@ -123,6 +132,17 @@ public class GUI extends Application {
     public void sendEvent(String event) {
         event = EventFactory.stringToEventJson(guiAdapter.getPlayerID(), event);
         out.println(event);
+        out.flush();
+    }
+
+    @Override
+    public void stop(){
+        System.out.println("closing...");
+        isAlive = false;
+
+        //It doesn't matter what this message is, it just needs it to pass through the in.nextLine() and
+        //let RemoteInput's run end normally.
+        out.println("close");
         out.flush();
     }
 }

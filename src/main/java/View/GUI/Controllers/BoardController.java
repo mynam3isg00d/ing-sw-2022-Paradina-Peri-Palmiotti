@@ -34,12 +34,8 @@ public class BoardController extends GUILeaf {
     private void init() {
         if(interactable) {
             dinings.setOnDragOver(dragEvent -> {
-                /* data is dragged over the target */
-                /* accept it only if it is not dragged from the same node
-                 * and if it has a string data */
                 if (dragEvent.getGestureSource().getClass().equals(StudentTile.class) &&
                         dragEvent.getDragboard().hasString()) {
-                    /* allow for both copying and moving, whatever user chooses */
                     dragEvent.acceptTransferModes(TransferMode.ANY);
                 }
 

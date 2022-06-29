@@ -36,5 +36,10 @@
             <Font name="Comic Sans MS Bold Italic" size="27.0" />
          </font>
       </Button>
+      <Text fx:id="num" layoutX="214.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="There are @n tiles available" wrappingWidth="184.60057067871094">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
    </children>
 </Pane>

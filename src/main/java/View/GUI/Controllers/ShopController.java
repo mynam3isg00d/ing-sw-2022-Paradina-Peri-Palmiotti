@@ -1,6 +1,7 @@
 package View.GUI.Controllers;
 
 import Model.CharacterCard;
+import Model.NoTileCard;
 import Model.Shop;
 import Model.StudentCard;
 import View.GUI.Nodes.GUILeaf;
@@ -55,6 +56,9 @@ public class ShopController extends GUILeaf {
             FXMLLoader nextLoader = new FXMLLoader(getClass().getResource("/fxml/Char" + ccarr[index].getCardID() + "Scene.fxml"));
             Parent nextRoot = nextLoader.load();
             CharacterController cc = nextLoader.getController();
+            if (ccarr[index].getCardID() == 4) {
+                ((GrandmaController) cc).updateNum(((NoTileCard)ccarr[index]).getNoTile());
+            }
             cc.connectGUI(this.gui, index);
             buyStage.initModality(Modality.APPLICATION_MODAL);
             buyStage.setScene(new Scene(nextRoot));
@@ -92,8 +96,10 @@ public class ShopController extends GUILeaf {
         if (ccarr[0] instanceof StudentCard) {
             StudentCard sc = (StudentCard) ccarr[0];
 
+            int prev = stud0.getChildren().size();
+            stud0.getChildren().remove(0, prev);
+
             for(int i=0; i<sc.getMAX_STUDENTS(); i++) {
-                stud0.getChildren().removeAll();
                 stud0.add(new StudentTile(sc.peekStudents().get(i).getColorId(), false, false, -1, 30), i%2, i/2);
             }
         }
@@ -101,8 +107,10 @@ public class ShopController extends GUILeaf {
         if (ccarr[1] instanceof StudentCard) {
             StudentCard sc = (StudentCard) ccarr[1];
 
+            int prev = stud1.getChildren().size();
+            stud1.getChildren().remove(0, prev);
+
             for(int i=0; i<sc.getMAX_STUDENTS(); i++) {
-                stud1.getChildren().removeAll();
                 stud1.add(new StudentTile(sc.peekStudents().get(i).getColorId(), false, false, -1, 30), i%2, i/2);
             }
         }
@@ -110,8 +118,10 @@ public class ShopController extends GUILeaf {
         if (ccarr[2] instanceof StudentCard) {
             StudentCard sc = (StudentCard) ccarr[2];
 
+            int prev = stud2.getChildren().size();
+            stud2.getChildren().remove(0, prev);
+
             for(int i=0; i<sc.getMAX_STUDENTS(); i++) {
-                stud2.getChildren().removeAll();
                 stud2.add(new StudentTile(sc.peekStudents().get(i).getColorId(), false, false, -1, 30), i%2, i/2);
             }
         }

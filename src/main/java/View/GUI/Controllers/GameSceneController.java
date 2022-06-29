@@ -4,26 +4,38 @@ import Model.*;
 import Network.Messages.Message;
 import View.GUI.GUI;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class GameSceneController {
 
     @FXML
-    BoardController boardMainController, board1Controller, board2Controller, board3Controller;
+    private Pane main;
     @FXML
-    IslandsWrapperController islandsWrapperController;
+    private Text info, gameInfo;
     @FXML
-    CloudWrapperController cloudWrapperController;
+    private BoardController boardMainController, board1Controller, board2Controller, board3Controller;
     @FXML
-    PlayerController playerMainController, player1Controller, player2Controller, player3Controller;
+    private IslandsWrapperController islandsWrapperController;
     @FXML
-    PickWizardController wizardsController;
+    private CloudWrapperController cloudWrapperController;
     @FXML
-    ShopController shopController;
+    private PlayerController playerMainController, player1Controller, player2Controller, player3Controller;
+    @FXML
+    private PickWizardController wizardsController;
+    @FXML
+    private ShopController shopController;
 
     @FXML
     public void initialize() {
+        main.setVisible(false);
         boardMainController.setInteractable(true);
         playerMainController.setInteractable(true);
 
@@ -120,14 +132,49 @@ public class GameSceneController {
         playerMainController.connectGUI(gui);
         wizardsController.connectGUI(gui);
         shopController.connectGUI(gui);
+
+        main.setVisible(true);
+        info.setVisible(false);
     }
 
     public void updateGameModel(GameModel gm) {
         wizardsController.update(gm);
+
+        gameInfo.setText(getInfoString(gm));
+
+        //End
+        if(gm.getGamePhase().equals(Phase.END)) {
+            main.setVisible(false);
+            switch (gm.getWinnerTeam()) {
+                case 0: info.setText("Team White won!!"); break;
+                case 1: info.setText("Team Black won!!"); break;
+                case 2: info.setText("Team Grey won!!"); break;
+                case -2: info.setText("Draw!!"); break;
+                default: info.setText("Game interrupted");
+            }
+            info.setVisible(true);
+        }
     }
 
     public void renderError(String error) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, error, ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.ERROR, error, ButtonType.OK);
         alert.show();
+    }
+
+    private String getInfoString(GameModel gm) {
+        String ret = gm.getCurrentPlayer().getName() + ", ";
+        switch (gm.getGamePhase()) {
+            case SETUP:
+                return "";
+            case PLANNING:
+                return ret + "play an assistant!";
+            case ACTION_STUDENTS:
+                return ret + "move your students! (" + (gm.getSTUDENTS_PER_TURN() - gm.getNumStudentsMoved()) + ")";
+            case ACTION_MOTHERNATURE:
+                return ret + "move Mother Nature!";
+            case ACTION_CLOUDS:
+                return ret + "pick a cloud!";
+        }
+        return ret;
     }
 }

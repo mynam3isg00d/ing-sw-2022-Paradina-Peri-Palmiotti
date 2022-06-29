@@ -3,25 +3,41 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.GameSceneController">
+<Pane prefHeight="882.0" prefWidth="1493.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.GUI.Controllers.GameSceneController">
    <children>
-      <ImageView fitHeight="938.0" fitWidth="1567.0" opacity="0.21" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../graphics/wooden_pieces/Background/gameScene_bg.jpg" />
-         </image>
-      </ImageView>
-      <fx:include fx:id="shop" layoutY="375.0" source="Shop.fxml" />
-      <fx:include fx:id="islandsWrapper" layoutX="-80.0" layoutY="-40.0" scaleX="0.8" scaleY="0.8" source="IslandsWrapper.fxml" />
-      <fx:include fx:id="boardMain" layoutX="520.0" layoutY="250.0" rotate="90.0" scaleX="0.9" scaleY="0.9" source="Board.fxml" />
-      <fx:include fx:id="board1" layoutX="880.0" layoutY="-17.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
-      <fx:include fx:id="board2" layoutX="880.0" layoutY="160.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
-      <fx:include fx:id="board3" layoutX="880.0" layoutY="340.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
-      <fx:include fx:id="cloudWrapper" layoutX="600.0" layoutY="-70.0" scaleX="0.75" scaleY="0.75" source="CloudWrapper.fxml" />
-      <fx:include fx:id="playerMain" layoutX="250.0" layoutY="800.0" source="Hand.fxml" />
-      <fx:include fx:id="player1" layoutX="124.0" layoutY="711.0" scaleX="0.7" scaleY="0.7" source="Hand.fxml" />
-      <fx:include fx:id="player2" layoutX="216.0" layoutY="711.0" scaleX="0.7" scaleY="0.7" source="Hand.fxml" />
-      <fx:include fx:id="player3" layoutX="307.0" layoutY="711.0" scaleX="0.7" scaleY="0.7" source="Hand.fxml" />
-      <fx:include fx:id="wizards" layoutX="550.0" layoutY="200.0" scaleX="1.5" scaleY="1.5" source="Wizards.fxml" />
+      <Text fx:id="info" layoutX="-18.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WAITING FOR PLAYERS..." textAlignment="CENTER" wrappingWidth="1523.790831565857">
+         <font>
+            <Font size="78.0" />
+         </font>
+      </Text>
+      <Pane fx:id="main" layoutX="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1500.0">
+         <children>
+            <ImageView fitHeight="938.0" fitWidth="1567.0" opacity="0.21" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/wooden_pieces/Background/gameScene_bg.jpg" />
+               </image>
+            </ImageView>
+            <fx:include fx:id="shop" layoutY="375.0" source="Shop.fxml" />
+            <fx:include fx:id="islandsWrapper" layoutX="-80.0" layoutY="-40.0" scaleX="0.8" scaleY="0.8" source="IslandsWrapper.fxml" />
+            <fx:include fx:id="boardMain" layoutX="520.0" layoutY="250.0" rotate="90.0" scaleX="0.9" scaleY="0.9" source="Board.fxml" />
+            <fx:include fx:id="board1" layoutX="880.0" layoutY="-17.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
+            <fx:include fx:id="board2" layoutX="880.0" layoutY="160.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
+            <fx:include fx:id="board3" layoutX="880.0" layoutY="340.0" scaleX="0.5" scaleY="0.5" source="Board.fxml" />
+            <fx:include fx:id="cloudWrapper" layoutX="600.0" layoutY="-70.0" scaleX="0.75" scaleY="0.75" source="CloudWrapper.fxml" />
+            <fx:include fx:id="playerMain" layoutX="250.0" layoutY="800.0" source="Hand.fxml" />
+            <fx:include fx:id="player1" layoutX="124.0" layoutY="711.0" scaleX="0.7" scaleY="0.7" source="Hand.fxml" />
+            <fx:include fx:id="player2" layoutX="216.0" layoutY="711.0" scaleX="0.7" scaleY="0.7" source="Hand.fxml" />
+            <fx:include fx:id="player3" layoutX="307.0" layoutY="711.0" scaleX="0.7" scaleY="0.7" source="Hand.fxml" />
+            <fx:include fx:id="wizards" layoutX="550.0" layoutY="200.0" scaleX="1.5" scaleY="1.5" source="Wizards.fxml" />
+            <Text fx:id="gameInfo" layoutX="769.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="xx" wrappingWidth="707.5205688476562">
+               <font>
+                  <Font size="34.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
    </children>
 </Pane>
