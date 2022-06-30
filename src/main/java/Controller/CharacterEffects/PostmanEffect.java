@@ -5,16 +5,12 @@ import Exceptions.InvalidPlayerInputException;
 
 import java.util.List;
 
+//You may move Mother Nature up to 2 additional islands than is indicated by the assistant card you played
 public class PostmanEffect extends CharacterEffect{
 
     private ExpertGame g;
     public PostmanEffect(String playerID) {
         super(playerID);
-    }
-
-    @Override
-    public String explainEffect() {
-        return "You may move Mother Nature up to 2 additional islands than is indicated by the assistant card you played";
     }
 
     /**
@@ -37,11 +33,9 @@ public class PostmanEffect extends CharacterEffect{
      */
     @Override
     public void playEffect(List<String> playerInput) throws InvalidPlayerInputException, Exception {
-
         // Expects:
         // {}
         if(playerInput.size()!=0) throw new InvalidPlayerInputException();
-
         g.setPostmanActive(true);
     }
 }

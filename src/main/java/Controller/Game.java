@@ -385,7 +385,7 @@ public class Game implements Observer {
      *         otherwise returns -1 if there are no winners,
      *         otherwise returns -2 if it's a draw.
      */
-    protected int checkTowerEnd() {
+    public int checkTowerEnd() {
         if (players.size() == 4) {
             int emptyWhite = 0;
             int emptyBlack = 0;
@@ -577,7 +577,7 @@ public class Game implements Observer {
      * Tells if all players have chosen an assistant
      * @return TRUE/FALSE
      */
-    private boolean allPlayersPlayedAssistant() {
+    public boolean allPlayersPlayedAssistant() {
         for (Player p : players) {
             if (p.getAssistantInPlay() == null) return false;
         }

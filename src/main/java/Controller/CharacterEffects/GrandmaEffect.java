@@ -17,10 +17,6 @@ public class GrandmaEffect extends CharacterEffect {
         super(playerID);
     }
 
-    @Override
-    public String explainEffect() {
-        return "Grandma.txt";
-    }
 
     /**
      * Initializes the attributes with the appropriate references

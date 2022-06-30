@@ -8,15 +8,11 @@ import Model.Player;
 import java.util.List;
 import java.util.Objects;
 
+//During the influence calculation this turn, you count as having two more influence
 public class KnightEffect extends InfluenceEffect {
 
     private String playerID;
     private int teamID;
-
-    @Override
-    public String explainEffect() {
-        return "During the influence calculation this turn, you count as having two more influence.";
-    }
 
     public KnightEffect(String playerID) {
         super(playerID);

@@ -6,12 +6,8 @@ import Exceptions.InvalidPlayerInputException;
 
 import java.util.List;
 
+//When resolving a Conquering on an Island, Towers do not count towards influence
 public class CentaurEffect extends InfluenceEffect {
-
-    @Override
-    public String explainEffect() {
-        return "When resolving a Conquering on an Island, Towers do not count towards influence";
-    }
 
     public CentaurEffect(String playerID) {
         super(playerID);

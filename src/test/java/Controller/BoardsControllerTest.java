@@ -116,6 +116,15 @@ class BoardsControllerTest {
     }
 
     @Test
+    public void createFiveBoardsTest() {
+        List<Player> pl = getPlayerList(5);
+
+        assertThrows(InvalidNumberOfPlayersException.class, () -> {
+            BoardsController bc = new BoardsController(pl, new Sack(120));
+        });
+    }
+
+    @Test
     void someRoundTesting() throws NoSuchStudentsException, FullElementException, EmptyElementException, InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
         BoardsController bc = new BoardsController(pl, new Sack(120));

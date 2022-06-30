@@ -11,8 +11,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExpertGameTest {
+
+
     @Test
-    public void setupPhase() throws Exception{
+    public void setupPhase() throws InvalidNumberOfPlayersException{
         //init a game with 3 players
         List<Player> players = new ArrayList<>();
         Player p1 = new Player("id1", "1", 0);
@@ -36,14 +38,10 @@ class ExpertGameTest {
         //---------------
 
 
-        //creates an event: p1 wants to choose wizard 0
-        ChooseWizardEvent wizardEvent1 = new ChooseWizardEvent();
-        wizardEvent1.setPlayerId("id1");
-        wizardEvent1.parseInput("0");
-
+        //p1 wants to choose wizard 0
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
-            game.handleEvent(wizardEvent1);
+            game.jsonToEvent(EventFactory.stringToEventJson("id1", "choose wizard 0"));
         });
 
         //the chosen wizard have been added to the correct player hand
@@ -115,7 +113,7 @@ class ExpertGameTest {
 
     }
 
-    public ExpertGame doSetupPhase() throws Exception{
+    public ExpertGame doSetupPhase() throws InvalidNumberOfPlayersException{
         //init a game with 3 players
         List<Player> players = new ArrayList<>();
         Player p1 = new Player("id1", "1", 0);
@@ -159,7 +157,7 @@ class ExpertGameTest {
         return game;
     }
     @Test
-    public void planningPhase() throws Exception{
+    public void planningPhase() throws InvalidNumberOfPlayersException {
         ExpertGame game = doSetupPhase();
 
         List<Player> initialPlayers = game.getPlayers();
@@ -176,13 +174,9 @@ class ExpertGameTest {
 
 
         //p1 wants to play the 3rd assistant in his hand
-        PlayAssistantEvent ev1 = new PlayAssistantEvent();
-        ev1.setPlayerId("id1");
-        ev1.parseInput("3");
-
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
-            game.handleEvent(ev1);
+            game.jsonToEvent(EventFactory.stringToEventJson("id1", "play assistant 3"));
         });
 
 
@@ -237,7 +231,7 @@ class ExpertGameTest {
         assertEquals("id2", gameModel.getCurrentPlayer().getPlayerID());
     }
 
-    public ExpertGame doPlanningPhase() throws Exception{
+    public ExpertGame doPlanningPhase() throws InvalidNumberOfPlayersException{
         ExpertGame game = doSetupPhase();
 
         List<Player> initialPlayers = game.getPlayers();
@@ -283,70 +277,22 @@ class ExpertGameTest {
     }
 
     @Test
-    public void postmanEffect() throws Exception {
-        ExpertGame g = doPlanningPhase();
-
-        //p2 (the player in turn) moves 4 students, in order to get to the phase in which to move mother nature
-        MoveStudentToDiningEvent e1 = new MoveStudentToDiningEvent();
-        e1.setPlayerId("id2");
-        e1.parseInput("0");
-        g.handleEvent(e1);
-
-        e1.parseInput("1");
-        g.handleEvent(e1);
-
-        e1.parseInput("2");
-        g.handleEvent(e1);
-
-        e1.parseInput("3");
-        g.handleEvent(e1);
-
-        //we in move mother nature phase
-        assertEquals(Phase.ACTION_MOTHERNATURE , g.gameModel.getGamePhase());
-
-        //p2 had played assistant 0 in doPlanningPhase
-        //so he shouldn't be able to move mother nature more than one step
-        MoveMotherNatureEvent e2 = new MoveMotherNatureEvent();
-        e2.setPlayerId("id2");
-        e2.parseInput("3");
-        assertThrows(InvalidMoveException.class , () -> {
-            g.handleEvent(e2);
-        });
-
-        //puts postman in the shop
-        g.setCharacterController(new CharacterController(g, new Integer[]{3, 3, 3}));
-        CharacterController cc = g.getCharacterController();
-
-        //p2 plays postman
-        List<String> playerInput = List.of();
-        cc.giveCoins("id2", 9999);
-        cc.buyCard(0, "id2", playerInput);
-
-        //now id2 should be able to move mother nature 3 steps
-        assertDoesNotThrow(() -> {
-            g.handleEvent(e2);
-        });
-    }
-    @Test
-    public void action_phase() throws Exception {
+    public void action_phase() throws InvalidNumberOfPlayersException{
         ExpertGame game = doPlanningPhase();
 
         GameModel gameModel = game.getGameModel();
         IslandController ic = game.getIslandController();
         IslandsWrapper im = ic.getIslandModel();
 
+
         //after the planning phase has finished we should be in the action phase (players move students)
         assertEquals(Phase.ACTION_STUDENTS , gameModel.getGamePhase());
 
         //-------------------------------------------
         //p2 wants to move one student (the one in his first slot) to island 0
-        MoveStudentToIslandEvent ev1 = new MoveStudentToIslandEvent();
-        ev1.setPlayerId("id2");
-        ev1.parseInput("0 + 0");
-
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
-            game.handleEvent(ev1);
+            game.jsonToEvent(EventFactory.stringToEventJson("id2", "move student 0 to island 0"));
         });
         //on island 0 there should be 1 student atm (since it is initialized with no students)
         assertEquals(1, countStudents(im.getStudents(0)));
@@ -425,7 +371,7 @@ class ExpertGameTest {
 
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
-            game.handleEvent(ev5);
+            game.jsonToEvent(EventFactory.stringToEventJson("id2", "move student 2 to dining"));
         });
 
         //one dining in p2's board should now have a student
@@ -468,7 +414,7 @@ class ExpertGameTest {
 
         //should signal the turn is wrong
         assertThrows(NotYourTurnException.class, () -> {
-            game.handleEvent(ev6);
+            game.jsonToEvent(EventFactory.stringToEventJson("id1", "move mother nature 1"));
         });
 
         //p2 wants to move mothernature 5 steps ahead
@@ -667,7 +613,7 @@ class ExpertGameTest {
         ev35.parseInput("1");
 
         assertDoesNotThrow(() -> {
-            game.handleEvent(ev35);
+            game.jsonToEvent(EventFactory.stringToEventJson("id3", "pick cloud 1"));
         });
 
         //->
@@ -677,6 +623,51 @@ class ExpertGameTest {
         assertEquals(Phase.PLANNING, gameModel.getGamePhase());
     }
 
+    @Test
+    public void postmanEffect() throws Exception {
+        ExpertGame g = doPlanningPhase();
+
+        //p2 (the player in turn) moves 4 students, in order to get to the phase in which to move mother nature
+        MoveStudentToDiningEvent e1 = new MoveStudentToDiningEvent();
+        e1.setPlayerId("id2");
+        e1.parseInput("0");
+        g.handleEvent(e1);
+
+        e1.parseInput("1");
+        g.handleEvent(e1);
+
+        e1.parseInput("2");
+        g.handleEvent(e1);
+
+        e1.parseInput("3");
+        g.handleEvent(e1);
+
+        //we in move mother nature phase
+        assertEquals(Phase.ACTION_MOTHERNATURE , g.gameModel.getGamePhase());
+
+        //p2 had played assistant 0 in doPlanningPhase
+        //so he shouldn't be able to move mother nature more than one step
+        MoveMotherNatureEvent e2 = new MoveMotherNatureEvent();
+        e2.setPlayerId("id2");
+        e2.parseInput("3");
+        assertThrows(InvalidMoveException.class , () -> {
+            g.handleEvent(e2);
+        });
+
+        //puts postman in the shop
+        g.setCharacterController(new CharacterController(g, new Integer[]{3, 3, 3}));
+        CharacterController cc = g.getCharacterController();
+
+        //p2 plays postman
+        List<String> playerInput = List.of();
+        cc.giveCoins("id2", 9999);
+        cc.buyCard(0, "id2", playerInput);
+
+        //now id2 should be able to move mother nature 3 steps
+        assertDoesNotThrow(() -> {
+            g.handleEvent(e2);
+        });
+    }
     private int countStudents(int[] s) {
         return s[0] + s[1] + s[2] + s[3] +s[4];
     }

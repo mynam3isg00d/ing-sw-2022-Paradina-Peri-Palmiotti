@@ -6,12 +6,8 @@ import Exceptions.InvalidPlayerInputException;
 
 import java.util.List;
 
+//Choose a color of Student: during the influence calculation this turn, that color adds no influence.
 public class MushroomEffect extends InfluenceEffect {
-
-    @Override
-    public String explainEffect() {
-        return "Choose a color of Student: during the influence calculation this turn, that color adds no influence.";
-    }
 
     public MushroomEffect(String playerID) {
         super(playerID);
@@ -43,7 +39,6 @@ public class MushroomEffect extends InfluenceEffect {
 
         int cid = Integer.parseInt(playerInput.get(0));
         if (cid < 0 || cid > 4) throw new InvalidPlayerInputException();
-
         ic.setInfluenceStrategy(new MushroomStrategy(cid));
     }
 }

@@ -10,16 +10,13 @@ import Model.StudentCard;
 
 import java.util.List;
 
+//Take 1 student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card.
 public class PrincessEffect extends StudentsEffect {
 
     private String playerID;
     private BoardsController bc;
     private CharacterController cc;
 
-    @Override
-    public String explainEffect() {
-        return "Take 1 student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card.";
-    }
 
     public PrincessEffect(String playerID) {
         super(playerID);

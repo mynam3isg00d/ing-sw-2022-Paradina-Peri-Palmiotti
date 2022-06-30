@@ -1,6 +1,6 @@
 package Controller;
 
-import Controller.CharacterEffects.CentaurEffect;
+import Controller.CharacterEffects.*;
 import Controller.CharacterEffects.Strategies.*;
 import Events.*;
 import Exceptions.EmptyElementException;
@@ -144,6 +144,18 @@ class CharacterControllerTest {
         //calculates influence on island 0 - since the tower doesn't count, should return p1's team id
         assertEquals(pl.get(1).getTeamID(), g.islandController.getInfluenceStrategy().calcInfluence(0, g.islandController.getIslandModel(), g.boardsController));
     }
+
+    @Test
+    void centaurStrategyTest() throws InvalidNumberOfPlayersException{
+        List<Player> pl = getPlayerList(3);
+        Game g = new Game(pl);
+
+        g.islandController.setInfluenceStrategy(new CentaurStrategy());
+
+        //no students on island 0, so it should return -1
+        assertEquals(-1, g.islandController.getInfluenceStrategy().calcInfluence(0, g.islandController.getIslandModel(), g.boardsController));
+    }
+
     @Test
     void MushroomEffectTest() throws Exception, InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
@@ -174,7 +186,7 @@ class CharacterControllerTest {
         assertEquals(-1, g.islandController.getInfluenceStrategy().calcInfluence(0, g.islandController.getIslandModel(), g.boardsController));
     }
 
-    /*
+
     @Test
     void bardEffectTest() throws Exception, InvalidNumberOfPlayersException {
         List<Player> pl = getPlayerList(2);
@@ -209,7 +221,7 @@ class CharacterControllerTest {
         assertEquals(2, g.boardsController.getBoard(pl.get(0).getPlayerID()).getDinings()[Student.RED.getColorId()]) ; // FALSE
 
     }
-    */
+
 
     @Test
     void FarmerEffectTest() throws Exception {
@@ -378,6 +390,40 @@ class CharacterControllerTest {
         assertEquals(1, ((NoTileCard) cc.getShopReference().getShop()[0]).getNoTile());
     }
 
+    @Test
+    void PrincessEffectTest() throws Exception {
+        List<Player> pl = getPlayerList(2);
+        ExpertGame g = new ExpertGame(pl);
+        g.setCharacterController(new CharacterController(g, new Integer[]{10, 10, 10}));
+        CharacterController cc = g.getCharacterController();
+
+        //player 1 activates the princess effect, in order to add the student 0 on the card to his dining
+        List<String> playerInput = List.of("0");
+        cc.giveCoins(pl.get(1).getPlayerID(), 90);
+
+        cc.buyCard(0, pl.get(1).getPlayerID(), playerInput);
+
+        //one student has been added to one of p1's dinings
+        assertEquals(1, countStudents(g.boardsController.getBoard(pl.get(1).getPlayerID()).getDinings()));
+    }
+
+    @Test
+    void JesterEffectTest() throws Exception {
+        List<Player> pl = getPlayerList(2);
+        ExpertGame g = new ExpertGame(pl);
+        g.setCharacterController(new CharacterController(g, new Integer[]{6, 6, 6}));
+        CharacterController cc = g.getCharacterController();
+
+
+        //player 0 activates the jester effect - wants to swap the first three students in his entrance with the three on the card
+        List<String> playerInput = List.of("0", "1", "2", "0", "1", "2");
+        cc.giveCoins(pl.get(0).getPlayerID(), 90);
+
+        assertDoesNotThrow( () -> {
+            cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
+        });
+
+    }
     private List<Player> getPlayerList(int n) {
         List<Player> ret = new ArrayList<>();
         String name = "a";
@@ -388,6 +434,10 @@ class CharacterControllerTest {
             name = name + "a";
         }
         return ret;
+    }
+
+    private int countStudents(int[] s) {
+        return s[0] + s[1] + s[2] + s[3] +s[4];
     }
 
     public ExpertGame doPlanningPhase() throws Exception{

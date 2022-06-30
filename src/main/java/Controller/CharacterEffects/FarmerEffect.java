@@ -7,16 +7,12 @@ import Exceptions.InvalidPlayerInputException;
 
 import java.util.List;
 
+//During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them
 public class FarmerEffect extends CharacterEffect{
 
     private BoardsController bc;
     public FarmerEffect(String playerID) {
         super(playerID);
-    }
-
-    @Override
-    public String explainEffect() {
-        return "During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them";
     }
 
     /**

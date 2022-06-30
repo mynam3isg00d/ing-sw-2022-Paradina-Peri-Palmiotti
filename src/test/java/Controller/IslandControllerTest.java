@@ -191,4 +191,20 @@ class IslandControllerTest {
 
 
     }
+
+    @Test
+    void noEntry() {
+        IslandController ic = new IslandController();
+        assertDoesNotThrow(() -> {
+            ic.setNoEntry(3);
+        });
+
+        assertTrue(ic.getIslandModel().isNoEntry(3));
+
+        assertDoesNotThrow(() -> {
+            ic.removeNoEntry(3);
+        });
+
+        assertFalse(ic.getIslandModel().isNoEntry(3));
+    }
 }

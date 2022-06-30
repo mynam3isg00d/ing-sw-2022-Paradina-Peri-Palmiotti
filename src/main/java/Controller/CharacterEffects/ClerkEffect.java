@@ -8,14 +8,10 @@ import Model.StudentCard;
 
 import java.util.List;
 
+//Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card
 public class ClerkEffect extends StudentsEffect {
 
     private IslandController ic;
-
-    @Override
-    public String explainEffect() {
-        return "Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card.";
-    }
 
     public ClerkEffect(String playerID) {
         super(playerID);

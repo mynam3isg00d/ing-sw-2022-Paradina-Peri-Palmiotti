@@ -48,10 +48,10 @@ public class BoardsController {
                 studentsPerEntrance = 9;
                 break;
             default:
-                System.out.println("EXCEPTION NEEDED: Invalid number of players");
+                throw new InvalidNumberOfPlayersException();
         }
 
-        // Fills board's entrance with the right number of students, accordingly to the number of players
+        // Fills board's entrance with the right number of students, according to the number of players
         try {
             init(s, studentsPerEntrance);
         } catch (Exception e) {

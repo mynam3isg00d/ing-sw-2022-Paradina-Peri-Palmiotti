@@ -10,14 +10,11 @@ import View.GUI.Controllers.BoardController;
 
 import java.util.List;
 
+//Choose a type of student: Every player (including yourself must return 3 Students of that type from their dining room to the bag. If any player has fewer than three students of that type, return as many Students as they have.
 public class ThiefEffect extends StudentsEffect {
 
     private BoardsController bc;
 
-    @Override
-    public String explainEffect() {
-        return "Choose a type of student: Every player (including yourself must return 3 Students of that type from their dining room to the bag. If any player has fewer than three students of that type, return as many Students as they have.";
-    }
 
     public ThiefEffect(String playerID) {
         super(playerID);

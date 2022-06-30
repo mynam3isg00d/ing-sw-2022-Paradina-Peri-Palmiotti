@@ -3,6 +3,7 @@ package Controller;
 import Events.*;
 import Exceptions.*;
 import Model.*;
+import View.RemoteView;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -57,14 +58,10 @@ class GameTest {
         //---------------
 
 
-        //creates an event: p1 wants to choose wizard 0
-        ChooseWizardEvent wizardEvent1 = new ChooseWizardEvent();
-        wizardEvent1.setPlayerId("id1");
-        wizardEvent1.parseInput("0");
-
+        //p1 wants to choose wizard 0
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
-            game.handleEvent(wizardEvent1);
+            game.jsonToEvent(EventFactory.stringToEventJson("id1", "choose wizard 0"));
         });
 
         //the chosen wizard have been added to the correct player hand
@@ -197,13 +194,9 @@ class GameTest {
 
 
         //p1 wants to play the 3rd assistant in his hand
-        PlayAssistantEvent ev1 = new PlayAssistantEvent();
-        ev1.setPlayerId("id1");
-        ev1.parseInput("3");
-
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
-            game.handleEvent(ev1);
+            game.jsonToEvent(EventFactory.stringToEventJson("id1", "play assistant 3"));
         });
 
 
@@ -302,7 +295,11 @@ class GameTest {
 
         return game;
     }
-
+    @Test
+    public void allPlayedAssistants() throws Exception{
+        Game g = doPlanningPhase();
+        assertTrue(g.allPlayersPlayedAssistant());
+    }
     @Test
     public void action_phase() throws InvalidNumberOfPlayersException{
         Game game = doPlanningPhase();
@@ -316,13 +313,9 @@ class GameTest {
 
         //-------------------------------------------
         //p2 wants to move one student (the one in his first slot) to island 0
-        MoveStudentToIslandEvent ev1 = new MoveStudentToIslandEvent();
-        ev1.setPlayerId("id2");
-        ev1.parseInput("0 + 0");
-
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
-            game.handleEvent(ev1);
+            game.jsonToEvent(EventFactory.stringToEventJson("id2", "move student 0 to island 0"));
         });
         //on island 0 there should be 1 student atm (since it is initialized with no students)
         assertEquals(1, countStudents(im.getStudents(0)));
@@ -401,7 +394,7 @@ class GameTest {
 
         //the event is processed correctly and no exception is thrown
         assertDoesNotThrow(() -> {
-            game.handleEvent(ev5);
+            game.jsonToEvent(EventFactory.stringToEventJson("id2", "move student 2 to dining"));
         });
 
         //one dining in p2's board should now have a student
@@ -444,7 +437,7 @@ class GameTest {
 
         //should signal the turn is wrong
         assertThrows(NotYourTurnException.class, () -> {
-            game.handleEvent(ev6);
+            game.jsonToEvent(EventFactory.stringToEventJson("id1", "move mother nature 1"));
         });
 
         //p2 wants to move mothernature 5 steps ahead
@@ -643,7 +636,7 @@ class GameTest {
         ev35.parseInput("1");
 
         assertDoesNotThrow(() -> {
-            game.handleEvent(ev35);
+            game.jsonToEvent(EventFactory.stringToEventJson("id3", "pick cloud 1"));
         });
 
         //->
@@ -699,6 +692,17 @@ class GameTest {
         IslandsWrapper im = ic.getIslandModel();
         assertEquals(1, im.getMotherNaturePos());
         assertNull(im.getInfluence(1));
+    }
+
+    @Test
+    public void checkTower() throws Exception{
+        List<Player> pl = getPlayerList(4);
+        Game g = new Game(pl);
+        ExpertGame eg = new ExpertGame(pl);
+
+        //no team has 0 towers left, so no winner
+        assertEquals(-1, g.checkTowerEnd());
+        assertEquals(-1, eg.checkTowerEnd());
     }
 
     private int countStudents(int[] s) {
