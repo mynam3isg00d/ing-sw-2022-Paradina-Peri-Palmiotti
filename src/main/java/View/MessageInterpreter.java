@@ -12,6 +12,8 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 /**
  * Interpreter for messages sent via json files
+ * Used by the client to interpet messages sent by the server, calls methods of the UI of the update of the model
+ * or the display of errors or messages
  */
 public class MessageInterpreter {
 

@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 public class BoardController extends GUILeaf {
 
@@ -30,9 +31,16 @@ public class BoardController extends GUILeaf {
     private ImageView yellowProf, blueProf, redProf, greenProf, pinkProf;
     @FXML
     private GridPane towers;
+    @FXML
+    private ImageView wflag, bflag; //Used to indicate teams in a towerless board
+    @FXML
+    private Text boardname;
 
     private void init() {
+        wflag.setVisible(false);
+        bflag.setVisible(false);
         if(interactable) {
+            boardname.setVisible(false);
             dinings.setOnDragOver(dragEvent -> {
                 if (dragEvent.getGestureSource().getClass().equals(StudentTile.class) &&
                         dragEvent.getDragboard().hasString()) {
@@ -58,6 +66,7 @@ public class BoardController extends GUILeaf {
     public void update(Board board) {
 
         this.name = board.getPlayerName();
+        boardname.setText(name + "'s Board");
         int prevSize;
 
         //Entrance
@@ -103,9 +112,14 @@ public class BoardController extends GUILeaf {
 
         //Towers
         int btow = board.getTowersNum();
+        wflag.setVisible(false); bflag.setVisible(false);
         prevSize = towers.getChildren().size();
         towers.getChildren().remove(0, prevSize);
         for(int i=0; i<btow; i++) towers.add(new TowerTile(board.getTeamID(), 70, interactable), i%2, i/2);
+        if (btow == 0) {
+            if (board.getTeamID() == 0) wflag.setVisible(true);
+            else if (board.getTeamID() == 1) bflag.setVisible(true);
+        }
     }
 
     public void setInteractable(boolean b) {

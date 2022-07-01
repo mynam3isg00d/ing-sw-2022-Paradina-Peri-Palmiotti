@@ -472,7 +472,8 @@ public class Game implements Observer {
         }
 
         //Check towers
-        int minTowers = Math.min(whiteSum, Math.min(blackSum, greySum));
+        int minTowers = Math.min(blackSum, whiteSum);
+        if (players.size() == 3) minTowers = Math.min(minTowers, greySum);
         List<Integer> possibleWinners = new ArrayList<>();
 
         if (whiteSum == minTowers) possibleWinners.add(0);
@@ -481,12 +482,13 @@ public class Game implements Observer {
         if (possibleWinners.size() == 1) return possibleWinners.get(0);
 
         //Tower draw!! Check professors
-        int minProfessors = Math.min(whiteProf, Math.min(blackProf, greyProf));
+        int maxProfessors = Math.max(blackProf, whiteProf);
+        if (players.size() == 3) maxProfessors = Math.max(maxProfessors, greyProf);
         List<Integer> newPossibleWinners = new ArrayList<>();
 
-        if (whiteProf == minProfessors && possibleWinners.contains(0)) newPossibleWinners.add(0);
-        if (blackProf == minProfessors && possibleWinners.contains(1)) newPossibleWinners.add(1);
-        if (players.size() == 3 && greyProf == minProfessors && possibleWinners.contains(2)) newPossibleWinners.add(2);
+        if (whiteProf == maxProfessors && possibleWinners.contains(0)) newPossibleWinners.add(0);
+        if (blackProf == maxProfessors && possibleWinners.contains(1)) newPossibleWinners.add(1);
+        if (players.size() == 3 && greyProf == maxProfessors && possibleWinners.contains(2)) newPossibleWinners.add(2);
         if (newPossibleWinners.size() == 1) return newPossibleWinners.get(0);
 
         //DRAW!
@@ -531,7 +533,6 @@ public class Game implements Observer {
      * all players will have chosen an assistant
      */
     public void updatePlayerOrder() {
-        //TODO: doesn't consider same assistant play for now
         ArrayList<Player> temp = new ArrayList<>();
         ArrayList<Player> playersCopy = new ArrayList<>(players);
         while(!playersCopy.isEmpty()) {

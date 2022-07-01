@@ -9,7 +9,7 @@ public class ServerApp {
             server.run();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("CANNOT RUN THE SERVER KITTEMMUORT");
+            System.out.println("CANNOT RUN THE SERVER, maybe already running");
         }
     }
 }

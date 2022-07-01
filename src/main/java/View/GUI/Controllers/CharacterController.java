@@ -32,6 +32,7 @@ public abstract class CharacterController extends GUILeaf {
                 toSend = toSend + " " + cb.getValue();
             }
         }
+        toSend = toSend.replace("null", "");
         System.out.println(toSend);
         sendEvent(toSend);
     }
