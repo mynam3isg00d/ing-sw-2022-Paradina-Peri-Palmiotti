@@ -68,8 +68,7 @@ class CLITest {
 
         p.add(new Player("Davide", 0));
         p.add(new Player("Samuele", 1));
-        p.add(new Player("Cugola", 2));
-        //p.add(new Player("SPietro", 1));
+        p.add(new Player("Puma", 2));
         for(Player p0 : p) p0.setPlayerID(p0.getName());
 
         ExpertGame eg = new ExpertGame(p);

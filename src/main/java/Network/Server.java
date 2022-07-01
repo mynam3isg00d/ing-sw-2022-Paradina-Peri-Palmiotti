@@ -63,9 +63,7 @@ public class Server implements Runnable{
         //duplicate id handling
         int idCount = 0;
         for (Map.Entry<Player, Connection> entry : waitingLists[listIndex].entrySet()) {
-            System.out.println("considerando connessione con nome = " + entry.getValue().getName());
             if (entry.getValue().getName().equals(name)) {
-                System.out.println("duplicate alert!");
                 idCount++;
             }
         }
@@ -83,9 +81,6 @@ public class Server implements Runnable{
         if (waitingLists[listIndex].size() == playerNumber) {
             //gets the keySet of the waitingList map in order to remove the first ones
             List<Player> players = new ArrayList<>(waitingLists[listIndex].keySet());
-            for (Player p : players) {
-                System.out.println("DEBUG: playing with "+ p.getName());
-            }
 
             //removes the first playersPerMatch connections from the waitingList and puts them in the playingList
             for (Player p : players) playingLists[listIndex].put(p, waitingLists[listIndex].get(p));
