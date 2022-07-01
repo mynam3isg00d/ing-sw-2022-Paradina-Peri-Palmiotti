@@ -1,19 +1,13 @@
 package View.GUI.Controllers;
 
-import View.GUI.GUI;
+import View.GUI.GUIClient;
 import View.GUI.Nodes.GUILeaf;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Pane;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public abstract class CharacterController extends GUILeaf {
 
@@ -37,7 +31,7 @@ public abstract class CharacterController extends GUILeaf {
         sendEvent(toSend);
     }
 
-    public void connectGUI(GUI gui, int cardIndex) {
+    public void connectGUI(GUIClient gui, int cardIndex) {
         connectGUI(gui);
         this.cardIndex = cardIndex;
     }

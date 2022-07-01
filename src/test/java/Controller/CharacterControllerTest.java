@@ -423,6 +423,7 @@ class CharacterControllerTest {
             cc.buyCard(0, pl.get(0).getPlayerID(), playerInput);
         });
 
+
     }
     private List<Player> getPlayerList(int n) {
         List<Player> ret = new ArrayList<>();

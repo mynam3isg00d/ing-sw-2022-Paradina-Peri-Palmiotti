@@ -2,7 +2,7 @@ package View.GUI.Controllers;
 
 
 import Network.Messages.PlayerInfoMessage;
-import View.GUI.GUI;
+import View.GUI.GUIClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 
 public class GameConfigController {
 
-    private GUI gui;
+    private GUIClient gui;
 
     ObservableList<String> playersNumberList = FXCollections.observableArrayList("2", "3", "4");
     @FXML
@@ -49,5 +49,5 @@ public class GameConfigController {
         else expert = true;
     }
 
-    public void connectGUI(GUI gui) {this.gui = gui;}
+    public void connectGUI(GUIClient gui) {this.gui = gui;}
 }

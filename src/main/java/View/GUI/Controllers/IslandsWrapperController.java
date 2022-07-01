@@ -1,7 +1,7 @@
 package View.GUI.Controllers;
 
 import Model.IslandsWrapper;
-import View.GUI.GUI;
+import View.GUI.GUIClient;
 import javafx.fxml.FXML;
 
 public class IslandsWrapperController {
@@ -138,7 +138,7 @@ public class IslandsWrapperController {
 
     }
 
-    public void connectGUI(GUI gui) {
+    public void connectGUI(GUIClient gui) {
         //I generated this in python, if it's worth anything
         island0Controller.connectGUI(gui);
         island1Controller.connectGUI(gui);

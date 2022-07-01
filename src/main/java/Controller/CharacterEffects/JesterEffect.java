@@ -59,9 +59,11 @@ public class JesterEffect extends StudentsEffect {
             if (cs < 0 || cs > 6) throw new InvalidPlayerInputException();
             cardStudents.add(cs);
         }
+
         for(int i=playerInput.size()/2; i<playerInput.size(); i++) {
             int es = Integer.parseInt(playerInput.get(i));
             if (es < 0 || es > bc.getBoard(playerID).getMaxEntrance() - 1) throw new InvalidPlayerInputException();
+            if (bc.getBoard(playerID).getEntrance()[es] == null) throw new InvalidPlayerInputException();
             entranceStudents.add(es);
         }
 

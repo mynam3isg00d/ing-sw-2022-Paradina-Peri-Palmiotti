@@ -1,18 +1,12 @@
 package View.GUI.Controllers;
 
 import Model.*;
-import Network.Messages.Message;
-import View.GUI.GUI;
+import View.GUI.GUIClient;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class GameSceneController {
 
@@ -121,7 +115,7 @@ public class GameSceneController {
     public void updateShop(Shop s) {shopController.update(s);
     }
 
-    public void connectGUI(GUI gui) {
+    public void connectGUI(GUIClient gui) {
         boardMainController.connectGUI(gui);
         board1Controller.connectGUI(gui);
         board2Controller.connectGUI(gui);

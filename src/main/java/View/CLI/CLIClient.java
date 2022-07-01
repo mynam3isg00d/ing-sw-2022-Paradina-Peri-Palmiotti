@@ -1,11 +1,10 @@
-package Network;
+package View.CLI;
 
 import Events.EventFactory;
 import Exceptions.UnknownMessageException;
 import Network.Messages.Message;
 import Network.Messages.PlayerInfoMessage;
 import Util.HelpInterpreter;
-import View.CLI.CLI;
 import View.MessageInterpreter;
 import View.UI;
 import com.google.gson.GsonBuilder;
@@ -18,7 +17,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
+public class CLIClient {
+
     boolean isActive = true;
     private String ip;
     private int port;
@@ -63,7 +63,6 @@ public class Client {
      */
     private class RemoteInput implements Runnable {
 
-        private String id;
         private BufferedReader in;
         private MessageInterpreter messageInterpreter;
 
@@ -96,7 +95,7 @@ public class Client {
         }
     }
 
-    public Client(String ip, int port){
+    public CLIClient(String ip, int port){
         this.ip = ip;
         this.port = port;
         ui = new CLI();
@@ -156,10 +155,10 @@ public class Client {
 
         try {
             //thread listening the player input
-            new Thread(new Client.LocalInput(out)).start();
+            new Thread(new CLIClient.LocalInput(out)).start();
 
             //thread listening messages from the socket, then prints them
-            new Thread(new Client.RemoteInput(in)).start();
+            new Thread(new CLIClient.RemoteInput(in)).start();
 
         } catch (Exception e) {
             System.out.println("Connection closed from the client side");

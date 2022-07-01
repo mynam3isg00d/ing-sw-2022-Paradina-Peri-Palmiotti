@@ -1,5 +1,5 @@
-import Network.Client;
-import View.GUI.GUI;
+import View.CLI.CLIClient;
+import View.GUI.GUIClient;
 import javafx.application.Application;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class ClientApp {
             case 0: {
                 System.out.print("IP address: ");
                 String ip = s.nextLine();
-                Client c = new Client(ip, 42069);
+                CLIClient c = new CLIClient(ip, 42069);
                 try {
                     c.run();
                 } catch (IOException e) {
@@ -25,7 +25,7 @@ public class ClientApp {
                 break;
             }
             case 1: {
-                Application.launch(GUI.class);
+                Application.launch(GUIClient.class);
                 break;
             }
         }

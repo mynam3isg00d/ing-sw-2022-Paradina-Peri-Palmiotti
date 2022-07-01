@@ -20,9 +20,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
-public class GUI extends Application {
+public class GUIClient extends Application {
 
     private Stage stage;
     private GUIAdapter guiAdapter;
@@ -126,7 +125,7 @@ public class GUI extends Application {
             e.printStackTrace();
         }
 
-        new Thread(new GUI.RemoteInput(in)).start();
+        new Thread(new GUIClient.RemoteInput(in)).start();
     }
 
     public void sendEvent(String event) {

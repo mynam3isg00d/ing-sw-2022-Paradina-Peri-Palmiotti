@@ -1,11 +1,11 @@
 package View.GUI.Nodes;
 
-import View.GUI.GUI;
+import View.GUI.GUIClient;
 
 public abstract class GUILeaf {
 
-    protected GUI gui;
-    public void connectGUI(GUI gui) {this.gui = gui;}
+    protected GUIClient gui;
+    public void connectGUI(GUIClient gui) {this.gui = gui;}
     protected void sendEvent(String event) {
         gui.sendEvent(event);
     }

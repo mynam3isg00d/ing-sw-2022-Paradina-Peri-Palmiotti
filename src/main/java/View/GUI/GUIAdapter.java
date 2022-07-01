@@ -8,9 +8,9 @@ import View.UI;
 public class GUIAdapter extends UI {
 
     private GameSceneController gameSceneController;
-    private GUI gui;
+    private GUIClient gui;
 
-    public GUIAdapter(GUI gui, GameSceneController gameSceneController) {
+    public GUIAdapter(GUIClient gui, GameSceneController gameSceneController) {
         this.gui = gui;
         this.gameSceneController = gameSceneController;
     }
