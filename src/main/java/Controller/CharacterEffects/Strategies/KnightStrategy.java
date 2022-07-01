@@ -115,7 +115,6 @@ public class KnightStrategy implements InfluenceStrategy{
         topInfluences.removeIf(e -> e.getValue() != maximumInfluence);
 
         //handles ties and decides which is the new most influent team
-        //TODO handle null pointers in currentInfluence
         int mostInfluentTeam;
         if (topInfluences.size() == 1) {
             mostInfluentTeam = Integer.valueOf(topInfluences.get(0).getKey()); //the team with the maximum influence

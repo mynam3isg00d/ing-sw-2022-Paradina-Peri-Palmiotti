@@ -42,9 +42,6 @@ public class MessageInterpreter {
             case 3:
                 //game init messages
                 switch (code%100) {
-                    case 0:
-
-                        break;
                     case 1:
                         //Set client id
                         ui.setPlayerID( messageAsJsonObject.get("message").getAsString() );

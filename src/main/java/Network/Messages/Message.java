@@ -1,6 +1,9 @@
 package Network.Messages;
 
-//TODO javadocs
+/**
+ * A generic message class, with a boolean attribute in case it's an error.
+ * Sent from the server to the client via Json Serialization.
+ */
 public class Message {
     private String message;
     private boolean isError;

@@ -1,6 +1,9 @@
 package Network.Messages;
 
-//TODO javadocs
+/**
+ * A message class used to communicate a player his identity on the server.
+ * Sent from the server to the client as a Json Object.
+ */
 public class PlayerInfoMessage {
     private String name;
     private int playerNumber;

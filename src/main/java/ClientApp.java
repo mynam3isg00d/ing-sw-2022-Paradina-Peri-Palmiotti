@@ -14,7 +14,6 @@ public class ClientApp {
 
         switch(choice) {
             case 0: {
-                //TODO: !!COOLER!! if moved to cli
                 System.out.print("IP address: ");
                 String ip = s.nextLine();
                 Client c = new Client(ip, 42069);
