@@ -10,18 +10,24 @@ public class HelpInterpreter {
     }
 
     public static String getHelpMessage(String help) {
-        if(Pattern.compile("^(help 1)$").matcher(help).find()) {
+        if (Pattern.compile("^(help 1)$").matcher(help).find()) {
+            return "Color ID: 0 = Y, 1 = B, 2 = G, 3 = R, 4 = P\n" +
+                    "Student ID (for entrance and character cards):\n" +
+                    "0,1\n" +
+                    "2,3...\n" +
+                    "page 1/3";
+        } else if(Pattern.compile("^(help 2)$").matcher(help).find()) {
             return "Available Commands:\n" +
                     "choose wizard X\n" +
                     "play assistant X\n" +
                     "move student X to dining - X is the position in the Entrance\n" +
-                    "page 1/2";
-        } else if (Pattern.compile("^(help 2)$").matcher(help).find()) {
+                    "page 2/3";
+        } else if (Pattern.compile("^(help 3)$").matcher(help).find()) {
             return "move student X to island Y - X is the position in the Entrance\n" +
                     "move mother nature X - X is the number of steps\n" +
                     "pick cloud X\n" +
                     "buy character X - X is index in the shop (not charID!)\n" +
-                    "page 2/2";
+                    "page 3/3";
         } else if (Pattern.compile("^(help char)").matcher(help).find()) {
             int charID = Integer.parseInt(help.split(" ")[2]);
             switch (charID) {
@@ -54,6 +60,7 @@ public class HelpInterpreter {
         }
         return  "help 1 for page 1\n" +
                 "help 2 for page 2\n" +
+                "help 3 for page 3\n" +
                 "help char [character id] for char info";
     }
 }

@@ -26,29 +26,35 @@
             <Image url="@../graphics/wooden_pieces/Cards/CarteTOT_front6.jpg" />
          </image>
       </ImageView>
-      <Text layoutX="217.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Students on card">
+      <Text layoutX="209.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Students on card" textAlignment="CENTER" wrappingWidth="78.00000000000011">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="415.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Students in entrance">
+      <Text layoutX="322.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Students in entrance" textAlignment="CENTER" wrappingWidth="95.25">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <ChoiceBox fx:id="cardStudent0" layoutX="209.0" layoutY="71.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="entranceStudent0" layoutX="422.0" layoutY="71.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="cardStudent1" layoutX="209.0" layoutY="116.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="entranceStudent1" layoutX="422.0" layoutY="116.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="cardStudent2" layoutX="209.0" layoutY="165.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="entranceStudent2" layoutX="422.0" layoutY="165.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="cardStudent0" layoutX="209.0" layoutY="71.0" prefHeight="25.0" prefWidth="78.0" />
+      <ChoiceBox fx:id="entranceStudent0" layoutX="331.0" layoutY="71.0" prefHeight="25.0" prefWidth="78.0" />
+      <ChoiceBox fx:id="cardStudent1" layoutX="209.0" layoutY="116.0" prefHeight="25.0" prefWidth="78.0" />
+      <ChoiceBox fx:id="entranceStudent1" layoutX="331.0" layoutY="116.0" prefHeight="25.0" prefWidth="78.0" />
+      <ChoiceBox fx:id="cardStudent2" layoutX="209.0" layoutY="165.0" prefHeight="24.0" prefWidth="78.0" />
+      <ChoiceBox fx:id="entranceStudent2" layoutX="331.0" layoutY="166.0" prefHeight="25.0" prefWidth="78.0" />
       <Button layoutX="460.0" layoutY="242.0" mnemonicParsing="false" onAction="#sendOk" prefHeight="63.0" prefWidth="126.0" text="OK">
          <font>
             <Font name="Comic Sans MS Bold Italic" size="27.0" />
          </font>
       </Button>
-      <Line endX="-73.39999389648438" endY="-1.52587890625E-5" layoutX="477.0" layoutY="83.0" startX="-100.0" strokeWidth="2.0" />
-      <Line endX="-73.39999389648438" endY="-1.52587890625E-5" layoutX="477.0" layoutY="177.0" startX="-100.0" strokeWidth="2.0" />
-      <Line endX="-73.39999389648438" endY="-1.52587890625E-5" layoutX="477.0" layoutY="128.0" startX="-100.0" strokeWidth="2.0" />
+      <Line endX="-73.39999389648438" endY="-1.52587890625E-5" layoutX="395.0" layoutY="83.0" startX="-100.0" strokeWidth="2.0" />
+      <Line endX="-73.39999389648438" endY="-1.52587890625E-5" layoutX="395.0" layoutY="177.0" startX="-100.0" strokeWidth="2.0" />
+      <Line endX="-73.39999389648438" endY="-1.52587890625E-5" layoutX="395.0" layoutY="128.0" startX="-100.0" strokeWidth="2.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="209.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/assets/conventions.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="209.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Input conventions" />
    </children>
 </Pane>

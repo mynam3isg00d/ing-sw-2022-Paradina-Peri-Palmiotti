@@ -16,9 +16,9 @@
             <Image url="@../graphics/wooden_pieces/Background/character_bg.jpg" />
          </image>
       </ImageView>
-      <Text layoutX="452.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have." textAlignment="CENTER" wrappingWidth="141.56256103515625">
+      <Text layoutX="452.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many Students as they have." textAlignment="CENTER" wrappingWidth="141.56256103515625">
          <font>
-            <Font size="16.0" />
+            <Font size="14.0" />
          </font>
       </Text>
       <ImageView fitHeight="280.0" fitWidth="223.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
@@ -40,5 +40,11 @@
             <Font name="Comic Sans MS Bold Italic" size="27.0" />
          </font>
       </Button>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="214.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/wooden_pieces/assets/conventions.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="214.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Input conventions" />
    </children>
 </Pane>

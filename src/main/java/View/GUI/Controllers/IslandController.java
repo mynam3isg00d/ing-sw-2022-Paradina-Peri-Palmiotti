@@ -21,7 +21,7 @@ public class IslandController extends GUILeaf {
     @FXML
     private Pane main;
     @FXML
-    private Text size;
+    private Text size, id;
     @FXML
     private ImageView tower;
     @FXML
@@ -43,8 +43,11 @@ public class IslandController extends GUILeaf {
         sendEvent("move mother nature " + distanceFromMother);
     }
 
-    public void update(Island island, int id) {
-        this.islandId = id;
+    public void update(Island island, int idn) {
+        this.islandId = idn;
+
+        //Id
+        id.setText(""+idn);
         //Size
         size.setText("SIZE: " + island.getDimension());
 

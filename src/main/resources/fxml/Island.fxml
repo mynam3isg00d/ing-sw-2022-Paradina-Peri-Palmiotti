@@ -83,5 +83,10 @@
             <Image url="@../graphics/wooden_pieces/deny_island_icon.png" />
          </image>
       </ImageView>
+      <Text fx:id="id" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Text>
    </children>
 </Pane>
