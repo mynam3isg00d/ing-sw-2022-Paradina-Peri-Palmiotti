@@ -54,3 +54,10 @@ See the complete ruleset [here](https://github.com/mynam3isg00d/ing-sw-2022-Para
 
 CLI
 ![cli](https://github.com/mynam3isg00d/ing-sw-2022-Paradina-Peri-Palmiotti/blob/main/readme_media/cli_main.png?raw=true)
+
+GUI Initialization
+![gui1](https://github.com/mynam3isg00d/ing-sw-2022-Paradina-Peri-Palmiotti/blob/main/readme_media/gui_intro.png?raw=true)
+![gui2](https://github.com/mynam3isg00d/ing-sw-2022-Paradina-Peri-Palmiotti/blob/main/readme_media/gui_wizard.png?raw=true)
+
+GUI
+![gui3](https://github.com/mynam3isg00d/ing-sw-2022-Paradina-Peri-Palmiotti/blob/main/readme_media/gui_main.png?raw=true)
