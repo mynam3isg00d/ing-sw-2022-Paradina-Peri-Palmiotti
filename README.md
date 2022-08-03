@@ -45,3 +45,12 @@ you will then be asked to choose between CLI (0) and GUI (1)
 *IMPORTANT*: for the correct usage of the CLI Enviroment, use the terminal in the biggest size possible (we reccomend fullscreen).
 The GUI is set to the default resolution of 1500x850, we haven't found any problems with different screen sizes.
 
+# Game
+
+Eriantys is a board game for 2-4 players
+See the complete ruleset [here](https://github.com/mynam3isg00d/ing-sw-2022-Paradina-Peri-Palmiotti/blob/main/eriantys_rules.pdf)
+
+### Screenshots
+
+CLI
+![cli](https://github.com/mynam3isg00d/ing-sw-2022-Paradina-Peri-Palmiotti/blob/main/readme_media/cli_main.png?raw=true)
