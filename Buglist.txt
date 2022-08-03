@@ -1,3 +1,0 @@
-VIEW:
-
-- Non c'è feedback se scegli la stessa carta di un altro giocatore
